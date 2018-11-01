@@ -1,0 +1,13 @@
+{
+  "node_path": {
+    "windows": "C:/Program Files/nodejs/node.exe",
+    "linux": "/usr/bin/nodejs",
+    "osx": "/usr/local/bin/node"
+  },
+  // Automatically format when a file is saved.
+  "format_on_save": true,
+  // Only format the selection if there's one available.
+  "format_selection_only": true,
+  // Log the settings passed to the prettifier from `.vuebeautifyrc`.
+  "print_diagnostics": true
+}
