@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <vdtnet-table/>
+    <vdtnet-table :fields="fields" :opts="options" />
   </div>
 </template>
 
@@ -9,7 +9,31 @@ import { VdtnetTable } from '../src'
 
 export default {
   name: 'app',
-  components: { VdtnetTable }
+  components: { VdtnetTable },
+  data() {
+    const vm = this
+
+    return {
+      options: {
+        ajax: {
+          url: 'https://jsonplaceholder.typicode.com/users',
+          dataSrc: (json) => {
+            console.log(json)
+            return json
+          }
+        }
+      },
+      fields: {
+        id: { label: 'ID', sortable: true },
+        name: { label: 'Name', sortable: true, searchable: true },
+        username: { label: 'Username' },
+        email: { label: 'Email' },
+        address: { label: 'Address' },
+        phone: { label: 'Phone' },
+        website: { label: 'Website' }
+      }
+    }
+  }
 }
 </script>
 

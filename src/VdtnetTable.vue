@@ -1,49 +1,30 @@
 <template>
   <div class="vdtnet-container">
     <div class="container-fluid">
-      <div class="form-group" v-once>
-        <vdtnet-filters @apply="applyFilters" />
-      </div>
+      <slot name="TOP" />
     </div>
     <div class="vtdnet-table" v-once>
       <table
         :id="myuid"
-        :class="classes"
-        class=""
+        :class="className"
+        ref="table"
       >
         <thead>
           <tr>
             <th
-              v-for="(field, name) in table.fields"
-              :key="name"
+              v-for="(field, i) in options.columns"
+              :key="i"
             >
-              <slot :name="`HEAD_${name}`">
-                <div
-                  :class="{'text-right': ['number'].includes(field.type)}"
-                >
-                  {{ field.label || name | spaceSeparated }}
-                </div>
+              <slot :name="`HEAD_${field.name}`">
+                <div :class="field.classes" v-html="field.title" />
               </slot>
             </th>
           </tr>
         </thead>
-        <tfoot v-show="footer">
-          <tr>
-            <th
-              v-for="(field, name) in table.fields"
-              :key="name"
-            >
-              <slot :name="`FOOT_${name}`">
-                <div
-                  :class="{'text-right': ['number'].includes(field.type)}"
-                >
-                  {{ field.label || name | spaceSeparated }}
-                </div>
-              </slot>
-            </th>
-          </tr>
-        </tfoot>
       </table>
+    </div>
+    <div class="container-fluid">
+      <slot name="BOTTOM" />
     </div>
   </div>
 </template>
@@ -51,114 +32,119 @@
 <script>
 // https://github.com/sstepanovvl/datatables-as-vuejs-component/blob/master/components/DataTable.1.vue
 import $ from 'jquery'
-import 'datatables.net-bs4'
+
+import 'datatables.net-bs4' // this automatically import base datatables.net
+
+// this import all buttons that we need
+import 'datatables.net-buttons/js/dataTables.buttons.js';
+import 'datatables.net-buttons/js/buttons.html5.js';
+import 'datatables.net-buttons/js/buttons.print.js';
+import 'datatables.net-responsive/js/dataTables.responsive.js';
+
+// import the rest
+import 'datatables.net-buttons-bs4'
 import 'datatables.net-responsive-bs4'
 import 'datatables.net-fixedheader-bs4'
-import 'datatables.net-buttons-bs4'
-import VdtnetFilters from './VdtnetFilters.vue'
+import 'datatables.net-scroller-bs4';
+import 'datatables.net-select-bs4';
+
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css';
+import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
+import 'datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css';
+import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
 
 export default {
   name: 'Vdtnet-Table',
-  components: { VdtnetFilters },
   props: {
-    footer: {
-      type: Boolean,
-      default: false
-    },
-    classes: {
+    className: {
       type: String,
-      default: 'table table-striped table-bordered'
+      default: 'table table-striped table-bordered dt-responsive nowrap w-100'
+    },
+    url: {
+      type: String
     },
     opts: {
+      type: Object
+    },
+    fields: {
       type: Object
     }
   },
   data() {
+    // initialize defaults
     return {
-      settings: {
+      options: {
+        processing: true,
+        pageLength: 15,
+        searching: true,
+        searchDelay: 1500,
         destroy: true,
+        ordering: true,
+        lengthChange: true,
         serverSide: true,
         ajax: '',
         fixedHeader: true,
         dom: '<\'row\'<\'col-sm-12 col-md-6\'B><\'col-sm-12 col-md-6\'f>>' +
           '<\'row\'<\'col-sm-12\'tr>>' +
           '<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
-        columns: []
-        /* examples
-        columns: [
-            { data: 'id' },
-            { data: 'date', render(data, type, row) {
-                return moment(data).format('YYYY-MM-DD')
-              }
-            },
-            { data: 'actions', sortable: false }
-        ]
-        */
-      }
-    }
-  },
-  computed: {
-    options() {
-      const vm = this
-
-      // append other things
-      return $.extend({}, vm.settings, {})
+        columns: [],
+        butons: []
+      },
+      dataTable: null
     }
   },
   mounted() {
-    var columns = [];
-    ['dataKey'].forEach(function(i,e){
-        let width = '100px'
-        let t = i
-        let className = 'text-center'
-        let visible = true
-        let r = function (data,type,row,meta) { //1. Переопределяем рендер ячейки
-            if (type === 'display') {
-                return data
-                let r = vm.$emit('displayCellCallback',{data,type,row,meta})  //2. отправляем данные чтобы обернуть в vue компонент, чтобы ими управлять
-                console.log(r)//6. тут мы получаем например select
-                return r //7. и отправляем его в ячейку
-            }
-            if (type === 'filter') {
-                return data
-            }
-            if (type === 'type') {
-                return type
-            }
-            if (type === 'sort') {
-                return data
-            }
-        }
-        columns.push({
-            data: i,
-            searchable: true,
-            defaultContent: '-',
-            title: t,
-            // width: width,
-            name: i,
-            visible: visible,
-            className: className,
-            render: r
-        })
-    })
-    this.parameters.columns = columns
-    this.parameters.data = [{
-               dataKey : 1
-           },{
-               dataKey : 2
-           },{
-               dataKey : 3
-           }]
-    this.dataTable = $(this.$el).DataTable(this.parameters)
     const vm = this
-    $(this.$el).on('click', 'td',function(){
-        let data = vm.dataTable.row( $(this).closest('tr')).data()
-        vm.$emit('editRow', data)
-    })
-    $(this.$el).on('click', 'td',function(){
-        let data = vm.dataTable.row( $(this).closest('tr')).data()
-        vm.$emit('deleteRow', data)
-    })
+
+    // allow user to override default options
+    if (vm.opts) {
+      vm.options = $.extend({}, vm.options, vm.opts)
+    }
+
+    if (vm.url) {
+      vm.options.ajax = vm.url
+    }
+
+    // if fields are passed in, generate column definition
+    // from our custom fields schema
+    if (vm.fields) {
+      const fields = vm.fields
+      const cols   = vm.options.columns
+
+      for (let k in fields) {
+        const field = fields[k]
+        field.name = field.name || k
+
+        // generate
+        let col = {
+          searchable: field.searchable,
+          defaultContent: '',
+          title: field.label || k,
+          width: field.width,
+          data: field.name,
+          visible: field.visible,
+          className: field.className
+        }
+
+        if (field.width) {
+          col.width = field.width
+        }
+
+        if (field.sortable) {
+          col.orderable = field.sortable
+        }
+
+        if (field.render) {
+          col.render = field.render
+        }
+        // console.log(col)
+
+        cols.push(col)
+      }
+    }
+
+    vm.dataTable = $(vm.$refs.table).DataTable(vm.options)
   }
 }
 </script>
