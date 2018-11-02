@@ -54,7 +54,7 @@ More documentation for this library, to come.
 ## Additional Headers
 Since options are completely exposed, simply use the native method per [jQuery DataTable example](https://editor.datatables.net/manual/security#Prevention)
 
-Or something like:
+i.e, something like:
 ```javascript
 options: {
   'ajax': {
@@ -66,4 +66,7 @@ options: {
   }
 }
 ```
+
+If you haven't already figured it out, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/) which is demonstrated here wrapped as [jQuery DataTable ajax pipeline](https://datatables.net/examples/server_side/pipeline.html)
+
 # MIT
