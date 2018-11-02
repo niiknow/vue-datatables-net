@@ -38,12 +38,12 @@
     "babel-preset-stage-3": "^6.24.1",
     "bili": "2.2.6",
     "cross-env": "^5.0.5",
-    "css-loader": "^1.0.1",
-    "file-loader": "^2.0.0",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
     "rollup-plugin-vue": "^4.3.2",
-    "vue-loader": "^15.4.2",
+    "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
-    "webpack": "^4.23.1",
-    "webpack-dev-server": "^3.1.10"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.1"
   }
 }
