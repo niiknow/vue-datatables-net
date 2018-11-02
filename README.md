@@ -6,7 +6,7 @@ This library is simply a wrapper for [jQuery DataTable](https://datatables.net/)
 ## Usage
 Like our example App, which demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
 
-Or simply with url that is a can handle datatable.net server-side api endpoint:
+Or simply with url that can handle datatable.net server-side endpoint:
 ```html
 <template>
   <div id="app">
