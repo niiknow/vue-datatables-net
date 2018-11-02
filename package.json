@@ -27,6 +27,7 @@
   ],
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
@@ -40,6 +41,10 @@
     "datatables.net-responsive-bs4": "^2.2.3",
     "datatables.net-scroller-bs4": "^1.5.1",
     "datatables.net-select-bs4": "^1.2.7",
+    "eslint": "^5.6.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-vue": "^4.7.1",
     "file-loader": "^1.1.4",
     "rollup-plugin-vue": "^4.3.2",
     "vue-loader": "^13.0.5",

@@ -1,30 +1,35 @@
 <template>
   <div class="vdtnet-container">
-    <div class="container-fluid">
-      <slot name="TOP" />
+    <div class="container-fluid vdtnet-head">
+      <slot name="HEAD" />
     </div>
-    <div class="vtdnet-table" v-once>
-      <table
-        :id="myuid"
-        :class="className"
-        ref="table"
-      >
-        <thead>
-          <tr>
-            <th
-              v-for="(field, i) in options.columns"
-              :key="i"
-            >
-              <slot :name="`HEAD_${field.name}`">
-                <div :class="field.classes" v-html="field.title" />
-              </slot>
-            </th>
-          </tr>
-        </thead>
-      </table>
+    <div class="vtdnet-body">
+      <slot name="BODY">
+        <table
+          v-once
+          ref="table"
+          :id="myuid"
+          :class="className"
+        >
+          <thead>
+            <tr>
+              <th
+                v-for="(field, i) in options.columns"
+                :key="i"
+              >
+                <slot :name="`HEAD_${field.name}`">
+                  <div 
+                    :class="field.classes" 
+                    v-html="field.title" />
+                </slot>
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </slot>
     </div>
-    <div class="container-fluid">
-      <slot name="BOTTOM" />
+    <div class="container-fluid vdtnet-foot">
+      <slot name="FOOT" />
     </div>
   </div>
 </template>
@@ -33,7 +38,7 @@
 import $ from 'jquery'
 
 export default {
-  name: 'Vdtnet-Table',
+  name: 'VdtnetTable',
   props: {
     className: {
       type: String,
@@ -133,7 +138,7 @@ export default {
       const $this  = $(this)
       const row    = vm.dataTable.row($this.closest('tr'))
       const data   = row.data()
-      const action = $this.data('action');
+      const action = $this.data('action')
 
       vm.$emit(action, {data, row, $this})
     })
