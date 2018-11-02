@@ -5,7 +5,6 @@
       <table
         v-once
         ref="table"
-        :id="myuid"
         :class="className"
       >
         <thead>
