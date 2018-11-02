@@ -1,7 +1,14 @@
 # vue-datatables-net
-> Vue jQuery DataTable.net component 
+> Vue jQuery DataTable.net wrapper component 
 
-This library is simply a wrapper for [jQuery DataTable](https://datatables.net/).  It's a tiny package that doesn't include anything, not even the datatable.net core library.  Per example below, you basically have to include any/only datatable.net package(s) that you need.
+This library is simply a wrapper for [jQuery DataTable](https://datatables.net/).  It's a tiny package that doesn't include anything, not even the datatable.net core library.  Per example below, you basically have to include only/any datatable.net package(s) that you need.
+
+The initial focus/design of this library is to use with ajax/server-side endpoint.  For local data, simply use native methods like so:
+
+```javascript
+component.dataTable.clear().draw();
+component.dataTable.rows.add(newDataArray).draw();
+```
 
 ## Usage
 Like our example App, which demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
@@ -44,4 +51,19 @@ Since it's a wrapper, all/most features are provided by the [jQuery DataTable](h
 
 More documentation for this library, to come.
 
+## Additional Headers
+Since options are completely exposed, simply use the native method per [jQuery DataTable example](https://editor.datatables.net/manual/security#Prevention)
+
+Or something like:
+```javascript
+options: {
+  'ajax': {
+    'url': url,
+    'type': 'GET',
+    'beforeSend': function (request) {
+        request.setRequestHeader("token", token);
+    }
+  }
+}
+```
 # MIT

@@ -52,21 +52,11 @@ export default {
     // initialize defaults
     return {
       options: {
-        processing: true,
-        pageLength: 15,
-        searching: true,
-        searchDelay: 1500,
-        destroy: true,
-        ordering: true,
-        lengthChange: true,
-        serverSide: true,
-        ajax: '',
-        fixedHeader: true,
         dom: '<\'row\'<\'col-sm-12 col-md-4\'l><\'text-right col-sm-12 col-md-6\'B><\'col-sm-12 col-md-2\'f>>' +
           '<\'row\'<\'col-sm-12\'tr>>' +
           '<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
         columns: [],
-        buttons: []
+        buttons: []  // remove any button defaults
       },
       dataTable: null
     }

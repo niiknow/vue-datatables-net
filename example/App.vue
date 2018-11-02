@@ -43,7 +43,16 @@ export default {
             // console.log(json)
             return json
           }
-        }
+        },
+        processing: true,
+        pageLength: 10,
+        searching: true,
+        searchDelay: 1500,
+        destroy: true,
+        ordering: true,
+        lengthChange: true,
+        serverSide: true,
+        fixedHeader: true
       },
       fields: {
         id: { label: 'ID', sortable: true },
