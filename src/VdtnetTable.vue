@@ -30,29 +30,7 @@
 </template>
 
 <script>
-// https://github.com/sstepanovvl/datatables-as-vuejs-component/blob/master/components/DataTable.1.vue
 import $ from 'jquery'
-
-import 'datatables.net-bs4' // this automatically import base datatables.net
-
-// this import all buttons that we need
-import 'datatables.net-buttons/js/dataTables.buttons.js';
-import 'datatables.net-buttons/js/buttons.html5.js';
-import 'datatables.net-buttons/js/buttons.print.js';
-import 'datatables.net-responsive/js/dataTables.responsive.js';
-
-// import the rest
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-responsive-bs4'
-import 'datatables.net-fixedheader-bs4'
-import 'datatables.net-scroller-bs4';
-import 'datatables.net-select-bs4';
-
-import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
-import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css';
-import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
-import 'datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css';
-import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
 
 export default {
   name: 'Vdtnet-Table',
@@ -85,11 +63,11 @@ export default {
         serverSide: true,
         ajax: '',
         fixedHeader: true,
-        dom: '<\'row\'<\'col-sm-12 col-md-6\'B><\'col-sm-12 col-md-6\'f>>' +
+        dom: '<\'row\'<\'col-sm-12 col-md-4\'l><\'text-right col-sm-12 col-md-6\'B><\'col-sm-12 col-md-2\'f>>' +
           '<\'row\'<\'col-sm-12\'tr>>' +
           '<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
         columns: [],
-        butons: []
+        buttons: []
       },
       dataTable: null
     }
@@ -144,7 +122,21 @@ export default {
       }
     }
 
-    vm.dataTable = $(vm.$refs.table).DataTable(vm.options)
+    const $el = $(vm.$refs.table)
+    vm.dataTable = $el.DataTable(vm.options)
+
+    // wire up view, edit, and/or delete button
+    // var d = table.row( this ).data();
+    $el.find('[data-action]').on('click', (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const $this  = $(this)
+      const row    = vm.dataTable.row($this.closest('tr'))
+      const data   = row.data()
+      const action = $this.data('action');
+
+      vm.$emit(action, {data, row, $this})
+    })
   }
 }
 </script>

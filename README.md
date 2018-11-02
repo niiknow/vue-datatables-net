@@ -1,24 +1,48 @@
 # vue-datatable-net
+> Vue jQuery DataTable.net component 
 
-> Vue jQuery DataTable.net component for bootstrap4 
+This library is simply a wrapper for [jQuery DataTable](https://datatables.net/).  It's a tiny package that doesn't include anything, not even the datatable.net core library.  Per example below, you basically have to include any/only datatable.net package(s) that you need.
 
-## Build Setup
+## Usage
+Like our example App, which demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
 
-``` bash
-# install dependencies
-npm install
+Or simply with url that is a can handle datatable.net server-side api endpoint:
+```html
+<template>
+  <div id="app">
+    <vdtnet-table :fields="fields" url="/some/api/using/yajra/laravel-datatables/or/similar" />
+  </div>
+</template>
 
-# serve with hot reload at localhost:8080
-npm run dev
+<script>
+import VdtnetTable from 'vue-datatable-net'
+import 'datatables.net-bs4'
 
-# build your demo page for production
-npm run build:example
+export default {
+  name: 'app',
+  components: { VdtnetTable },
+  data() {
+    const vm = this
 
-# pack your component/library with bili for publishing to npm
-npm run build
-
-# publishing your component/library to npm (Check your version first before publish.)
-npm publish
+    return {
+      fields: {
+        id: { label: 'ID', sortable: true },
+        name: { label: 'Name', sortable: true, searchable: true },
+        username: { label: 'Username', sortable: false, searchable: true  },
+        email: { label: 'Email' },
+        address: { label: 'Address' },
+        phone: { label: 'Phone' },
+        website: { label: 'Website' }
+      }
+    }
+  }
+}
+</script>
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Documentation
+Since it's a wrapper, all/most features are provided by the [jQuery DataTable](https://datatables.net/manual/) library.
+
+More documentation for this library, to come.
+
+# MIT
