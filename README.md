@@ -11,9 +11,48 @@ component.dataTable.rows.add(newDataArray).draw();
 ```
 
 ## Usage
-Like our example App, which demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
+> You will require these to use with Bootstrap 4:
 
-Or simply with url that can handle datatable.net server-side endpoint:
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css'>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+<script>
+import VdtnetTable from '../src'
+import 'datatables.net-bs4'
+
+/*
+// you can import these if needed
+// this import all buttons that we need
+import 'datatables.net-buttons/js/dataTables.buttons.js';
+import 'datatables.net-buttons/js/buttons.html5.js';
+import 'datatables.net-buttons/js/buttons.print.js';
+import 'datatables.net-responsive/js/dataTables.responsive.js';
+
+// import the rest
+import 'datatables.net-buttons-bs4'
+import 'datatables.net-responsive-bs4'
+import 'datatables.net-fixedheader-bs4'
+import 'datatables.net-scroller-bs4';
+import 'datatables.net-select-bs4';
+
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css';
+import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
+import 'datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css';
+import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
+*/
+</script>
+```
+
+> Use it like the example App
+
+This demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
+
+> Or simply with url that can handle datatable.net server-side endpoint:
+
 ```html
 <template>
   <div id="app">
