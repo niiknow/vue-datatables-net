@@ -1,4 +1,4 @@
-# vue-datatable-net
+# vue-datatables-net
 > Vue jQuery DataTable.net component 
 
 This library is simply a wrapper for [jQuery DataTable](https://datatables.net/).  It's a tiny package that doesn't include anything, not even the datatable.net core library.  Per example below, you basically have to include any/only datatable.net package(s) that you need.
@@ -15,7 +15,7 @@ Or simply with url that is a can handle datatable.net server-side api endpoint:
 </template>
 
 <script>
-import VdtnetTable from 'vue-datatable-net'
+import VdtnetTable from 'vue-datatables-net'
 import 'datatables.net-bs4'
 
 export default {

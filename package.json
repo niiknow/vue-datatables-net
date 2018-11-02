@@ -1,10 +1,10 @@
 {
-  "name": "vue-datatable-net",
-  "description": "Vue jQuery DataTable.net component for bootstrap4",
+  "name": "vue-datatables-net",
+  "description": "Vue jQuery DataTable.net wrapper component ",
   "version": "1.0.0",
   "author": "friends@niiknow.org",
   "license": "MIT",
-  "main": "lib/vue-datatable-net.min.js",
+  "main": "lib/vue-datatables-net.min.js",
   "files": [
     "lib"
   ],
