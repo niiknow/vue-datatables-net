@@ -30,7 +30,6 @@ export default {
         name: { label: 'Name', sortable: true, searchable: true },
         username: { label: 'Username', sortable: false, searchable: true  },
         email: { label: 'Email' },
-        address: { label: 'Address' },
         phone: { label: 'Phone' },
         website: { label: 'Website' }
       }

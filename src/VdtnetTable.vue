@@ -1,36 +1,30 @@
 <template>
   <div class="vdtnet-container">
-    <div class="container-fluid vdtnet-head">
-      <slot name="HEAD" />
-    </div>
+    <div class="container-fluid vdtnet-head"><slot name="HEAD" /></div>
     <div class="vtdnet-body">
-      <slot name="BODY">
-        <table
-          v-once
-          ref="table"
-          :id="myuid"
-          :class="className"
-        >
-          <thead>
-            <tr>
-              <th
-                v-for="(field, i) in options.columns"
-                :key="i"
-              >
-                <slot :name="`HEAD_${field.name}`">
-                  <div 
-                    :class="field.classes" 
-                    v-html="field.title" />
-                </slot>
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </slot>
+      <table
+        v-once
+        ref="table"
+        :id="myuid"
+        :class="className"
+      >
+        <thead>
+          <tr>
+            <th
+              v-for="(field, i) in options.columns"
+              :key="i"
+            >
+              <slot :name="`HEAD_${field.name}`">
+                <div
+                  :class="field.classes"
+                  v-html="field.title" />
+              </slot>
+            </th>
+          </tr>
+        </thead>
+      </table>
     </div>
-    <div class="container-fluid vdtnet-foot">
-      <slot name="FOOT" />
-    </div>
+    <div class="container-fluid vdtnet-foot"><slot name="FOOT" /></div>
   </div>
 </template>
 
@@ -136,11 +130,12 @@ export default {
       e.preventDefault()
       e.stopPropagation()
       const $this  = $(this)
-      const row    = vm.dataTable.row($this.closest('tr'))
-      const data   = row.data()
       const action = $this.data('action')
-
-      vm.$emit(action, {data, row, $this})
+      if (action) {
+        const row  = vm.dataTable.row($this.closest('tr'))
+        const data = row.data()
+        vm.$emit(action, {data, row, $this})
+      }
     })
   }
 }

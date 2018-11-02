@@ -50,7 +50,12 @@ export default {
         name: { label: 'Name', sortable: true, searchable: true },
         username: { label: 'Username', sortable: false, searchable: true  },
         email: { label: 'Email' },
-        address: { label: 'Address' },
+        address: {
+          label: 'Address',
+          render: (data) => {
+            return `${data.street}, ${data.suite}, ${data.city} ${data.zipcode}`
+          }
+        },
         phone: { label: 'Phone' },
         website: { label: 'Website' }
       }
