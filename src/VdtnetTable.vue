@@ -12,15 +12,14 @@
             <th
               v-for="(field, i) in options.columns"
               :key="i"
+              :class="field.className"
             >
               <slot
                 :name="`HEAD_${field.name}`"
                 :field="field"
                 :i="i"
               >
-                <div
-                  :class="field.className"
-                  v-html="field.title" />
+                <div v-html="field.title" />
               </slot>
             </th>
           </tr>
@@ -50,6 +49,9 @@ export default {
     },
     jquery: {
       type: Object
+    },
+    selectable: {
+      type: Boolean
     }
   },
   data() {
@@ -65,13 +67,18 @@ export default {
       dataTable: null
     }
   },
-  mounted() {
+  computed: {
+    jq() {
+      return this.jquery || window.jQuery
+    }
+  },
+  created() {
     const vm = this
-    const jq = vm.jquery || window.jQuery
+    const jq = vm.jq
 
     // allow user to override default options
     if (vm.opts) {
-      vm.options = jq.extend({}, vm.options, vm.opts)
+      vm.options = jq.extend({}, vm.opts, vm.options)
     }
 
     if (vm.url) {
@@ -119,8 +126,56 @@ export default {
       }
     }
 
+    if (vm.selectable) {
+      // expand column
+      vm.options.columns = [{
+        orderable: false,
+        className: 'select-checkbox',
+        data: null,
+        defaultContent: '',
+        title: '<input type="checkbox" class="select-all-checkbox">',
+        targets: 0
+      }].concat(vm.options.columns)
+
+      // console.log(vm.options.columns)
+      vm.options.select = jq.extend(
+        vm.options.select || {},
+        {
+          style: 'os',
+          selector: 'td:first-child'
+        }
+      )
+
+      if (!vm.options.order) {
+        vm.options.order = [[1, 'asc']]
+      }
+    }
+  },
+  mounted() {
+    const vm = this
+    const jq = vm.jq
     const $el = jq(vm.$refs.table)
     vm.dataTable = $el.DataTable(vm.options)
+
+    if (vm.selectable) {
+      $el.on('click', 'th input.select-all-checkbox', (e) => {
+        if(jq(e.target).is(':checked')) {
+          vm.dataTable.rows().select()
+        } else {
+          vm.dataTable.rows().deselect()
+        }
+      })
+
+      vm.dataTable.on('select deselect', () => {
+        if (vm.dataTable.rows({
+            selected: true
+          }).count() !== vm.dataTable.rows().count()) {
+          jq('th.select-checkbox').removeClass('selected')
+        } else {
+          jq('th.select-checkbox').addClass('selected')
+        }
+      })
+    }
 
     // wire up edit, delete, and/or action buttons
     $el.on('click', '[data-action]', (e) => {
@@ -160,3 +215,8 @@ export default {
   }
 }
 </script>
+<style>
+.select-checkbox, .select-all-checkbox {
+  cursor: pointer;
+}
+</style>
