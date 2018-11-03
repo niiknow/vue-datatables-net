@@ -58,10 +58,15 @@ export default {
     // initialize defaults
     return {
       options: {
-        dom: '<\'row\'<\'col-sm-12 col-md-4\'l><\'text-right col-sm-12 col-md-6\'B><\'col-sm-12 col-md-2\'f>>' +
-          '<\'row\'<\'col-sm-12\'tr>>' +
-          '<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
+/*eslint-disable */
+        dom: "<'row'<'col-sm-12 col-md-9'lB><'col-sm-12 col-md-3'f>>" +
+          "<'row'<'col-sm-12'tr>>" +
+          "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+/*eslint-enable */
         columns: [],
+        language: {
+          infoFiltered: ''
+        },
         buttons: []  // remove any button defaults
       },
       dataTable: null
@@ -78,7 +83,7 @@ export default {
 
     // allow user to override default options
     if (vm.opts) {
-      vm.options = jq.extend({}, vm.opts, vm.options)
+      vm.options = jq.extend({}, vm.options, vm.opts)
     }
 
     if (vm.url) {
@@ -155,6 +160,7 @@ export default {
     const vm = this
     const jq = vm.jq
     const $el = jq(vm.$refs.table)
+    console.log(vm.options.buttons)
     vm.dataTable = $el.DataTable(vm.options)
 
     if (vm.selectable) {
@@ -218,5 +224,9 @@ export default {
 <style>
 .select-checkbox, .select-all-checkbox {
   cursor: pointer;
+}
+.dataTables_length {
+  float: left;
+  padding-right: 10px;
 }
 </style>

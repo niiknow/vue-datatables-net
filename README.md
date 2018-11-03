@@ -138,4 +138,11 @@ actions: {
 }
 ```
 
+## Selectable
+> set this to enable datatable.net-select extension
+
+```html
+ <vdtnet-table :selectable="true" />
+```
+
 # MIT
