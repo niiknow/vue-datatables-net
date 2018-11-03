@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
-
 export default {
   name: 'VdtnetTable',
   props: {
@@ -69,7 +67,7 @@ export default {
 
     // allow user to override default options
     if (vm.opts) {
-      vm.options = $.extend({}, vm.options, vm.opts)
+      vm.options = window.jQuery.extend({}, vm.options, vm.opts)
     }
 
     if (vm.url) {
@@ -114,7 +112,7 @@ export default {
       }
     }
 
-    const $el = $(vm.$refs.table)
+    const $el = window.jQuery(vm.$refs.table)
     vm.dataTable = $el.DataTable(vm.options)
 
     // wire up view, edit, and/or delete button
