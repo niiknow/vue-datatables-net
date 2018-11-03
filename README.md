@@ -14,13 +14,14 @@ component.dataTable.rows.add(newDataArray).draw();
 > You will require these to use with Bootstrap 4:
 
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css'>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
 <script>
-import VdtnetTable from '../src'
+import VdtnetTable from 'vue-datatables-net'
 import 'datatables.net-bs4'
 
 /*
@@ -50,6 +51,25 @@ import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
 > Use it like the example App
 
 This demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
+
+**NOTE:**
+The example app use free API endpoint from typicode [https://jsonplaceholder.typicode.com] so it's not jQuery DataTable.net compatible.  As a result, we have to define a dataSrc wrapper like so:
+```
+ajax: {
+  url: 'https://jsonplaceholder.typicode.com/users',
+  dataSrc: (json) => {
+    return json
+  }
+}
+```
+
+Some example server-side ajax parsers implementation:
+* PHP - https://github.com/lampjunkie/php-datatables
+* PHP Symphony - https://github.com/stwe/DatatablesBundle
+* PHP Laravel - https://github.com/yajra/laravel-datatables
+* dotNET - https://github.com/ALMMa/datatables.aspnet, https://github.com/garvincasimir/csharp-datatables-parser
+* NodeJS - https://github.com/jpravetz/node-datatable
+* Rails - https://github.com/jbox-web/ajax-datatables-rails
 
 > Or simply with url that can handle datatable.net server-side endpoint:
 
