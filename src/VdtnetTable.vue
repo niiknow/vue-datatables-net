@@ -13,9 +13,13 @@
               v-for="(field, i) in options.columns"
               :key="i"
             >
-              <slot :name="`HEAD_${field.name}`">
+              <slot
+                :name="`HEAD_${field.name}`"
+                :field="field"
+                :i="i"
+              >
                 <div
-                  :class="field.classes"
+                  :class="field.className"
                   v-html="field.title" />
               </slot>
             </th>
