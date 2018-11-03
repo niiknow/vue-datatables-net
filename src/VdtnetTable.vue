@@ -91,7 +91,6 @@ export default {
         // generate
         let col = {
           searchable: field.searchable,
-          defaultContent: '',
           title: field.label || k,
           width: field.width,
           data: field.name,
@@ -101,6 +100,10 @@ export default {
 
         if (field.width) {
           col.width = field.width
+        }
+
+        if (field.defaultContent) {
+          col.defaultContent = field.defaultContent
         }
 
         if (field.sortable) {
