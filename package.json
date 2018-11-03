@@ -1,7 +1,7 @@
 {
   "name": "vue-datatables-net",
   "description": "Vue jQuery DataTable.net wrapper component ",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "author": "friends@niiknow.org",
   "license": "MIT",
   "main": "lib/vue-datatables-net.min.js",
@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build:lib": "rm -rf ./lib && bili src/index.js",
-    "build:example": "rm -rf ./dist && cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "build:example": "rm -rf ./dist && cross-env NODE_ENV=demo webpack --progress --hide-modules",
     "lint": "eslint --ext .js,.vue src/",
     "lint-fix": "eslint --fix --ext .js,.vue src/",
     "check-outdated": "npm outdated"

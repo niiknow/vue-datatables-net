@@ -10,8 +10,7 @@ module.exports = {
   },
   externals: {
     jquery: 'jQuery',
-    vue: 'Vue',
-    vue: 'Vue'
+    Vue: 'Vue'
   },
   module: {
     rules: [

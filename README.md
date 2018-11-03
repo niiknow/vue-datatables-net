@@ -88,7 +88,7 @@ export default {
 ## Documentation
 Since it's a wrapper, all/most features are provided by the [jQuery DataTable](https://datatables.net/manual/) library.
 
-More documentation for this library, to come.
+More documentations below.
 
 ## Additional Headers
 Since options are completely exposed, simply use the native method per [jQuery DataTable example](https://editor.datatables.net/manual/security#Prevention)
@@ -107,5 +107,17 @@ options: {
 ```
 
 If you haven't already figured it out, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/) which is demonstrated here wrapped as [jQuery DataTable ajax pipeline](https://datatables.net/examples/server_side/pipeline.html)
+
+## Row Action Buttons
+Use `data-action` attribute to automatically wire up any action button/elements.  To render action button/element in a row, simply define field like below (also, see example App):
+```javascript
+actions: {
+  label: 'Actions',
+  render: () => {
+    return '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
+    '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
+  }
+}
+```
 
 # MIT

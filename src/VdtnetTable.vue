@@ -47,6 +47,9 @@ export default {
     },
     fields: {
       type: Object
+    },
+    jquery: {
+      type: Object
     }
   },
   data() {
@@ -64,10 +67,11 @@ export default {
   },
   mounted() {
     const vm = this
+    const jq = vm.jquery || window.jQuery
 
     // allow user to override default options
     if (vm.opts) {
-      vm.options = window.jQuery.extend({}, vm.options, vm.opts)
+      vm.options = jq.extend({}, vm.options, vm.opts)
     }
 
     if (vm.url) {
@@ -112,20 +116,42 @@ export default {
       }
     }
 
-    const $el = window.jQuery(vm.$refs.table)
+    const $el = jq(vm.$refs.table)
     vm.dataTable = $el.DataTable(vm.options)
 
-    // wire up view, edit, and/or delete button
-    // var d = table.row( this ).data();
-    $el.on('click', 'tbody > tr [data-action]', (e) => {
+    // wire up edit, delete, and/or action buttons
+    $el.on('click', '[data-action]', (e) => {
       e.preventDefault()
       e.stopPropagation()
-      const $this  = $(this)
-      const action = $this.data('action')
+      const target = jq(e.target)
+      let that     = target
+      let action   = that.attr('data-action')
+      while(!action) {
+        // don't let it propagate outside of container
+        if (that.hasClass('vdtnet-container')) {
+          // no action, simply exit
+          return
+        }
+        that   = that.parent()
+        action = that.attr('data-action')
+      }
+
+      // only emit if there is action
       if (action) {
-        const row  = vm.dataTable.row($this.closest('tr'))
-        const data = row.data()
-        vm.$emit(action, {data, row, $this})
+        // detect if row action
+        let tr = that.closest('tr')
+        if (tr) {
+          if (tr.hasClass('child')) {
+            tr = tr.prev()
+          }
+          const row  = vm.dataTable.row(tr)
+          const data = row.data()
+          vm.$emit(action, {data, row, that})
+        } else {
+          // not a row click, must be other kind of action
+          // such as bulk, csv, pdf, etc...
+          vm.$emit(action, {target})
+        }
       }
     })
   }
