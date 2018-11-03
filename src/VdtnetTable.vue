@@ -117,7 +117,7 @@ export default {
 
     // wire up view, edit, and/or delete button
     // var d = table.row( this ).data();
-    $el.find('[data-action]').on('click', (e) => {
+    $el.on('click', 'tbody > tr [data-action]', (e) => {
       e.preventDefault()
       e.stopPropagation()
       const $this  = $(this)
