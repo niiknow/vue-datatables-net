@@ -1,33 +1,29 @@
 <template>
   <div class="vdtnet-container">
-    <div class="container-fluid vdtnet-head"><slot name="HEAD" /></div>
-    <div class="vtdnet-body">
-      <table
-        v-once
-        ref="table"
-        :class="className"
-        cellpadding="0"
-      >
-        <thead>
-          <tr>
-            <th
-              v-for="(field, i) in options.columns"
-              :key="i"
-              :class="field.className"
+    <table
+      v-once
+      ref="table"
+      :class="className"
+      cellpadding="0"
+    >
+      <thead>
+        <tr>
+          <th
+            v-for="(field, i) in options.columns"
+            :key="i"
+            :class="field.className"
+          >
+            <slot
+              :name="`HEAD_${field.name}`"
+              :field="field"
+              :i="i"
             >
-              <slot
-                :name="`HEAD_${field.name}`"
-                :field="field"
-                :i="i"
-              >
-                <div v-html="field.title" />
-              </slot>
-            </th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <div class="container-fluid vdtnet-foot"><slot name="FOOT" /></div>
+              <div v-html="field.title" />
+            </slot>
+          </th>
+        </tr>
+      </thead>
+    </table>
   </div>
 </template>
 
