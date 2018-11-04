@@ -192,5 +192,4 @@ Let say you have a column `description`, you can provide table head template for
 </template>
 ```
 
-
 # MIT
