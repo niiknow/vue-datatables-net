@@ -206,7 +206,8 @@ export default {
       let action   = that.attr('data-action')
       while(!action) {
         // don't let it propagate outside of container
-        if (that.hasClass('vdtnet-container')) {
+        if (that.hasClass('vdtnet-container') ||
+          that.prop('tagName') === 'table') {
           // no action, simply exit
           return
         }
@@ -224,11 +225,11 @@ export default {
           }
           const row  = vm.dataTable.row(tr)
           const data = row.data()
-          vm.$emit(action, {data, row, that})
+          vm.$emit(action, data, row, that, tr)
         } else {
           // not a row click, must be other kind of action
           // such as bulk, csv, pdf, etc...
-          vm.$emit(action, {target})
+          vm.$emit(action, target)
         }
       }
     })
