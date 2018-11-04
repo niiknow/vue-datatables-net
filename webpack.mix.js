@@ -45,7 +45,7 @@ const config = {
   },
   devServer: {
     inline: true,
-    quiet: false,
+    quiet: false
   },
   devtool: 'source-map'
 };
@@ -57,5 +57,19 @@ mix.sourceMaps();
 if (mix.inProduction()) {
   mix.version();
   mix.disableNotifications();
+} else {
+  mix.browserSync({
+    proxy: false,
+    port: 3000,
+    files: [
+      'src/*',
+      'example/*'
+    ],
+    browser: 'firefox',
+    open: 'local',
+    server: {
+      baseDir: './'
+    }
+  });
 }
 

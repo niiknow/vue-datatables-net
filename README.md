@@ -9,6 +9,18 @@ The initial focus/design of this library is to use with ajax/server-side endpoin
 component.dataTable.clear().draw();
 component.dataTable.rows.add(newDataArray).draw();
 ```
+## Development
+This library uses the NodeJS library `laravel-mix` to simplify build and packaging.
+
+To run locally, it automatically launch firefox:
+```
+npm run watch
+```
+
+To build library for npm publish:
+```
+npm run build
+```
 
 ## Usage
 > You will require these to use with Bootstrap 4:
