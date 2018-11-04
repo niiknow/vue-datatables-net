@@ -6,6 +6,7 @@
         v-once
         ref="table"
         :class="className"
+        cellpadding="0"
       >
         <thead>
           <tr>
@@ -160,7 +161,8 @@ export default {
     const vm = this
     const jq = vm.jq
     const $el = jq(vm.$refs.table)
-    console.log(vm.options.buttons)
+
+    // console.log(vm.options.buttons)
     vm.dataTable = $el.DataTable(vm.options)
 
     if (vm.selectable) {
