@@ -1,10 +1,10 @@
 {
   "name": "vue-datatables-net",
   "description": "Vue jQuery DataTable.net wrapper component ",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "author": "friends@niiknow.org",
   "license": "MIT",
-  "main": "lib/index.min.js",
+  "main": "lib/index.js",
   "files": [
     "lib"
   ],
