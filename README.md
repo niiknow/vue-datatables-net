@@ -184,4 +184,13 @@ actions: {
 }
 ```
 
+## Customizable table head (th) columns
+Let say you have a column `description`, you can provide table head template for the description column like so:
+```html
+<template slot="HEAD_description">
+  <h1>desc</h1>
+</template>
+```
+
+
 # MIT

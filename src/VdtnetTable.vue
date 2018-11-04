@@ -188,12 +188,15 @@ export default {
       })
 
       vm.dataTable.on('select deselect', () => {
+        const $input = $el.find('th input.select-all-checkbox')
         if (vm.dataTable.rows({
             selected: true
           }).count() !== vm.dataTable.rows().count()) {
           jq('th.select-checkbox').removeClass('selected')
+          $input.attr('checked', false)
         } else {
           jq('th.select-checkbox').addClass('selected')
+          $input.attr('checked', true)
         }
       })
     }
