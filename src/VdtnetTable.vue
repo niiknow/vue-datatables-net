@@ -35,22 +35,39 @@
 export default {
   name: 'VdtnetTable',
   props: {
+    // Set the table classes you wish to use, default with bootstrap4
+    // but you can override with: themeforest, foundation, etc..
     className: {
       type: String,
       default: 'table table-striped table-bordered dt-responsive nowrap w-100'
     },
-    url: {
-      type: String
-    },
+    // the options object: https://datatables.net/manual/options
     opts: {
       type: Object
     },
+    /**
+     * List all fields to be converted to opts columns
+     *
+     * @type {Object}
+     */
     fields: {
       type: Object
     },
+    /**
+     * Pass in DataTables.Net loaded jQuery to resolve
+     * any multiple loaded browser jQuery conflict
+     *
+     * @type {Object}
+     */
     jquery: {
       type: Object
     },
+    /**
+     * True to enable multi-select checkboxes
+     * Current implementation require datatables.net-select
+     *
+     * @type Boolean
+     */
     selectable: {
       type: Boolean
     }
@@ -87,10 +104,6 @@ export default {
       vm.options = jq.extend({}, vm.options, vm.opts)
     }
 
-    if (vm.url) {
-      vm.options.ajax = vm.url
-    }
-
     // if fields are passed in, generate column definition
     // from our custom fields schema
     if (vm.fields) {
@@ -115,11 +128,11 @@ export default {
           col.width = field.width
         }
 
-        if (field.defaultContent) {
+        if (field.hasOwnProperty('defaultContent')) {
           col.defaultContent = field.defaultContent
         }
 
-        if (field.sortable) {
+        if (field.hasOwnProperty('sortable')) {
           col.orderable = field.sortable
         }
 
