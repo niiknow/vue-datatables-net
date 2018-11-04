@@ -1,9 +1,9 @@
 # vue-datatables-net
-> Vue jQuery DataTable.net wrapper component 
+> Vue jQuery DataTables.net wrapper component 
 
-This library is a wrapper for [jQuery DataTable](https://datatables.net/).  It's a tiny package that doesn't include anything, not even the datatables.net core library.
+This library is a Vue 2 wrapper for [jQuery DataTables](https://datatables.net/).  It's a tiny wrapper that doesn't include anything, not even the datatables.net core library.
 
-The initial focus/design of this library is to use with ajax/server-side endpoint.  Though, since it is a datatables.net wrapper, local data use/loading is simply:
+The initial focus/design is to use with ajax/server-side endpoint.  Though, since it is just a wrapper, local data use/loading is simply:
 
 ```javascript
 component.dataTable.clear().draw();
@@ -24,7 +24,9 @@ npm run build
 ```
 
 ## Usage
-> You will require these to use with Bootstrap 4:
+This library default configuration and provide example for use with `bootstrap4` styling.  Though, you can fully customize with any other jQuery DataTables supported theme.
+
+> Example of required imports for Bootstrap 4:
 
 ```html
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -46,7 +48,7 @@ import 'datatables.net-buttons/js/buttons.html5.js';
 import 'datatables.net-buttons/js/buttons.print.js';
 import 'datatables.net-responsive/js/dataTables.responsive.js';
 
-// import any datatable extension as you would when using it raw
+// import any datatables.net extension as you would when using it raw
 import 'datatables.net-buttons-bs4'
 import 'datatables.net-responsive-bs4'
 import 'datatables.net-fixedheader-bs4'
@@ -68,7 +70,7 @@ import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
 Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
 
 **NOTE:**
-The example App use free API endpoint from typicode [https://jsonplaceholder.typicode.com] so it's not jQuery DataTable.net queryable.  As a result, we have to define a dataSrc wrapper like so:
+Our example use a free API endpoint from [typicode](https://jsonplaceholder.typicode.com), which is simply a JSON endpoint.  As a result, we define a `dataSrc` wrapper like so:
 ```
 ajax: {
   url: 'https://jsonplaceholder.typicode.com/users',
@@ -78,7 +80,7 @@ ajax: {
 }
 ```
 
-Here are some server-side ajax parser implementation:
+Here are some jQuery DataTables server-side compatible parsers:
 * PHP - https://github.com/lampjunkie/php-datatables
 * PHP Symphony - https://github.com/stwe/DatatablesBundle
 * PHP Laravel - https://github.com/yajra/laravel-datatables
@@ -87,9 +89,7 @@ Here are some server-side ajax parser implementation:
 * Rails - https://github.com/jbox-web/ajax-datatables-rails
 
 ## Documentation
-Since it's a wrapper, all/most features are provided by the [jQuery DataTable](https://datatables.net/manual/) library.
-
-More documentations below.
+Since it's a wrapper, all/most features are provided by the [jQuery DataTables](https://datatables.net/manual/) library.
 
 ## Parameters
 Our component parameters:
@@ -137,7 +137,7 @@ props: {
 `fields` is an schema object that identify all datatables.net columns, example:
 
 Example:
-```json
+```javascript
 fields: {
   _id: { label: "ID" },
   title: { label: "Title", searchable: true, sortable: true },
@@ -157,7 +157,7 @@ fields: {
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
 
 ## Additional Headers
-Many server-side usage require CSRF and/or API token headers.  Since options are completely exposed, simply use the native method per [jQuery DataTable example](https://editor.datatables.net/manual/security#Prevention)
+Many server-side usage require CSRF and/or API token headers.  Since options are completely exposed, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)
 
 i.e, something like:
 ```javascript
@@ -172,7 +172,7 @@ options: {
 }
 ```
 
-If you haven't already figured it out, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/) which is demonstrated here wrapped as [jQuery DataTable ajax pipeline](https://datatables.net/examples/server_side/pipeline.html)
+If you haven't already figured it out, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/) which is demonstrated here wrapped as [jQuery DataTables ajax pipeline](https://datatables.net/examples/server_side/pipeline.html)
 
 ## Row Action Buttons
 Use `data-action` attribute to automatically wire up any action button/elements.  To render action button/element in a row, simply define dummy field like so:
