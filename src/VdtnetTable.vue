@@ -35,7 +35,7 @@ export default {
     // but you can override with: themeforest, foundation, etc..
     className: {
       type: String,
-      default: 'table table-striped table-bordered dt-responsive nowrap w-100'
+      default: 'table table-striped table-bordered nowrap w-100'
     },
     // the options object: https://datatables.net/manual/options
     opts: {
@@ -66,9 +66,6 @@ export default {
      */
     selectable: {
       type: Boolean
-    },
-    details: {
-      type: Object
     }
   },
   data() {
@@ -84,6 +81,7 @@ export default {
         language: {
           infoFiltered: ''
         },
+        responsive: true,
         buttons: []  // remove any button defaults
       },
       dataTable: null
@@ -168,16 +166,6 @@ export default {
         }
       )
     }
-
-    if (vm.details) {
-      const col = {
-        orderable: false,
-        className: 'details-control',
-        data: null,
-        defaultContent: vm.details.icons || '<span class="details-control-plus" title="Show Details">+</span><span class="details-control-minus" title="Hide Details">-</span>'
-      }
-      vm.options.columns.splice(1, 0, col)
-    }
   },
   mounted() {
     const vm = this
@@ -246,37 +234,6 @@ export default {
         }
       }
     })
-
-    if (vm.details) {
-      // must be string template
-      const renderFunc = vm.compileTemplate(vm.details.template)
-
-      // handle master/details
-      // Add event listener for opening and closing details
-      $el.on('click', 'td.details-control', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        const target = jq(e.target)
-        let that     = target
-        let tr       = that.closest('tr')
-        if (tr.attr('role') !== 'row') {
-          tr = tr.prev()
-        }
-        const row = vm.dataTable.row( tr )
-
-        if ( row.child.isShown() ) {
-          // This row is already open - close it
-          row.child.hide()
-          tr.removeClass('shown')
-        }
-        else {
-          // Open this row
-          const data = row.data()
-          row.child( renderFunc(data, 'child', row, tr) ).show()
-          tr.addClass('shown')
-        }
-      })
-    }
   },
   methods: {
     compileTemplate(template) {
