@@ -153,15 +153,24 @@ fields: {
 - `visible` false to hide
 - `width` to provide custom width
 - `className` set column class names
-- `defaultContent` provide default html for null
+- `defaultContent` provide default html when no data available
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
+- `template` simple vue template for the field
+
+> It is important to understand why we define field and not just simply pass in `opts.columns`.
+
+One of the other purpose of this component is to extend jQuery DataTables function and features, such as:
+* We simplify some of the feature configurations, such as `select-checkbox` column, custom `action` buttons, and future Vue specific features.
+* We allow for customizable table heading on a per column basis; thereby, not having to define all html for column header.
+* We added the ability to have simple `template` field so we can pass schema JSON from API instead of having to define a javascript `render` function.  Though, the `render` function would have best performance.
+* Having schema also allow future features, example: support of editable column/cell feature.
 
 ## Additional Headers
 Many server-side usage require CSRF and/or API token headers.  Since options are completely exposed, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)
 
 i.e, something like:
 ```javascript
-options: {
+opts: {
   'ajax': {
     'url': url,
     'type': 'GET',
