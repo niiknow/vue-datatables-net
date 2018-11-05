@@ -70,7 +70,7 @@ import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
 Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
 
 **NOTE:**
-Our example use a free API endpoint from [typicode](https://jsonplaceholder.typicode.com), which is simply a JSON endpoint.  As a result, we define a `dataSrc` wrapper like so:
+Our example use a free API endpoint from [typicode](https://jsonplaceholder.typicode.com), which is simply a JSON endpoint.  As a result, we needed to define a `dataSrc` wrapper like so:
 ```
 ajax: {
   url: 'https://jsonplaceholder.typicode.com/users',
@@ -157,13 +157,13 @@ fields: {
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
 - `template` simple vue template for the field
 
-> It is important to understand why we define field and not just simply pass in `opts.columns`.  Though, `fields` definition is optional, you can ignore `fields` and pass `opts.columns` definition if you do not wish to use this feature.
+> It is important to understand why one should use `fields` and not simply pass in `opts.columns`.  Though, `fields` definition is optional, you can just pass `opts.columns` definition if you do not wish to use `fields`.
 
-One of the other purpose of this component is to extend jQuery DataTables function and features, such as:
-* We simplify some of the feature configurations, such as `select-checkbox` column, custom `action` buttons, and future Vue specific features.
-* We allow for customizable table heading on a per column basis; thereby, not having to define all html for column header.
-* We added the ability to have simple `template` field so we can pass schema JSON from API instead of having to define a javascript `render` function.  Though, the `render` function would have best performance.
-* Having schema also allow future features, example: support of editable column/cell feature.
+One of the `Purpose` of this component is to extend jQuery DataTables function and features, example:
+* Simplification of features configuration, such as `select-checkbox` column, custom `action` buttons, and/or future Vue specific features.
+* Allow for customizable table heading on a per column basis; thereby, not having to define all html for column header.
+* Ability to have simple `template` field so you can pass schema JSON from static file or some API instead of requiring to define a javascript `render` function.  Though, the `render` function would provide best performance.
+* Having schema also allow future features, such as: support of editable column/cell.
 
 ## Additional Headers
 Many server-side usage require CSRF and/or API token headers.  Since options are completely exposed, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)
