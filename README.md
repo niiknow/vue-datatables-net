@@ -13,6 +13,14 @@ component.dataTable.rows.add(newDataArray).draw();
 ## Development
 This library uses the NodeJS library `laravel-mix` to simplify build and packaging.
 
+Requirement: Install NodeJS, NPM
+Then:
+```
+git clone https://github.com/niiknow/vue-datatables-net
+cd vue-datatables-net
+npm install
+```
+
 To run locally (automatically launch firefox):
 ```
 npm run watch
@@ -21,6 +29,11 @@ npm run watch
 To build library for npm publish:
 ```
 npm run build
+```
+
+Available on NPM.  To install as a library:
+```
+npm install vue-datatables-net
 ```
 
 ## Usage
