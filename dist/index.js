@@ -19930,6 +19930,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       fields: {
         id: { label: 'ID', sortable: true },
+        actions: {
+          label: 'Actions',
+          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
+        },
         name: { label: 'Name', sortable: true, searchable: true },
         username: { label: 'Username', sortable: false, searchable: true },
         email: { label: 'Email' },
@@ -19943,17 +19947,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           render: function render(data) {
             return 'https://' + data;
           }
-        },
-        actions: {
-          label: 'Actions',
-          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         }
       }
     };
   },
 
   methods: {
-    alert: function alert(msg) {
+    doAlert: function doAlert(msg) {
       window.alert(msg);
     }
   }
@@ -23744,10 +23744,10 @@ var render = function() {
         attrs: { fields: _vm.fields, opts: _vm.options, selectable: true },
         on: {
           edit: function($event) {
-            _vm.alert("row edit button clicked")
+            _vm.doAlert("row edit button clicked")
           },
           delete: function($event) {
-            _vm.alert("row delete button clicked")
+            _vm.doAlert("row delete button clicked")
           }
         }
       }),

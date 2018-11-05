@@ -4,8 +4,8 @@
       :fields="fields"
       :opts="options"
       :selectable="true"
-      @edit="alert('row edit button clicked')"
-      @delete="alert('row delete button clicked')"
+      @edit="doAlert('row edit button clicked')"
+      @delete="doAlert('row delete button clicked')"
     />
     <h3>Note:</h3>
     <ul>
@@ -64,6 +64,11 @@ export default {
       },
       fields: {
         id: { label: 'ID', sortable: true },
+        actions: {
+          label: 'Actions',
+          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
+            '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
+        },
         name: { label: 'Name', sortable: true, searchable: true },
         username: { label: 'Username', sortable: false, searchable: true  },
         email: { label: 'Email' },
@@ -77,17 +82,12 @@ export default {
           render: (data) => {
             return `https://${ data }`
           }
-        },
-        actions: {
-          label: 'Actions',
-          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
-            '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         }
       }
     }
   },
   methods: {
-    alert(msg) {
+    doAlert(msg) {
       window.alert(msg)
     }
   }
