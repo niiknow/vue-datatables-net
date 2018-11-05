@@ -58,8 +58,8 @@ export default {
       type: Object
     },
     /**
-     * Pass in DataTables.Net loaded jQuery to resolve
-     * any multiple loaded browser jQuery conflict
+     * Pass in DataTables.Net jQuery to resolve any conflict from
+     * multiple jQuery loaded in the browser
      *
      * @type Object
      */
