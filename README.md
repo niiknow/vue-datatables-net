@@ -107,44 +107,52 @@ Since it's a wrapper, all/most features are provided by the [jQuery DataTables](
 ## Parameters
 Our component parameters:
 ```javascript
-props: {
-  // Set the table classes you wish to use, default with bootstrap4
-  // but you can override with: themeforest, foundation, etc..
-  className: {
-    type: String,
-    default: 'table table-striped table-bordered dt-responsive nowrap w-100'
-  },
-  // the options object: https://datatables.net/manual/options
-  opts: {
-    type: Object
-  },
-  /**
-   * List all fields to be converted to opts columns
-   *
-   * @type {Object}
-   */
-  fields: {
-    type: Object
-  },
-  /**
-   * Pass in DataTables.Net loaded jQuery to resolve
-   * any multiple loaded browser jQuery conflict
-   *
-   * @type {Object}
-   */
-  jquery: {
-    type: Object
-  },
-  /**
-   * True to enable multi-select checkboxes
-   * Current implementation require datatables.net-select
-   *
-   * @type Boolean
-   */
-  selectable: {
-    type: Boolean
+  props: {
+    /**
+     * Set the table classes you wish to use, default with bootstrap4
+     * but you can override with: themeforest, foundation, etc..
+     *
+     * @type String
+     */
+    className: {
+      type: String,
+      default: 'table table-striped table-bordered nowrap w-100'
+    },
+    /**
+     * the options object: https://datatables.net/manual/options
+     *
+     * @type Object
+     */
+    opts: {
+      type: Object
+    },
+    /**
+     * List all fields to be converted to opts columns
+     *
+     * @type Object
+     */
+    fields: {
+      type: Object
+    },
+    /**
+     * Pass in DataTables.Net loaded jQuery to resolve
+     * any multiple loaded browser jQuery conflict
+     *
+     * @type Object
+     */
+    jquery: {
+      type: Object
+    },
+    /**
+     * True to enable multi-select checkboxes
+     * Current implementation require datatables.net-select
+     *
+     * @type Boolean
+     */
+    selectable: {
+      type: Boolean
+    }
   }
-},
 ```
 
 `fields` is an schema object that identify all datatables.net columns, example:

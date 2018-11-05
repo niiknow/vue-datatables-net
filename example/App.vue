@@ -60,6 +60,7 @@ export default {
         lengthChange: true,
         serverSide: true,
         fixedHeader: true,
+        saveState: true,
         buttons: ['copy', 'csv', 'print']
       },
       fields: {

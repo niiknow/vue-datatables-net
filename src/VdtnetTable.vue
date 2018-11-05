@@ -31,20 +31,28 @@
 export default {
   name: 'VdtnetTable',
   props: {
-    // Set the table classes you wish to use, default with bootstrap4
-    // but you can override with: themeforest, foundation, etc..
+    /**
+     * Set the table classes you wish to use, default with bootstrap4
+     * but you can override with: themeforest, foundation, etc..
+     *
+     * @type String
+     */
     className: {
       type: String,
       default: 'table table-striped table-bordered nowrap w-100'
     },
-    // the options object: https://datatables.net/manual/options
+    /**
+     * the options object: https://datatables.net/manual/options
+     *
+     * @type Object
+     */
     opts: {
       type: Object
     },
     /**
      * List all fields to be converted to opts columns
      *
-     * @type {Object}
+     * @type Object
      */
     fields: {
       type: Object
@@ -53,7 +61,7 @@ export default {
      * Pass in DataTables.Net loaded jQuery to resolve
      * any multiple loaded browser jQuery conflict
      *
-     * @type {Object}
+     * @type Object
      */
     jquery: {
       type: Object
@@ -239,6 +247,13 @@ export default {
       }
     })
   },
+  beforeDestroy() {
+    const vm = this
+    if (vm.dataTable) {
+      vm.dataTable.destroy(true)
+    }
+    vm.dataTable = null
+  },
   methods: {
     compileTemplate(template) {
       const vm  = this
@@ -259,6 +274,19 @@ export default {
       }
 
       return renderFunc
+    },
+    /**
+     * Set table data array that was loaded from somewhere else
+     * This method allow for local setting of data; though, it
+     * is recommended to use ajax instead of this.
+     *
+     * @param Array data the array of data
+     */
+    setTableData(data) {
+      const vm = this
+      vm.dataTable.clear().rows.add(data)
+      vm.dataTable.draw(false)
+      vm.dataTable.columns.adjust()
     }
   }
 }

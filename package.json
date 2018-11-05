@@ -1,7 +1,7 @@
 {
   "name": "vue-datatables-net",
   "description": "Vue jQuery DataTables.net wrapper component",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "author": "friends@niiknow.org",
   "license": "MIT",
   "main": "lib/index.js",
@@ -30,7 +30,7 @@
     "not ie <= 8"
   ],
   "peerDependencies": {
-    "datatables.net": "^1.10.19",
+    "jquery": ">=1.7",
     "vue": ">=2.0.0"
   },
   "devDependencies": {
