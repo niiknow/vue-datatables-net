@@ -73,7 +73,7 @@ export default {
     return {
       options: {
 /*eslint-disable */
-        dom: "<'row'<'col-sm-12 col-md-9'lB><'col-sm-12 col-md-3'f>>" +
+        dom: "<'row'<'col-sm-12 col-md-9'<'dataTables_toolbar'><'dataTables_buttons'B>l><'col-sm-12 col-md-3'f>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
 /*eslint-enable */
@@ -240,7 +240,7 @@ export default {
 .select-checkbox, .select-all-checkbox {
   cursor: pointer;
 }
-.dataTables_length {
+.dataTables_toolbar, .dataTables_buttons, .dataTables_length {
   float: left;
   padding-right: 10px;
 }
