@@ -66,6 +66,9 @@ export default {
      */
     selectable: {
       type: Boolean
+    },
+    details: {
+      type: Object
     }
   },
   data() {
@@ -92,8 +95,8 @@ export default {
     }
   },
   created() {
-    const vm = this
-    const jq = vm.jq
+    const vm  = this
+    const jq  = vm.jq
 
     // allow user to override default options
     if (vm.opts) {
@@ -133,21 +136,7 @@ export default {
         }
 
         if (field.template) {
-          // must be string template
-          const res = Vue.compile(`<div>${field.template}</div>`)
-          field.render = (data, type, row, meta) => {
-            const comp = new Vue({
-              data: {
-                  data: data,
-                  type: type,
-                  row: row,
-                  meta: meta
-              },
-              render: res.render,
-              staticRenderFns: res.staticRenderFns
-            }).$mount()
-            return jq(comp.$el).html()
-          }
+          field.render = vm.compileTemplate(field.template)
         }
 
         if (field.render) {
@@ -161,27 +150,33 @@ export default {
 
     if (vm.selectable) {
       // expand column
-      vm.options.columns = [{
+      const col = {
         orderable: false,
         className: 'select-checkbox',
         data: null,
         defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox">',
-        targets: 0
-      }].concat(vm.options.columns)
+        title: '<input type="checkbox" class="select-all-checkbox">'
+      }
+      vm.options.columns.splice(1, 0, col)
 
       // console.log(vm.options.columns)
       vm.options.select = jq.extend(
         vm.options.select || {},
         {
           style: 'os',
-          selector: 'td:first-child'
+          selector: 'td.select-checkbox'
         }
       )
+    }
 
-      if (!vm.options.order) {
-        vm.options.order = [[1, 'asc']]
+    if (vm.details) {
+      const col = {
+        orderable: false,
+        className: 'details-control',
+        data: null,
+        defaultContent: vm.details.icons || '<span class="details-control-plus" title="Show Details">+</span><span class="details-control-minus" title="Hide Details">-</span>'
       }
+      vm.options.columns.splice(1, 0, col)
     }
   },
   mounted() {
@@ -238,7 +233,7 @@ export default {
         // detect if row action
         let tr = that.closest('tr')
         if (tr) {
-          if (tr.hasClass('child')) {
+          if (tr.attr('role') !== 'row') {
             tr = tr.prev()
           }
           const row  = vm.dataTable.row(tr)
@@ -251,6 +246,59 @@ export default {
         }
       }
     })
+
+    if (vm.details) {
+      // must be string template
+      const renderFunc = vm.compileTemplate(vm.details.template)
+
+      // handle master/details
+      // Add event listener for opening and closing details
+      $el.on('click', 'td.details-control', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const target = jq(e.target)
+        let that     = target
+        let tr       = that.closest('tr')
+        if (tr.attr('role') !== 'row') {
+          tr = tr.prev()
+        }
+        const row = vm.dataTable.row( tr )
+
+        if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide()
+          tr.removeClass('shown')
+        }
+        else {
+          // Open this row
+          const data = row.data()
+          row.child( renderFunc(data, 'child', row, tr) ).show()
+          tr.addClass('shown')
+        }
+      })
+    }
+  },
+  methods: {
+    compileTemplate(template) {
+      const vm  = this
+      const jq  = vm.jq
+      const res = Vue.compile(`<div>${template}</div>`)
+      const renderFunc = (data, type, row, meta) => {
+        const comp = new Vue({
+          data: {
+              data: data,
+              type: type,
+              row: row,
+              meta: meta
+          },
+          render: res.render,
+          staticRenderFns: res.staticRenderFns
+        }).$mount()
+        return jq(comp.$el).html()
+      }
+
+      return renderFunc
+    }
   }
 }
 </script>
@@ -261,5 +309,24 @@ export default {
 .dataTables_toolbar, .dataTables_buttons, .dataTables_length {
   float: left;
   padding-right: 10px;
+}
+.shown .details-control-plus
+{
+  cursor: pointer;
+  display: none;
+}
+.details-control-minus
+{
+  cursor: pointer;
+  display: none;
+}
+.shown .details-control-minus
+{
+  cursor: pointer;
+  display: inline;
+}
+.details-control {
+  cursor: pointer;
+  font-weight: 700;
 }
 </style>

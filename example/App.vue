@@ -4,6 +4,7 @@
       :fields="fields"
       :opts="options"
       :selectable="true"
+      :details="childOptions"
       @edit="alert('row edit button clicked')"
       @delete="alert('row delete button clicked')"
     />
@@ -78,6 +79,9 @@ export default {
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
             '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         }
+      },
+      childOptions: {
+        template: 'I\'m a child yall'
       }
     }
   },
