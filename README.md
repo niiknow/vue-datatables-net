@@ -214,6 +214,36 @@ actions: {
 }
 ```
 
+## Reload method and reloaded event
+Allow you to refresh ajax content after some event.  Let say you have something like this:
+
+```html
+<template>
+  <div id="app">
+    <vdtnet-table
+      :fields="fields"
+      :opts="options"
+      ref="table"
+      @delete="doAjaxDelete"
+      @reloaded="doSomethingAfterReload"
+    />
+  </div>
+</template>
+<script>
+// ... component top ...
+  methods: {
+    doAjaxDelete(data, row, tr, target) {
+      // do some ajax delete
+      // then reload after ajax complete
+      this.$refs.table.reload()
+    },
+    doSomethingAfterReload(data, table) {
+      // some something after data loaded from server
+    }
+  }
+// ... component bottom ...
+```
+
 ## Customizable table head (th) columns
 Let say you have a column `description`, you can provide table head template for the description column like so:
 ```html

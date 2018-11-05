@@ -1,11 +1,13 @@
 <template>
   <div id="app">
     <vdtnet-table
+      ref="table"
       :fields="fields"
       :opts="options"
       :selectable="true"
-      @edit="doAlert('row edit button clicked')"
-      @delete="doAlert('row delete button clicked')"
+      @edit="doAlertEdit"
+      @delete="doAlertDelete"
+      @reloaded="doAfterReload"
     />
     <h3>Note:</h3>
     <ul>
@@ -88,8 +90,24 @@ export default {
     }
   },
   methods: {
-    doAlert(msg) {
-      window.alert(msg)
+    doAlertEdit(data) {
+      window.alert(`row edit click for item ID: ${data.id}`)
+    },
+    doAlertDelete(data, row, tr, target) {
+      window.alert(`deleting item ID: ${data.id}`)
+
+      // row.remove() doesn't work when serverside is enabled
+      // so we fake it with dom remove
+      tr.remove()
+
+      const table = this.$refs.table
+      setTimeout(() => {
+        // simulate extra long running ajax
+        table.reload()
+      }, 1500)
+    },
+    doAfterReload(data, table) {
+      window.alert('data reloaded')
     }
   }
 }

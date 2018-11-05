@@ -238,11 +238,11 @@ export default {
           }
           const row  = vm.dataTable.row(tr)
           const data = row.data()
-          vm.$emit(action, data, row, that, tr)
+          vm.$emit(action, data, row, tr, that)
         } else {
           // not a row click, must be other kind of action
           // such as bulk, csv, pdf, etc...
-          vm.$emit(action, target)
+          vm.$emit(action, null, null, null, target)
         }
       }
     })
@@ -255,6 +255,12 @@ export default {
     vm.dataTable = null
   },
   methods: {
+    /**
+     * Vue.compile a template string and return the compiled function
+     *
+     * @param  {String} template the string template
+     * @return {Function}          the compiled template function
+     */
     compileTemplate(template) {
       const vm  = this
       const jq  = vm.jq
@@ -280,13 +286,28 @@ export default {
      * This method allow for local setting of data; though, it
      * is recommended to use ajax instead of this.
      *
-     * @param Array data the array of data
+     * @param {Array} data   the array of data
+     * @return {Object}            the component
      */
     setTableData(data) {
       const vm = this
       vm.dataTable.clear().rows.add(data)
       vm.dataTable.draw(false)
       vm.dataTable.columns.adjust()
+      return vm
+    },
+    /**
+     * pass through reload method
+     *
+     * @param  {Boolean}  resetPaging true to reset current page position
+     * @return {Object}            the component
+     */
+    reload(resetPaging = false) {
+      const vm = this
+      const callback = (data) => { vm.$emit('reloaded', data, vm) }
+
+      vm.dataTable.ajax.reload( callback, resetPaging )
+      return vm
     }
   }
 }
