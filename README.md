@@ -157,7 +157,7 @@ fields: {
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
 - `template` simple vue template for the field
 
-> It is important to understand why we define field and not just simply pass in `opts.columns`.
+> It is important to understand why we define field and not just simply pass in `opts.columns`.  Though, `fields` definition is optional, you can ignore `fields` and pass `opts.columns` definition if you do not wish to use this feature.
 
 One of the other purpose of this component is to extend jQuery DataTables function and features, such as:
 * We simplify some of the feature configurations, such as `select-checkbox` column, custom `action` buttons, and future Vue specific features.
