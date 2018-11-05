@@ -4,10 +4,14 @@
       :fields="fields"
       :opts="options"
       :selectable="true"
-      :details="childOptions"
       @edit="alert('row edit button clicked')"
       @delete="alert('row delete button clicked')"
     />
+    <h3>Note:</h3>
+    <ul>
+      <li>Select Checkbox is on 2nd column to prevent conflict with responsive.</li>
+      <li>Responsive also has conflict with custom master/details implementation because, by default, it use the jQuery DataTables child function.  Therefore, it's probably best to use some kind of action button to support master/details.</li>
+    </ul>
   </div>
 </template>
 
@@ -79,9 +83,6 @@ export default {
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
             '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         }
-      },
-      childOptions: {
-        template: 'I\'m a child yall'
       }
     }
   },

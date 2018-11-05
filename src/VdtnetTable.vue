@@ -176,6 +176,7 @@ export default {
     vm.dataTable = $el.DataTable(vm.options)
 
     if (vm.selectable) {
+      // handle select all checkbox
       $el.on('click', 'th input.select-all-checkbox', (e) => {
         if(jq(e.target).is(':checked')) {
           vm.dataTable.rows().select()
@@ -184,6 +185,7 @@ export default {
         }
       })
 
+      // handle individual row select events
       vm.dataTable.on('select deselect', () => {
         const $input = $el.find('th input.select-all-checkbox')
         if (vm.dataTable.rows({
@@ -195,6 +197,7 @@ export default {
           jq('th.select-checkbox').addClass('selected')
           $input.attr('checked', true)
         }
+        // TODO: vm.$emit the selected row?
       })
     }
 
@@ -266,24 +269,5 @@ export default {
 .dataTables_toolbar, .dataTables_buttons, .dataTables_length {
   float: left;
   padding-right: 10px;
-}
-.shown .details-control-plus
-{
-  cursor: pointer;
-  display: none;
-}
-.details-control-minus
-{
-  cursor: pointer;
-  display: none;
-}
-.shown .details-control-minus
-{
-  cursor: pointer;
-  display: inline;
-}
-.details-control {
-  cursor: pointer;
-  font-weight: 700;
 }
 </style>

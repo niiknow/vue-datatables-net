@@ -19793,7 +19793,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"App.vue","sourceRoot":""}]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"App.vue","sourceRoot":""}]);
 
 // exports
 
@@ -19877,6 +19877,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 // this demonstrate with buttons and responsive master/details row
 
@@ -19944,9 +19948,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           label: 'Actions',
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         }
-      },
-      childOptions: {
-        template: 'I\'m a child yall'
       }
     };
   },
@@ -20055,7 +20056,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, "\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.dataTables_toolbar, .dataTables_buttons, .dataTables_length {\n  float: left;\n  padding-right: 10px;\n}\n.shown .details-control-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-control-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.shown .details-control-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n", "", {"version":3,"sources":["/Users/tomn/Desktop/work/niiknow/vue-datatables-net/src/src/VdtnetTable.vue"],"names":[],"mappings":";AAsQA;EACA,gBAAA;CACA;AACA;EACA,YAAA;EACA,oBAAA;CACA;AACA;;EAEA,gBAAA;EACA,cAAA;CACA;AACA;;EAEA,gBAAA;EACA,cAAA;CACA;AACA;;EAEA,gBAAA;EACA,gBAAA;CACA;AACA;EACA,gBAAA;EACA,iBAAA;CACA","file":"VdtnetTable.vue","sourcesContent":["<template>\n  <div class=\"vdtnet-container\">\n    <table\n      v-once\n      ref=\"table\"\n      :class=\"className\"\n      cellpadding=\"0\"\n    >\n      <thead>\n        <tr>\n          <th\n            v-for=\"(field, i) in options.columns\"\n            :key=\"i\"\n            :class=\"field.className\"\n          >\n            <slot\n              :name=\"`HEAD_${field.name}`\"\n              :field=\"field\"\n              :i=\"i\"\n            >\n              <div v-html=\"field.title\" />\n            </slot>\n          </th>\n        </tr>\n      </thead>\n    </table>\n  </div>\n</template>\n\n<script>\nexport default {\n  name: 'VdtnetTable',\n  props: {\n    // Set the table classes you wish to use, default with bootstrap4\n    // but you can override with: themeforest, foundation, etc..\n    className: {\n      type: String,\n      default: 'table table-striped table-bordered nowrap w-100'\n    },\n    // the options object: https://datatables.net/manual/options\n    opts: {\n      type: Object\n    },\n    /**\n     * List all fields to be converted to opts columns\n     *\n     * @type {Object}\n     */\n    fields: {\n      type: Object\n    },\n    /**\n     * Pass in DataTables.Net loaded jQuery to resolve\n     * any multiple loaded browser jQuery conflict\n     *\n     * @type {Object}\n     */\n    jquery: {\n      type: Object\n    },\n    /**\n     * True to enable multi-select checkboxes\n     * Current implementation require datatables.net-select\n     *\n     * @type Boolean\n     */\n    selectable: {\n      type: Boolean\n    }\n  },\n  data() {\n    // initialize defaults\n    return {\n      options: {\n/*eslint-disable */\n        dom: \"<'row'<'col-sm-12 col-md-9'<'dataTables_toolbar'><'dataTables_buttons'B>l><'col-sm-12 col-md-3'f>>\" +\n          \"<'row'<'col-sm-12'tr>>\" +\n          \"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>\",\n/*eslint-enable */\n        columns: [],\n        language: {\n          infoFiltered: ''\n        },\n        responsive: true,\n        buttons: []  // remove any button defaults\n      },\n      dataTable: null\n    }\n  },\n  computed: {\n    jq() {\n      return this.jquery || window.jQuery\n    }\n  },\n  created() {\n    const vm  = this\n    const jq  = vm.jq\n\n    // allow user to override default options\n    if (vm.opts) {\n      vm.options = jq.extend({}, vm.options, vm.opts)\n    }\n\n    // if fields are passed in, generate column definition\n    // from our custom fields schema\n    if (vm.fields) {\n      const fields = vm.fields\n      const cols   = vm.options.columns\n\n      for (let k in fields) {\n        const field = fields[k]\n        field.name = field.name || k\n\n        // generate\n        let col = {\n          searchable: field.searchable,\n          title: field.label || k,\n          width: field.width,\n          data: field.name,\n          visible: field.visible,\n          className: field.className\n        }\n\n        if (field.width) {\n          col.width = field.width\n        }\n\n        if (field.hasOwnProperty('defaultContent')) {\n          col.defaultContent = field.defaultContent\n        }\n\n        if (field.hasOwnProperty('sortable')) {\n          col.orderable = field.sortable\n        }\n\n        if (field.template) {\n          field.render = vm.compileTemplate(field.template)\n        }\n\n        if (field.render) {\n          col.render = field.render\n        }\n        // console.log(col)\n\n        cols.push(col)\n      }\n    }\n\n    if (vm.selectable) {\n      // expand column\n      const col = {\n        orderable: false,\n        className: 'select-checkbox',\n        data: null,\n        defaultContent: '',\n        title: '<input type=\"checkbox\" class=\"select-all-checkbox\">'\n      }\n      vm.options.columns.splice(1, 0, col)\n\n      // console.log(vm.options.columns)\n      vm.options.select = jq.extend(\n        vm.options.select || {},\n        {\n          style: 'os',\n          selector: 'td.select-checkbox'\n        }\n      )\n    }\n  },\n  mounted() {\n    const vm = this\n    const jq = vm.jq\n    const $el = jq(vm.$refs.table)\n\n    // console.log(vm.options.buttons)\n    vm.dataTable = $el.DataTable(vm.options)\n\n    if (vm.selectable) {\n      $el.on('click', 'th input.select-all-checkbox', (e) => {\n        if(jq(e.target).is(':checked')) {\n          vm.dataTable.rows().select()\n        } else {\n          vm.dataTable.rows().deselect()\n        }\n      })\n\n      vm.dataTable.on('select deselect', () => {\n        const $input = $el.find('th input.select-all-checkbox')\n        if (vm.dataTable.rows({\n            selected: true\n          }).count() !== vm.dataTable.rows().count()) {\n          jq('th.select-checkbox').removeClass('selected')\n          $input.attr('checked', false)\n        } else {\n          jq('th.select-checkbox').addClass('selected')\n          $input.attr('checked', true)\n        }\n      })\n    }\n\n    // wire up edit, delete, and/or action buttons\n    $el.on('click', '[data-action]', (e) => {\n      e.preventDefault()\n      e.stopPropagation()\n      const target = jq(e.target)\n      let that     = target\n      let action   = that.attr('data-action')\n      while(!action) {\n        // don't let it propagate outside of container\n        if (that.hasClass('vdtnet-container') ||\n          that.prop('tagName') === 'table') {\n          // no action, simply exit\n          return\n        }\n        that   = that.parent()\n        action = that.attr('data-action')\n      }\n\n      // only emit if there is action\n      if (action) {\n        // detect if row action\n        let tr = that.closest('tr')\n        if (tr) {\n          if (tr.attr('role') !== 'row') {\n            tr = tr.prev()\n          }\n          const row  = vm.dataTable.row(tr)\n          const data = row.data()\n          vm.$emit(action, data, row, that, tr)\n        } else {\n          // not a row click, must be other kind of action\n          // such as bulk, csv, pdf, etc...\n          vm.$emit(action, target)\n        }\n      }\n    })\n  },\n  methods: {\n    compileTemplate(template) {\n      const vm  = this\n      const jq  = vm.jq\n      const res = Vue.compile(`<div>${template}</div>`)\n      const renderFunc = (data, type, row, meta) => {\n        const comp = new Vue({\n          data: {\n              data: data,\n              type: type,\n              row: row,\n              meta: meta\n          },\n          render: res.render,\n          staticRenderFns: res.staticRenderFns\n        }).$mount()\n        return jq(comp.$el).html()\n      }\n\n      return renderFunc\n    }\n  }\n}\n</script>\n<style>\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.dataTables_toolbar, .dataTables_buttons, .dataTables_length {\n  float: left;\n  padding-right: 10px;\n}\n.shown .details-control-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-control-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.shown .details-control-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n</style>\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.dataTables_toolbar, .dataTables_buttons, .dataTables_length {\n  float: left;\n  padding-right: 10px;\n}\n", "", {"version":3,"sources":["/Users/tomn/Desktop/work/niiknow/vue-datatables-net/src/src/VdtnetTable.vue"],"names":[],"mappings":";AAyQA;EACA,gBAAA;CACA;AACA;EACA,YAAA;EACA,oBAAA;CACA","file":"VdtnetTable.vue","sourcesContent":["<template>\n  <div class=\"vdtnet-container\">\n    <table\n      v-once\n      ref=\"table\"\n      :class=\"className\"\n      cellpadding=\"0\"\n    >\n      <thead>\n        <tr>\n          <th\n            v-for=\"(field, i) in options.columns\"\n            :key=\"i\"\n            :class=\"field.className\"\n          >\n            <slot\n              :name=\"`HEAD_${field.name}`\"\n              :field=\"field\"\n              :i=\"i\"\n            >\n              <div v-html=\"field.title\" />\n            </slot>\n          </th>\n        </tr>\n      </thead>\n    </table>\n  </div>\n</template>\n\n<script>\nexport default {\n  name: 'VdtnetTable',\n  props: {\n    // Set the table classes you wish to use, default with bootstrap4\n    // but you can override with: themeforest, foundation, etc..\n    className: {\n      type: String,\n      default: 'table table-striped table-bordered nowrap w-100'\n    },\n    // the options object: https://datatables.net/manual/options\n    opts: {\n      type: Object\n    },\n    /**\n     * List all fields to be converted to opts columns\n     *\n     * @type {Object}\n     */\n    fields: {\n      type: Object\n    },\n    /**\n     * Pass in DataTables.Net loaded jQuery to resolve\n     * any multiple loaded browser jQuery conflict\n     *\n     * @type {Object}\n     */\n    jquery: {\n      type: Object\n    },\n    /**\n     * True to enable multi-select checkboxes\n     * Current implementation require datatables.net-select\n     *\n     * @type Boolean\n     */\n    selectable: {\n      type: Boolean\n    }\n  },\n  data() {\n    // initialize defaults\n    return {\n      options: {\n/*eslint-disable */\n        dom: \"<'row'<'col-sm-12 col-md-9'<'dataTables_toolbar'><'dataTables_buttons'B>l><'col-sm-12 col-md-3'f>>\" +\n          \"<'row'<'col-sm-12'tr>>\" +\n          \"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>\",\n/*eslint-enable */\n        columns: [],\n        language: {\n          infoFiltered: ''\n        },\n        responsive: true,\n        buttons: []  // remove any button defaults\n      },\n      dataTable: null\n    }\n  },\n  computed: {\n    jq() {\n      return this.jquery || window.jQuery\n    }\n  },\n  created() {\n    const vm  = this\n    const jq  = vm.jq\n\n    // allow user to override default options\n    if (vm.opts) {\n      vm.options = jq.extend({}, vm.options, vm.opts)\n    }\n\n    // if fields are passed in, generate column definition\n    // from our custom fields schema\n    if (vm.fields) {\n      const fields = vm.fields\n      const cols   = vm.options.columns\n\n      for (let k in fields) {\n        const field = fields[k]\n        field.name = field.name || k\n\n        // generate\n        let col = {\n          searchable: field.searchable,\n          title: field.label || k,\n          width: field.width,\n          data: field.name,\n          visible: field.visible,\n          className: field.className\n        }\n\n        if (field.width) {\n          col.width = field.width\n        }\n\n        if (field.hasOwnProperty('defaultContent')) {\n          col.defaultContent = field.defaultContent\n        }\n\n        if (field.hasOwnProperty('sortable')) {\n          col.orderable = field.sortable\n        }\n\n        if (field.template) {\n          field.render = vm.compileTemplate(field.template)\n        }\n\n        if (field.render) {\n          col.render = field.render\n        }\n        // console.log(col)\n\n        cols.push(col)\n      }\n    }\n\n    if (vm.selectable) {\n      // expand column\n      const col = {\n        orderable: false,\n        className: 'select-checkbox',\n        data: null,\n        defaultContent: '',\n        title: '<input type=\"checkbox\" class=\"select-all-checkbox\">'\n      }\n      vm.options.columns.splice(1, 0, col)\n\n      // console.log(vm.options.columns)\n      vm.options.select = jq.extend(\n        vm.options.select || {},\n        {\n          style: 'os',\n          selector: 'td.select-checkbox'\n        }\n      )\n    }\n  },\n  mounted() {\n    const vm = this\n    const jq = vm.jq\n    const $el = jq(vm.$refs.table)\n\n    // console.log(vm.options.buttons)\n    vm.dataTable = $el.DataTable(vm.options)\n\n    if (vm.selectable) {\n      // handle select all checkbox\n      $el.on('click', 'th input.select-all-checkbox', (e) => {\n        if(jq(e.target).is(':checked')) {\n          vm.dataTable.rows().select()\n        } else {\n          vm.dataTable.rows().deselect()\n        }\n      })\n\n      // handle individual row select events\n      vm.dataTable.on('select deselect', () => {\n        const $input = $el.find('th input.select-all-checkbox')\n        if (vm.dataTable.rows({\n            selected: true\n          }).count() !== vm.dataTable.rows().count()) {\n          jq('th.select-checkbox').removeClass('selected')\n          $input.attr('checked', false)\n        } else {\n          jq('th.select-checkbox').addClass('selected')\n          $input.attr('checked', true)\n        }\n        // TODO: vm.$emit the selected row?\n      })\n    }\n\n    // wire up edit, delete, and/or action buttons\n    $el.on('click', '[data-action]', (e) => {\n      e.preventDefault()\n      e.stopPropagation()\n      const target = jq(e.target)\n      let that     = target\n      let action   = that.attr('data-action')\n      while(!action) {\n        // don't let it propagate outside of container\n        if (that.hasClass('vdtnet-container') ||\n          that.prop('tagName') === 'table') {\n          // no action, simply exit\n          return\n        }\n        that   = that.parent()\n        action = that.attr('data-action')\n      }\n\n      // only emit if there is action\n      if (action) {\n        // detect if row action\n        let tr = that.closest('tr')\n        if (tr) {\n          if (tr.attr('role') !== 'row') {\n            tr = tr.prev()\n          }\n          const row  = vm.dataTable.row(tr)\n          const data = row.data()\n          vm.$emit(action, data, row, that, tr)\n        } else {\n          // not a row click, must be other kind of action\n          // such as bulk, csv, pdf, etc...\n          vm.$emit(action, target)\n        }\n      }\n    })\n  },\n  methods: {\n    compileTemplate(template) {\n      const vm  = this\n      const jq  = vm.jq\n      const res = Vue.compile(`<div>${template}</div>`)\n      const renderFunc = (data, type, row, meta) => {\n        const comp = new Vue({\n          data: {\n              data: data,\n              type: type,\n              row: row,\n              meta: meta\n          },\n          render: res.render,\n          staticRenderFns: res.staticRenderFns\n        }).$mount()\n        return jq(comp.$el).html()\n      }\n\n      return renderFunc\n    }\n  }\n}\n</script>\n<style>\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.dataTables_toolbar, .dataTables_buttons, .dataTables_length {\n  float: left;\n  padding-right: 10px;\n}\n</style>\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -20240,6 +20241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     vm.dataTable = $el.DataTable(vm.options);
 
     if (vm.selectable) {
+      // handle select all checkbox
       $el.on('click', 'th input.select-all-checkbox', function (e) {
         if (jq(e.target).is(':checked')) {
           vm.dataTable.rows().select();
@@ -20248,6 +20250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
 
+      // handle individual row select events
       vm.dataTable.on('select deselect', function () {
         var $input = $el.find('th input.select-all-checkbox');
         if (vm.dataTable.rows({
@@ -20259,6 +20262,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           jq('th.select-checkbox').addClass('selected');
           $input.attr('checked', true);
         }
+        // TODO: vm.$emit the selected row?
       });
     }
 
@@ -23737,12 +23741,7 @@ var render = function() {
     { attrs: { id: "app" } },
     [
       _c("vdtnet-table", {
-        attrs: {
-          fields: _vm.fields,
-          opts: _vm.options,
-          selectable: true,
-          details: _vm.childOptions
-        },
+        attrs: { fields: _vm.fields, opts: _vm.options, selectable: true },
         on: {
           edit: function($event) {
             _vm.alert("row edit button clicked")
@@ -23751,12 +23750,35 @@ var render = function() {
             _vm.alert("row delete button clicked")
           }
         }
-      })
+      }),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Note:")]),
+      _vm._v(" "),
+      _vm._m(0)
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [
+        _vm._v(
+          "Select Checkbox is on 2nd column to prevent conflict with responsive."
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "Responsive also has conflict with custom master/details implementation because, by default, it use the jQuery DataTables child function.  Therefore, it's probably best to use some kind of action button to support master/details."
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
