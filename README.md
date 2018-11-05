@@ -6,14 +6,14 @@ This library is a Vue 2 wrapper for [jQuery DataTables](https://datatables.net/)
 The initial focus/design is to use with ajax/server-side endpoint.  Though, since it is just a wrapper, local data use/loading is simply:
 
 ```javascript
-component.dataTable.clear().draw();
-component.dataTable.rows.add(newDataArray).draw();
+thisComponent.setTableData(dataArray)
 ```
 
 ## Development
 This library uses the NodeJS library `laravel-mix` to simplify build and packaging.
 
 Requirement: Install NodeJS, NPM
+
 Then:
 ```
 git clone https://github.com/niiknow/vue-datatables-net
@@ -31,7 +31,7 @@ To build library for npm publish:
 npm run build
 ```
 
-Available on NPM.  To install as a library:
+This library is available on NPM, to install:
 ```
 npm install vue-datatables-net
 ```
@@ -135,8 +135,8 @@ Our component parameters:
       type: Object
     },
     /**
-     * Pass in DataTables.Net loaded jQuery to resolve
-     * any multiple loaded browser jQuery conflict
+     * Pass in DataTables.Net jQuery to resolve any conflict from
+     * multiple jQuery loaded in the browser
      *
      * @type Object
      */
@@ -180,7 +180,7 @@ fields: {
 
 > It is important to understand why one should use `fields` and not simply pass in `opts.columns`.  Though, `fields` definition is optional, you can just pass `opts.columns` definition if you do not wish to use `fields`.
 
-One of the `Purpose` of this component is to extend jQuery DataTables function and features, example:
+One `Purpose` of this component is to extend jQuery DataTables function and features, example:
 * Simplification of features configuration, such as `select-checkbox` column, custom `action` buttons, and/or future Vue specific features.
 * Allow for customizable table heading on a per column basis; thereby, not having to define all html for column header.
 * Ability to have simple `template` field so you can pass schema JSON from static file or some API instead of requiring to define a javascript `render` function.  Though, the `render` function would provide best performance.
