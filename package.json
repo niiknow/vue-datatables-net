@@ -1,13 +1,17 @@
 {
   "name": "vue-datatables-net",
   "description": "Vue jQuery DataTables.net wrapper component",
-  "version": "0.8.8",
+  "version": "0.9.0",
   "author": "friends@niiknow.org",
   "license": "MIT",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niiknow/vue-datatables-net.git"
+  },
   "scripts": {
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch-poll": "npm run watch -- --watch-poll",
@@ -19,15 +23,16 @@
     "lint-fix": "eslint --fix --ext .js,.vue src/ example/",
     "check-outdated": "npm outdated"
   },
-  "dependencies": {
-    "jquery": ">=1.7",
-    "vue": ">=2.0.0"
-  },
+  "dependencies": {},
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
   ],
+  "peerDependencies": {
+    "datatables.net": "^1.10.19",
+    "vue": ">=2.0.0"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
@@ -53,8 +58,10 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-vue": "^4.7.1",
     "file-loader": "^1.1.11",
+    "jquery": ">=1.7",
     "laravel-mix": "^2.1.14",
     "vue-loader": "^13.7.3",
-    "vue-template-compiler": "^2.4.4"
+    "vue-template-compiler": "^2.4.4",
+    "vue": ">=2.0.0"
   }
 }
