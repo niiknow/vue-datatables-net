@@ -132,6 +132,24 @@ export default {
           col.orderable = field.sortable
         }
 
+        if (field.template) {
+          // must be string template
+          const res = Vue.compile(`<div>${field.template}</div>`)
+          field.render = (data, type, row, meta) => {
+            const comp = new Vue({
+              data: {
+                  data: data,
+                  type: type,
+                  row: row,
+                  meta: meta
+              },
+              render: res.render,
+              staticRenderFns: res.staticRenderFns
+            }).$mount()
+            return jq(comp.$el).html()
+          }
+        }
+
         if (field.render) {
           col.render = field.render
         }

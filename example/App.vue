@@ -64,12 +64,15 @@ export default {
         email: { label: 'Email' },
         address: {
           label: 'Address',
-          render: (data) => {
-            return `${data.street}, ${data.suite}, ${data.city} ${data.zipcode}`
-          }
+          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
         },
         phone: { label: 'Phone' },
-        website: { label: 'Website' },
+        website: {
+          label: 'Website',
+          render: (data) => {
+            return `https://${ data }`
+          }
+        },
         actions: {
           label: 'Actions',
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
