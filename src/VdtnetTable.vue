@@ -81,6 +81,7 @@ export default {
         language: {
           infoFiltered: ''
         },
+        lengthMenu: [ [10, 100, 500, 1000, -1], [10, 100, 500, 1000, 'All'] ],
         responsive: true,
         buttons: []  // remove any button defaults
       },
