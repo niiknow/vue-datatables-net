@@ -200,6 +200,29 @@ opts: {
     }
   }
 }
+
+// or as headers parameter
+opts: {
+  'ajax': {
+    'url': url,
+    'type': 'GET',
+    'headers': {
+      'CSRFToken': TOKEN
+    }
+  }
+}
+
+// or as query parameter
+opts: {
+  'ajax': {
+    'url': url,
+    'type': 'GET',
+    'data': function ( d ) {
+      d.CSRFToken = TOKEN;
+    }
+  }
+}
+
 ```
 
 If you haven't already figured it out, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/) which is demonstrated here wrapped as [jQuery DataTables ajax pipeline](https://datatables.net/examples/server_side/pipeline.html)
