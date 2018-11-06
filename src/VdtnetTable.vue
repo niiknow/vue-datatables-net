@@ -193,6 +193,7 @@ export default {
       // expand column
       const col = {
         orderable: false,
+        name: '_select_checkbox',
         className: 'select-checkbox',
         data: null,
         defaultContent: '',
@@ -216,11 +217,12 @@ export default {
 
     // handle master details
     if (vm.details) {
-      console.log('hi')
       const col = {
         orderable: false,
+        name: '_details_control',
         className: 'details-control',
         data: null,
+        defaultContent: '',
         defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
       }
       vm.options.columns.splice((vm.details.index || 1) - 1, 0, col)

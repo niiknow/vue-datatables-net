@@ -40,6 +40,7 @@
         </form>
       </div>
     </div>
+    <!-- Using the VdtnetTable component -->
     <vdtnet-table
       ref="table"
       :fields="fields"
@@ -49,12 +50,11 @@
       @edit="doAlertEdit"
       @delete="doAlertDelete"
       @reloaded="doAfterReload"
-    />
-    <h3>Note:</h3>
-    <ul>
-      <li>Select Checkbox is on 2nd column to prevent conflict with responsive.</li>
-      <li>Responsive also has conflict with custom master/details implementation because, by default, it use the jQuery DataTables child function.  Therefore, it's probably best to use some kind of action button to support master/details.</li>
-    </ul>
+    >
+      <template slot="HEAD__details_control">
+        Show Details
+      </template>
+    </vdtnet-table>
   </div>
 </template>
 
