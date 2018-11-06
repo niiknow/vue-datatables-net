@@ -3,12 +3,6 @@
 
 This library is a Vue 2 wrapper for [jQuery DataTables](https://datatables.net/).  It's a tiny wrapper that doesn't include anything, not even the datatables.net core library.
 
-The initial focus/design is to use with ajax/server-side endpoint.  Though, since it is just a wrapper, local data use/loading is simply:
-
-```javascript
-thisComponent.setTableData(dataArray)
-```
-
 ## Development
 This library uses the NodeJS library `laravel-mix` to simplify build and packaging.
 
@@ -150,6 +144,23 @@ Our component parameters:
      * @type Boolean
      */
     selectable: {
+      type: Boolean
+    }
+    /**
+     * Provide custom local data loading.  Warning: this option has not been
+     * thoroughly tested.  Please use ajax and serverSide instead.
+     *
+     * @type Function
+     */
+    dataLoader: {
+      type: Function
+    },
+    /**
+     * true to hide the footer of the table
+     *
+     * @type Boolean
+     */
+    hideFooter: {
       type: Boolean
     }
   }

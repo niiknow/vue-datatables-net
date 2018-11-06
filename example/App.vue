@@ -128,6 +128,11 @@ export default {
     }
   },
   methods: {
+    doLoadTable(cb) {
+      $.getJSON( 'https://jsonplaceholder.typicode.com/users', function( data ) {
+        cb(data)
+      })
+    },
     doAlertEdit(data) {
       window.alert(`row edit click for item ID: ${data.id}`)
     },

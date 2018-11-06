@@ -1,5 +1,7 @@
 <template>
-  <div class="vdtnet-container">
+  <div
+    :class="classes"
+  >
     <table
       v-once
       ref="table"
@@ -83,6 +85,14 @@ export default {
      */
     dataLoader: {
       type: Function
+    },
+    /**
+     * true to hide the footer of the table
+     *
+     * @type Boolean
+     */
+    hideFooter: {
+      type: Boolean
     }
   },
   data() {
@@ -108,6 +118,14 @@ export default {
   computed: {
     jq() {
       return this.jquery || window.jQuery
+    },
+    classes() {
+      let classes = 'vdtnet-container'
+      if (this.hideFooter) {
+        classes += ' hide-footer'
+      }
+
+      return classes
     }
   },
   created() {
@@ -260,6 +278,11 @@ export default {
         }
       }
     })
+
+    // finally, load data
+    if (vm.dataLoader) {
+      vm.reload()
+    }
   },
   beforeDestroy() {
     const vm = this
@@ -365,5 +388,8 @@ export default {
 }
 .vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {
   float: right;
+}
+.hide-footer .vdtnet-footer {
+  display: none;
 }
 </style>
