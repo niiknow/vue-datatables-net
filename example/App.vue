@@ -1,7 +1,9 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="col-12">
     <div class="row">
-      <div class="col-sm-12 col-md-9">
+      <div class="col-12 col-md-9">
         <div class="dt-buttons btn-group">
           <button
             class="btn btn-secondary buttons-copy buttons-html5"
@@ -14,7 +16,7 @@
             @click.stop.prevent="doExport('pdf')">Pdf</button>
         </div>
       </div>
-      <div class="col-sm-12 col-md-3">
+      <div class="col-12 col-md-3">
         <form
           class="form-inline d-flex mx-1 justify-content-end"
           @submit.stop.prevent="doSearch"
@@ -42,7 +44,8 @@
       ref="table"
       :fields="fields"
       :opts="options"
-      :selectable="true"
+      :select-checkbox="1"
+      :details="details"
       @edit="doAlertEdit"
       @delete="doAlertDelete"
       @reloaded="doAfterReload"
@@ -91,6 +94,7 @@ export default {
             return json
           }
         },
+        responsive: false,
         processing: true,
         pageLength: 10,
         searching: true,
@@ -105,6 +109,7 @@ export default {
       fields: {
         id: { label: 'ID', sortable: true },
         actions: {
+          sortable: false,
           label: 'Actions',
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
             '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
@@ -124,7 +129,10 @@ export default {
           }
         }
       },
-      quickSearch: ''
+      quickSearch: '',
+      details: {
+        template: 'I\'m a child yall'
+      }
     }
   },
   methods: {

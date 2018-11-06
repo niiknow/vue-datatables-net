@@ -313,4 +313,9 @@ const url = 'export.php?' + $.param(data)
 window.open(url)
 ```
 
+## Responsive
+1. In Bootstrap4, there's a class called [table-responsive](https://getbootstrap.com/docs/4.1/content/tables/#responsive-tables) that wrap the table at each screen breakpoint.  We apply this class on our wrapper div to make the table scroll horizontally.
+
+2. Alternatively, you can set `options.responsive = true` to use jQuery DataTable responsive plugin.  **WARNING**: This plugin does not play well with `select-checkbox`, `master-details`, and many other features.  It is recommended to use option 1 above.
+
 # MIT

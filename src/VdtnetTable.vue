@@ -69,13 +69,13 @@ export default {
       type: Object
     },
     /**
-     * True to enable multi-select checkboxes
+     * The select-checkbox column index (start at 1)
      * Current implementation require datatables.net-select
      *
-     * @type Boolean
+     * @type Number
      */
-    selectable: {
-      type: Boolean
+    selectCheckbox: {
+      type: Number
     },
     /**
      * Provide custom local data loading.  Warning: this option has not been
@@ -93,6 +93,14 @@ export default {
      */
     hideFooter: {
       type: Boolean
+    },
+    /**
+     * The details column configuration of master/details.
+     *
+     * @type {Object}
+     */
+    details: {
+      type: Object
     }
   },
   data() {
@@ -100,15 +108,13 @@ export default {
     return {
       options: {
 /*eslint-disable */
-        dom: "<'row'<'col-sm-12'tr>>" +
-          "<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
+        dom: "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
 /*eslint-enable */
         columns: [],
         language: {
           infoFiltered: ''
         },
         lengthMenu: [ [15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All'] ],
-        responsive: true,
         pageLength: 15,
         buttons: []  // remove any button defaults
       },
@@ -120,7 +126,7 @@ export default {
       return this.jquery || window.jQuery
     },
     classes() {
-      let classes = 'vdtnet-container'
+      let classes = 'table-responsive vdtnet-container'
       if (this.hideFooter) {
         classes += ' hide-footer'
       }
@@ -131,6 +137,7 @@ export default {
   created() {
     const vm  = this
     const jq  = vm.jq
+    let sort  = 0
 
     // allow user to override default options
     if (vm.opts) {
@@ -182,7 +189,7 @@ export default {
       }
     }
 
-    if (vm.selectable) {
+    if (vm.selectCheckbox) {
       // expand column
       const col = {
         orderable: false,
@@ -191,7 +198,7 @@ export default {
         defaultContent: '',
         title: '<input type="checkbox" class="select-all-checkbox">'
       }
-      vm.options.columns.splice(1, 0, col)
+      vm.options.columns.splice(vm.selectCheckbox - 1, 0, col)
 
       // console.log(vm.options.columns)
       vm.options.select = jq.extend(
@@ -201,8 +208,33 @@ export default {
           selector: 'td.select-checkbox'
         }
       )
+
+      if (vm.selectCheckbox == 1) {
+        sort++
+      }
     }
 
+    // handle master details
+    if (vm.details) {
+      console.log('hi')
+      const col = {
+        orderable: false,
+        className: 'details-control',
+        data: null,
+        defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
+      }
+      vm.options.columns.splice((vm.details.index || 1) - 1, 0, col)
+
+      if ((vm.details.index || 1) > 0) {
+        sort++
+      }
+    }
+
+    if (sort > 0) {
+      vm.options.order = [[sort, 'asc']]
+    }
+
+    // handle local data loader
     if (vm.dataLoader) {
       delete vm.options.ajax
       vm.options.serverSide = false
@@ -216,7 +248,7 @@ export default {
     // console.log(vm.options.buttons)
     vm.dataTable = $el.DataTable(vm.options)
 
-    if (vm.selectable) {
+    if (vm.selectCheckbox) {
       // handle select all checkbox
       $el.on('click', 'th input.select-all-checkbox', (e) => {
         if(jq(e.target).is(':checked')) {
@@ -278,6 +310,36 @@ export default {
         }
       }
     })
+
+    // handle master/details
+    if (vm.details && vm.details.template) {
+      // must be string template
+      const renderFunc = vm.compileTemplate(vm.details.template)
+      // handle master/details
+      // Add event listener for opening and closing details
+      $el.on('click', 'td.details-control', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const target = jq(e.target)
+        let that     = target
+        let tr       = that.closest('tr')
+        if (tr.attr('role') !== 'row') {
+          tr = tr.prev()
+        }
+        const row = vm.dataTable.row( tr )
+        if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide()
+          tr.removeClass('master')
+        }
+        else {
+          // Open this row
+          const data = row.data()
+          row.child( renderFunc(data, 'child', row, tr) ).show()
+          tr.addClass('master')
+        }
+      })
+    }
 
     // finally, load data
     if (vm.dataLoader) {
@@ -391,5 +453,25 @@ export default {
 }
 .hide-footer .vdtnet-footer {
   display: none;
+}
+
+.master .details-plus
+{
+  cursor: pointer;
+  display: none;
+}
+.details-minus
+{
+  cursor: pointer;
+  display: none;
+}
+.master .details-minus
+{
+  cursor: pointer;
+  display: inline;
+}
+.details-control {
+  cursor: pointer;
+  font-weight: 700;
 }
 </style>
