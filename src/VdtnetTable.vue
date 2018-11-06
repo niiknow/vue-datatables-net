@@ -74,6 +74,15 @@ export default {
      */
     selectable: {
       type: Boolean
+    },
+    /**
+     * Provide custom local data loading.  Warning: this option has not been
+     * thoroughly tested.  Please use ajax and serverSide instead.
+     *
+     * @type Function
+     */
+    dataLoader: {
+      type: Function
     }
   },
   data() {
@@ -175,6 +184,11 @@ export default {
         }
       )
     }
+
+    if (vm.dataLoader) {
+      delete vm.options.ajax
+      vm.options.serverSide = false
+    }
   },
   mounted() {
     const vm = this
@@ -246,9 +260,6 @@ export default {
         }
       }
     })
-
-    // mount component into dataTable_toolbar
-
   },
   beforeDestroy() {
     const vm = this
@@ -294,9 +305,11 @@ export default {
      */
     setTableData(data) {
       const vm = this
-      vm.dataTable.clear().rows.add(data)
-      vm.dataTable.draw(false)
-      vm.dataTable.columns.adjust()
+      if (data.constructor === Array) {
+        vm.dataTable.clear().rows.add(data)
+        vm.dataTable.draw(false)
+        vm.dataTable.columns.adjust()
+      }
       return vm
     },
     /**
@@ -307,9 +320,25 @@ export default {
      */
     reload(resetPaging = false) {
       const vm = this
-      const callback = (data) => { vm.$emit('reloaded', data, vm) }
+      const callback =
 
       vm.dataTable.ajax.reload( callback, resetPaging )
+
+      if (vm.dataLoader) {
+        // manual data loading
+        const p = vm.getServerParams()
+        vm.dataLoader(p, (data) => {
+          if (data && !data.data) {
+            data = { data: data }
+          }
+          vm.setTableData( data.data )
+
+          vm.$emit('reloaded', data, vm)
+        })
+      } else {
+        vm.dataTable.ajax.reload( (data) => { vm.$emit('reloaded', data, vm) } , resetPaging )
+      }
+
       return vm
     },
     search(value) {
