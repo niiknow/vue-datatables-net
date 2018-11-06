@@ -252,4 +252,21 @@ Let say you have a column `description`, you can provide table head template for
 </template>
 ```
 
+## dom (Searching and Toolbar)
+`dom` configuration defines how jQuery DataTables components are rendered - https://datatables.net/reference/option/dom
+
+Our default configuration compatible with Bootstrap4 is:
+```html
+"<'row'<'col-sm-12'tr>>" +
+"<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>"
+```
+
+This is based on the configuration `lftiprB`, also see: https://datatables.net/reference/option/dom
+
+Note, we do not include toolbar buttons (B) or search control (s).  This is because we defer these functions to you (the User).  Toolbar Buttons are client-side; and since we do not use client-side, we don't need these buttons.  We expose a `search` method on `vdtnet-table` so you can use this method to perform search.
+
+Simply create your own Buttons for server-side exports, bulk, and/or other things.  Create your own search control and use the `search` method.  See example App.  All these things are now Vue Native.
+
+Though, if you want to use these client-side controls, you can freely override the default `opts.dom` and `opts.buttons` to show these controls.
+
 # MIT

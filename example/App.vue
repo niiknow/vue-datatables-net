@@ -1,5 +1,37 @@
 <template>
   <div id="app">
+    <div class="row">
+      <div class="col-sm-12 col-md-9">
+        <div class="dt-buttons btn-group">
+          <button class="btn btn-secondary buttons-copy buttons-html5">button1</button>
+          <button class="btn btn-secondary buttons-copy buttons-html5">button2</button>
+          <button class="btn btn-secondary buttons-copy buttons-html5">button3</button>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <form
+          class="form-inline d-flex mx-1 justify-content-end"
+          @submit.stop.prevent="doSearch"
+        >
+          <div class="input-group">
+            <input
+              v-model="quickSearch"
+              type="search"
+              placeholder="Quick search"
+              class="form-control"
+            >
+            <div class="input-group-append">
+              <button
+                type="submit"
+                class="btn btn-outline-secondary"
+              >
+                <i class="mdi mdi-magnify"/> Go
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
     <vdtnet-table
       ref="table"
       :fields="fields"
@@ -62,8 +94,7 @@ export default {
         lengthChange: true,
         serverSide: true,
         fixedHeader: true,
-        saveState: true,
-        buttons: ['copy', 'csv', 'print']
+        saveState: true
       },
       fields: {
         id: { label: 'ID', sortable: true },
@@ -86,7 +117,8 @@ export default {
             return `https://${ data }`
           }
         }
-      }
+      },
+      quickSearch: ''
     }
   },
   methods: {
@@ -108,6 +140,9 @@ export default {
     },
     doAfterReload(data, table) {
       window.alert('data reloaded')
+    },
+    doSearch() {
+      this.$refs.table.search(this.quickSearch)
     }
   }
 }

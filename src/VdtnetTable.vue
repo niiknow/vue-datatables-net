@@ -81,9 +81,8 @@ export default {
     return {
       options: {
 /*eslint-disable */
-        dom: "<'row'<'col-sm-12 col-md-9'<'dataTables_toolbar'><'dataTables_buttons'B>l><'col-sm-12 col-md-3'f>>" +
-          "<'row'<'col-sm-12'tr>>" +
-          "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        dom: "<'row'<'col-sm-12'tr>>" +
+          "<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
 /*eslint-enable */
         columns: [],
         language: {
@@ -246,6 +245,9 @@ export default {
         }
       }
     })
+
+    // mount component into dataTable_toolbar
+
   },
   beforeDestroy() {
     const vm = this
@@ -308,6 +310,16 @@ export default {
 
       vm.dataTable.ajax.reload( callback, resetPaging )
       return vm
+    },
+    search(value) {
+      const vm = this
+      vm.dataTable.search( value ).draw()
+      return vm
+    },
+    setPageLength(value) {
+      const vm = this
+      vm.dataTable.page.len( value )
+      return vm.reload()
     }
   }
 }
@@ -316,8 +328,11 @@ export default {
 .select-checkbox, .select-all-checkbox {
   cursor: pointer;
 }
-.dataTables_toolbar, .dataTables_buttons, .dataTables_length {
-  float: left;
+.vdtnet-footer .dataTables_length {
+  padding-top: 6px;
   padding-right: 10px;
+}
+.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {
+  float: right;
 }
 </style>
