@@ -88,8 +88,9 @@ export default {
         language: {
           infoFiltered: ''
         },
-        lengthMenu: [ [10, 100, 500, 1000, -1], [10, 100, 500, 1000, 'All'] ],
+        lengthMenu: [ [15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All'] ],
         responsive: true,
+        pageLength: 15,
         buttons: []  // remove any button defaults
       },
       dataTable: null
@@ -320,6 +321,9 @@ export default {
       const vm = this
       vm.dataTable.page.len( value )
       return vm.reload()
+    },
+    getServerParams() {
+      return this.dataTable.ajax.params()
     }
   }
 }

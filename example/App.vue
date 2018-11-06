@@ -3,9 +3,15 @@
     <div class="row">
       <div class="col-sm-12 col-md-9">
         <div class="dt-buttons btn-group">
-          <button class="btn btn-secondary buttons-copy buttons-html5">button1</button>
-          <button class="btn btn-secondary buttons-copy buttons-html5">button2</button>
-          <button class="btn btn-secondary buttons-copy buttons-html5">button3</button>
+          <button
+            class="btn btn-secondary buttons-copy buttons-html5"
+            @click.stop.prevent="doExport('csv')">Csv</button>
+          <button
+            class="btn btn-secondary buttons-copy buttons-html5"
+            @click.stop.prevent="doExport('excel')">Excel</button>
+          <button
+            class="btn btn-secondary buttons-copy buttons-html5"
+            @click.stop.prevent="doExport('pdf')">Pdf</button>
         </div>
       </div>
       <div class="col-sm-12 col-md-3">
@@ -143,6 +149,11 @@ export default {
     },
     doSearch() {
       this.$refs.table.search(this.quickSearch)
+    },
+    doExport(type) {
+      const parms = this.$refs.table.getServerParams()
+      parms.export = type
+      window.alert('GET /api/v1/export?' + jQuery.param(parms))
     }
   }
 }

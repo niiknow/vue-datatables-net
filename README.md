@@ -265,8 +265,18 @@ This is based on the configuration `lftiprB`, also see: https://datatables.net/r
 
 Note, we do not include toolbar buttons (B) or search control (s).  This is because we defer these functions to you (the User).  Toolbar Buttons are client-side; and since we do not use client-side, we don't need these buttons.  We expose a `search` method on `vdtnet-table` so you can use this method to perform search.
 
-Simply create your own Buttons for server-side exports, bulk, and/or other things.  Create your own search control and use the `search` method.  See example App.  All these things are now Vue Native.
+Simply create your own Buttons for server-side exports, bulk, and/or other things.  Create your own search control and use the `search` method.  See example App.  All these things are now Vue natives.
 
-Though, if you want to use these client-side controls, you can freely override the default `opts.dom` and `opts.buttons` to show these controls.
+Though, if you really insists on using these client-side controls, simply override the default `opts.dom` and `opts.buttons` with your own settings.
+
+## getServerParams method
+This function return the parameters last used by our server-side endpoint.  It allow you to use for server-side export API call.  Example:
+```javascript
+const parms = this.$refs.table.getServerParams()
+parms.export = 'csv'
+// boom export
+const url = 'export.php?' + $.param(data)
+window.open(url)
+```
 
 # MIT
