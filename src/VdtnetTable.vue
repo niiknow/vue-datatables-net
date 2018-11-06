@@ -320,14 +320,9 @@ export default {
      */
     reload(resetPaging = false) {
       const vm = this
-      const callback =
-
-      vm.dataTable.ajax.reload( callback, resetPaging )
-
       if (vm.dataLoader) {
         // manual data loading
-        const p = vm.getServerParams()
-        vm.dataLoader(p, (data) => {
+        vm.dataLoader((data) => {
           if (data && !data.data) {
             data = { data: data }
           }
@@ -352,6 +347,9 @@ export default {
       return vm.reload()
     },
     getServerParams() {
+      if (this.dataLoader) {
+        return {}
+      }
       return this.dataTable.ajax.params()
     }
   }
