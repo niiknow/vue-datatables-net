@@ -31,9 +31,9 @@ npm install vue-datatables-net
 ```
 
 ## Usage
-This library default configuration and provide example for use with `bootstrap4` styling.  Though, you can fully customize with any other jQuery DataTables supported theme.
+This library default configuration and provide example for use with `bootstrap4` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
 
-> Example of required imports for Bootstrap 4:
+> Example of imports for Bootstrap 4:
 
 ```html
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -74,7 +74,7 @@ import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
 
 > See example [App](https://niiknow.github.io/vue-datatables-net/)
 
-Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue#L8
+Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue
 
 **NOTE:**
 Our example use a free API endpoint from [typicode](https://jsonplaceholder.typicode.com), which is simply a JSON endpoint.  As a result, we needed to define a `dataSrc` wrapper like so:
@@ -87,7 +87,7 @@ ajax: {
 }
 ```
 
-Here are some jQuery DataTables server-side compatible parsers:
+Of course, for your implementation, simply use a server-side compatible parser.  Below are some jQuery DataTables server-side parsers:
 * PHP - https://github.com/lampjunkie/php-datatables
 * PHP Symphony - https://github.com/stwe/DatatablesBundle
 * PHP Laravel - https://github.com/yajra/laravel-datatables
@@ -138,14 +138,14 @@ Our component parameters:
       type: Object
     },
     /**
-     * True to enable multi-select checkboxes
+     * The select-checkbox column index (start at 1)
      * Current implementation require datatables.net-select
      *
-     * @type Boolean
+     * @type Number
      */
-    selectable: {
-      type: Boolean
-    }
+    selectCheckbox: {
+      type: Number
+    },
     /**
      * Provide custom local data loading.  Warning: this option has not been
      * thoroughly tested.  Please use ajax and serverSide instead.
@@ -162,6 +162,14 @@ Our component parameters:
      */
     hideFooter: {
       type: Boolean
+    },
+    /**
+     * The details column configuration of master/details.
+     *
+     * @type {Object}
+     */
+    details: {
+      type: Object
     }
   }
 ```
@@ -187,18 +195,18 @@ fields: {
 - `className` set column class names
 - `defaultContent` provide default html when no data available
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
-- `template` simple vue template for the field
+- `template` simple vue template for the field.  See example App.
 
-> It is important to understand why one should use `fields` and not simply pass in `opts.columns`.  Though, `fields` definition is optional, you can just pass `opts.columns` definition if you do not wish to use `fields`.
+> It is important to understand why one should use `fields` and not `opts.columns`.  Though, `fields` is optional, you can simply pass `opts.columns` definition if you do not wish to use `fields`.
 
 One `Purpose` of this component is to extend jQuery DataTables function and features, example:
 * Simplification of features configuration, such as `select-checkbox` column, custom `action` buttons, and/or future Vue specific features.
-* Allow for customizable table heading on a per column basis; thereby, not having to define all html for column header.
-* Ability to have simple `template` field so you can pass schema JSON from static file or some API instead of requiring to define a javascript `render` function.  Though, the `render` function would provide best performance.
+* Allow for customizable table heading on a per-column basis; thereby, not having to define all html for each column header.
+* Ability to have simple `template` field so you can pass schema JSON from static file or some API, instead of requiring to define a javascript `render` function.  Though, the `render` function would provide best performance.
 * Having schema also allow future features, such as: support of editable column/cell.
 
 ## Additional Headers
-Many server-side usage require CSRF and/or API token headers.  Since options are completely exposed, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)
+Many server-side usage require CSRF and/or API token headers.  Since jQuery DataTables `options` are completely exposed as `opts`, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)
 
 i.e, something like:
 ```javascript
@@ -236,7 +244,7 @@ opts: {
 
 ```
 
-If you haven't already figured it out, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/) which is demonstrated here wrapped as [jQuery DataTables ajax pipeline](https://datatables.net/examples/server_side/pipeline.html)
+If you haven't already guessed, ajax is basically the signature of [jQuery.ajax](http://api.jquery.com/jquery.ajax/), which can be seen in this [jQuery DataTables ajax pipeline](https://datatables.net/examples/server_side/pipeline.html) code demonstration.
 
 ## Row Action Buttons
 Use `data-action` attribute to automatically wire up any action button/elements.  To render action button/element in a row, simply define dummy field like so:
@@ -291,8 +299,7 @@ Let say you have a column `description`, you can provide table head template for
 
 Our default configuration compatible with Bootstrap4 is:
 ```html
-"<'row'<'col-sm-12'tr>>" +
-"<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>"
+"tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>"
 ```
 
 This is based on the configuration `lftiprB`, also see: https://datatables.net/reference/option/dom
@@ -318,4 +325,23 @@ window.open(url)
 
 2. Alternatively, you can set `options.responsive = true` to use jQuery DataTable responsive plugin.  **WARNING**: This plugin does not play well with `select-checkbox`, `master-details`, and many other features.  It is recommended to use option 1 above.
 
-# MIT
+## Master-details pattern
+`details` configuration allow you to create template for displaying details row in Master-details pattern.  Schema:
+```javascript
+{
+  index: 'a number (start at 1) representing the column position',
+  template: 'the template where {{ data.column }} is the item/row data',
+  render: 'provide a custom render function as alternative to template'
+}
+```
+
+## Tips
+If you're like us, you want to write as little code as possible, as in, application of the DRY Principal.  This mean the UI has a standard look/feel/behavior; where toolbar, search, and other controls are place at specific location.  So this mean you want to wrap this component inside your own component?  Our sample App give you a good idea on how to start.  Below are a few things to consider:
+
+1. Identify all properties of the new component and howto translate into this component.  Example: hidePageLength -> opts.lengthChange, hideQuickSearch -> v-if on quickSearch form, hideToolbar -> v-if on toolbar div, etc...
+2. Identify methods to wrap, i.e. your component API: reload, getServerParams, etc...
+3. Wrap individual action events you want to expose, or simply wrap with v-on="$listeners" to pipe all events from this component to your component.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

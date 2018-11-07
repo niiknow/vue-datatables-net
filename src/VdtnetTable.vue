@@ -314,9 +314,15 @@ export default {
     })
 
     // handle master/details
-    if (vm.details && vm.details.template) {
+    if (vm.details) {
+      // default to render function
+      let renderFunc = vm.details.render
+
       // must be string template
-      const renderFunc = vm.compileTemplate(vm.details.template)
+      if (vm.details.template) {
+        renderFunc = vm.compileTemplate(vm.details.template)
+      }
+
       // handle master/details
       // Add event listener for opening and closing details
       $el.on('click', 'td.details-control', (e) => {

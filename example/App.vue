@@ -131,7 +131,7 @@ export default {
       },
       quickSearch: '',
       details: {
-        template: 'I\'m a child yall'
+        template: 'I\'m a child for {{ data.id }} yall'
       }
     }
   },
