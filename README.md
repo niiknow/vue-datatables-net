@@ -336,7 +336,7 @@ window.open(url)
 ```
 
 ## Tips
-If you're like us, you want to write as little code as possible, as in, application of the DRY Principal.  This mean the UI has a standard look/feel/behavior; where toolbar, search, and other controls are place at specific location.  So this mean you want to wrap this component inside your own component?  Our sample App give you a good idea on how to start.  Below are a few things to consider:
+If you're like us, you want to write as little code as possible; as in, application of the DRY Principle.  This mean the UI has a standard look/feel/behavior; where toolbar, search, and other controls are place at specific location.  So this mean you want to wrap this component inside your own component?  Our sample App give you a good idea on how to start.  Below are a few things to consider:
 
 1. Identify all properties of the new component and howto translate into this component.  Example: hidePageLength -> opts.lengthChange, hideQuickSearch -> v-if on quickSearch form, hideToolbar -> v-if on toolbar div, etc...
 2. Identify methods to wrap, i.e. your component API: reload, getServerParams, etc...
