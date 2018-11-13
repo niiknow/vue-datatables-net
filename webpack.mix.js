@@ -2,6 +2,7 @@ const path = require('path');
 const mix = require('laravel-mix');
 const source =  process.env.NODE_ENV === 'production' ? 'src' : 'example';
 const public = process.env.NODE_ENV === 'production' ? 'lib' : 'dist';
+const { VueLoaderPlugin } = require('vue-loader');
 
 mix.options({
   processCssUrls: false,
@@ -36,6 +37,9 @@ const config = {
       }
     ]
   },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
   output: {
     path: path.resolve(public),
     filename: 'index.js',

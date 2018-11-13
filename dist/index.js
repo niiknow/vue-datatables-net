@@ -7,7 +7,7 @@
 		exports["VdtnetTable"] = factory(require("Vue"), require("jQuery"));
 	else
 		root["VdtnetTable"] = factory(root["Vue"], root["jQuery"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_0__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,6 +81,638 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(selector) {
+		if (typeof memo[selector] === "undefined") {
+			memo[selector] = fn.call(this, selector);
+		}
+
+		return memo[selector]
+	};
+})(function (target) {
+	return document.querySelector(target)
+});
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(24);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton) options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables Bootstrap 4 integration
+ * ©2011-2017 SpryMedia Ltd - datatables.net/license
+ */
+
+/**
+ * DataTables integration for Bootstrap 4. This requires Bootstrap 4 and
+ * DataTables 1.10 or newer.
+ *
+ * This file sets the defaults and adds options to DataTables to style its
+ * controls using Bootstrap. See http://datatables.net/manual/styling/bootstrap
+ * for further information.
+ */
+(function( factory ){
+	if ( true ) {
+		// AMD
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+			return factory( $, window, document );
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+	else if ( typeof exports === 'object' ) {
+		// CommonJS
+		module.exports = function (root, $) {
+			if ( ! root ) {
+				root = window;
+			}
+
+			if ( ! $ || ! $.fn.dataTable ) {
+				// Require DataTables, which attaches to jQuery, including
+				// jQuery if needed and have a $ property so we can access the
+				// jQuery object that is used
+				$ = require('datatables.net')(root, $).$;
+			}
+
+			return factory( $, root, root.document );
+		};
+	}
+	else {
+		// Browser
+		factory( jQuery, window, document );
+	}
+}(function( $, window, document, undefined ) {
+'use strict';
+var DataTable = $.fn.dataTable;
+
+
+/* Set the defaults for DataTables initialisation */
+$.extend( true, DataTable.defaults, {
+	dom:
+		"<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+		"<'row'<'col-sm-12'tr>>" +
+		"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+	renderer: 'bootstrap'
+} );
+
+
+/* Default class modification */
+$.extend( DataTable.ext.classes, {
+	sWrapper:      "dataTables_wrapper dt-bootstrap4",
+	sFilterInput:  "form-control form-control-sm",
+	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
+	sProcessing:   "dataTables_processing card",
+	sPageButton:   "paginate_button page-item"
+} );
+
+
+/* Bootstrap paging button renderer */
+DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
+	var api     = new DataTable.Api( settings );
+	var classes = settings.oClasses;
+	var lang    = settings.oLanguage.oPaginate;
+	var aria = settings.oLanguage.oAria.paginate || {};
+	var btnDisplay, btnClass, counter=0;
+
+	var attach = function( container, buttons ) {
+		var i, ien, node, button;
+		var clickHandler = function ( e ) {
+			e.preventDefault();
+			if ( !$(e.currentTarget).hasClass('disabled') && api.page() != e.data.action ) {
+				api.page( e.data.action ).draw( 'page' );
+			}
+		};
+
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			button = buttons[i];
+
+			if ( $.isArray( button ) ) {
+				attach( container, button );
+			}
+			else {
+				btnDisplay = '';
+				btnClass = '';
+
+				switch ( button ) {
+					case 'ellipsis':
+						btnDisplay = '&#x2026;';
+						btnClass = 'disabled';
+						break;
+
+					case 'first':
+						btnDisplay = lang.sFirst;
+						btnClass = button + (page > 0 ?
+							'' : ' disabled');
+						break;
+
+					case 'previous':
+						btnDisplay = lang.sPrevious;
+						btnClass = button + (page > 0 ?
+							'' : ' disabled');
+						break;
+
+					case 'next':
+						btnDisplay = lang.sNext;
+						btnClass = button + (page < pages-1 ?
+							'' : ' disabled');
+						break;
+
+					case 'last':
+						btnDisplay = lang.sLast;
+						btnClass = button + (page < pages-1 ?
+							'' : ' disabled');
+						break;
+
+					default:
+						btnDisplay = button + 1;
+						btnClass = page === button ?
+							'active' : '';
+						break;
+				}
+
+				if ( btnDisplay ) {
+					node = $('<li>', {
+							'class': classes.sPageButton+' '+btnClass,
+							'id': idx === 0 && typeof button === 'string' ?
+								settings.sTableId +'_'+ button :
+								null
+						} )
+						.append( $('<a>', {
+								'href': '#',
+								'aria-controls': settings.sTableId,
+								'aria-label': aria[ button ],
+								'data-dt-idx': counter,
+								'tabindex': settings.iTabIndex,
+								'class': 'page-link'
+							} )
+							.html( btnDisplay )
+						)
+						.appendTo( container );
+
+					settings.oApi._fnBindAction(
+						node, {action: button}, clickHandler
+					);
+
+					counter++;
+				}
+			}
+		}
+	};
+
+	// IE9 throws an 'unknown error' if document.activeElement is used
+	// inside an iframe or frame. 
+	var activeEl;
+
+	try {
+		// Because this approach is destroying and recreating the paging
+		// elements, focus is lost on the select button which is bad for
+		// accessibility. So we want to restore focus once the draw has
+		// completed
+		activeEl = $(host).find(document.activeElement).data('dt-idx');
+	}
+	catch (e) {}
+
+	attach(
+		$(host).empty().html('<ul class="pagination"/>').children('ul'),
+		buttons
+	);
+
+	if ( activeEl !== undefined ) {
+		$(host).find( '[data-dt-idx='+activeEl+']' ).focus();
+	}
+};
+
+
+return DataTable;
+}));
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.19
@@ -15383,107 +16015,1340 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___ = __webpack_require__(6);
+/* unused harmony namespace reexport */
+ /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___["a" /* default */]); 
 
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables_net_bs4_js_dataTables_bootstrap4_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables_net_bs4_js_dataTables_bootstrap4_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_datatables_net_bs4_js_dataTables_bootstrap4_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net_buttons_bs4__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net_buttons_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_datatables_net_buttons_bs4__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net_responsive_bs4__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net_responsive_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net_responsive_bs4__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net_select_bs4__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net_select_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_datatables_net_select_bs4__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_datatables_net_bs4_css_dataTables_bootstrap4_min_css__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_datatables_net_bs4_css_dataTables_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_datatables_net_bs4_css_dataTables_bootstrap4_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_datatables_net_select_bs4_css_select_bootstrap4_min_css__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_datatables_net_select_bs4_css_select_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_datatables_net_select_bs4_css_select_bootstrap4_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
+// this demonstrate with buttons and responsive master/details row
 
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+// since I already include on index.html, I don't need to include it here
+// import 'datatables.net/js/jquery.dataTables.js'
+
+
+// import the rest
+
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  name: 'App',
+  components: { VdtnetTable: __WEBPACK_IMPORTED_MODULE_0__src__["a" /* default */] },
+  data: function data() {
+    var vm = this;
+
+    return {
+      options: {
+        ajax: {
+          url: 'https://jsonplaceholder.typicode.com/users',
+          dataSrc: function dataSrc(json) {
+            return json;
+          }
+        },
+        responsive: false,
+        processing: true,
+        pageLength: 10,
+        searching: true,
+        searchDelay: 1500,
+        destroy: true,
+        ordering: true,
+        lengthChange: true,
+        serverSide: true,
+        fixedHeader: true,
+        saveState: true
+      },
+      fields: {
+        id: { label: 'ID', sortable: true },
+        actions: {
+          sortable: false,
+          label: 'Actions',
+          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
+        },
+        name: { label: 'Name', sortable: true, searchable: true },
+        username: { label: 'Username', sortable: false, searchable: true },
+        email: { label: 'Email' },
+        address: {
+          label: 'Address',
+          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
+        },
+        phone: { label: 'Phone' },
+        website: {
+          label: 'Website',
+          render: function render(data) {
+            return 'https://' + data;
+          }
+        }
+      },
+      quickSearch: '',
+      details: {
+        template: 'I\'m a child for {{ data.id }} yall'
+      }
+    };
+  },
+
+  methods: {
+    doLoadTable: function doLoadTable(cb) {
+      $.getJSON('https://jsonplaceholder.typicode.com/users', function (data) {
+        cb(data);
+      });
+    },
+    doAlertEdit: function doAlertEdit(data) {
+      window.alert('row edit click for item ID: ' + data.id);
+    },
+    doAlertDelete: function doAlertDelete(data, row, tr, target) {
+      window.alert('deleting item ID: ' + data.id);
+
+      // row.remove() doesn't work when serverside is enabled
+      // so we fake it with dom remove
+      tr.remove();
+
+      var table = this.$refs.table;
+      setTimeout(function () {
+        // simulate extra long running ajax
+        table.reload();
+      }, 1500);
+    },
+    doAfterReload: function doAfterReload(data, table) {
+      window.alert('data reloaded');
+    },
+    doSearch: function doSearch() {
+      this.$refs.table.search(this.quickSearch);
+    },
+    doExport: function doExport(type) {
+      var parms = this.$refs.table.getServerParams();
+      parms.export = type;
+      window.alert('GET /api/v1/export?' + jQuery.param(parms));
+    }
+  }
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_script_lang_js___ = __webpack_require__(8);
+/* unused harmony namespace reexport */
+ /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_script_lang_js___["a" /* default */]); 
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  name: 'VdtnetTable',
+  props: {
+    /**
+     * Set the table classes you wish to use, default with bootstrap4
+     * but you can override with: themeforest, foundation, etc..
+     *
+     * @type String
+     */
+    className: {
+      type: String,
+      default: 'table table-striped table-bordered nowrap w-100'
+    },
+    /**
+     * the options object: https://datatables.net/manual/options
+     *
+     * @type Object
+     */
+    opts: {
+      type: Object
+    },
+    /**
+     * List all fields to be converted to opts columns
+     *
+     * @type Object
+     */
+    fields: {
+      type: Object
+    },
+    /**
+     * Pass in DataTables.Net jQuery to resolve any conflict from
+     * multiple jQuery loaded in the browser
+     *
+     * @type Object
+     */
+    jquery: {
+      type: Object
+    },
+    /**
+     * The select-checkbox column index (start at 1)
+     * Current implementation require datatables.net-select
+     *
+     * @type Number
+     */
+    selectCheckbox: {
+      type: Number
+    },
+    /**
+     * Provide custom local data loading.  Warning: this option has not been
+     * thoroughly tested.  Please use ajax and serverSide instead.
+     *
+     * @type Function
+     */
+    dataLoader: {
+      type: Function
+    },
+    /**
+     * true to hide the footer of the table
+     *
+     * @type Boolean
+     */
+    hideFooter: {
+      type: Boolean
+    },
+    /**
+     * The details column configuration of master/details.
+     *
+     * @type {Object}
+     */
+    details: {
+      type: Object
+    }
+  },
+  data: function data() {
+    // initialize defaults
+    return {
+      options: {
+        /*eslint-disable */
+        dom: "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
+        /*eslint-enable */
+        columns: [],
+        language: {
+          infoFiltered: ''
+        },
+        lengthMenu: [[15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All']],
+        pageLength: 15,
+        buttons: [] // remove any button defaults
+      },
+      dataTable: null
+    };
+  },
+
+  computed: {
+    jq: function jq() {
+      return this.jquery || window.jQuery;
+    },
+    classes: function classes() {
+      var classes = 'table-responsive vdtnet-container';
+      if (this.hideFooter) {
+        classes += ' hide-footer';
+      }
+
+      return classes;
+    }
+  },
+  created: function created() {
+    var vm = this;
+    var jq = vm.jq;
+    var sort = 0;
+
+    // allow user to override default options
+    if (vm.opts) {
+      vm.options = jq.extend({}, vm.options, vm.opts);
+    }
+
+    // if fields are passed in, generate column definition
+    // from our custom fields schema
+    if (vm.fields) {
+      var fields = vm.fields;
+      var cols = vm.options.columns;
+
+      for (var k in fields) {
+        var field = fields[k];
+        field.name = field.name || k;
+
+        // generate
+        var col = {
+          searchable: field.searchable,
+          title: field.label || k,
+          width: field.width,
+          data: field.name,
+          visible: field.visible,
+          className: field.className
+        };
+
+        if (field.width) {
+          col.width = field.width;
+        }
+
+        if (field.hasOwnProperty('defaultContent')) {
+          col.defaultContent = field.defaultContent;
+        }
+
+        if (field.hasOwnProperty('sortable')) {
+          col.orderable = field.sortable;
+        }
+
+        if (field.template) {
+          field.render = vm.compileTemplate(field.template);
+        }
+
+        if (field.render) {
+          col.render = field.render;
+        }
+        // console.log(col)
+
+        cols.push(col);
+      }
+    }
+
+    if (vm.selectCheckbox) {
+      // expand column
+      var _col = {
+        orderable: false,
+        name: '_select_checkbox',
+        className: 'select-checkbox',
+        data: null,
+        defaultContent: '',
+        title: '<input type="checkbox" class="select-all-checkbox">'
+      };
+      vm.options.columns.splice(vm.selectCheckbox - 1, 0, _col);
+
+      // console.log(vm.options.columns)
+      vm.options.select = jq.extend(vm.options.select || {}, {
+        style: 'os',
+        selector: 'td.select-checkbox'
+      });
+
+      if (vm.selectCheckbox == 1) {
+        sort++;
+      }
+    }
+
+    // handle master details
+    if (vm.details) {
+      var _col2 = _defineProperty({
+        orderable: false,
+        name: '_details_control',
+        className: 'details-control',
+        data: null,
+        defaultContent: ''
+      }, 'defaultContent', vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>');
+      vm.options.columns.splice((vm.details.index || 1) - 1, 0, _col2);
+
+      if ((vm.details.index || 1) > 0) {
+        sort++;
+      }
+    }
+
+    if (sort > 0) {
+      vm.options.order = [[sort, 'asc']];
+    }
+
+    // handle local data loader
+    if (vm.dataLoader) {
+      delete vm.options.ajax;
+      vm.options.serverSide = false;
+    }
+  },
+  mounted: function mounted() {
+    var vm = this;
+    var jq = vm.jq;
+    var $el = jq(vm.$refs.table);
+
+    // console.log(vm.options.buttons)
+    vm.dataTable = $el.DataTable(vm.options);
+
+    if (vm.selectCheckbox) {
+      // handle select all checkbox
+      $el.on('click', 'th input.select-all-checkbox', function (e) {
+        if (jq(e.target).is(':checked')) {
+          vm.dataTable.rows().select();
+        } else {
+          vm.dataTable.rows().deselect();
+        }
+      });
+
+      // handle individual row select events
+      vm.dataTable.on('select deselect', function () {
+        var $input = $el.find('th input.select-all-checkbox');
+        if (vm.dataTable.rows({
+          selected: true
+        }).count() !== vm.dataTable.rows().count()) {
+          jq('th.select-checkbox').removeClass('selected');
+          $input.attr('checked', false);
+        } else {
+          jq('th.select-checkbox').addClass('selected');
+          $input.attr('checked', true);
+        }
+        // TODO: vm.$emit the selected row?
+      });
+    }
+
+    // wire up edit, delete, and/or action buttons
+    $el.on('click', '[data-action]', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var target = jq(e.target);
+      var that = target;
+      var action = that.attr('data-action');
+      while (!action) {
+        // don't let it propagate outside of container
+        if (that.hasClass('vdtnet-container') || that.prop('tagName') === 'table') {
+          // no action, simply exit
+          return;
+        }
+        that = that.parent();
+        action = that.attr('data-action');
+      }
+
+      // only emit if there is action
+      if (action) {
+        // detect if row action
+        var tr = that.closest('tr');
+        if (tr) {
+          if (tr.attr('role') !== 'row') {
+            tr = tr.prev();
+          }
+          var row = vm.dataTable.row(tr);
+          var data = row.data();
+          vm.$emit(action, data, row, tr, that);
+        } else {
+          // not a row click, must be other kind of action
+          // such as bulk, csv, pdf, etc...
+          vm.$emit(action, null, null, null, target);
+        }
+      }
+    });
+
+    // handle master/details
+    if (vm.details) {
+      // default to render function
+      var renderFunc = vm.details.render;
+
+      // must be string template
+      if (vm.details.template) {
+        renderFunc = vm.compileTemplate(vm.details.template);
+      }
+
+      // handle master/details
+      // Add event listener for opening and closing details
+      $el.on('click', 'td.details-control', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var target = jq(e.target);
+        var that = target;
+        var tr = that.closest('tr');
+        if (tr.attr('role') !== 'row') {
+          tr = tr.prev();
+        }
+        var row = vm.dataTable.row(tr);
+        if (row.child.isShown()) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('master');
+        } else {
+          // Open this row
+          var data = row.data();
+          row.child(renderFunc(data, 'child', row, tr)).show();
+          tr.addClass('master');
+        }
+      });
+    }
+
+    // finally, load data
+    if (vm.dataLoader) {
+      vm.reload();
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    var vm = this;
+    if (vm.dataTable) {
+      vm.dataTable.destroy(true);
+    }
+    vm.dataTable = null;
+  },
+
+  methods: {
+    /**
+     * Vue.compile a template string and return the compiled function
+     *
+     * @param  {String} template the string template
+     * @return {Function}          the compiled template function
+     */
+    compileTemplate: function compileTemplate(template) {
+      var vm = this;
+      var jq = vm.jq;
+      var res = Vue.compile('<div>' + template + '</div>');
+      var renderFunc = function renderFunc(data, type, row, meta) {
+        var comp = new Vue({
+          data: {
+            data: data,
+            type: type,
+            row: row,
+            meta: meta
+          },
+          render: res.render,
+          staticRenderFns: res.staticRenderFns
+        }).$mount();
+        return jq(comp.$el).html();
+      };
+
+      return renderFunc;
+    },
+
+    /**
+     * Set table data array that was loaded from somewhere else
+     * This method allow for local setting of data; though, it
+     * is recommended to use ajax instead of this.
+     *
+     * @param {Array} data   the array of data
+     * @return {Object}            the component
+     */
+    setTableData: function setTableData(data) {
+      var vm = this;
+      if (data.constructor === Array) {
+        vm.dataTable.clear().rows.add(data);
+        vm.dataTable.draw(false);
+        vm.dataTable.columns.adjust();
+      }
+      return vm;
+    },
+
+    /**
+     * pass through reload method
+     *
+     * @param  {Boolean}  resetPaging true to reset current page position
+     * @return {Object}            the component
+     */
+    reload: function reload() {
+      var resetPaging = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      var vm = this;
+      if (vm.dataLoader) {
+        // manual data loading
+        vm.dataLoader(function (data) {
+          if (data && !data.data) {
+            data = { data: data };
+          }
+          vm.setTableData(data.data);
+
+          vm.$emit('reloaded', data, vm);
+        });
+      } else {
+        vm.dataTable.ajax.reload(function (data) {
+          vm.$emit('reloaded', data, vm);
+        }, resetPaging);
+      }
+
+      return vm;
+    },
+    search: function search(value) {
+      var vm = this;
+      vm.dataTable.search(value).draw();
+      return vm;
+    },
+    setPageLength: function setPageLength(value) {
+      var vm = this;
+      vm.dataTable.page.len(value);
+      return vm.reload();
+    },
+    getServerParams: function getServerParams() {
+      if (this.dataLoader) {
+        return {};
+      }
+      return this.dataTable.ajax.params();
+    }
+  }
+});
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(23);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(2)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./VdtnetTable.vue?vue&type=style&index=0&lang=css&", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./VdtnetTable.vue?vue&type=style&index=0&lang=css&");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
 		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
 	}
-
-	return [content].join('\n');
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
 }
 
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-	return '/*# ' + data + ' */';
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = normalizeComponent;
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
 }
 
 
 /***/ }),
-/* 3 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables Bootstrap 4 integration
- * ©2011-2017 SpryMedia Ltd - datatables.net/license
- */
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(40);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(2)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(13);
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_vue__ = __webpack_require__(15);
+
+
+
+new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#app',
+  render: function render(h) {
+    return h(__WEBPACK_IMPORTED_MODULE_1__App_vue__["a" /* default */]);
+  }
+});
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App_vue_vue_type_template_id_a9794c84_scoped_true___ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_vue_vue_type_script_lang_js___ = __webpack_require__(5);
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__ = __webpack_require__(10);
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(__WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__["a" /* default */])(
+  __WEBPACK_IMPORTED_MODULE_1__App_vue_vue_type_script_lang_js___["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__App_vue_vue_type_template_id_a9794c84_scoped_true___["a" /* render */],
+  __WEBPACK_IMPORTED_MODULE_0__App_vue_vue_type_template_id_a9794c84_scoped_true___["b" /* staticRenderFns */],
+  false,
+  null,
+  "a9794c84",
+  null
+  
+)
+
+/* hot reload */
+if (false) {
+  var api = require("/Users/tomn/Desktop/work/niiknow/vue-datatables-net/node_modules/vue-hot-reload-api/dist/index.js")
+  api.install(require('vue'))
+  if (api.compatible) {
+    module.hot.accept()
+    if (!module.hot.data) {
+      api.createRecord('a9794c84', component.options)
+    } else {
+      api.reload('a9794c84', component.options)
+    }
+    module.hot.accept("./App.vue?vue&type=template&id=a9794c84&scoped=true&", function () {
+      api.rerender('a9794c84', {
+        render: render,
+        staticRenderFns: staticRenderFns
+      })
+    })
+  }
+}
+component.options.__file = "example/App.vue"
+/* harmony default export */ __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___ = __webpack_require__(17);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___["b"]; });
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-12", attrs: { id: "app" } },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-md-9" }, [
+          _c("div", { staticClass: "dt-buttons btn-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary buttons-copy buttons-html5",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    $event.preventDefault()
+                    _vm.doExport("csv")
+                  }
+                }
+              },
+              [_vm._v("Csv")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary buttons-copy buttons-html5",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    $event.preventDefault()
+                    _vm.doExport("excel")
+                  }
+                }
+              },
+              [_vm._v("Excel")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary buttons-copy buttons-html5",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    $event.preventDefault()
+                    _vm.doExport("pdf")
+                  }
+                }
+              },
+              [_vm._v("Pdf")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-md-3" }, [
+          _c(
+            "form",
+            {
+              staticClass: "form-inline d-flex mx-1 justify-content-end",
+              on: {
+                submit: function($event) {
+                  $event.stopPropagation()
+                  $event.preventDefault()
+                  return _vm.doSearch($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "input-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.quickSearch,
+                      expression: "quickSearch"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "search", placeholder: "Quick search" },
+                  domProps: { value: _vm.quickSearch },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.quickSearch = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "vdtnet-table",
+        {
+          ref: "table",
+          attrs: {
+            fields: _vm.fields,
+            opts: _vm.options,
+            "select-checkbox": 1,
+            details: _vm.details
+          },
+          on: {
+            edit: _vm.doAlertEdit,
+            delete: _vm.doAlertDelete,
+            reloaded: _vm.doAfterReload
+          }
+        },
+        [
+          _c("template", { slot: "HEAD__details_control" }, [
+            _vm._v("\n      Show Details\n    ")
+          ])
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-outline-secondary", attrs: { type: "submit" } },
+        [
+          _c("i", { staticClass: "mdi mdi-magnify" }),
+          _vm._v(" Go\n            ")
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue__ = __webpack_require__(19);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue__["a" /* default */]);
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue_vue_type_template_id_c0350a64___ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VdtnetTable_vue_vue_type_script_lang_js___ = __webpack_require__(7);
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VdtnetTable_vue_vue_type_style_index_0_lang_css___ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__ = __webpack_require__(10);
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(__WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__["a" /* default */])(
+  __WEBPACK_IMPORTED_MODULE_1__VdtnetTable_vue_vue_type_script_lang_js___["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue_vue_type_template_id_c0350a64___["a" /* render */],
+  __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue_vue_type_template_id_c0350a64___["b" /* staticRenderFns */],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) {
+  var api = require("/Users/tomn/Desktop/work/niiknow/vue-datatables-net/node_modules/vue-hot-reload-api/dist/index.js")
+  api.install(require('vue'))
+  if (api.compatible) {
+    module.hot.accept()
+    if (!module.hot.data) {
+      api.createRecord('c0350a64', component.options)
+    } else {
+      api.reload('c0350a64', component.options)
+    }
+    module.hot.accept("./VdtnetTable.vue?vue&type=template&id=c0350a64&", function () {
+      api.rerender('c0350a64', {
+        render: render,
+        staticRenderFns: staticRenderFns
+      })
+    })
+  }
+}
+component.options.__file = "src/VdtnetTable.vue"
+/* harmony default export */ __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___ = __webpack_require__(21);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___["b"]; });
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { class: _vm.classes }, [_vm._m(0)])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "table",
+      { ref: "table", class: _vm.className, attrs: { cellpadding: "0" } },
+      [
+        _c("thead", [
+          _c(
+            "tr",
+            _vm._l(_vm.options.columns, function(field, i) {
+              return _c(
+                "th",
+                { key: i, class: field.className },
+                [
+                  _vm._t(
+                    "HEAD_" + field.name,
+                    [
+                      _c("div", {
+                        domProps: { innerHTML: _vm._s(field.title) }
+                      })
+                    ],
+                    { field: field, i: i }
+                  )
+                ],
+                2
+              )
+            })
+          )
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___);
+/* unused harmony reexport namespace */
+ /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css____default.a); 
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.vdtnet-footer .dataTables_length {\n  padding-top: 6px;\n  padding-right: 10px;\n}\n.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {\n  float: right;\n}\n.hide-footer .vdtnet-footer {\n  display: none;\n}\n.master .details-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.master .details-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
 
 /**
- * DataTables integration for Bootstrap 4. This requires Bootstrap 4 and
- * DataTables 1.10 or newer.
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
  *
- * This file sets the defaults and adds options to DataTables to style its
- * controls using Bootstrap. See http://datatables.net/manual/styling/bootstrap
- * for further information.
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
  */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap integration for DataTables' Buttons
+ * ©2016 SpryMedia Ltd - datatables.net/license
+ */
+
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -15496,10 +17361,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables B
 			}
 
 			if ( ! $ || ! $.fn.dataTable ) {
-				// Require DataTables, which attaches to jQuery, including
-				// jQuery if needed and have a $ property so we can access the
-				// jQuery object that is used
-				$ = require('datatables.net')(root, $).$;
+				$ = require('datatables.net-bs4')(root, $).$;
+			}
+
+			if ( ! $.fn.dataTable.Buttons ) {
+				require('datatables.net-buttons')(root, $);
 			}
 
 			return factory( $, root, root.document );
@@ -15513,150 +17379,36 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables B
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
-/* Set the defaults for DataTables initialisation */
-$.extend( true, DataTable.defaults, {
-	dom:
-		"<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-		"<'row'<'col-sm-12'tr>>" +
-		"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-	renderer: 'bootstrap'
-} );
-
-
-/* Default class modification */
-$.extend( DataTable.ext.classes, {
-	sWrapper:      "dataTables_wrapper dt-bootstrap4",
-	sFilterInput:  "form-control form-control-sm",
-	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
-	sProcessing:   "dataTables_processing card",
-	sPageButton:   "paginate_button page-item"
-} );
-
-
-/* Bootstrap paging button renderer */
-DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
-	var api     = new DataTable.Api( settings );
-	var classes = settings.oClasses;
-	var lang    = settings.oLanguage.oPaginate;
-	var aria = settings.oLanguage.oAria.paginate || {};
-	var btnDisplay, btnClass, counter=0;
-
-	var attach = function( container, buttons ) {
-		var i, ien, node, button;
-		var clickHandler = function ( e ) {
-			e.preventDefault();
-			if ( !$(e.currentTarget).hasClass('disabled') && api.page() != e.data.action ) {
-				api.page( e.data.action ).draw( 'page' );
-			}
-		};
-
-		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-			button = buttons[i];
-
-			if ( $.isArray( button ) ) {
-				attach( container, button );
-			}
-			else {
-				btnDisplay = '';
-				btnClass = '';
-
-				switch ( button ) {
-					case 'ellipsis':
-						btnDisplay = '&#x2026;';
-						btnClass = 'disabled';
-						break;
-
-					case 'first':
-						btnDisplay = lang.sFirst;
-						btnClass = button + (page > 0 ?
-							'' : ' disabled');
-						break;
-
-					case 'previous':
-						btnDisplay = lang.sPrevious;
-						btnClass = button + (page > 0 ?
-							'' : ' disabled');
-						break;
-
-					case 'next':
-						btnDisplay = lang.sNext;
-						btnClass = button + (page < pages-1 ?
-							'' : ' disabled');
-						break;
-
-					case 'last':
-						btnDisplay = lang.sLast;
-						btnClass = button + (page < pages-1 ?
-							'' : ' disabled');
-						break;
-
-					default:
-						btnDisplay = button + 1;
-						btnClass = page === button ?
-							'active' : '';
-						break;
-				}
-
-				if ( btnDisplay ) {
-					node = $('<li>', {
-							'class': classes.sPageButton+' '+btnClass,
-							'id': idx === 0 && typeof button === 'string' ?
-								settings.sTableId +'_'+ button :
-								null
-						} )
-						.append( $('<a>', {
-								'href': '#',
-								'aria-controls': settings.sTableId,
-								'aria-label': aria[ button ],
-								'data-dt-idx': counter,
-								'tabindex': settings.iTabIndex,
-								'class': 'page-link'
-							} )
-							.html( btnDisplay )
-						)
-						.appendTo( container );
-
-					settings.oApi._fnBindAction(
-						node, {action: button}, clickHandler
-					);
-
-					counter++;
-				}
+$.extend( true, DataTable.Buttons.defaults, {
+	dom: {
+		container: {
+			className: 'dt-buttons btn-group'
+		},
+		button: {
+			className: 'btn btn-secondary'
+		},
+		collection: {
+			tag: 'div',
+			className: 'dt-button-collection dropdown-menu',
+			button: {
+				tag: 'a',
+				className: 'dt-button dropdown-item',
+				active: 'active',
+				disabled: 'disabled'
 			}
 		}
-	};
-
-	// IE9 throws an 'unknown error' if document.activeElement is used
-	// inside an iframe or frame. 
-	var activeEl;
-
-	try {
-		// Because this approach is destroying and recreating the paging
-		// elements, focus is lost on the select button which is bad for
-		// accessibility. So we want to restore focus once the draw has
-		// completed
-		activeEl = $(host).find(document.activeElement).data('dt-idx');
 	}
-	catch (e) {}
+} );
 
-	attach(
-		$(host).empty().html('<ul class="pagination"/>').children('ul'),
-		buttons
-	);
+DataTable.ext.buttons.collection.className += ' dropdown-toggle';
+DataTable.ext.buttons.collection.rightAlignClassName = 'dropdown-menu-right';
 
-	if ( activeEl !== undefined ) {
-		$(host).find( '[data-dt-idx='+activeEl+']' ).focus();
-	}
-};
-
-
-return DataTable;
+return DataTable.Buttons;
 }));
 
 
 /***/ }),
-/* 4 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for DataTables 1.5.4
@@ -15666,7 +17418,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for 
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -17579,703 +19331,99 @@ return Buttons;
 
 
 /***/ }),
-/* 5 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 integration for DataTables' Responsive
+ * ©2016 SpryMedia Ltd - datatables.net/license
+ */
 
-var stylesInDom = {};
-
-var	memoize = function (fn) {
-	var memo;
-
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
-
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
-
-var getElement = (function (fn) {
-	var memo = {};
-
-	return function(selector) {
-		if (typeof memo[selector] === "undefined") {
-			memo[selector] = fn.call(this, selector);
-		}
-
-		return memo[selector]
-	};
-})(function (target) {
-	return document.querySelector(target)
-});
-
-var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
-
-var	fixUrls = __webpack_require__(31);
-
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+(function( factory ){
+	if ( true ) {
+		// AMD
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+			return factory( $, window, document );
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
+	else if ( typeof exports === 'object' ) {
+		// CommonJS
+		module.exports = function (root, $) {
+			if ( ! root ) {
+				root = window;
+			}
 
-	options = options || {};
+			if ( ! $ || ! $.fn.dataTable ) {
+				$ = require('datatables.net-bs4')(root, $).$;
+			}
 
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+			if ( ! $.fn.dataTable.Responsive ) {
+				require('datatables.net-responsive')(root, $);
+			}
 
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton) options.singleton = isOldIE();
+			return factory( $, root, root.document );
+		};
+	}
+	else {
+		// Browser
+		factory( jQuery, window, document );
+	}
+}(function( $, window, document, undefined ) {
+'use strict';
+var DataTable = $.fn.dataTable;
 
-	// By default, add <style> tags to the <head> element
-	if (!options.insertInto) options.insertInto = "head";
 
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
+var _display = DataTable.Responsive.display;
+var _original = _display.modal;
+var _modal = $(
+	'<div class="modal fade dtr-bs-modal" role="dialog">'+
+		'<div class="modal-dialog" role="document">'+
+			'<div class="modal-content">'+
+				'<div class="modal-header">'+
+					'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+				'</div>'+
+				'<div class="modal-body"/>'+
+			'</div>'+
+		'</div>'+
+	'</div>'
+);
 
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
+_display.modal = function ( options ) {
+	return function ( row, update, render ) {
+		if ( ! $.fn.modal ) {
+			_original( row, update, render );
 		}
+		else {
+			if ( ! update ) {
+				if ( options && options.header ) {
+					var header = _modal.find('div.modal-header');
+					var button = header.find('button').detach();
+					
+					header
+						.empty()
+						.append( '<h4 class="modal-title">'+options.header( row )+'</h4>' )
+						.append( button );
+				}
 
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
+				_modal.find( 'div.modal-body' )
+					.empty()
+					.append( render() );
 
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
+				_modal
+					.appendTo( 'body' )
+					.modal();
 			}
 		}
 	};
 };
 
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
 
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else {
-		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	options.attrs.type = "text/css";
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	options.attrs.type = "text/css";
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = options.transform(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
+return DataTable.Responsive;
+}));
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(15)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 8 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Responsive 2.2.3
@@ -18303,7 +19451,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Responsive 2
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -19675,2832 +20823,7 @@ return Responsive;
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(10);
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_vue__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__App_vue__);
-
-
-
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#app',
-  render: function render(h) {
-    return h(__WEBPACK_IMPORTED_MODULE_1__App_vue___default.a);
-  }
-});
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(13)
-}
-var normalizeComponent = __webpack_require__(7)
-/* script */
-var __vue_script__ = __webpack_require__(16)
-/* template */
-var __vue_template__ = __webpack_require__(38)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-a9794c84"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "example/App.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-a9794c84", Component.options)
-  } else {
-    hotAPI.reload("data-v-a9794c84", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(14);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(6)("54c20aa0", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../node_modules/css-loader/index.js?sourceMap!../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a9794c84\",\"scoped\":true,\"hasInlineConfig\":true}!../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue", function() {
-     var newContent = require("!!../node_modules/css-loader/index.js?sourceMap!../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a9794c84\",\"scoped\":true,\"hasInlineConfig\":true}!../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(true);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"App.vue","sourceRoot":""}]);
-
-// exports
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables_net_js_jquery_dataTables_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables_net_js_jquery_dataTables_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_datatables_net_js_jquery_dataTables_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net_bs4_js_dataTables_bootstrap4_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net_bs4_js_dataTables_bootstrap4_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_datatables_net_bs4_js_dataTables_bootstrap4_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net_buttons_js_dataTables_buttons_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net_buttons_js_dataTables_buttons_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net_buttons_js_dataTables_buttons_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net_buttons_js_buttons_html5_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net_buttons_js_buttons_html5_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_datatables_net_buttons_js_buttons_html5_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_datatables_net_buttons_js_buttons_print_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_datatables_net_buttons_js_buttons_print_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_datatables_net_buttons_js_buttons_print_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_datatables_net_responsive_js_dataTables_responsive_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_datatables_net_responsive_js_dataTables_responsive_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_datatables_net_responsive_js_dataTables_responsive_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_datatables_net_select_bs4__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_datatables_net_select_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_datatables_net_select_bs4__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_datatables_net_bs4_css_dataTables_bootstrap4_min_css__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_datatables_net_bs4_css_dataTables_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_datatables_net_bs4_css_dataTables_bootstrap4_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_datatables_net_select_bs4_css_select_bootstrap4_min_css__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_datatables_net_select_bs4_css_select_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_datatables_net_select_bs4_css_select_bootstrap4_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// this demonstrate with buttons and responsive master/details row
-
-
-
-
-// import buttons
-
-
-
-
-
-// import the rest
-
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'App',
-  components: { VdtnetTable: __WEBPACK_IMPORTED_MODULE_0__src__["a" /* default */] },
-  data: function data() {
-    var vm = this;
-
-    return {
-      options: {
-        ajax: {
-          url: 'https://jsonplaceholder.typicode.com/users',
-          dataSrc: function dataSrc(json) {
-            return json;
-          }
-        },
-        responsive: false,
-        processing: true,
-        pageLength: 10,
-        searching: true,
-        searchDelay: 1500,
-        destroy: true,
-        ordering: true,
-        lengthChange: true,
-        serverSide: true,
-        fixedHeader: true,
-        saveState: true
-      },
-      fields: {
-        id: { label: 'ID', sortable: true },
-        actions: {
-          sortable: false,
-          label: 'Actions',
-          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
-        },
-        name: { label: 'Name', sortable: true, searchable: true },
-        username: { label: 'Username', sortable: false, searchable: true },
-        email: { label: 'Email' },
-        address: {
-          label: 'Address',
-          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
-        },
-        phone: { label: 'Phone' },
-        website: {
-          label: 'Website',
-          render: function render(data) {
-            return 'https://' + data;
-          }
-        }
-      },
-      quickSearch: '',
-      details: {
-        template: 'I\'m a child for {{ data.id }} yall'
-      }
-    };
-  },
-
-  methods: {
-    doLoadTable: function doLoadTable(cb) {
-      $.getJSON('https://jsonplaceholder.typicode.com/users', function (data) {
-        cb(data);
-      });
-    },
-    doAlertEdit: function doAlertEdit(data) {
-      window.alert('row edit click for item ID: ' + data.id);
-    },
-    doAlertDelete: function doAlertDelete(data, row, tr, target) {
-      window.alert('deleting item ID: ' + data.id);
-
-      // row.remove() doesn't work when serverside is enabled
-      // so we fake it with dom remove
-      tr.remove();
-
-      var table = this.$refs.table;
-      setTimeout(function () {
-        // simulate extra long running ajax
-        table.reload();
-      }, 1500);
-    },
-    doAfterReload: function doAfterReload(data, table) {
-      window.alert('data reloaded');
-    },
-    doSearch: function doSearch() {
-      this.$refs.table.search(this.quickSearch);
-    },
-    doExport: function doExport(type) {
-      var parms = this.$refs.table.getServerParams();
-      parms.export = type;
-      window.alert('GET /api/v1/export?' + jQuery.param(parms));
-    }
-  }
-});
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue__);
-
-
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue___default.a);
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(19)
-}
-var normalizeComponent = __webpack_require__(7)
-/* script */
-var __vue_script__ = __webpack_require__(21)
-/* template */
-var __vue_template__ = __webpack_require__(22)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/VdtnetTable.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c0350a64", Component.options)
-  } else {
-    hotAPI.reload("data-v-c0350a64", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(20);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(6)("8401f024", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../node_modules/css-loader/index.js?sourceMap!../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0350a64\",\"scoped\":false,\"hasInlineConfig\":true}!../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VdtnetTable.vue", function() {
-     var newContent = require("!!../node_modules/css-loader/index.js?sourceMap!../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0350a64\",\"scoped\":false,\"hasInlineConfig\":true}!../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VdtnetTable.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(true);
-// imports
-
-
-// module
-exports.push([module.i, "\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.vdtnet-footer .dataTables_length {\n  padding-top: 6px;\n  padding-right: 10px;\n}\n.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {\n  float: right;\n}\n.hide-footer .vdtnet-footer {\n  display: none;\n}\n.master .details-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.master .details-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n", "", {"version":3,"sources":["/Users/tomn/Desktop/work/niiknow/vue-datatables-net/src/src/VdtnetTable.vue"],"names":[],"mappings":";AAmcA;EACA,gBAAA;CACA;AACA;EACA,iBAAA;EACA,oBAAA;CACA;AACA;EACA,aAAA;CACA;AACA;EACA,cAAA;CACA;AAEA;;EAEA,gBAAA;EACA,cAAA;CACA;AACA;;EAEA,gBAAA;EACA,cAAA;CACA;AACA;;EAEA,gBAAA;EACA,gBAAA;CACA;AACA;EACA,gBAAA;EACA,iBAAA;CACA","file":"VdtnetTable.vue","sourcesContent":["<template>\n  <div\n    :class=\"classes\"\n  >\n    <table\n      v-once\n      ref=\"table\"\n      :class=\"className\"\n      cellpadding=\"0\"\n    >\n      <thead>\n        <tr>\n          <th\n            v-for=\"(field, i) in options.columns\"\n            :key=\"i\"\n            :class=\"field.className\"\n          >\n            <slot\n              :name=\"`HEAD_${field.name}`\"\n              :field=\"field\"\n              :i=\"i\"\n            >\n              <div v-html=\"field.title\" />\n            </slot>\n          </th>\n        </tr>\n      </thead>\n    </table>\n  </div>\n</template>\n\n<script>\nexport default {\n  name: 'VdtnetTable',\n  props: {\n    /**\n     * Set the table classes you wish to use, default with bootstrap4\n     * but you can override with: themeforest, foundation, etc..\n     *\n     * @type String\n     */\n    className: {\n      type: String,\n      default: 'table table-striped table-bordered nowrap w-100'\n    },\n    /**\n     * the options object: https://datatables.net/manual/options\n     *\n     * @type Object\n     */\n    opts: {\n      type: Object\n    },\n    /**\n     * List all fields to be converted to opts columns\n     *\n     * @type Object\n     */\n    fields: {\n      type: Object\n    },\n    /**\n     * Pass in DataTables.Net jQuery to resolve any conflict from\n     * multiple jQuery loaded in the browser\n     *\n     * @type Object\n     */\n    jquery: {\n      type: Object\n    },\n    /**\n     * The select-checkbox column index (start at 1)\n     * Current implementation require datatables.net-select\n     *\n     * @type Number\n     */\n    selectCheckbox: {\n      type: Number\n    },\n    /**\n     * Provide custom local data loading.  Warning: this option has not been\n     * thoroughly tested.  Please use ajax and serverSide instead.\n     *\n     * @type Function\n     */\n    dataLoader: {\n      type: Function\n    },\n    /**\n     * true to hide the footer of the table\n     *\n     * @type Boolean\n     */\n    hideFooter: {\n      type: Boolean\n    },\n    /**\n     * The details column configuration of master/details.\n     *\n     * @type {Object}\n     */\n    details: {\n      type: Object\n    }\n  },\n  data() {\n    // initialize defaults\n    return {\n      options: {\n/*eslint-disable */\n        dom: \"tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>\",\n/*eslint-enable */\n        columns: [],\n        language: {\n          infoFiltered: ''\n        },\n        lengthMenu: [ [15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All'] ],\n        pageLength: 15,\n        buttons: []  // remove any button defaults\n      },\n      dataTable: null\n    }\n  },\n  computed: {\n    jq() {\n      return this.jquery || window.jQuery\n    },\n    classes() {\n      let classes = 'table-responsive vdtnet-container'\n      if (this.hideFooter) {\n        classes += ' hide-footer'\n      }\n\n      return classes\n    }\n  },\n  created() {\n    const vm  = this\n    const jq  = vm.jq\n    let sort  = 0\n\n    // allow user to override default options\n    if (vm.opts) {\n      vm.options = jq.extend({}, vm.options, vm.opts)\n    }\n\n    // if fields are passed in, generate column definition\n    // from our custom fields schema\n    if (vm.fields) {\n      const fields = vm.fields\n      const cols   = vm.options.columns\n\n      for (let k in fields) {\n        const field = fields[k]\n        field.name = field.name || k\n\n        // generate\n        let col = {\n          searchable: field.searchable,\n          title: field.label || k,\n          width: field.width,\n          data: field.name,\n          visible: field.visible,\n          className: field.className\n        }\n\n        if (field.width) {\n          col.width = field.width\n        }\n\n        if (field.hasOwnProperty('defaultContent')) {\n          col.defaultContent = field.defaultContent\n        }\n\n        if (field.hasOwnProperty('sortable')) {\n          col.orderable = field.sortable\n        }\n\n        if (field.template) {\n          field.render = vm.compileTemplate(field.template)\n        }\n\n        if (field.render) {\n          col.render = field.render\n        }\n        // console.log(col)\n\n        cols.push(col)\n      }\n    }\n\n    if (vm.selectCheckbox) {\n      // expand column\n      const col = {\n        orderable: false,\n        name: '_select_checkbox',\n        className: 'select-checkbox',\n        data: null,\n        defaultContent: '',\n        title: '<input type=\"checkbox\" class=\"select-all-checkbox\">'\n      }\n      vm.options.columns.splice(vm.selectCheckbox - 1, 0, col)\n\n      // console.log(vm.options.columns)\n      vm.options.select = jq.extend(\n        vm.options.select || {},\n        {\n          style: 'os',\n          selector: 'td.select-checkbox'\n        }\n      )\n\n      if (vm.selectCheckbox == 1) {\n        sort++\n      }\n    }\n\n    // handle master details\n    if (vm.details) {\n      const col = {\n        orderable: false,\n        name: '_details_control',\n        className: 'details-control',\n        data: null,\n        defaultContent: '',\n        defaultContent: vm.details.icons || '<span class=\"details-plus\" title=\"Show details\">+</span><span class=\"details-minus\" title=\"Hide details\">-</span>'\n      }\n      vm.options.columns.splice((vm.details.index || 1) - 1, 0, col)\n\n      if ((vm.details.index || 1) > 0) {\n        sort++\n      }\n    }\n\n    if (sort > 0) {\n      vm.options.order = [[sort, 'asc']]\n    }\n\n    // handle local data loader\n    if (vm.dataLoader) {\n      delete vm.options.ajax\n      vm.options.serverSide = false\n    }\n  },\n  mounted() {\n    const vm = this\n    const jq = vm.jq\n    const $el = jq(vm.$refs.table)\n\n    // console.log(vm.options.buttons)\n    vm.dataTable = $el.DataTable(vm.options)\n\n    if (vm.selectCheckbox) {\n      // handle select all checkbox\n      $el.on('click', 'th input.select-all-checkbox', (e) => {\n        if(jq(e.target).is(':checked')) {\n          vm.dataTable.rows().select()\n        } else {\n          vm.dataTable.rows().deselect()\n        }\n      })\n\n      // handle individual row select events\n      vm.dataTable.on('select deselect', () => {\n        const $input = $el.find('th input.select-all-checkbox')\n        if (vm.dataTable.rows({\n            selected: true\n          }).count() !== vm.dataTable.rows().count()) {\n          jq('th.select-checkbox').removeClass('selected')\n          $input.attr('checked', false)\n        } else {\n          jq('th.select-checkbox').addClass('selected')\n          $input.attr('checked', true)\n        }\n        // TODO: vm.$emit the selected row?\n      })\n    }\n\n    // wire up edit, delete, and/or action buttons\n    $el.on('click', '[data-action]', (e) => {\n      e.preventDefault()\n      e.stopPropagation()\n      const target = jq(e.target)\n      let that     = target\n      let action   = that.attr('data-action')\n      while(!action) {\n        // don't let it propagate outside of container\n        if (that.hasClass('vdtnet-container') ||\n          that.prop('tagName') === 'table') {\n          // no action, simply exit\n          return\n        }\n        that   = that.parent()\n        action = that.attr('data-action')\n      }\n\n      // only emit if there is action\n      if (action) {\n        // detect if row action\n        let tr = that.closest('tr')\n        if (tr) {\n          if (tr.attr('role') !== 'row') {\n            tr = tr.prev()\n          }\n          const row  = vm.dataTable.row(tr)\n          const data = row.data()\n          vm.$emit(action, data, row, tr, that)\n        } else {\n          // not a row click, must be other kind of action\n          // such as bulk, csv, pdf, etc...\n          vm.$emit(action, null, null, null, target)\n        }\n      }\n    })\n\n    // handle master/details\n    if (vm.details) {\n      // default to render function\n      let renderFunc = vm.details.render\n\n      // must be string template\n      if (vm.details.template) {\n        renderFunc = vm.compileTemplate(vm.details.template)\n      }\n\n      // handle master/details\n      // Add event listener for opening and closing details\n      $el.on('click', 'td.details-control', (e) => {\n        e.preventDefault()\n        e.stopPropagation()\n        const target = jq(e.target)\n        let that     = target\n        let tr       = that.closest('tr')\n        if (tr.attr('role') !== 'row') {\n          tr = tr.prev()\n        }\n        const row = vm.dataTable.row( tr )\n        if ( row.child.isShown() ) {\n          // This row is already open - close it\n          row.child.hide()\n          tr.removeClass('master')\n        }\n        else {\n          // Open this row\n          const data = row.data()\n          row.child( renderFunc(data, 'child', row, tr) ).show()\n          tr.addClass('master')\n        }\n      })\n    }\n\n    // finally, load data\n    if (vm.dataLoader) {\n      vm.reload()\n    }\n  },\n  beforeDestroy() {\n    const vm = this\n    if (vm.dataTable) {\n      vm.dataTable.destroy(true)\n    }\n    vm.dataTable = null\n  },\n  methods: {\n    /**\n     * Vue.compile a template string and return the compiled function\n     *\n     * @param  {String} template the string template\n     * @return {Function}          the compiled template function\n     */\n    compileTemplate(template) {\n      const vm  = this\n      const jq  = vm.jq\n      const res = Vue.compile(`<div>${template}</div>`)\n      const renderFunc = (data, type, row, meta) => {\n        const comp = new Vue({\n          data: {\n              data: data,\n              type: type,\n              row: row,\n              meta: meta\n          },\n          render: res.render,\n          staticRenderFns: res.staticRenderFns\n        }).$mount()\n        return jq(comp.$el).html()\n      }\n\n      return renderFunc\n    },\n    /**\n     * Set table data array that was loaded from somewhere else\n     * This method allow for local setting of data; though, it\n     * is recommended to use ajax instead of this.\n     *\n     * @param {Array} data   the array of data\n     * @return {Object}            the component\n     */\n    setTableData(data) {\n      const vm = this\n      if (data.constructor === Array) {\n        vm.dataTable.clear().rows.add(data)\n        vm.dataTable.draw(false)\n        vm.dataTable.columns.adjust()\n      }\n      return vm\n    },\n    /**\n     * pass through reload method\n     *\n     * @param  {Boolean}  resetPaging true to reset current page position\n     * @return {Object}            the component\n     */\n    reload(resetPaging = false) {\n      const vm = this\n      if (vm.dataLoader) {\n        // manual data loading\n        vm.dataLoader((data) => {\n          if (data && !data.data) {\n            data = { data: data }\n          }\n          vm.setTableData( data.data )\n\n          vm.$emit('reloaded', data, vm)\n        })\n      } else {\n        vm.dataTable.ajax.reload( (data) => { vm.$emit('reloaded', data, vm) } , resetPaging )\n      }\n\n      return vm\n    },\n    search(value) {\n      const vm = this\n      vm.dataTable.search( value ).draw()\n      return vm\n    },\n    setPageLength(value) {\n      const vm = this\n      vm.dataTable.page.len( value )\n      return vm.reload()\n    },\n    getServerParams() {\n      if (this.dataLoader) {\n        return {}\n      }\n      return this.dataTable.ajax.params()\n    }\n  }\n}\n</script>\n<style>\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.vdtnet-footer .dataTables_length {\n  padding-top: 6px;\n  padding-right: 10px;\n}\n.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {\n  float: right;\n}\n.hide-footer .vdtnet-footer {\n  display: none;\n}\n\n.master .details-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.master .details-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n</style>\n"],"sourceRoot":""}]);
-
-// exports
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'VdtnetTable',
-  props: {
-    /**
-     * Set the table classes you wish to use, default with bootstrap4
-     * but you can override with: themeforest, foundation, etc..
-     *
-     * @type String
-     */
-    className: {
-      type: String,
-      default: 'table table-striped table-bordered nowrap w-100'
-    },
-    /**
-     * the options object: https://datatables.net/manual/options
-     *
-     * @type Object
-     */
-    opts: {
-      type: Object
-    },
-    /**
-     * List all fields to be converted to opts columns
-     *
-     * @type Object
-     */
-    fields: {
-      type: Object
-    },
-    /**
-     * Pass in DataTables.Net jQuery to resolve any conflict from
-     * multiple jQuery loaded in the browser
-     *
-     * @type Object
-     */
-    jquery: {
-      type: Object
-    },
-    /**
-     * The select-checkbox column index (start at 1)
-     * Current implementation require datatables.net-select
-     *
-     * @type Number
-     */
-    selectCheckbox: {
-      type: Number
-    },
-    /**
-     * Provide custom local data loading.  Warning: this option has not been
-     * thoroughly tested.  Please use ajax and serverSide instead.
-     *
-     * @type Function
-     */
-    dataLoader: {
-      type: Function
-    },
-    /**
-     * true to hide the footer of the table
-     *
-     * @type Boolean
-     */
-    hideFooter: {
-      type: Boolean
-    },
-    /**
-     * The details column configuration of master/details.
-     *
-     * @type {Object}
-     */
-    details: {
-      type: Object
-    }
-  },
-  data: function data() {
-    // initialize defaults
-    return {
-      options: {
-        /*eslint-disable */
-        dom: "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
-        /*eslint-enable */
-        columns: [],
-        language: {
-          infoFiltered: ''
-        },
-        lengthMenu: [[15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All']],
-        pageLength: 15,
-        buttons: [] // remove any button defaults
-      },
-      dataTable: null
-    };
-  },
-
-  computed: {
-    jq: function jq() {
-      return this.jquery || window.jQuery;
-    },
-    classes: function classes() {
-      var classes = 'table-responsive vdtnet-container';
-      if (this.hideFooter) {
-        classes += ' hide-footer';
-      }
-
-      return classes;
-    }
-  },
-  created: function created() {
-    var vm = this;
-    var jq = vm.jq;
-    var sort = 0;
-
-    // allow user to override default options
-    if (vm.opts) {
-      vm.options = jq.extend({}, vm.options, vm.opts);
-    }
-
-    // if fields are passed in, generate column definition
-    // from our custom fields schema
-    if (vm.fields) {
-      var fields = vm.fields;
-      var cols = vm.options.columns;
-
-      for (var k in fields) {
-        var field = fields[k];
-        field.name = field.name || k;
-
-        // generate
-        var col = {
-          searchable: field.searchable,
-          title: field.label || k,
-          width: field.width,
-          data: field.name,
-          visible: field.visible,
-          className: field.className
-        };
-
-        if (field.width) {
-          col.width = field.width;
-        }
-
-        if (field.hasOwnProperty('defaultContent')) {
-          col.defaultContent = field.defaultContent;
-        }
-
-        if (field.hasOwnProperty('sortable')) {
-          col.orderable = field.sortable;
-        }
-
-        if (field.template) {
-          field.render = vm.compileTemplate(field.template);
-        }
-
-        if (field.render) {
-          col.render = field.render;
-        }
-        // console.log(col)
-
-        cols.push(col);
-      }
-    }
-
-    if (vm.selectCheckbox) {
-      // expand column
-      var _col = {
-        orderable: false,
-        name: '_select_checkbox',
-        className: 'select-checkbox',
-        data: null,
-        defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox">'
-      };
-      vm.options.columns.splice(vm.selectCheckbox - 1, 0, _col);
-
-      // console.log(vm.options.columns)
-      vm.options.select = jq.extend(vm.options.select || {}, {
-        style: 'os',
-        selector: 'td.select-checkbox'
-      });
-
-      if (vm.selectCheckbox == 1) {
-        sort++;
-      }
-    }
-
-    // handle master details
-    if (vm.details) {
-      var _col2 = _defineProperty({
-        orderable: false,
-        name: '_details_control',
-        className: 'details-control',
-        data: null,
-        defaultContent: ''
-      }, 'defaultContent', vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>');
-      vm.options.columns.splice((vm.details.index || 1) - 1, 0, _col2);
-
-      if ((vm.details.index || 1) > 0) {
-        sort++;
-      }
-    }
-
-    if (sort > 0) {
-      vm.options.order = [[sort, 'asc']];
-    }
-
-    // handle local data loader
-    if (vm.dataLoader) {
-      delete vm.options.ajax;
-      vm.options.serverSide = false;
-    }
-  },
-  mounted: function mounted() {
-    var vm = this;
-    var jq = vm.jq;
-    var $el = jq(vm.$refs.table);
-
-    // console.log(vm.options.buttons)
-    vm.dataTable = $el.DataTable(vm.options);
-
-    if (vm.selectCheckbox) {
-      // handle select all checkbox
-      $el.on('click', 'th input.select-all-checkbox', function (e) {
-        if (jq(e.target).is(':checked')) {
-          vm.dataTable.rows().select();
-        } else {
-          vm.dataTable.rows().deselect();
-        }
-      });
-
-      // handle individual row select events
-      vm.dataTable.on('select deselect', function () {
-        var $input = $el.find('th input.select-all-checkbox');
-        if (vm.dataTable.rows({
-          selected: true
-        }).count() !== vm.dataTable.rows().count()) {
-          jq('th.select-checkbox').removeClass('selected');
-          $input.attr('checked', false);
-        } else {
-          jq('th.select-checkbox').addClass('selected');
-          $input.attr('checked', true);
-        }
-        // TODO: vm.$emit the selected row?
-      });
-    }
-
-    // wire up edit, delete, and/or action buttons
-    $el.on('click', '[data-action]', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var target = jq(e.target);
-      var that = target;
-      var action = that.attr('data-action');
-      while (!action) {
-        // don't let it propagate outside of container
-        if (that.hasClass('vdtnet-container') || that.prop('tagName') === 'table') {
-          // no action, simply exit
-          return;
-        }
-        that = that.parent();
-        action = that.attr('data-action');
-      }
-
-      // only emit if there is action
-      if (action) {
-        // detect if row action
-        var tr = that.closest('tr');
-        if (tr) {
-          if (tr.attr('role') !== 'row') {
-            tr = tr.prev();
-          }
-          var row = vm.dataTable.row(tr);
-          var data = row.data();
-          vm.$emit(action, data, row, tr, that);
-        } else {
-          // not a row click, must be other kind of action
-          // such as bulk, csv, pdf, etc...
-          vm.$emit(action, null, null, null, target);
-        }
-      }
-    });
-
-    // handle master/details
-    if (vm.details) {
-      // default to render function
-      var renderFunc = vm.details.render;
-
-      // must be string template
-      if (vm.details.template) {
-        renderFunc = vm.compileTemplate(vm.details.template);
-      }
-
-      // handle master/details
-      // Add event listener for opening and closing details
-      $el.on('click', 'td.details-control', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var target = jq(e.target);
-        var that = target;
-        var tr = that.closest('tr');
-        if (tr.attr('role') !== 'row') {
-          tr = tr.prev();
-        }
-        var row = vm.dataTable.row(tr);
-        if (row.child.isShown()) {
-          // This row is already open - close it
-          row.child.hide();
-          tr.removeClass('master');
-        } else {
-          // Open this row
-          var data = row.data();
-          row.child(renderFunc(data, 'child', row, tr)).show();
-          tr.addClass('master');
-        }
-      });
-    }
-
-    // finally, load data
-    if (vm.dataLoader) {
-      vm.reload();
-    }
-  },
-  beforeDestroy: function beforeDestroy() {
-    var vm = this;
-    if (vm.dataTable) {
-      vm.dataTable.destroy(true);
-    }
-    vm.dataTable = null;
-  },
-
-  methods: {
-    /**
-     * Vue.compile a template string and return the compiled function
-     *
-     * @param  {String} template the string template
-     * @return {Function}          the compiled template function
-     */
-    compileTemplate: function compileTemplate(template) {
-      var vm = this;
-      var jq = vm.jq;
-      var res = Vue.compile('<div>' + template + '</div>');
-      var renderFunc = function renderFunc(data, type, row, meta) {
-        var comp = new Vue({
-          data: {
-            data: data,
-            type: type,
-            row: row,
-            meta: meta
-          },
-          render: res.render,
-          staticRenderFns: res.staticRenderFns
-        }).$mount();
-        return jq(comp.$el).html();
-      };
-
-      return renderFunc;
-    },
-
-    /**
-     * Set table data array that was loaded from somewhere else
-     * This method allow for local setting of data; though, it
-     * is recommended to use ajax instead of this.
-     *
-     * @param {Array} data   the array of data
-     * @return {Object}            the component
-     */
-    setTableData: function setTableData(data) {
-      var vm = this;
-      if (data.constructor === Array) {
-        vm.dataTable.clear().rows.add(data);
-        vm.dataTable.draw(false);
-        vm.dataTable.columns.adjust();
-      }
-      return vm;
-    },
-
-    /**
-     * pass through reload method
-     *
-     * @param  {Boolean}  resetPaging true to reset current page position
-     * @return {Object}            the component
-     */
-    reload: function reload() {
-      var resetPaging = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      var vm = this;
-      if (vm.dataLoader) {
-        // manual data loading
-        vm.dataLoader(function (data) {
-          if (data && !data.data) {
-            data = { data: data };
-          }
-          vm.setTableData(data.data);
-
-          vm.$emit('reloaded', data, vm);
-        });
-      } else {
-        vm.dataTable.ajax.reload(function (data) {
-          vm.$emit('reloaded', data, vm);
-        }, resetPaging);
-      }
-
-      return vm;
-    },
-    search: function search(value) {
-      var vm = this;
-      vm.dataTable.search(value).draw();
-      return vm;
-    },
-    setPageLength: function setPageLength(value) {
-      var vm = this;
-      vm.dataTable.page.len(value);
-      return vm.reload();
-    },
-    getServerParams: function getServerParams() {
-      if (this.dataLoader) {
-        return {};
-      }
-      return this.dataTable.ajax.params();
-    }
-  }
-});
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { class: _vm.classes }, [_vm._m(0)])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "table",
-      { ref: "table", class: _vm.className, attrs: { cellpadding: "0" } },
-      [
-        _c("thead", [
-          _c(
-            "tr",
-            _vm._l(_vm.options.columns, function(field, i) {
-              return _c(
-                "th",
-                { key: i, class: field.className },
-                [
-                  _vm._t(
-                    "HEAD_" + field.name,
-                    [
-                      _c("div", {
-                        domProps: { innerHTML: _vm._s(field.title) }
-                      })
-                    ],
-                    { field: field, i: i }
-                  )
-                ],
-                2
-              )
-            })
-          )
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-c0350a64", module.exports)
-  }
-}
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * HTML5 export buttons for Buttons and DataTables.
- * 2016 SpryMedia Ltd - datatables.net/license
- *
- * FileSaver.js (1.3.3) - MIT license
- * Copyright © 2016 Eli Grey - http://eligrey.com
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(1), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $, jszip, pdfmake) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.Buttons ) {
-				require('datatables.net-buttons')(root, $);
-			}
-
-			return factory( $, root, root.document, jszip, pdfmake );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, jszip, pdfmake, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-// Allow the constructor to pass in JSZip and PDFMake from external requires.
-// Otherwise, use globally defined variables, if they are available.
-function _jsZip () {
-	return jszip || window.JSZip;
-}
-function _pdfMake () {
-	return pdfmake || window.pdfMake;
-}
-
-DataTable.Buttons.pdfMake = function (_) {
-	if ( ! _ ) {
-		return _pdfMake();
-	}
-	pdfmake = m_ake;
-}
-
-DataTable.Buttons.jszip = function (_) {
-	if ( ! _ ) {
-		return _jsZip();
-	}
-	jszip = _;
-}
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FileSaver.js dependency
- */
-
-/*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
-
-var _saveAs = (function(view) {
-	"use strict";
-	// IE <10 is explicitly unsupported
-	if (typeof view === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
-		return;
-	}
-	var
-		  doc = view.document
-		  // only get URL when necessary in case Blob.js hasn't overridden it yet
-		, get_URL = function() {
-			return view.URL || view.webkitURL || view;
-		}
-		, save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
-		, can_use_save_link = "download" in save_link
-		, click = function(node) {
-			var event = new MouseEvent("click");
-			node.dispatchEvent(event);
-		}
-		, is_safari = /constructor/i.test(view.HTMLElement) || view.safari
-		, is_chrome_ios =/CriOS\/[\d]+/.test(navigator.userAgent)
-		, throw_outside = function(ex) {
-			(view.setImmediate || view.setTimeout)(function() {
-				throw ex;
-			}, 0);
-		}
-		, force_saveable_type = "application/octet-stream"
-		// the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
-		, arbitrary_revoke_timeout = 1000 * 40 // in ms
-		, revoke = function(file) {
-			var revoker = function() {
-				if (typeof file === "string") { // file is an object URL
-					get_URL().revokeObjectURL(file);
-				} else { // file is a File
-					file.remove();
-				}
-			};
-			setTimeout(revoker, arbitrary_revoke_timeout);
-		}
-		, dispatch = function(filesaver, event_types, event) {
-			event_types = [].concat(event_types);
-			var i = event_types.length;
-			while (i--) {
-				var listener = filesaver["on" + event_types[i]];
-				if (typeof listener === "function") {
-					try {
-						listener.call(filesaver, event || filesaver);
-					} catch (ex) {
-						throw_outside(ex);
-					}
-				}
-			}
-		}
-		, auto_bom = function(blob) {
-			// prepend BOM for UTF-8 XML and text/* types (including HTML)
-			// note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
-			if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
-				return new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
-			}
-			return blob;
-		}
-		, FileSaver = function(blob, name, no_auto_bom) {
-			if (!no_auto_bom) {
-				blob = auto_bom(blob);
-			}
-			// First try a.download, then web filesystem, then object URLs
-			var
-				  filesaver = this
-				, type = blob.type
-				, force = type === force_saveable_type
-				, object_url
-				, dispatch_all = function() {
-					dispatch(filesaver, "writestart progress write writeend".split(" "));
-				}
-				// on any filesys errors revert to saving with object URLs
-				, fs_error = function() {
-					if ((is_chrome_ios || (force && is_safari)) && view.FileReader) {
-						// Safari doesn't allow downloading of blob urls
-						var reader = new FileReader();
-						reader.onloadend = function() {
-							var url = is_chrome_ios ? reader.result : reader.result.replace(/^data:[^;]*;/, 'data:attachment/file;');
-							var popup = view.open(url, '_blank');
-							if(!popup) view.location.href = url;
-							url=undefined; // release reference before dispatching
-							filesaver.readyState = filesaver.DONE;
-							dispatch_all();
-						};
-						reader.readAsDataURL(blob);
-						filesaver.readyState = filesaver.INIT;
-						return;
-					}
-					// don't create more object URLs than needed
-					if (!object_url) {
-						object_url = get_URL().createObjectURL(blob);
-					}
-					if (force) {
-						view.location.href = object_url;
-					} else {
-						var opened = view.open(object_url, "_blank");
-						if (!opened) {
-							// Apple does not allow window.open, see https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/WorkingwithWindowsandTabs/WorkingwithWindowsandTabs.html
-							view.location.href = object_url;
-						}
-					}
-					filesaver.readyState = filesaver.DONE;
-					dispatch_all();
-					revoke(object_url);
-				}
-			;
-			filesaver.readyState = filesaver.INIT;
-
-			if (can_use_save_link) {
-				object_url = get_URL().createObjectURL(blob);
-				setTimeout(function() {
-					save_link.href = object_url;
-					save_link.download = name;
-					click(save_link);
-					dispatch_all();
-					revoke(object_url);
-					filesaver.readyState = filesaver.DONE;
-				});
-				return;
-			}
-
-			fs_error();
-		}
-		, FS_proto = FileSaver.prototype
-		, saveAs = function(blob, name, no_auto_bom) {
-			return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
-		}
-	;
-	// IE 10+ (native saveAs)
-	if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
-		return function(blob, name, no_auto_bom) {
-			name = name || blob.name || "download";
-
-			if (!no_auto_bom) {
-				blob = auto_bom(blob);
-			}
-			return navigator.msSaveOrOpenBlob(blob, name);
-		};
-	}
-
-	FS_proto.abort = function(){};
-	FS_proto.readyState = FS_proto.INIT = 0;
-	FS_proto.WRITING = 1;
-	FS_proto.DONE = 2;
-
-	FS_proto.error =
-	FS_proto.onwritestart =
-	FS_proto.onprogress =
-	FS_proto.onwrite =
-	FS_proto.onabort =
-	FS_proto.onerror =
-	FS_proto.onwriteend =
-		null;
-
-	return saveAs;
-}(
-	   typeof self !== "undefined" && self
-	|| typeof window !== "undefined" && window
-	|| this.content
-));
-
-
-// Expose file saver on the DataTables API. Can't attach to `DataTables.Buttons`
-// since this file can be loaded before Button's core!
-DataTable.fileSave = _saveAs;
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Local (private) functions
- */
-
-/**
- * Get the sheet name for Excel exports.
- *
- * @param {object}	config Button configuration
- */
-var _sheetname = function ( config )
-{
-	var sheetName = 'Sheet1';
-
-	if ( config.sheetName ) {
-		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
-	}
-
-	return sheetName;
-};
-
-/**
- * Get the newline character(s)
- *
- * @param {object}	config Button configuration
- * @return {string}				Newline character
- */
-var _newLine = function ( config )
-{
-	return config.newline ?
-		config.newline :
-		navigator.userAgent.match(/Windows/) ?
-			'\r\n' :
-			'\n';
-};
-
-/**
- * Combine the data from the `buttons.exportData` method into a string that
- * will be used in the export file.
- *
- * @param	{DataTable.Api} dt		 DataTables API instance
- * @param	{object}				config Button configuration
- * @return {object}							 The data to export
- */
-var _exportData = function ( dt, config )
-{
-	var newLine = _newLine( config );
-	var data = dt.buttons.exportData( config.exportOptions );
-	var boundary = config.fieldBoundary;
-	var separator = config.fieldSeparator;
-	var reBoundary = new RegExp( boundary, 'g' );
-	var escapeChar = config.escapeChar !== undefined ?
-		config.escapeChar :
-		'\\';
-	var join = function ( a ) {
-		var s = '';
-
-		// If there is a field boundary, then we might need to escape it in
-		// the source data
-		for ( var i=0, ien=a.length ; i<ien ; i++ ) {
-			if ( i > 0 ) {
-				s += separator;
-			}
-
-			s += boundary ?
-				boundary + ('' + a[i]).replace( reBoundary, escapeChar+boundary ) + boundary :
-				a[i];
-		}
-
-		return s;
-	};
-
-	var header = config.header ? join( data.header )+newLine : '';
-	var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
-	var body = [];
-
-	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		body.push( join( data.body[i] ) );
-	}
-
-	return {
-		str: header + body.join( newLine ) + footer,
-		rows: body.length
-	};
-};
-
-/**
- * Older versions of Safari (prior to tech preview 18) don't support the
- * download option required.
- *
- * @return {Boolean} `true` if old Safari
- */
-var _isDuffSafari = function ()
-{
-	var safari = navigator.userAgent.indexOf('Safari') !== -1 &&
-		navigator.userAgent.indexOf('Chrome') === -1 &&
-		navigator.userAgent.indexOf('Opera') === -1;
-
-	if ( ! safari ) {
-		return false;
-	}
-
-	var version = navigator.userAgent.match( /AppleWebKit\/(\d+\.\d+)/ );
-	if ( version && version.length > 1 && version[1]*1 < 603.1 ) {
-		return true;
-	}
-
-	return false;
-};
-
-/**
- * Convert from numeric position to letter for column names in Excel
- * @param  {int} n Column number
- * @return {string} Column letter(s) name
- */
-function createCellPos( n ){
-	var ordA = 'A'.charCodeAt(0);
-	var ordZ = 'Z'.charCodeAt(0);
-	var len = ordZ - ordA + 1;
-	var s = "";
-
-	while( n >= 0 ) {
-		s = String.fromCharCode(n % len + ordA) + s;
-		n = Math.floor(n / len) - 1;
-	}
-
-	return s;
-}
-
-try {
-	var _serialiser = new XMLSerializer();
-	var _ieExcel;
-}
-catch (t) {}
-
-/**
- * Recursively add XML files from an object's structure to a ZIP file. This
- * allows the XSLX file to be easily defined with an object's structure matching
- * the files structure.
- *
- * @param {JSZip} zip ZIP package
- * @param {object} obj Object to add (recursive)
- */
-function _addToZip( zip, obj ) {
-	if ( _ieExcel === undefined ) {
-		// Detect if we are dealing with IE's _awful_ serialiser by seeing if it
-		// drop attributes
-		_ieExcel = _serialiser
-			.serializeToString(
-				$.parseXML( excelStrings['xl/worksheets/sheet1.xml'] )
-			)
-			.indexOf( 'xmlns:r' ) === -1;
-	}
-
-	$.each( obj, function ( name, val ) {
-		if ( $.isPlainObject( val ) ) {
-			var newDir = zip.folder( name );
-			_addToZip( newDir, val );
-		}
-		else {
-			if ( _ieExcel ) {
-				// IE's XML serialiser will drop some name space attributes from
-				// from the root node, so we need to save them. Do this by
-				// replacing the namespace nodes with a regular attribute that
-				// we convert back when serialised. Edge does not have this
-				// issue
-				var worksheet = val.childNodes[0];
-				var i, ien;
-				var attrs = [];
-
-				for ( i=worksheet.attributes.length-1 ; i>=0 ; i-- ) {
-					var attrName = worksheet.attributes[i].nodeName;
-					var attrValue = worksheet.attributes[i].nodeValue;
-
-					if ( attrName.indexOf( ':' ) !== -1 ) {
-						attrs.push( { name: attrName, value: attrValue } );
-
-						worksheet.removeAttribute( attrName );
-					}
-				}
-
-				for ( i=0, ien=attrs.length ; i<ien ; i++ ) {
-					var attr = val.createAttribute( attrs[i].name.replace( ':', '_dt_b_namespace_token_' ) );
-					attr.value = attrs[i].value;
-					worksheet.setAttributeNode( attr );
-				}
-			}
-
-			var str = _serialiser.serializeToString(val);
-
-			// Fix IE's XML
-			if ( _ieExcel ) {
-				// IE doesn't include the XML declaration
-				if ( str.indexOf( '<?xml' ) === -1 ) {
-					str = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+str;
-				}
-
-				// Return namespace attributes to being as such
-				str = str.replace( /_dt_b_namespace_token_/g, ':' );
-
-				// Remove testing name space that IE puts into the space preserve attr
-				str = str.replace( /xmlns:NS[\d]+="" NS[\d]+:/g, '' );
-			}
-
-			// Safari, IE and Edge will put empty name space attributes onto
-			// various elements making them useless. This strips them out
-			str = str.replace( /<([^<>]*?) xmlns=""([^<>]*?)>/g, '<$1 $2>' );
-
-			zip.file( name, str );
-		}
-	} );
-}
-
-/**
- * Create an XML node and add any children, attributes, etc without needing to
- * be verbose in the DOM.
- *
- * @param  {object} doc      XML document
- * @param  {string} nodeName Node name
- * @param  {object} opts     Options - can be `attr` (attributes), `children`
- *   (child nodes) and `text` (text content)
- * @return {node}            Created node
- */
-function _createNode( doc, nodeName, opts ) {
-	var tempNode = doc.createElement( nodeName );
-
-	if ( opts ) {
-		if ( opts.attr ) {
-			$(tempNode).attr( opts.attr );
-		}
-
-		if ( opts.children ) {
-			$.each( opts.children, function ( key, value ) {
-				tempNode.appendChild( value );
-			} );
-		}
-
-		if ( opts.text !== null && opts.text !== undefined ) {
-			tempNode.appendChild( doc.createTextNode( opts.text ) );
-		}
-	}
-
-	return tempNode;
-}
-
-/**
- * Get the width for an Excel column based on the contents of that column
- * @param  {object} data Data for export
- * @param  {int}    col  Column index
- * @return {int}         Column width
- */
-function _excelColWidth( data, col ) {
-	var max = data.header[col].length;
-	var len, lineSplit, str;
-
-	if ( data.footer && data.footer[col].length > max ) {
-		max = data.footer[col].length;
-	}
-
-	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		var point = data.body[i][col];
-		str = point !== null && point !== undefined ?
-			point.toString() :
-			'';
-
-		// If there is a newline character, workout the width of the column
-		// based on the longest line in the string
-		if ( str.indexOf('\n') !== -1 ) {
-			lineSplit = str.split('\n');
-			lineSplit.sort( function (a, b) {
-				return b.length - a.length;
-			} );
-
-			len = lineSplit[0].length;
-		}
-		else {
-			len = str.length;
-		}
-
-		if ( len > max ) {
-			max = len;
-		}
-
-		// Max width rather than having potentially massive column widths
-		if ( max > 40 ) {
-			return 54; // 40 * 1.35
-		}
-	}
-
-	max *= 1.35;
-
-	// And a min width
-	return max > 6 ? max : 6;
-}
-
-// Excel - Pre-defined strings to build a basic XLSX file
-var excelStrings = {
-	"_rels/.rels":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
-			'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'+
-		'</Relationships>',
-
-	"xl/_rels/workbook.xml.rels":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
-			'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>'+
-			'<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'+
-		'</Relationships>',
-
-	"[Content_Types].xml":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'+
-			'<Default Extension="xml" ContentType="application/xml" />'+
-			'<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />'+
-			'<Default Extension="jpeg" ContentType="image/jpeg" />'+
-			'<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" />'+
-			'<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" />'+
-			'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" />'+
-		'</Types>',
-
-	"xl/workbook.xml":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'+
-			'<fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="24816"/>'+
-			'<workbookPr showInkAnnotation="0" autoCompressPictures="0"/>'+
-			'<bookViews>'+
-				'<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>'+
-			'</bookViews>'+
-			'<sheets>'+
-				'<sheet name="Sheet1" sheetId="1" r:id="rId1"/>'+
-			'</sheets>'+
-			'<definedNames/>'+
-		'</workbook>',
-
-	"xl/worksheets/sheet1.xml":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
-			'<sheetData/>'+
-			'<mergeCells count="0"/>'+
-		'</worksheet>',
-
-	"xl/styles.xml":
-		'<?xml version="1.0" encoding="UTF-8"?>'+
-		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
-			'<numFmts count="6">'+
-				'<numFmt numFmtId="164" formatCode="#,##0.00_-\ [$$-45C]"/>'+
-				'<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>'+
-				'<numFmt numFmtId="166" formatCode="[$€-2]\ #,##0.00"/>'+
-				'<numFmt numFmtId="167" formatCode="0.0%"/>'+
-				'<numFmt numFmtId="168" formatCode="#,##0;(#,##0)"/>'+
-				'<numFmt numFmtId="169" formatCode="#,##0.00;(#,##0.00)"/>'+
-			'</numFmts>'+
-			'<fonts count="5" x14ac:knownFonts="1">'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<color rgb="FFFFFFFF" />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<b />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<i />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<u />'+
-				'</font>'+
-			'</fonts>'+
-			'<fills count="6">'+
-				'<fill>'+
-					'<patternFill patternType="none" />'+
-				'</fill>'+
-				'<fill>'+ // Excel appears to use this as a dotted background regardless of values but
-					'<patternFill patternType="none" />'+ // to be valid to the schema, use a patternFill
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="FFD9D9D9" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="FFD99795" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="ffc6efce" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="ffc6cfef" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-			'</fills>'+
-			'<borders count="2">'+
-				'<border>'+
-					'<left />'+
-					'<right />'+
-					'<top />'+
-					'<bottom />'+
-					'<diagonal />'+
-				'</border>'+
-				'<border diagonalUp="false" diagonalDown="false">'+
-					'<left style="thin">'+
-						'<color auto="1" />'+
-					'</left>'+
-					'<right style="thin">'+
-						'<color auto="1" />'+
-					'</right>'+
-					'<top style="thin">'+
-						'<color auto="1" />'+
-					'</top>'+
-					'<bottom style="thin">'+
-						'<color auto="1" />'+
-					'</bottom>'+
-					'<diagonal />'+
-				'</border>'+
-			'</borders>'+
-			'<cellStyleXfs count="1">'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" />'+
-			'</cellStyleXfs>'+
-			'<cellXfs count="67">'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="left"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="center"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="right"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="fill"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment textRotation="90"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment wrapText="1"/>'+
-				'</xf>'+
-				'<xf numFmtId="9"   fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="164" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="165" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="166" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="167" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="168" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="169" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="3" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="4" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="1" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="2" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-			'</cellXfs>'+
-			'<cellStyles count="1">'+
-				'<cellStyle name="Normal" xfId="0" builtinId="0" />'+
-			'</cellStyles>'+
-			'<dxfs count="0" />'+
-			'<tableStyles count="0" defaultTableStyle="TableStyleMedium9" defaultPivotStyle="PivotStyleMedium4" />'+
-		'</styleSheet>'
-};
-// Note we could use 3 `for` loops for the styles, but when gzipped there is
-// virtually no difference in size, since the above can be easily compressed
-
-// Pattern matching for special number formats. Perhaps this should be exposed
-// via an API in future?
-// Ref: section 3.8.30 - built in formatters in open spreadsheet
-//   https://www.ecma-international.org/news/TC45_current_work/Office%20Open%20XML%20Part%204%20-%20Markup%20Language%20Reference.pdf
-var _excelSpecials = [
-	{ match: /^\-?\d+\.\d%$/,       style: 60, fmt: function (d) { return d/100; } }, // Precent with d.p.
-	{ match: /^\-?\d+\.?\d*%$/,     style: 56, fmt: function (d) { return d/100; } }, // Percent
-	{ match: /^\-?\$[\d,]+.?\d*$/,  style: 57 }, // Dollars
-	{ match: /^\-?£[\d,]+.?\d*$/,   style: 58 }, // Pounds
-	{ match: /^\-?€[\d,]+.?\d*$/,   style: 59 }, // Euros
-	{ match: /^\-?\d+$/,            style: 65 }, // Numbers without thousand separators
-	{ match: /^\-?\d+\.\d{2}$/,     style: 66 }, // Numbers 2 d.p. without thousands separators
-	{ match: /^\([\d,]+\)$/,        style: 61, fmt: function (d) { return -1 * d.replace(/[\(\)]/g, ''); } },  // Negative numbers indicated by brackets
-	{ match: /^\([\d,]+\.\d{2}\)$/, style: 62, fmt: function (d) { return -1 * d.replace(/[\(\)]/g, ''); } },  // Negative numbers indicated by brackets - 2d.p.
-	{ match: /^\-?[\d,]+$/,         style: 63 }, // Numbers with thousand separators
-	{ match: /^\-?[\d,]+\.\d{2}$/,  style: 64 }  // Numbers with 2 d.p. and thousands separators
-];
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Buttons
- */
-
-//
-// Copy to clipboard
-//
-DataTable.ext.buttons.copyHtml5 = {
-	className: 'buttons-copy buttons-html5',
-
-	text: function ( dt ) {
-		return dt.i18n( 'buttons.copy', 'Copy' );
-	},
-
-	action: function ( e, dt, button, config ) {
-		this.processing( true );
-
-		var that = this;
-		var exportData = _exportData( dt, config );
-		var info = dt.buttons.exportInfo( config );
-		var newline = _newLine(config);
-		var output = exportData.str;
-		var hiddenDiv = $('<div/>')
-			.css( {
-				height: 1,
-				width: 1,
-				overflow: 'hidden',
-				position: 'fixed',
-				top: 0,
-				left: 0
-			} );
-
-		if ( info.title ) {
-			output = info.title + newline + newline + output;
-		}
-
-		if ( info.messageTop ) {
-			output = info.messageTop + newline + newline + output;
-		}
-
-		if ( info.messageBottom ) {
-			output = output + newline + newline + info.messageBottom;
-		}
-
-		if ( config.customize ) {
-			output = config.customize( output, config, dt );
-		}
-
-		var textarea = $('<textarea readonly/>')
-			.val( output )
-			.appendTo( hiddenDiv );
-
-		// For browsers that support the copy execCommand, try to use it
-		if ( document.queryCommandSupported('copy') ) {
-			hiddenDiv.appendTo( dt.table().container() );
-			textarea[0].focus();
-			textarea[0].select();
-
-			try {
-				var successful = document.execCommand( 'copy' );
-				hiddenDiv.remove();
-
-				if (successful) {
-					dt.buttons.info(
-						dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
-						dt.i18n( 'buttons.copySuccess', {
-							1: 'Copied one row to clipboard',
-							_: 'Copied %d rows to clipboard'
-						}, exportData.rows ),
-						2000
-					);
-
-					this.processing( false );
-					return;
-				}
-			}
-			catch (t) {}
-		}
-
-		// Otherwise we show the text box and instruct the user to use it
-		var message = $('<span>'+dt.i18n( 'buttons.copyKeys',
-				'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>'+
-				'To cancel, click this message or press escape.' )+'</span>'
-			)
-			.append( hiddenDiv );
-
-		dt.buttons.info( dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ), message, 0 );
-
-		// Select the text so when the user activates their system clipboard
-		// it will copy that text
-		textarea[0].focus();
-		textarea[0].select();
-
-		// Event to hide the message when the user is done
-		var container = $(message).closest('.dt-button-info');
-		var close = function () {
-			container.off( 'click.buttons-copy' );
-			$(document).off( '.buttons-copy' );
-			dt.buttons.info( false );
-		};
-
-		container.on( 'click.buttons-copy', close );
-		$(document)
-			.on( 'keydown.buttons-copy', function (e) {
-				if ( e.keyCode === 27 ) { // esc
-					close();
-					that.processing( false );
-				}
-			} )
-			.on( 'copy.buttons-copy cut.buttons-copy', function () {
-				close();
-				that.processing( false );
-			} );
-	},
-
-	exportOptions: {},
-
-	fieldSeparator: '\t',
-
-	fieldBoundary: '',
-
-	header: true,
-
-	footer: false,
-
-	title: '*',
-
-	messageTop: '*',
-
-	messageBottom: '*'
-};
-
-//
-// CSV export
-//
-DataTable.ext.buttons.csvHtml5 = {
-	bom: false,
-
-	className: 'buttons-csv buttons-html5',
-
-	available: function () {
-		return window.FileReader !== undefined && window.Blob;
-	},
-
-	text: function ( dt ) {
-		return dt.i18n( 'buttons.csv', 'CSV' );
-	},
-
-	action: function ( e, dt, button, config ) {
-		this.processing( true );
-
-		// Set the text
-		var output = _exportData( dt, config ).str;
-		var info = dt.buttons.exportInfo(config);
-		var charset = config.charset;
-
-		if ( config.customize ) {
-			output = config.customize( output, config, dt );
-		}
-
-		if ( charset !== false ) {
-			if ( ! charset ) {
-				charset = document.characterSet || document.charset;
-			}
-
-			if ( charset ) {
-				charset = ';charset='+charset;
-			}
-		}
-		else {
-			charset = '';
-		}
-
-		if ( config.bom ) {
-			output = '\ufeff' + output;
-		}
-
-		_saveAs(
-			new Blob( [output], {type: 'text/csv'+charset} ),
-			info.filename,
-			true
-		);
-
-		this.processing( false );
-	},
-
-	filename: '*',
-
-	extension: '.csv',
-
-	exportOptions: {},
-
-	fieldSeparator: ',',
-
-	fieldBoundary: '"',
-
-	escapeChar: '"',
-
-	charset: null,
-
-	header: true,
-
-	footer: false
-};
-
-//
-// Excel (xlsx) export
-//
-DataTable.ext.buttons.excelHtml5 = {
-	className: 'buttons-excel buttons-html5',
-
-	available: function () {
-		return window.FileReader !== undefined && _jsZip() !== undefined && ! _isDuffSafari() && _serialiser;
-	},
-
-	text: function ( dt ) {
-		return dt.i18n( 'buttons.excel', 'Excel' );
-	},
-
-	action: function ( e, dt, button, config ) {
-		this.processing( true );
-
-		var that = this;
-		var rowPos = 0;
-		var dataStartRow, dataEndRow;
-		var getXml = function ( type ) {
-			var str = excelStrings[ type ];
-
-			//str = str.replace( /xmlns:/g, 'xmlns_' ).replace( /mc:/g, 'mc_' );
-
-			return $.parseXML( str );
-		};
-		var rels = getXml('xl/worksheets/sheet1.xml');
-		var relsGet = rels.getElementsByTagName( "sheetData" )[0];
-
-		var xlsx = {
-			_rels: {
-				".rels": getXml('_rels/.rels')
-			},
-			xl: {
-				_rels: {
-					"workbook.xml.rels": getXml('xl/_rels/workbook.xml.rels')
-				},
-				"workbook.xml": getXml('xl/workbook.xml'),
-				"styles.xml": getXml('xl/styles.xml'),
-				"worksheets": {
-					"sheet1.xml": rels
-				}
-
-			},
-			"[Content_Types].xml": getXml('[Content_Types].xml')
-		};
-
-		var data = dt.buttons.exportData( config.exportOptions );
-		var currentRow, rowNode;
-		var addRow = function ( row ) {
-			currentRow = rowPos+1;
-			rowNode = _createNode( rels, "row", { attr: {r:currentRow} } );
-
-			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
-				// Concat both the Cell Columns as a letter and the Row of the cell.
-				var cellId = createCellPos(i) + '' + currentRow;
-				var cell = null;
-
-				// For null, undefined of blank cell, continue so it doesn't create the _createNode
-				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
-					if ( config.createEmptyCells === true ) {
-						row[i] = '';
-					}
-					else {
-						continue;
-					}
-				}
-
-				var originalContent = row[i];
-				row[i] = $.trim( row[i] );
-
-				// Special number formatting options
-				for ( var j=0, jen=_excelSpecials.length ; j<jen ; j++ ) {
-					var special = _excelSpecials[j];
-
-					// TODO Need to provide the ability for the specials to say
-					// if they are returning a string, since at the moment it is
-					// assumed to be a number
-					if ( row[i].match && ! row[i].match(/^0\d+/) && row[i].match( special.match ) ) {
-						var val = row[i].replace(/[^\d\.\-]/g, '');
-
-						if ( special.fmt ) {
-							val = special.fmt( val );
-						}
-
-						cell = _createNode( rels, 'c', {
-							attr: {
-								r: cellId,
-								s: special.style
-							},
-							children: [
-								_createNode( rels, 'v', { text: val } )
-							]
-						} );
-
-						break;
-					}
-				}
-
-				if ( ! cell ) {
-					if ( typeof row[i] === 'number' || (
-						row[i].match &&
-						row[i].match(/^-?\d+(\.\d+)?$/) &&
-						! row[i].match(/^0\d+/) )
-					) {
-						// Detect numbers - don't match numbers with leading zeros
-						// or a negative anywhere but the start
-						cell = _createNode( rels, 'c', {
-							attr: {
-								t: 'n',
-								r: cellId
-							},
-							children: [
-								_createNode( rels, 'v', { text: row[i] } )
-							]
-						} );
-					}
-					else {
-						// String output - replace non standard characters for text output
-						var text = ! originalContent.replace ?
-							originalContent :
-							originalContent.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
-
-						cell = _createNode( rels, 'c', {
-							attr: {
-								t: 'inlineStr',
-								r: cellId
-							},
-							children:{
-								row: _createNode( rels, 'is', {
-									children: {
-										row: _createNode( rels, 't', {
-											text: text,
-											attr: {
-												'xml:space': 'preserve'
-											}
-										} )
-									}
-								} )
-							}
-						} );
-					}
-				}
-
-				rowNode.appendChild( cell );
-			}
-
-			relsGet.appendChild(rowNode);
-			rowPos++;
-		};
-
-		if ( config.customizeData ) {
-			config.customizeData( data );
-		}
-
-		var mergeCells = function ( row, colspan ) {
-			var mergeCells = $('mergeCells', rels);
-
-			mergeCells[0].appendChild( _createNode( rels, 'mergeCell', {
-				attr: {
-					ref: 'A'+row+':'+createCellPos(colspan)+row
-				}
-			} ) );
-			mergeCells.attr( 'count', parseFloat(mergeCells.attr( 'count' ))+1 );
-			$('row:eq('+(row-1)+') c', rels).attr( 's', '51' ); // centre
-		};
-
-		// Title and top messages
-		var exportInfo = dt.buttons.exportInfo( config );
-		if ( exportInfo.title ) {
-			addRow( [exportInfo.title], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
-		}
-
-		if ( exportInfo.messageTop ) {
-			addRow( [exportInfo.messageTop], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
-		}
-
-
-		// Table itself
-		if ( config.header ) {
-			addRow( data.header, rowPos );
-			$('row:last c', rels).attr( 's', '2' ); // bold
-		}
-	
-		dataStartRow = rowPos;
-
-		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
-			addRow( data.body[n], rowPos );
-		}
-	
-		dataEndRow = rowPos;
-
-		if ( config.footer && data.footer ) {
-			addRow( data.footer, rowPos);
-			$('row:last c', rels).attr( 's', '2' ); // bold
-		}
-
-		// Below the table
-		if ( exportInfo.messageBottom ) {
-			addRow( [exportInfo.messageBottom], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
-		}
-
-		// Set column widths
-		var cols = _createNode( rels, 'cols' );
-		$('worksheet', rels).prepend( cols );
-
-		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
-			cols.appendChild( _createNode( rels, 'col', {
-				attr: {
-					min: i+1,
-					max: i+1,
-					width: _excelColWidth( data, i ),
-					customWidth: 1
-				}
-			} ) );
-		}
-
-		// Auto filter for columns
-		$('mergeCells', rels).before( _createNode( rels, 'autoFilter', {
-			attr: {
-				ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
-			}
-		} ) );
-
-		// Workbook modifications
-		var workbook = xlsx.xl['workbook.xml'];
-
-		$( 'sheets sheet', workbook ).attr( 'name', _sheetname( config ) );
-
-		if ( config.autoFilter ) {
-			$('definedNames', workbook).append( _createNode( workbook, 'definedName', {
-				attr: {
-					name: '_xlnm._FilterDatabase',
-					localSheetId: '0',
-					hidden: 1
-				},
-				text: _sheetname(config)+'!$A$'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
-			} ) );
-		}
-
-		// Let the developer customise the document if they want to
-		if ( config.customize ) {
-			config.customize( xlsx, config, dt );
-		}
-
-		// Excel doesn't like an empty mergeCells tag
-		if ( $('mergeCells', rels).children().length === 0 ) {
-			$('mergeCells', rels).remove();
-		}
-
-		var jszip = _jsZip();
-		var zip = new jszip();
-		var zipConfig = {
-			type: 'blob',
-			mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-		};
-
-		_addToZip( zip, xlsx );
-
-		if ( zip.generateAsync ) {
-			// JSZip 3+
-			zip
-				.generateAsync( zipConfig )
-				.then( function ( blob ) {
-					_saveAs( blob, exportInfo.filename );
-					that.processing( false );
-				} );
-		}
-		else {
-			// JSZip 2.5
-			_saveAs(
-				zip.generate( zipConfig ),
-				exportInfo.filename
-			);
-			this.processing( false );
-		}
-	},
-
-	filename: '*',
-
-	extension: '.xlsx',
-
-	exportOptions: {},
-
-	header: true,
-
-	footer: false,
-
-	title: '*',
-
-	messageTop: '*',
-
-	messageBottom: '*',
-
-	createEmptyCells: false,
-
-	autoFilter: false,
-
-	sheetName: ''
-};
-
-//
-// PDF export - using pdfMake - http://pdfmake.org
-//
-DataTable.ext.buttons.pdfHtml5 = {
-	className: 'buttons-pdf buttons-html5',
-
-	available: function () {
-		return window.FileReader !== undefined && _pdfMake();
-	},
-
-	text: function ( dt ) {
-		return dt.i18n( 'buttons.pdf', 'PDF' );
-	},
-
-	action: function ( e, dt, button, config ) {
-		this.processing( true );
-
-		var that = this;
-		var data = dt.buttons.exportData( config.exportOptions );
-		var info = dt.buttons.exportInfo( config );
-		var rows = [];
-
-		if ( config.header ) {
-			rows.push( $.map( data.header, function ( d ) {
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: 'tableHeader'
-				};
-			} ) );
-		}
-
-		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-			rows.push( $.map( data.body[i], function ( d ) {
-				if ( d === null || d === undefined ) {
-					d = '';
-				}
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: i % 2 ? 'tableBodyEven' : 'tableBodyOdd'
-				};
-			} ) );
-		}
-
-		if ( config.footer && data.footer) {
-			rows.push( $.map( data.footer, function ( d ) {
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: 'tableFooter'
-				};
-			} ) );
-		}
-
-		var doc = {
-			pageSize: config.pageSize,
-			pageOrientation: config.orientation,
-			content: [
-				{
-					table: {
-						headerRows: 1,
-						body: rows
-					},
-					layout: 'noBorders'
-				}
-			],
-			styles: {
-				tableHeader: {
-					bold: true,
-					fontSize: 11,
-					color: 'white',
-					fillColor: '#2d4154',
-					alignment: 'center'
-				},
-				tableBodyEven: {},
-				tableBodyOdd: {
-					fillColor: '#f3f3f3'
-				},
-				tableFooter: {
-					bold: true,
-					fontSize: 11,
-					color: 'white',
-					fillColor: '#2d4154'
-				},
-				title: {
-					alignment: 'center',
-					fontSize: 15
-				},
-				message: {}
-			},
-			defaultStyle: {
-				fontSize: 10
-			}
-		};
-
-		if ( info.messageTop ) {
-			doc.content.unshift( {
-				text: info.messageTop,
-				style: 'message',
-				margin: [ 0, 0, 0, 12 ]
-			} );
-		}
-
-		if ( info.messageBottom ) {
-			doc.content.push( {
-				text: info.messageBottom,
-				style: 'message',
-				margin: [ 0, 0, 0, 12 ]
-			} );
-		}
-
-		if ( info.title ) {
-			doc.content.unshift( {
-				text: info.title,
-				style: 'title',
-				margin: [ 0, 0, 0, 12 ]
-			} );
-		}
-
-		if ( config.customize ) {
-			config.customize( doc, config, dt );
-		}
-
-		var pdf = _pdfMake().createPdf( doc );
-
-		if ( config.download === 'open' && ! _isDuffSafari() ) {
-			pdf.open();
-		}
-		else {
-			pdf.download( info.filename );
-		}
-
-		this.processing( false );
-	},
-
-	title: '*',
-
-	filename: '*',
-
-	extension: '.pdf',
-
-	exportOptions: {},
-
-	orientation: 'portrait',
-
-	pageSize: 'A4',
-
-	header: true,
-
-	footer: false,
-
-	messageTop: '*',
-
-	messageBottom: '*',
-
-	customize: null,
-
-	download: 'download'
-};
-
-
-return DataTable.Buttons;
-}));
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * Print button for Buttons and DataTables.
- * 2016 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(1), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.Buttons ) {
-				require('datatables.net-buttons')(root, $);
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
-var _link = document.createElement( 'a' );
-
-/**
- * Clone link and style tags, taking into account the need to change the source
- * path.
- *
- * @param  {node}     el Element to convert
- */
-var _styleToAbs = function( el ) {
-	var url;
-	var clone = $(el).clone()[0];
-	var linkHost;
-
-	if ( clone.nodeName.toLowerCase() === 'link' ) {
-		clone.href = _relToAbs( clone.href );
-	}
-
-	return clone.outerHTML;
-};
-
-/**
- * Convert a URL from a relative to an absolute address so it will work
- * correctly in the popup window which has no base URL.
- *
- * @param  {string} href URL
- */
-var _relToAbs = function( href ) {
-	// Assign to a link on the original page so the browser will do all the
-	// hard work of figuring out where the file actually is
-	_link.href = href;
-	var linkHost = _link.host;
-
-	// IE doesn't have a trailing slash on the host
-	// Chrome has it on the pathname
-	if ( linkHost.indexOf('/') === -1 && _link.pathname.indexOf('/') !== 0) {
-		linkHost += '/';
-	}
-
-	return _link.protocol+"//"+linkHost+_link.pathname+_link.search;
-};
-
-
-DataTable.ext.buttons.print = {
-	className: 'buttons-print',
-
-	text: function ( dt ) {
-		return dt.i18n( 'buttons.print', 'Print' );
-	},
-
-	action: function ( e, dt, button, config ) {
-		var data = dt.buttons.exportData(
-			$.extend( {decodeEntities: false}, config.exportOptions ) // XSS protection
-		);
-		var exportInfo = dt.buttons.exportInfo( config );
-		var columnClasses = dt
-			.columns( config.exportOptions.columns )
-			.flatten()
-			.map( function (idx) {
-				return dt.settings()[0].aoColumns[dt.column(idx).index()].sClass;
-			} )
-			.toArray();
-
-		var addRow = function ( d, tag ) {
-			var str = '<tr>';
-
-			for ( var i=0, ien=d.length ; i<ien ; i++ ) {
-				// null and undefined aren't useful in the print output
-				var dataOut = d[i] === null || d[i] === undefined ?
-					'' :
-					d[i];
-				var classAttr = columnClasses[i] ?
-					'class="'+columnClasses[i]+'"' :
-					'';
-
-				str += '<'+tag+' '+classAttr+'>'+dataOut+'</'+tag+'>';
-			}
-
-			return str + '</tr>';
-		};
-
-		// Construct a table for printing
-		var html = '<table class="'+dt.table().node().className+'">';
-
-		if ( config.header ) {
-			html += '<thead>'+ addRow( data.header, 'th' ) +'</thead>';
-		}
-
-		html += '<tbody>';
-		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-			html += addRow( data.body[i], 'td' );
-		}
-		html += '</tbody>';
-
-		if ( config.footer && data.footer ) {
-			html += '<tfoot>'+ addRow( data.footer, 'th' ) +'</tfoot>';
-		}
-		html += '</table>';
-
-		// Open a new window for the printable table
-		var win = window.open( '', '' );
-		win.document.close();
-
-		// Inject the title and also a copy of the style and link tags from this
-		// document so the table can retain its base styling. Note that we have
-		// to use string manipulation as IE won't allow elements to be created
-		// in the host document and then appended to the new window.
-		var head = '<title>'+exportInfo.title+'</title>';
-		$('style, link').each( function () {
-			head += _styleToAbs( this );
-		} );
-
-		try {
-			win.document.head.innerHTML = head; // Work around for Edge
-		}
-		catch (e) {
-			$(win.document.head).html( head ); // Old IE
-		}
-
-		// Inject the table and other surrounding information
-		win.document.body.innerHTML =
-			'<h1>'+exportInfo.title+'</h1>'+
-			'<div>'+(exportInfo.messageTop || '')+'</div>'+
-			html+
-			'<div>'+(exportInfo.messageBottom || '')+'</div>';
-
-		$(win.document.body).addClass('dt-print-view');
-
-		$('img', win.document.body).each( function ( i, img ) {
-			img.setAttribute( 'src', _relToAbs( img.getAttribute('src') ) );
-		} );
-
-		if ( config.customize ) {
-			config.customize( win, config, dt );
-		}
-
-		// Allow stylesheets time to load
-		var autoPrint = function () {
-			if ( config.autoPrint ) {
-				win.print(); // blocking - so close will not
-				win.close(); // execute until this is done
-			}
-		};
-
-		if ( navigator.userAgent.match(/Trident\/\d.\d/) ) { // IE needs to call this without a setTimeout
-			autoPrint();
-		}
-		else {
-			win.setTimeout( autoPrint, 1000 );
-		}
-	},
-
-	title: '*',
-
-	messageTop: '*',
-
-	messageBottom: '*',
-
-	exportOptions: {},
-
-	header: true,
-
-	footer: false,
-
-	autoPrint: true,
-
-	customize: null
-};
-
-
-return DataTable.Buttons;
-}));
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap integration for DataTables' Buttons
- * ©2016 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net-bs4')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.Buttons ) {
-				require('datatables.net-buttons')(root, $);
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-$.extend( true, DataTable.Buttons.defaults, {
-	dom: {
-		container: {
-			className: 'dt-buttons btn-group'
-		},
-		button: {
-			className: 'btn btn-secondary'
-		},
-		collection: {
-			tag: 'div',
-			className: 'dt-button-collection dropdown-menu',
-			button: {
-				tag: 'a',
-				className: 'dt-button dropdown-item',
-				active: 'active',
-				disabled: 'disabled'
-			}
-		}
-	}
-} );
-
-DataTable.ext.buttons.collection.className += ' dropdown-toggle';
-DataTable.ext.buttons.collection.rightAlignClassName = 'dropdown-menu-right';
-
-return DataTable.Buttons;
-}));
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 integration for DataTables' Responsive
- * ©2016 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net-bs4')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.Responsive ) {
-				require('datatables.net-responsive')(root, $);
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
-var _display = DataTable.Responsive.display;
-var _original = _display.modal;
-var _modal = $(
-	'<div class="modal fade dtr-bs-modal" role="dialog">'+
-		'<div class="modal-dialog" role="document">'+
-			'<div class="modal-content">'+
-				'<div class="modal-header">'+
-					'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-				'</div>'+
-				'<div class="modal-body"/>'+
-			'</div>'+
-		'</div>'+
-	'</div>'
-);
-
-_display.modal = function ( options ) {
-	return function ( row, update, render ) {
-		if ( ! $.fn.modal ) {
-			_original( row, update, render );
-		}
-		else {
-			if ( ! update ) {
-				if ( options && options.header ) {
-					var header = _modal.find('div.modal-header');
-					var button = header.find('button').detach();
-					
-					header
-						.empty()
-						.append( '<h4 class="modal-title">'+options.header( row )+'</h4>' )
-						.append( button );
-				}
-
-				_modal.find( 'div.modal-body' )
-					.empty()
-					.append( render() );
-
-				_modal
-					.appendTo( 'body' )
-					.modal();
-			}
-		}
-	};
-};
-
-
-return DataTable.Responsive;
-}));
-
-
-/***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 styling wrapper for Select
@@ -22510,7 +20833,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(30)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -22544,7 +20867,7 @@ return $.fn.dataTable;
 }));
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.2.7
@@ -22573,7 +20896,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for D
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -23726,13 +22049,13 @@ return DataTable.select;
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(30);
+var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -23740,7 +22063,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(2)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -23757,10 +22080,10 @@ if(false) {
 }
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -23771,108 +22094,13 @@ exports.push([module.i, "table.dataTable{clear:both;margin-top:6px !important;ma
 
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports) {
-
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
-  }
-
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
-  }
-
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
-
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
-
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
-
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
-
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
-
-		// convert the url to a full url
-		var newUrl;
-
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
-};
-
-
-/***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(33);
+var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -23880,7 +22108,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(2)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -23897,10 +22125,10 @@ if(false) {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -23911,13 +22139,13 @@ exports.push([module.i, "table.dataTable tbody>tr.selected,table.dataTable tbody
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(35);
+var content = __webpack_require__(36);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -23925,7 +22153,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(2)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -23942,10 +22170,10 @@ if(false) {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -23956,13 +22184,13 @@ exports.push([module.i, "@keyframes dtb-spinner{100%{transform:rotate(360deg)}}@
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(37);
+var content = __webpack_require__(38);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -23970,7 +22198,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(2)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -23987,10 +22215,10 @@ if(false) {
 }
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -24001,163 +22229,28 @@ exports.push([module.i, "table.dataTable.dtr-inline.collapsed>tbody>tr>td.child,
 
 
 /***/ }),
-/* 38 */
+/* 39 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___);
+/* unused harmony reexport namespace */
+ /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css____default.a); 
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-12", attrs: { id: "app" } },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 col-md-9" }, [
-          _c("div", { staticClass: "dt-buttons btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-secondary buttons-copy buttons-html5",
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    $event.preventDefault()
-                    _vm.doExport("csv")
-                  }
-                }
-              },
-              [_vm._v("Csv")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-secondary buttons-copy buttons-html5",
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    $event.preventDefault()
-                    _vm.doExport("excel")
-                  }
-                }
-              },
-              [_vm._v("Excel")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-secondary buttons-copy buttons-html5",
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    $event.preventDefault()
-                    _vm.doExport("pdf")
-                  }
-                }
-              },
-              [_vm._v("Pdf")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12 col-md-3" }, [
-          _c(
-            "form",
-            {
-              staticClass: "form-inline d-flex mx-1 justify-content-end",
-              on: {
-                submit: function($event) {
-                  $event.stopPropagation()
-                  $event.preventDefault()
-                  return _vm.doSearch($event)
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "input-group" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.quickSearch,
-                      expression: "quickSearch"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "search", placeholder: "Quick search" },
-                  domProps: { value: _vm.quickSearch },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.quickSearch = $event.target.value
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm._m(0)
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "vdtnet-table",
-        {
-          ref: "table",
-          attrs: {
-            fields: _vm.fields,
-            opts: _vm.options,
-            "select-checkbox": 1,
-            details: _vm.details
-          },
-          on: {
-            edit: _vm.doAlertEdit,
-            delete: _vm.doAlertDelete,
-            reloaded: _vm.doAfterReload
-          }
-        },
-        [
-          _c("template", { slot: "HEAD__details_control" }, [
-            _vm._v("\n      Show Details\n    ")
-          ])
-        ],
-        2
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-append" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-outline-secondary", attrs: { type: "submit" } },
-        [
-          _c("i", { staticClass: "mdi mdi-magnify" }),
-          _vm._v(" Go\n            ")
-        ]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-a9794c84", module.exports)
-  }
-}
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

@@ -61,14 +61,9 @@
 <script>
 // this demonstrate with buttons and responsive master/details row
 import VdtnetTable from '../src'
-import 'datatables.net/js/jquery.dataTables.js'
+// since I already include on index.html, I don't need to include it here
+// import 'datatables.net/js/jquery.dataTables.js'
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js'
-
-// import buttons
-import 'datatables.net-buttons/js/dataTables.buttons.js'
-import 'datatables.net-buttons/js/buttons.html5.js'
-import 'datatables.net-buttons/js/buttons.print.js'
-import 'datatables.net-responsive/js/dataTables.responsive.js'
 
 // import the rest
 import 'datatables.net-buttons-bs4'
