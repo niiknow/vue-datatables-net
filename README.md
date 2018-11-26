@@ -196,6 +196,7 @@ fields: {
 - `defaultContent` provide default html when no data available
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
 - `template` simple vue template for the field.  See example App.
+- `defaultOrder` null, asc/desc - the default/initial sort order
 
 > It is important to understand why one should use `fields` and not `opts.columns`.  Though, `fields` is optional, you can simply pass `opts.columns` definition if you do not wish to use `fields`.
 

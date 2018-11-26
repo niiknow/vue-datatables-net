@@ -135,9 +135,12 @@ export default {
     }
   },
   created() {
-    const vm  = this
-    const jq  = vm.jq
-    let sort  = 0
+    const vm     = this
+    const jq     = vm.jq
+    const orders = []
+
+    let sort = 0
+    let icol = 0
 
     // allow user to override default options
     if (vm.opts) {
@@ -186,8 +189,17 @@ export default {
         // console.log(col)
 
         cols.push(col)
+
+        if (col.defaultOrder) {
+          orders.push([icol, col.defaultOrder])
+        }
+
+        icol++
       }
     }
+
+    // apply orders calculated from above
+    vm.options.order = vm.options.order || orders
 
     if (vm.selectCheckbox) {
       // expand column

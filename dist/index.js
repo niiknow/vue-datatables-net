@@ -16369,7 +16369,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     var vm = this;
     var jq = vm.jq;
+    var orders = [];
+
     var sort = 0;
+    var icol = 0;
 
     // allow user to override default options
     if (vm.opts) {
@@ -16418,8 +16421,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         // console.log(col)
 
         cols.push(col);
+
+        if (col.defaultOrder) {
+          orders.push([icol, col.defaultOrder]);
+        }
+
+        icol++;
       }
     }
+
+    // apply orders calculated from above
+    vm.options.order = vm.options.order || orders;
 
     if (vm.selectCheckbox) {
       // expand column
