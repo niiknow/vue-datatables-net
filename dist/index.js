@@ -617,7 +617,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         cols.push(col);
 
-        if (col.defaultOrder) {
+        if (field.defaultOrder) {
           orders.push([icol, col.defaultOrder]);
         }
 

@@ -190,7 +190,7 @@ export default {
 
         cols.push(col)
 
-        if (col.defaultOrder) {
+        if (field.defaultOrder) {
           orders.push([icol, col.defaultOrder])
         }
 
