@@ -139,8 +139,8 @@ export default {
     const jq     = vm.jq
     const orders = []
 
-    let sort = 0
-    let icol = 0
+    let startCol = 0
+    let icol     = 0
 
     // allow user to override default options
     if (vm.opts) {
@@ -191,7 +191,7 @@ export default {
         cols.push(col)
 
         if (field.defaultOrder) {
-          orders.push([icol, col.defaultOrder])
+          orders.push([icol, field.defaultOrder])
         }
 
         icol++
@@ -223,7 +223,7 @@ export default {
       )
 
       if (vm.selectCheckbox == 1) {
-        sort++
+        startCol++
       }
     }
 
@@ -234,18 +234,23 @@ export default {
         name: '_details_control',
         className: 'details-control',
         data: null,
-        defaultContent: '',
         defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
       }
       vm.options.columns.splice((vm.details.index || 1) - 1, 0, col)
 
-      if ((vm.details.index || 1) > 0) {
-        sort++
+      if ((vm.details.index || 1) == 1) {
+        startCol++
       }
     }
 
-    if (sort > 0) {
-      vm.options.order = [[sort, 'asc']]
+    if (startCol > 0) {
+      if (vm.options.order) {
+        vm.options.order.forEach((v) => {
+          v[0] += startCol
+        })
+      } else {
+        vm.options.order = [[startCol, 'asc']]
+      }
     }
 
     // handle local data loader

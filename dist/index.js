@@ -342,7 +342,8 @@ __webpack_require__.r(__webpack_exports__);
         name: {
           label: 'Name',
           sortable: true,
-          searchable: true
+          searchable: true,
+          defaultOrder: 'desc'
         },
         username: {
           label: 'Username',
@@ -417,8 +418,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -568,7 +567,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var vm = this;
     var jq = vm.jq;
     var orders = [];
-    var sort = 0;
+    var startCol = 0;
     var icol = 0; // allow user to override default options
 
     if (vm.opts) {
@@ -618,7 +617,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         cols.push(col);
 
         if (field.defaultOrder) {
-          orders.push([icol, col.defaultOrder]);
+          orders.push([icol, field.defaultOrder]);
         }
 
         icol++;
@@ -646,29 +645,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
 
       if (vm.selectCheckbox == 1) {
-        sort++;
+        startCol++;
       }
     } // handle master details
 
 
     if (vm.details) {
-      var _col2 = _defineProperty({
+      var _col2 = {
         orderable: false,
         name: '_details_control',
         className: 'details-control',
         data: null,
-        defaultContent: ''
-      }, "defaultContent", vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>');
-
+        defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
+      };
       vm.options.columns.splice((vm.details.index || 1) - 1, 0, _col2);
 
-      if ((vm.details.index || 1) > 0) {
-        sort++;
+      if ((vm.details.index || 1) == 1) {
+        startCol++;
       }
     }
 
-    if (sort > 0) {
-      vm.options.order = [[sort, 'asc']];
+    if (startCol > 0) {
+      if (vm.options.order) {
+        vm.options.order.forEach(function (v) {
+          v[0] += startCol;
+        });
+      } else {
+        vm.options.order = [[startCol, 'asc']];
+      }
     } // handle local data loader
 
 

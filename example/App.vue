@@ -114,7 +114,7 @@ export default {
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' +
             '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         },
-        name: { label: 'Name', sortable: true, searchable: true },
+        name: { label: 'Name', sortable: true, searchable: true, defaultOrder: 'desc' },
         username: { label: 'Username', sortable: false, searchable: true  },
         email: { label: 'Email' },
         address: {
