@@ -1,19 +1,29 @@
 <template>
   <div
     id="app"
-    class="col-12">
+    class="col-12"
+  >
     <div class="row">
       <div class="col-12 col-md-9">
         <div class="dt-buttons btn-group">
           <button
             class="btn btn-secondary buttons-copy buttons-html5"
-            @click.stop.prevent="doExport('csv')">Csv</button>
+            @click.stop.prevent="doExport('csv')"
+          >
+            Csv
+          </button>
           <button
             class="btn btn-secondary buttons-copy buttons-html5"
-            @click.stop.prevent="doExport('excel')">Excel</button>
+            @click.stop.prevent="doExport('excel')"
+          >
+            Excel
+          </button>
           <button
             class="btn btn-secondary buttons-copy buttons-html5"
-            @click.stop.prevent="doExport('pdf')">Pdf</button>
+            @click.stop.prevent="doExport('pdf')"
+          >
+            Pdf
+          </button>
         </div>
       </div>
       <div class="col-12 col-md-3">
@@ -33,7 +43,7 @@
                 type="submit"
                 class="btn btn-outline-secondary"
               >
-                <i class="mdi mdi-magnify"/> Go
+                <i class="mdi mdi-magnify" /> Go
               </button>
             </div>
           </div>
@@ -66,14 +76,10 @@ import VdtnetTable from '../src'
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js'
 
 // import the rest
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-responsive-bs4'
 import 'datatables.net-select-bs4'
 
 import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
 import 'datatables.net-select-bs4/css/select.bootstrap4.min.css'
-import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'
-import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css'
 
 export default {
   name: 'App',
@@ -91,7 +97,6 @@ export default {
         },
         responsive: false,
         processing: true,
-        pageLength: 10,
         searching: true,
         searchDelay: 1500,
         destroy: true,

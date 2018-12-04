@@ -37,9 +37,6 @@ const config = {
       }
     ]
   },
-  plugins: [
-    new VueLoaderPlugin()
-  ],
   output: {
     path: path.resolve(public),
     filename: 'index.js',

@@ -7,7 +7,7 @@
 		exports["VdtnetTable"] = factory(require("Vue"), require("jQuery"));
 	else
 		root["VdtnetTable"] = factory(root["Vue"], root["jQuery"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_0__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE_vue__, __WEBPACK_EXTERNAL_MODULE_jquery__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -46,12 +46,32 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -69,18 +89,899 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
+/******/ ({
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+/***/ "./example/App.vue":
+/*!*************************!*\
+  !*** ./example/App.vue ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _App_vue_vue_type_template_id_a9794c84_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue?vue&type=template&id=a9794c84&scoped=true& */ "./example/App.vue?vue&type=template&id=a9794c84&scoped=true&");
+/* harmony import */ var _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue?vue&type=script&lang=js& */ "./example/App.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css& */ "./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _App_vue_vue_type_template_id_a9794c84_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _App_vue_vue_type_template_id_a9794c84_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "a9794c84",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "example/App.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
-/* 1 */
+
+/***/ "./example/App.vue?vue&type=script&lang=js&":
+/*!**************************************************!*\
+  !*** ./example/App.vue?vue&type=script&lang=js& ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/babel-loader/lib??ref--4-0!../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&":
+/*!**********************************************************************************!*\
+  !*** ./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css& ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/style-loader!../node_modules/css-loader!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./example/App.vue?vue&type=template&id=a9794c84&scoped=true&":
+/*!********************************************************************!*\
+  !*** ./example/App.vue?vue&type=template&id=a9794c84&scoped=true& ***!
+  \********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=template&id=a9794c84&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=template&id=a9794c84&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./example/index.js":
+/*!**************************!*\
+  !*** ./example/index.js ***!
+  \**************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./example/App.vue");
+
+
+new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#app',
+  render: function render(h) {
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./example/App.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src */ "./src/index.js");
+/* harmony import */ var datatables_net_bs4_js_dataTables_bootstrap4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net-bs4/js/dataTables.bootstrap4.js */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4_js_dataTables_bootstrap4_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4_js_dataTables_bootstrap4_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var datatables_net_select_bs4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! datatables.net-select-bs4 */ "./node_modules/datatables.net-select-bs4/js/select.bootstrap4.js");
+/* harmony import */ var datatables_net_select_bs4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(datatables_net_select_bs4__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var datatables_net_bs4_css_dataTables_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! datatables.net-bs4/css/dataTables.bootstrap4.min.css */ "./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css");
+/* harmony import */ var datatables_net_bs4_css_dataTables_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4_css_dataTables_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var datatables_net_select_bs4_css_select_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! datatables.net-select-bs4/css/select.bootstrap4.min.css */ "./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css");
+/* harmony import */ var datatables_net_select_bs4_css_select_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(datatables_net_select_bs4_css_select_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// this demonstrate with buttons and responsive master/details row
+ // since I already include on index.html, I don't need to include it here
+// import 'datatables.net/js/jquery.dataTables.js'
+
+ // import the rest
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'App',
+  components: {
+    VdtnetTable: _src__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var vm = this;
+    return {
+      options: {
+        ajax: {
+          url: 'https://jsonplaceholder.typicode.com/users',
+          dataSrc: function dataSrc(json) {
+            return json;
+          }
+        },
+        responsive: false,
+        processing: true,
+        searching: true,
+        searchDelay: 1500,
+        destroy: true,
+        ordering: true,
+        lengthChange: true,
+        serverSide: true,
+        fixedHeader: true,
+        saveState: true
+      },
+      fields: {
+        id: {
+          label: 'ID',
+          sortable: true
+        },
+        actions: {
+          sortable: false,
+          label: 'Actions',
+          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
+        },
+        name: {
+          label: 'Name',
+          sortable: true,
+          searchable: true
+        },
+        username: {
+          label: 'Username',
+          sortable: false,
+          searchable: true
+        },
+        email: {
+          label: 'Email'
+        },
+        address: {
+          label: 'Address',
+          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
+        },
+        phone: {
+          label: 'Phone'
+        },
+        website: {
+          label: 'Website',
+          render: function render(data) {
+            return "https://".concat(data);
+          }
+        }
+      },
+      quickSearch: '',
+      details: {
+        template: 'I\'m a child for {{ data.id }} yall'
+      }
+    };
+  },
+  methods: {
+    doLoadTable: function doLoadTable(cb) {
+      $.getJSON('https://jsonplaceholder.typicode.com/users', function (data) {
+        cb(data);
+      });
+    },
+    doAlertEdit: function doAlertEdit(data) {
+      window.alert("row edit click for item ID: ".concat(data.id));
+    },
+    doAlertDelete: function doAlertDelete(data, row, tr, target) {
+      window.alert("deleting item ID: ".concat(data.id)); // row.remove() doesn't work when serverside is enabled
+      // so we fake it with dom remove
+
+      tr.remove();
+      var table = this.$refs.table;
+      setTimeout(function () {
+        // simulate extra long running ajax
+        table.reload();
+      }, 1500);
+    },
+    doAfterReload: function doAfterReload(data, table) {
+      window.alert('data reloaded');
+    },
+    doSearch: function doSearch() {
+      this.$refs.table.search(this.quickSearch);
+    },
+    doExport: function doExport(type) {
+      var parms = this.$refs.table.getServerParams();
+      parms.export = type;
+      window.alert('GET /api/v1/export?' + jQuery.param(parms));
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./src/VdtnetTable.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'VdtnetTable',
+  props: {
+    /**
+     * Set the table classes you wish to use, default with bootstrap4
+     * but you can override with: themeforest, foundation, etc..
+     *
+     * @type String
+     */
+    className: {
+      type: String,
+      default: 'table table-striped table-bordered nowrap w-100'
+    },
+
+    /**
+     * the options object: https://datatables.net/manual/options
+     *
+     * @type Object
+     */
+    opts: {
+      type: Object
+    },
+
+    /**
+     * List all fields to be converted to opts columns
+     *
+     * @type Object
+     */
+    fields: {
+      type: Object
+    },
+
+    /**
+     * Pass in DataTables.Net jQuery to resolve any conflict from
+     * multiple jQuery loaded in the browser
+     *
+     * @type Object
+     */
+    jquery: {
+      type: Object
+    },
+
+    /**
+     * The select-checkbox column index (start at 1)
+     * Current implementation require datatables.net-select
+     *
+     * @type Number
+     */
+    selectCheckbox: {
+      type: Number
+    },
+
+    /**
+     * Provide custom local data loading.  Warning: this option has not been
+     * thoroughly tested.  Please use ajax and serverSide instead.
+     *
+     * @type Function
+     */
+    dataLoader: {
+      type: Function
+    },
+
+    /**
+     * true to hide the footer of the table
+     *
+     * @type Boolean
+     */
+    hideFooter: {
+      type: Boolean
+    },
+
+    /**
+     * The details column configuration of master/details.
+     *
+     * @type {Object}
+     */
+    details: {
+      type: Object
+    }
+  },
+  data: function data() {
+    // initialize defaults
+    return {
+      options: {
+        /*eslint-disable */
+        dom: "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
+
+        /*eslint-enable */
+        columns: [],
+        language: {
+          infoFiltered: ''
+        },
+        lengthMenu: [[15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All']],
+        pageLength: 15,
+        buttons: [] // remove any button defaults
+
+      },
+      dataTable: null
+    };
+  },
+  computed: {
+    jq: function jq() {
+      return this.jquery || window.jQuery;
+    },
+    classes: function classes() {
+      var classes = 'table-responsive vdtnet-container';
+
+      if (this.hideFooter) {
+        classes += ' hide-footer';
+      }
+
+      return classes;
+    }
+  },
+  created: function created() {
+    var vm = this;
+    var jq = vm.jq;
+    var orders = [];
+    var sort = 0;
+    var icol = 0; // allow user to override default options
+
+    if (vm.opts) {
+      vm.options = jq.extend({}, vm.options, vm.opts);
+    } // if fields are passed in, generate column definition
+    // from our custom fields schema
+
+
+    if (vm.fields) {
+      var fields = vm.fields;
+      var cols = vm.options.columns;
+
+      for (var k in fields) {
+        var field = fields[k];
+        field.name = field.name || k; // generate
+
+        var col = {
+          searchable: field.searchable,
+          title: field.label || k,
+          width: field.width,
+          data: field.name,
+          visible: field.visible,
+          className: field.className
+        };
+
+        if (field.width) {
+          col.width = field.width;
+        }
+
+        if (field.hasOwnProperty('defaultContent')) {
+          col.defaultContent = field.defaultContent;
+        }
+
+        if (field.hasOwnProperty('sortable')) {
+          col.orderable = field.sortable;
+        }
+
+        if (field.template) {
+          field.render = vm.compileTemplate(field.template);
+        }
+
+        if (field.render) {
+          col.render = field.render;
+        } // console.log(col)
+
+
+        cols.push(col);
+
+        if (col.defaultOrder) {
+          orders.push([icol, col.defaultOrder]);
+        }
+
+        icol++;
+      }
+    } // apply orders calculated from above
+
+
+    vm.options.order = vm.options.order || orders;
+
+    if (vm.selectCheckbox) {
+      // expand column
+      var _col = {
+        orderable: false,
+        name: '_select_checkbox',
+        className: 'select-checkbox',
+        data: null,
+        defaultContent: '',
+        title: '<input type="checkbox" class="select-all-checkbox">'
+      };
+      vm.options.columns.splice(vm.selectCheckbox - 1, 0, _col); // console.log(vm.options.columns)
+
+      vm.options.select = jq.extend(vm.options.select || {}, {
+        style: 'os',
+        selector: 'td.select-checkbox'
+      });
+
+      if (vm.selectCheckbox == 1) {
+        sort++;
+      }
+    } // handle master details
+
+
+    if (vm.details) {
+      var _col2 = _defineProperty({
+        orderable: false,
+        name: '_details_control',
+        className: 'details-control',
+        data: null,
+        defaultContent: ''
+      }, "defaultContent", vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>');
+
+      vm.options.columns.splice((vm.details.index || 1) - 1, 0, _col2);
+
+      if ((vm.details.index || 1) > 0) {
+        sort++;
+      }
+    }
+
+    if (sort > 0) {
+      vm.options.order = [[sort, 'asc']];
+    } // handle local data loader
+
+
+    if (vm.dataLoader) {
+      delete vm.options.ajax;
+      vm.options.serverSide = false;
+    }
+  },
+  mounted: function mounted() {
+    var vm = this;
+    var jq = vm.jq;
+    var $el = jq(vm.$refs.table); // console.log(vm.options.buttons)
+
+    vm.dataTable = $el.DataTable(vm.options);
+
+    if (vm.selectCheckbox) {
+      // handle select all checkbox
+      $el.on('click', 'th input.select-all-checkbox', function (e) {
+        if (jq(e.target).is(':checked')) {
+          vm.dataTable.rows().select();
+        } else {
+          vm.dataTable.rows().deselect();
+        }
+      }); // handle individual row select events
+
+      vm.dataTable.on('select deselect', function () {
+        var $input = $el.find('th input.select-all-checkbox');
+
+        if (vm.dataTable.rows({
+          selected: true
+        }).count() !== vm.dataTable.rows().count()) {
+          jq('th.select-checkbox').removeClass('selected');
+          $input.attr('checked', false);
+        } else {
+          jq('th.select-checkbox').addClass('selected');
+          $input.attr('checked', true);
+        } // TODO: vm.$emit the selected row?
+
+      });
+    } // wire up edit, delete, and/or action buttons
+
+
+    $el.on('click', '[data-action]', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var target = jq(e.target);
+      var that = target;
+      var action = that.attr('data-action');
+
+      while (!action) {
+        // don't let it propagate outside of container
+        if (that.hasClass('vdtnet-container') || that.prop('tagName') === 'table') {
+          // no action, simply exit
+          return;
+        }
+
+        that = that.parent();
+        action = that.attr('data-action');
+      } // only emit if there is action
+
+
+      if (action) {
+        // detect if row action
+        var tr = that.closest('tr');
+
+        if (tr) {
+          if (tr.attr('role') !== 'row') {
+            tr = tr.prev();
+          }
+
+          var row = vm.dataTable.row(tr);
+          var data = row.data();
+          vm.$emit(action, data, row, tr, that);
+        } else {
+          // not a row click, must be other kind of action
+          // such as bulk, csv, pdf, etc...
+          vm.$emit(action, null, null, null, target);
+        }
+      }
+    }); // handle master/details
+
+    if (vm.details) {
+      // default to render function
+      var renderFunc = vm.details.render; // must be string template
+
+      if (vm.details.template) {
+        renderFunc = vm.compileTemplate(vm.details.template);
+      } // handle master/details
+      // Add event listener for opening and closing details
+
+
+      $el.on('click', 'td.details-control', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var target = jq(e.target);
+        var that = target;
+        var tr = that.closest('tr');
+
+        if (tr.attr('role') !== 'row') {
+          tr = tr.prev();
+        }
+
+        var row = vm.dataTable.row(tr);
+
+        if (row.child.isShown()) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('master');
+        } else {
+          // Open this row
+          var data = row.data();
+          row.child(renderFunc(data, 'child', row, tr)).show();
+          tr.addClass('master');
+        }
+      });
+    } // finally, load data
+
+
+    if (vm.dataLoader) {
+      vm.reload();
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    var vm = this;
+
+    if (vm.dataTable) {
+      vm.dataTable.destroy(true);
+    }
+
+    vm.dataTable = null;
+  },
+  methods: {
+    /**
+     * Vue.compile a template string and return the compiled function
+     *
+     * @param  {String} template the string template
+     * @return {Function}          the compiled template function
+     */
+    compileTemplate: function compileTemplate(template) {
+      var vm = this;
+      var jq = vm.jq;
+      var res = Vue.compile("<div>".concat(template, "</div>"));
+
+      var renderFunc = function renderFunc(data, type, row, meta) {
+        var comp = new Vue({
+          data: {
+            data: data,
+            type: type,
+            row: row,
+            meta: meta
+          },
+          render: res.render,
+          staticRenderFns: res.staticRenderFns
+        }).$mount();
+        return jq(comp.$el).html();
+      };
+
+      return renderFunc;
+    },
+
+    /**
+     * Set table data array that was loaded from somewhere else
+     * This method allow for local setting of data; though, it
+     * is recommended to use ajax instead of this.
+     *
+     * @param {Array} data   the array of data
+     * @return {Object}            the component
+     */
+    setTableData: function setTableData(data) {
+      var vm = this;
+
+      if (data.constructor === Array) {
+        vm.dataTable.clear().rows.add(data);
+        vm.dataTable.draw(false);
+        vm.dataTable.columns.adjust();
+      }
+
+      return vm;
+    },
+
+    /**
+     * pass through reload method
+     *
+     * @param  {Boolean}  resetPaging true to reset current page position
+     * @return {Object}            the component
+     */
+    reload: function reload() {
+      var resetPaging = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var vm = this;
+
+      if (vm.dataLoader) {
+        // manual data loading
+        vm.dataLoader(function (data) {
+          if (data && !data.data) {
+            data = {
+              data: data
+            };
+          }
+
+          vm.setTableData(data.data);
+          vm.$emit('reloaded', data, vm);
+        });
+      } else {
+        vm.dataTable.ajax.reload(function (data) {
+          vm.$emit('reloaded', data, vm);
+        }, resetPaging);
+      }
+
+      return vm;
+    },
+    search: function search(value) {
+      var vm = this;
+      vm.dataTable.search(value).draw();
+      return vm;
+    },
+    setPageLength: function setPageLength(value) {
+      var vm = this;
+      vm.dataTable.page.len(value);
+      return vm.reload();
+    },
+    getServerParams: function getServerParams() {
+      if (this.dataLoader) {
+        return {};
+      }
+
+      return this.dataTable.ajax.params();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "table.dataTable{clear:both;margin-top:6px !important;margin-bottom:6px !important;max-width:none !important;border-collapse:separate !important;border-spacing:0}table.dataTable td,table.dataTable th{-webkit-box-sizing:content-box;box-sizing:content-box}table.dataTable td.dataTables_empty,table.dataTable th.dataTables_empty{text-align:center}table.dataTable.nowrap th,table.dataTable.nowrap td{white-space:nowrap}div.dataTables_wrapper div.dataTables_length label{font-weight:normal;text-align:left;white-space:nowrap}div.dataTables_wrapper div.dataTables_length select{width:auto;display:inline-block}div.dataTables_wrapper div.dataTables_filter{text-align:right}div.dataTables_wrapper div.dataTables_filter label{font-weight:normal;white-space:nowrap;text-align:left}div.dataTables_wrapper div.dataTables_filter input{margin-left:0.5em;display:inline-block;width:auto}div.dataTables_wrapper div.dataTables_info{padding-top:0.85em;white-space:nowrap}div.dataTables_wrapper div.dataTables_paginate{margin:0;white-space:nowrap;text-align:right}div.dataTables_wrapper div.dataTables_paginate ul.pagination{margin:2px 0;white-space:nowrap;justify-content:flex-end}div.dataTables_wrapper div.dataTables_processing{position:absolute;top:50%;left:50%;width:200px;margin-left:-100px;margin-top:-26px;text-align:center;padding:1em 0}table.dataTable thead>tr>th.sorting_asc,table.dataTable thead>tr>th.sorting_desc,table.dataTable thead>tr>th.sorting,table.dataTable thead>tr>td.sorting_asc,table.dataTable thead>tr>td.sorting_desc,table.dataTable thead>tr>td.sorting{padding-right:30px}table.dataTable thead>tr>th:active,table.dataTable thead>tr>td:active{outline:none}table.dataTable thead .sorting,table.dataTable thead .sorting_asc,table.dataTable thead .sorting_desc,table.dataTable thead .sorting_asc_disabled,table.dataTable thead .sorting_desc_disabled{cursor:pointer;position:relative}table.dataTable thead .sorting:before,table.dataTable thead .sorting:after,table.dataTable thead .sorting_asc:before,table.dataTable thead .sorting_asc:after,table.dataTable thead .sorting_desc:before,table.dataTable thead .sorting_desc:after,table.dataTable thead .sorting_asc_disabled:before,table.dataTable thead .sorting_asc_disabled:after,table.dataTable thead .sorting_desc_disabled:before,table.dataTable thead .sorting_desc_disabled:after{position:absolute;bottom:0.9em;display:block;opacity:0.3}table.dataTable thead .sorting:before,table.dataTable thead .sorting_asc:before,table.dataTable thead .sorting_desc:before,table.dataTable thead .sorting_asc_disabled:before,table.dataTable thead .sorting_desc_disabled:before{right:1em;content:\"\\2191\"}table.dataTable thead .sorting:after,table.dataTable thead .sorting_asc:after,table.dataTable thead .sorting_desc:after,table.dataTable thead .sorting_asc_disabled:after,table.dataTable thead .sorting_desc_disabled:after{right:0.5em;content:\"\\2193\"}table.dataTable thead .sorting_asc:before,table.dataTable thead .sorting_desc:after{opacity:1}table.dataTable thead .sorting_asc_disabled:before,table.dataTable thead .sorting_desc_disabled:after{opacity:0}div.dataTables_scrollHead table.dataTable{margin-bottom:0 !important}div.dataTables_scrollBody table{border-top:none;margin-top:0 !important;margin-bottom:0 !important}div.dataTables_scrollBody table thead .sorting:before,div.dataTables_scrollBody table thead .sorting_asc:before,div.dataTables_scrollBody table thead .sorting_desc:before,div.dataTables_scrollBody table thead .sorting:after,div.dataTables_scrollBody table thead .sorting_asc:after,div.dataTables_scrollBody table thead .sorting_desc:after{display:none}div.dataTables_scrollBody table tbody tr:first-child th,div.dataTables_scrollBody table tbody tr:first-child td{border-top:none}div.dataTables_scrollFoot>.dataTables_scrollFootInner{box-sizing:content-box}div.dataTables_scrollFoot>.dataTables_scrollFootInner>table{margin-top:0 !important;border-top:none}@media screen and (max-width: 767px){div.dataTables_wrapper div.dataTables_length,div.dataTables_wrapper div.dataTables_filter,div.dataTables_wrapper div.dataTables_info,div.dataTables_wrapper div.dataTables_paginate{text-align:center}}table.dataTable.table-sm>thead>tr>th{padding-right:20px}table.dataTable.table-sm .sorting:before,table.dataTable.table-sm .sorting_asc:before,table.dataTable.table-sm .sorting_desc:before{top:5px;right:0.85em}table.dataTable.table-sm .sorting:after,table.dataTable.table-sm .sorting_asc:after,table.dataTable.table-sm .sorting_desc:after{top:5px}table.table-bordered.dataTable th,table.table-bordered.dataTable td{border-left-width:0}table.table-bordered.dataTable th:last-child,table.table-bordered.dataTable th:last-child,table.table-bordered.dataTable td:last-child,table.table-bordered.dataTable td:last-child{border-right-width:0}table.table-bordered.dataTable tbody th,table.table-bordered.dataTable tbody td{border-bottom-width:0}div.dataTables_scrollHead table.table-bordered{border-bottom-width:0}div.table-responsive>div.dataTables_wrapper>div.row{margin:0}div.table-responsive>div.dataTables_wrapper>div.row>div[class^=\"col-\"]:first-child{padding-left:0}div.table-responsive>div.dataTables_wrapper>div.row>div[class^=\"col-\"]:last-child{padding-right:0}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#0275d8}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#0172d2}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#0170d0}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#0172d3}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#016ecc}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#016fcd}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#0170cf}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#0172d3}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#0173d5}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#0174d7}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#016ecc}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#0172d3}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#016bc6}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#016cc7}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#016dca}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#016bc6}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:' ';margin-top:-6px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:'\\2714';margin-top:-11px;margin-left:-4px;text-align:center;text-shadow:1px 1px #B0BED9, -1px -1px #B0BED9, 1px -1px #B0BED9, -1px 1px #B0BED9}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options!./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.vdtnet-footer .dataTables_length {\n  padding-top: 6px;\n  padding-right: 10px;\n}\n.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {\n  float: right;\n}\n.hide-footer .vdtnet-footer {\n  display: none;\n}\n.master .details-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.master .details-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
 /*
@@ -162,366 +1063,42 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 2 */
+
+/***/ "./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css":
+/*!***************************************************************************!*\
+  !*** ./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css ***!
+  \***************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
 
-var stylesInDom = {};
+var content = __webpack_require__(/*! !../../css-loader!./dataTables.bootstrap4.min.css */ "./node_modules/css-loader/index.js!./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css");
 
-var	memoize = function (fn) {
-	var memo;
+if(typeof content === 'string') content = [[module.i, content, '']];
 
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
+var transform;
+var insertInto;
 
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
 
-var getElement = (function (fn) {
-	var memo = {};
 
-	return function(selector) {
-		if (typeof memo[selector] === "undefined") {
-			memo[selector] = fn.call(this, selector);
-		}
+var options = {"hmr":true}
 
-		return memo[selector]
-	};
-})(function (target) {
-	return document.querySelector(target)
-});
+options.transform = transform
+options.insertInto = undefined;
 
-var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
+var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
-var	fixUrls = __webpack_require__(24);
+if(content.locals) module.exports = content.locals;
 
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton) options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-	if (!options.insertInto) options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
-
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
-
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else {
-		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	options.attrs.type = "text/css";
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	options.attrs.type = "text/css";
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = options.transform(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
-
+if(false) {}
 
 /***/ }),
-/* 3 */
+
+/***/ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js ***!
+  \*********************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables Bootstrap 4 integration
@@ -539,32 +1116,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables B
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				// Require DataTables, which attaches to jQuery, including
-				// jQuery if needed and have a $ property so we can access the
-				// jQuery object that is used
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
+	else {}
 }(function( $, window, document, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
@@ -712,7 +1269,1240 @@ return DataTable;
 
 
 /***/ }),
-/* 4 */
+
+/***/ "./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css":
+/*!******************************************************************************!*\
+  !*** ./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../css-loader!./select.bootstrap4.min.css */ "./node_modules/css-loader/index.js!./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/datatables.net-select-bs4/js/select.bootstrap4.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/datatables.net-select-bs4/js/select.bootstrap4.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 styling wrapper for Select
+ * ©2018 SpryMedia Ltd - datatables.net/license
+ */
+
+(function( factory ){
+	if ( true ) {
+		// AMD
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"), __webpack_require__(/*! datatables.net-select */ "./node_modules/datatables.net-select/js/dataTables.select.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+			return factory( $, window, document );
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+	else {}
+}(function( $, window, document, undefined ) {
+
+return $.fn.dataTable;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/datatables.net-select/js/dataTables.select.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/datatables.net-select/js/dataTables.select.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.2.7
+ * 2015-2018 SpryMedia Ltd - datatables.net/license/mit
+ */
+
+/**
+ * @summary     Select for DataTables
+ * @description A collection of API methods, events and buttons for DataTables
+ *   that provides selection options of the items in a DataTable
+ * @version     1.2.7
+ * @file        dataTables.select.js
+ * @author      SpryMedia Ltd (www.sprymedia.co.uk)
+ * @contact     datatables.net/forums
+ * @copyright   Copyright 2015-2018 SpryMedia Ltd.
+ *
+ * This source file is free software, available under the following license:
+ *   MIT license - http://datatables.net/license/mit
+ *
+ * This source file is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
+ *
+ * For details please refer to: http://www.datatables.net/extensions/select
+ */
+(function( factory ){
+	if ( true ) {
+		// AMD
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+			return factory( $, window, document );
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+	else {}
+}(function( $, window, document, undefined ) {
+'use strict';
+var DataTable = $.fn.dataTable;
+
+
+// Version information for debugger
+DataTable.select = {};
+
+DataTable.select.version = '1.2.7';
+
+DataTable.select.init = function ( dt ) {
+	var ctx = dt.settings()[0];
+	var init = ctx.oInit.select;
+	var defaults = DataTable.defaults.select;
+	var opts = init === undefined ?
+		defaults :
+		init;
+
+	// Set defaults
+	var items = 'row';
+	var style = 'api';
+	var blurable = false;
+	var info = true;
+	var selector = 'td, th';
+	var className = 'selected';
+	var setStyle = false;
+
+	ctx._select = {};
+
+	// Initialisation customisations
+	if ( opts === true ) {
+		style = 'os';
+		setStyle = true;
+	}
+	else if ( typeof opts === 'string' ) {
+		style = opts;
+		setStyle = true;
+	}
+	else if ( $.isPlainObject( opts ) ) {
+		if ( opts.blurable !== undefined ) {
+			blurable = opts.blurable;
+		}
+
+		if ( opts.info !== undefined ) {
+			info = opts.info;
+		}
+
+		if ( opts.items !== undefined ) {
+			items = opts.items;
+		}
+
+		if ( opts.style !== undefined ) {
+			style = opts.style;
+			setStyle = true;
+		}
+
+		if ( opts.selector !== undefined ) {
+			selector = opts.selector;
+		}
+
+		if ( opts.className !== undefined ) {
+			className = opts.className;
+		}
+	}
+
+	dt.select.selector( selector );
+	dt.select.items( items );
+	dt.select.style( style );
+	dt.select.blurable( blurable );
+	dt.select.info( info );
+	ctx._select.className = className;
+
+
+	// Sort table based on selected rows. Requires Select Datatables extension
+	$.fn.dataTable.ext.order['select-checkbox'] = function ( settings, col ) {
+		return this.api().column( col, {order: 'index'} ).nodes().map( function ( td ) {
+			if ( settings._select.items === 'row' ) {
+				return $( td ).parent().hasClass( settings._select.className );
+			} else if ( settings._select.items === 'cell' ) {
+				return $( td ).hasClass( settings._select.className );
+			}
+			return false;
+		});
+	};
+
+	// If the init options haven't enabled select, but there is a selectable
+	// class name, then enable
+	if ( ! setStyle && $( dt.table().node() ).hasClass( 'selectable' ) ) {
+		dt.select.style( 'os' );
+	}
+};
+
+/*
+
+Select is a collection of API methods, event handlers, event emitters and
+buttons (for the `Buttons` extension) for DataTables. It provides the following
+features, with an overview of how they are implemented:
+
+## Selection of rows, columns and cells. Whether an item is selected or not is
+   stored in:
+
+* rows: a `_select_selected` property which contains a boolean value of the
+  DataTables' `aoData` object for each row
+* columns: a `_select_selected` property which contains a boolean value of the
+  DataTables' `aoColumns` object for each column
+* cells: a `_selected_cells` property which contains an array of boolean values
+  of the `aoData` object for each row. The array is the same length as the
+  columns array, with each element of it representing a cell.
+
+This method of using boolean flags allows Select to operate when nodes have not
+been created for rows / cells (DataTables' defer rendering feature).
+
+## API methods
+
+A range of API methods are available for triggering selection and de-selection
+of rows. Methods are also available to configure the selection events that can
+be triggered by an end user (such as which items are to be selected). To a large
+extent, these of API methods *is* Select. It is basically a collection of helper
+functions that can be used to select items in a DataTable.
+
+Configuration of select is held in the object `_select` which is attached to the
+DataTables settings object on initialisation. Select being available on a table
+is not optional when Select is loaded, but its default is for selection only to
+be available via the API - so the end user wouldn't be able to select rows
+without additional configuration.
+
+The `_select` object contains the following properties:
+
+```
+{
+	items:string     - Can be `rows`, `columns` or `cells`. Defines what item 
+	                   will be selected if the user is allowed to activate row
+	                   selection using the mouse.
+	style:string     - Can be `none`, `single`, `multi` or `os`. Defines the
+	                   interaction style when selecting items
+	blurable:boolean - If row selection can be cleared by clicking outside of
+	                   the table
+	info:boolean     - If the selection summary should be shown in the table
+	                   information elements
+}
+```
+
+In addition to the API methods, Select also extends the DataTables selector
+options for rows, columns and cells adding a `selected` option to the selector
+options object, allowing the developer to select only selected items or
+unselected items.
+
+## Mouse selection of items
+
+Clicking on items can be used to select items. This is done by a simple event
+handler that will select the items using the API methods.
+
+ */
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Local functions
+ */
+
+/**
+ * Add one or more cells to the selection when shift clicking in OS selection
+ * style cell selection.
+ *
+ * Cell range is more complicated than row and column as we want to select
+ * in the visible grid rather than by index in sequence. For example, if you
+ * click first in cell 1-1 and then shift click in 2-2 - cells 1-2 and 2-1
+ * should also be selected (and not 1-3, 1-4. etc)
+ * 
+ * @param  {DataTable.Api} dt   DataTable
+ * @param  {object}        idx  Cell index to select to
+ * @param  {object}        last Cell index to select from
+ * @private
+ */
+function cellRange( dt, idx, last )
+{
+	var indexes;
+	var columnIndexes;
+	var rowIndexes;
+	var selectColumns = function ( start, end ) {
+		if ( start > end ) {
+			var tmp = end;
+			end = start;
+			start = tmp;
+		}
+		
+		var record = false;
+		return dt.columns( ':visible' ).indexes().filter( function (i) {
+			if ( i === start ) {
+				record = true;
+			}
+			
+			if ( i === end ) { // not else if, as start might === end
+				record = false;
+				return true;
+			}
+
+			return record;
+		} );
+	};
+
+	var selectRows = function ( start, end ) {
+		var indexes = dt.rows( { search: 'applied' } ).indexes();
+
+		// Which comes first - might need to swap
+		if ( indexes.indexOf( start ) > indexes.indexOf( end ) ) {
+			var tmp = end;
+			end = start;
+			start = tmp;
+		}
+
+		var record = false;
+		return indexes.filter( function (i) {
+			if ( i === start ) {
+				record = true;
+			}
+			
+			if ( i === end ) {
+				record = false;
+				return true;
+			}
+
+			return record;
+		} );
+	};
+
+	if ( ! dt.cells( { selected: true } ).any() && ! last ) {
+		// select from the top left cell to this one
+		columnIndexes = selectColumns( 0, idx.column );
+		rowIndexes = selectRows( 0 , idx.row );
+	}
+	else {
+		// Get column indexes between old and new
+		columnIndexes = selectColumns( last.column, idx.column );
+		rowIndexes = selectRows( last.row , idx.row );
+	}
+
+	indexes = dt.cells( rowIndexes, columnIndexes ).flatten();
+
+	if ( ! dt.cells( idx, { selected: true } ).any() ) {
+		// Select range
+		dt.cells( indexes ).select();
+	}
+	else {
+		// Deselect range
+		dt.cells( indexes ).deselect();
+	}
+}
+
+/**
+ * Disable mouse selection by removing the selectors
+ *
+ * @param {DataTable.Api} dt DataTable to remove events from
+ * @private
+ */
+function disableMouseSelection( dt )
+{
+	var ctx = dt.settings()[0];
+	var selector = ctx._select.selector;
+
+	$( dt.table().container() )
+		.off( 'mousedown.dtSelect', selector )
+		.off( 'mouseup.dtSelect', selector )
+		.off( 'click.dtSelect', selector );
+
+	$('body').off( 'click.dtSelect' + dt.table().node().id );
+}
+
+/**
+ * Attach mouse listeners to the table to allow mouse selection of items
+ *
+ * @param {DataTable.Api} dt DataTable to remove events from
+ * @private
+ */
+function enableMouseSelection ( dt )
+{
+	var container = $( dt.table().container() );
+	var ctx = dt.settings()[0];
+	var selector = ctx._select.selector;
+	var matchSelection;
+
+	container
+		.on( 'mousedown.dtSelect', selector, function(e) {
+			// Disallow text selection for shift clicking on the table so multi
+			// element selection doesn't look terrible!
+			if ( e.shiftKey || e.metaKey || e.ctrlKey ) {
+				container
+					.css( '-moz-user-select', 'none' )
+					.one('selectstart.dtSelect', selector, function () {
+						return false;
+					} );
+			}
+
+			if ( window.getSelection ) {
+				matchSelection = window.getSelection();
+			}
+		} )
+		.on( 'mouseup.dtSelect', selector, function() {
+			// Allow text selection to occur again, Mozilla style (tested in FF
+			// 35.0.1 - still required)
+			container.css( '-moz-user-select', '' );
+		} )
+		.on( 'click.dtSelect', selector, function ( e ) {
+			var items = dt.select.items();
+			var idx;
+
+			// If text was selected (click and drag), then we shouldn't change
+			// the row's selected state
+			if ( window.getSelection ) {
+				var selection = window.getSelection();
+
+				// If the element that contains the selection is not in the table, we can ignore it
+				// This can happen if the developer selects text from the click event
+				if ( ! selection.anchorNode || $(selection.anchorNode).closest('table')[0] === dt.table().node() ) {
+					if ( selection !== matchSelection ) {
+						return;
+					}
+				}
+			}
+
+			var ctx = dt.settings()[0];
+			var wrapperClass = dt.settings()[0].oClasses.sWrapper.replace(/ /g, '.');
+
+			// Ignore clicks inside a sub-table
+			if ( $(e.target).closest('div.'+wrapperClass)[0] != dt.table().container() ) {
+				return;
+			}
+
+			var cell = dt.cell( $(e.target).closest('td, th') );
+
+			// Check the cell actually belongs to the host DataTable (so child
+			// rows, etc, are ignored)
+			if ( ! cell.any() ) {
+				return;
+			}
+
+			var event = $.Event('user-select.dt');
+			eventTrigger( dt, event, [ items, cell, e ] );
+
+			if ( event.isDefaultPrevented() ) {
+				return;
+			}
+
+			var cellIndex = cell.index();
+			if ( items === 'row' ) {
+				idx = cellIndex.row;
+				typeSelect( e, dt, ctx, 'row', idx );
+			}
+			else if ( items === 'column' ) {
+				idx = cell.index().column;
+				typeSelect( e, dt, ctx, 'column', idx );
+			}
+			else if ( items === 'cell' ) {
+				idx = cell.index();
+				typeSelect( e, dt, ctx, 'cell', idx );
+			}
+
+			ctx._select_lastCell = cellIndex;
+		} );
+
+	// Blurable
+	$('body').on( 'click.dtSelect' + dt.table().node().id, function ( e ) {
+		if ( ctx._select.blurable ) {
+			// If the click was inside the DataTables container, don't blur
+			if ( $(e.target).parents().filter( dt.table().container() ).length ) {
+				return;
+			}
+
+			// Ignore elements which have been removed from the DOM (i.e. paging
+			// buttons)
+			if ( $(e.target).parents('html').length === 0 ) {
+			 	return;
+			}
+
+			// Don't blur in Editor form
+			if ( $(e.target).parents('div.DTE').length ) {
+				return;
+			}
+
+			clear( ctx, true );
+		}
+	} );
+}
+
+/**
+ * Trigger an event on a DataTable
+ *
+ * @param {DataTable.Api} api      DataTable to trigger events on
+ * @param  {boolean}      selected true if selected, false if deselected
+ * @param  {string}       type     Item type acting on
+ * @param  {boolean}      any      Require that there are values before
+ *     triggering
+ * @private
+ */
+function eventTrigger ( api, type, args, any )
+{
+	if ( any && ! api.flatten().length ) {
+		return;
+	}
+
+	if ( typeof type === 'string' ) {
+		type = type +'.dt';
+	}
+
+	args.unshift( api );
+
+	$(api.table().node()).trigger( type, args );
+}
+
+/**
+ * Update the information element of the DataTable showing information about the
+ * items selected. This is done by adding tags to the existing text
+ * 
+ * @param {DataTable.Api} api DataTable to update
+ * @private
+ */
+function info ( api )
+{
+	var ctx = api.settings()[0];
+
+	if ( ! ctx._select.info || ! ctx.aanFeatures.i ) {
+		return;
+	}
+
+	if ( api.select.style() === 'api' ) {
+		return;
+	}
+
+	var rows    = api.rows( { selected: true } ).flatten().length;
+	var columns = api.columns( { selected: true } ).flatten().length;
+	var cells   = api.cells( { selected: true } ).flatten().length;
+
+	var add = function ( el, name, num ) {
+		el.append( $('<span class="select-item"/>').append( api.i18n(
+			'select.'+name+'s',
+			{ _: '%d '+name+'s selected', 0: '', 1: '1 '+name+' selected' },
+			num
+		) ) );
+	};
+
+	// Internal knowledge of DataTables to loop over all information elements
+	$.each( ctx.aanFeatures.i, function ( i, el ) {
+		el = $(el);
+
+		var output  = $('<span class="select-info"/>');
+		add( output, 'row', rows );
+		add( output, 'column', columns );
+		add( output, 'cell', cells  );
+
+		var exisiting = el.children('span.select-info');
+		if ( exisiting.length ) {
+			exisiting.remove();
+		}
+
+		if ( output.text() !== '' ) {
+			el.append( output );
+		}
+	} );
+}
+
+/**
+ * Initialisation of a new table. Attach event handlers and callbacks to allow
+ * Select to operate correctly.
+ *
+ * This will occur _after_ the initial DataTables initialisation, although
+ * before Ajax data is rendered, if there is ajax data
+ *
+ * @param  {DataTable.settings} ctx Settings object to operate on
+ * @private
+ */
+function init ( ctx ) {
+	var api = new DataTable.Api( ctx );
+
+	// Row callback so that classes can be added to rows and cells if the item
+	// was selected before the element was created. This will happen with the
+	// `deferRender` option enabled.
+	// 
+	// This method of attaching to `aoRowCreatedCallback` is a hack until
+	// DataTables has proper events for row manipulation If you are reviewing
+	// this code to create your own plug-ins, please do not do this!
+	ctx.aoRowCreatedCallback.push( {
+		fn: function ( row, data, index ) {
+			var i, ien;
+			var d = ctx.aoData[ index ];
+
+			// Row
+			if ( d._select_selected ) {
+				$( row ).addClass( ctx._select.className );
+			}
+
+			// Cells and columns - if separated out, we would need to do two
+			// loops, so it makes sense to combine them into a single one
+			for ( i=0, ien=ctx.aoColumns.length ; i<ien ; i++ ) {
+				if ( ctx.aoColumns[i]._select_selected || (d._selected_cells && d._selected_cells[i]) ) {
+					$(d.anCells[i]).addClass( ctx._select.className );
+				}
+			}
+		},
+		sName: 'select-deferRender'
+	} );
+
+	// On Ajax reload we want to reselect all rows which are currently selected,
+	// if there is an rowId (i.e. a unique value to identify each row with)
+	api.on( 'preXhr.dt.dtSelect', function () {
+		// note that column selection doesn't need to be cached and then
+		// reselected, as they are already selected
+		var rows = api.rows( { selected: true } ).ids( true ).filter( function ( d ) {
+			return d !== undefined;
+		} );
+
+		var cells = api.cells( { selected: true } ).eq(0).map( function ( cellIdx ) {
+			var id = api.row( cellIdx.row ).id( true );
+			return id ?
+				{ row: id, column: cellIdx.column } :
+				undefined;
+		} ).filter( function ( d ) {
+			return d !== undefined;
+		} );
+
+		// On the next draw, reselect the currently selected items
+		api.one( 'draw.dt.dtSelect', function () {
+			api.rows( rows ).select();
+
+			// `cells` is not a cell index selector, so it needs a loop
+			if ( cells.any() ) {
+				cells.each( function ( id ) {
+					api.cells( id.row, id.column ).select();
+				} );
+			}
+		} );
+	} );
+
+	// Update the table information element with selected item summary
+	api.on( 'draw.dtSelect.dt select.dtSelect.dt deselect.dtSelect.dt info.dt', function () {
+		info( api );
+	} );
+
+	// Clean up and release
+	api.on( 'destroy.dtSelect', function () {
+		disableMouseSelection( api );
+		api.off( '.dtSelect' );
+	} );
+}
+
+/**
+ * Add one or more items (rows or columns) to the selection when shift clicking
+ * in OS selection style
+ *
+ * @param  {DataTable.Api} dt   DataTable
+ * @param  {string}        type Row or column range selector
+ * @param  {object}        idx  Item index to select to
+ * @param  {object}        last Item index to select from
+ * @private
+ */
+function rowColumnRange( dt, type, idx, last )
+{
+	// Add a range of rows from the last selected row to this one
+	var indexes = dt[type+'s']( { search: 'applied' } ).indexes();
+	var idx1 = $.inArray( last, indexes );
+	var idx2 = $.inArray( idx, indexes );
+
+	if ( ! dt[type+'s']( { selected: true } ).any() && idx1 === -1 ) {
+		// select from top to here - slightly odd, but both Windows and Mac OS
+		// do this
+		indexes.splice( $.inArray( idx, indexes )+1, indexes.length );
+	}
+	else {
+		// reverse so we can shift click 'up' as well as down
+		if ( idx1 > idx2 ) {
+			var tmp = idx2;
+			idx2 = idx1;
+			idx1 = tmp;
+		}
+
+		indexes.splice( idx2+1, indexes.length );
+		indexes.splice( 0, idx1 );
+	}
+
+	if ( ! dt[type]( idx, { selected: true } ).any() ) {
+		// Select range
+		dt[type+'s']( indexes ).select();
+	}
+	else {
+		// Deselect range - need to keep the clicked on row selected
+		indexes.splice( $.inArray( idx, indexes ), 1 );
+		dt[type+'s']( indexes ).deselect();
+	}
+}
+
+/**
+ * Clear all selected items
+ *
+ * @param  {DataTable.settings} ctx Settings object of the host DataTable
+ * @param  {boolean} [force=false] Force the de-selection to happen, regardless
+ *     of selection style
+ * @private
+ */
+function clear( ctx, force )
+{
+	if ( force || ctx._select.style === 'single' ) {
+		var api = new DataTable.Api( ctx );
+		
+		api.rows( { selected: true } ).deselect();
+		api.columns( { selected: true } ).deselect();
+		api.cells( { selected: true } ).deselect();
+	}
+}
+
+/**
+ * Select items based on the current configuration for style and items.
+ *
+ * @param  {object}             e    Mouse event object
+ * @param  {DataTables.Api}     dt   DataTable
+ * @param  {DataTable.settings} ctx  Settings object of the host DataTable
+ * @param  {string}             type Items to select
+ * @param  {int|object}         idx  Index of the item to select
+ * @private
+ */
+function typeSelect ( e, dt, ctx, type, idx )
+{
+	var style = dt.select.style();
+	var isSelected = dt[type]( idx, { selected: true } ).any();
+
+	if ( style === 'os' ) {
+		if ( e.ctrlKey || e.metaKey ) {
+			// Add or remove from the selection
+			dt[type]( idx ).select( ! isSelected );
+		}
+		else if ( e.shiftKey ) {
+			if ( type === 'cell' ) {
+				cellRange( dt, idx, ctx._select_lastCell || null );
+			}
+			else {
+				rowColumnRange( dt, type, idx, ctx._select_lastCell ?
+					ctx._select_lastCell[type] :
+					null
+				);
+			}
+		}
+		else {
+			// No cmd or shift click - deselect if selected, or select
+			// this row only
+			var selected = dt[type+'s']( { selected: true } );
+
+			if ( isSelected && selected.flatten().length === 1 ) {
+				dt[type]( idx ).deselect();
+			}
+			else {
+				selected.deselect();
+				dt[type]( idx ).select();
+			}
+		}
+	} else if ( style == 'multi+shift' ) {
+		if ( e.shiftKey ) {
+			if ( type === 'cell' ) {
+				cellRange( dt, idx, ctx._select_lastCell || null );
+			}
+			else {
+				rowColumnRange( dt, type, idx, ctx._select_lastCell ?
+					ctx._select_lastCell[type] :
+					null
+				);
+			}
+		}
+		else {
+			dt[ type ]( idx ).select( ! isSelected );
+		}
+	}
+	else {
+		dt[ type ]( idx ).select( ! isSelected );
+	}
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables selectors
+ */
+
+// row and column are basically identical just assigned to different properties
+// and checking a different array, so we can dynamically create the functions to
+// reduce the code size
+$.each( [
+	{ type: 'row', prop: 'aoData' },
+	{ type: 'column', prop: 'aoColumns' }
+], function ( i, o ) {
+	DataTable.ext.selector[ o.type ].push( function ( settings, opts, indexes ) {
+		var selected = opts.selected;
+		var data;
+		var out = [];
+
+		if ( selected !== true && selected !== false ) {
+			return indexes;
+		}
+
+		for ( var i=0, ien=indexes.length ; i<ien ; i++ ) {
+			data = settings[ o.prop ][ indexes[i] ];
+
+			if ( (selected === true && data._select_selected === true) ||
+			     (selected === false && ! data._select_selected )
+			) {
+				out.push( indexes[i] );
+			}
+		}
+
+		return out;
+	} );
+} );
+
+DataTable.ext.selector.cell.push( function ( settings, opts, cells ) {
+	var selected = opts.selected;
+	var rowData;
+	var out = [];
+
+	if ( selected === undefined ) {
+		return cells;
+	}
+
+	for ( var i=0, ien=cells.length ; i<ien ; i++ ) {
+		rowData = settings.aoData[ cells[i].row ];
+
+		if ( (selected === true && rowData._selected_cells && rowData._selected_cells[ cells[i].column ] === true) ||
+		     (selected === false && ( ! rowData._selected_cells || ! rowData._selected_cells[ cells[i].column ] ) )
+		) {
+			out.push( cells[i] );
+		}
+	}
+
+	return out;
+} );
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables API
+ *
+ * For complete documentation, please refer to the docs/api directory or the
+ * DataTables site
+ */
+
+// Local variables to improve compression
+var apiRegister = DataTable.Api.register;
+var apiRegisterPlural = DataTable.Api.registerPlural;
+
+apiRegister( 'select()', function () {
+	return this.iterator( 'table', function ( ctx ) {
+		DataTable.select.init( new DataTable.Api( ctx ) );
+	} );
+} );
+
+apiRegister( 'select.blurable()', function ( flag ) {
+	if ( flag === undefined ) {
+		return this.context[0]._select.blurable;
+	}
+
+	return this.iterator( 'table', function ( ctx ) {
+		ctx._select.blurable = flag;
+	} );
+} );
+
+apiRegister( 'select.info()', function ( flag ) {
+	if ( info === undefined ) {
+		return this.context[0]._select.info;
+	}
+
+	return this.iterator( 'table', function ( ctx ) {
+		ctx._select.info = flag;
+	} );
+} );
+
+apiRegister( 'select.items()', function ( items ) {
+	if ( items === undefined ) {
+		return this.context[0]._select.items;
+	}
+
+	return this.iterator( 'table', function ( ctx ) {
+		ctx._select.items = items;
+
+		eventTrigger( new DataTable.Api( ctx ), 'selectItems', [ items ] );
+	} );
+} );
+
+// Takes effect from the _next_ selection. None disables future selection, but
+// does not clear the current selection. Use the `deselect` methods for that
+apiRegister( 'select.style()', function ( style ) {
+	if ( style === undefined ) {
+		return this.context[0]._select.style;
+	}
+
+	return this.iterator( 'table', function ( ctx ) {
+		ctx._select.style = style;
+
+		if ( ! ctx._select_init ) {
+			init( ctx );
+		}
+
+		// Add / remove mouse event handlers. They aren't required when only
+		// API selection is available
+		var dt = new DataTable.Api( ctx );
+		disableMouseSelection( dt );
+		
+		if ( style !== 'api' ) {
+			enableMouseSelection( dt );
+		}
+
+		eventTrigger( new DataTable.Api( ctx ), 'selectStyle', [ style ] );
+	} );
+} );
+
+apiRegister( 'select.selector()', function ( selector ) {
+	if ( selector === undefined ) {
+		return this.context[0]._select.selector;
+	}
+
+	return this.iterator( 'table', function ( ctx ) {
+		disableMouseSelection( new DataTable.Api( ctx ) );
+
+		ctx._select.selector = selector;
+
+		if ( ctx._select.style !== 'api' ) {
+			enableMouseSelection( new DataTable.Api( ctx ) );
+		}
+	} );
+} );
+
+
+
+apiRegisterPlural( 'rows().select()', 'row().select()', function ( select ) {
+	var api = this;
+
+	if ( select === false ) {
+		return this.deselect();
+	}
+
+	this.iterator( 'row', function ( ctx, idx ) {
+		clear( ctx );
+
+		ctx.aoData[ idx ]._select_selected = true;
+		$( ctx.aoData[ idx ].nTr ).addClass( ctx._select.className );
+	} );
+
+	this.iterator( 'table', function ( ctx, i ) {
+		eventTrigger( api, 'select', [ 'row', api[i] ], true );
+	} );
+
+	return this;
+} );
+
+apiRegisterPlural( 'columns().select()', 'column().select()', function ( select ) {
+	var api = this;
+
+	if ( select === false ) {
+		return this.deselect();
+	}
+
+	this.iterator( 'column', function ( ctx, idx ) {
+		clear( ctx );
+
+		ctx.aoColumns[ idx ]._select_selected = true;
+
+		var column = new DataTable.Api( ctx ).column( idx );
+
+		$( column.header() ).addClass( ctx._select.className );
+		$( column.footer() ).addClass( ctx._select.className );
+
+		column.nodes().to$().addClass( ctx._select.className );
+	} );
+
+	this.iterator( 'table', function ( ctx, i ) {
+		eventTrigger( api, 'select', [ 'column', api[i] ], true );
+	} );
+
+	return this;
+} );
+
+apiRegisterPlural( 'cells().select()', 'cell().select()', function ( select ) {
+	var api = this;
+
+	if ( select === false ) {
+		return this.deselect();
+	}
+
+	this.iterator( 'cell', function ( ctx, rowIdx, colIdx ) {
+		clear( ctx );
+
+		var data = ctx.aoData[ rowIdx ];
+
+		if ( data._selected_cells === undefined ) {
+			data._selected_cells = [];
+		}
+
+		data._selected_cells[ colIdx ] = true;
+
+		if ( data.anCells ) {
+			$( data.anCells[ colIdx ] ).addClass( ctx._select.className );
+		}
+	} );
+
+	this.iterator( 'table', function ( ctx, i ) {
+		eventTrigger( api, 'select', [ 'cell', api[i] ], true );
+	} );
+
+	return this;
+} );
+
+
+apiRegisterPlural( 'rows().deselect()', 'row().deselect()', function () {
+	var api = this;
+
+	this.iterator( 'row', function ( ctx, idx ) {
+		ctx.aoData[ idx ]._select_selected = false;
+		$( ctx.aoData[ idx ].nTr ).removeClass( ctx._select.className );
+	} );
+
+	this.iterator( 'table', function ( ctx, i ) {
+		eventTrigger( api, 'deselect', [ 'row', api[i] ], true );
+	} );
+
+	return this;
+} );
+
+apiRegisterPlural( 'columns().deselect()', 'column().deselect()', function () {
+	var api = this;
+
+	this.iterator( 'column', function ( ctx, idx ) {
+		ctx.aoColumns[ idx ]._select_selected = false;
+
+		var api = new DataTable.Api( ctx );
+		var column = api.column( idx );
+
+		$( column.header() ).removeClass( ctx._select.className );
+		$( column.footer() ).removeClass( ctx._select.className );
+
+		// Need to loop over each cell, rather than just using
+		// `column().nodes()` as cells which are individually selected should
+		// not have the `selected` class removed from them
+		api.cells( null, idx ).indexes().each( function (cellIdx) {
+			var data = ctx.aoData[ cellIdx.row ];
+			var cellSelected = data._selected_cells;
+
+			if ( data.anCells && (! cellSelected || ! cellSelected[ cellIdx.column ]) ) {
+				$( data.anCells[ cellIdx.column  ] ).removeClass( ctx._select.className );
+			}
+		} );
+	} );
+
+	this.iterator( 'table', function ( ctx, i ) {
+		eventTrigger( api, 'deselect', [ 'column', api[i] ], true );
+	} );
+
+	return this;
+} );
+
+apiRegisterPlural( 'cells().deselect()', 'cell().deselect()', function () {
+	var api = this;
+
+	this.iterator( 'cell', function ( ctx, rowIdx, colIdx ) {
+		var data = ctx.aoData[ rowIdx ];
+
+		data._selected_cells[ colIdx ] = false;
+
+		// Remove class only if the cells exist, and the cell is not column
+		// selected, in which case the class should remain (since it is selected
+		// in the column)
+		if ( data.anCells && ! ctx.aoColumns[ colIdx ]._select_selected ) {
+			$( data.anCells[ colIdx ] ).removeClass( ctx._select.className );
+		}
+	} );
+
+	this.iterator( 'table', function ( ctx, i ) {
+		eventTrigger( api, 'deselect', [ 'cell', api[i] ], true );
+	} );
+
+	return this;
+} );
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Buttons
+ */
+function i18n( label, def ) {
+	return function (dt) {
+		return dt.i18n( 'buttons.'+label, def );
+	};
+}
+
+// Common events with suitable namespaces
+function namespacedEvents ( config ) {
+	var unique = config._eventNamespace;
+
+	return 'draw.dt.DT'+unique+' select.dt.DT'+unique+' deselect.dt.DT'+unique;
+}
+
+function enabled ( dt, config ) {
+	if ( $.inArray( 'rows', config.limitTo ) !== -1 && dt.rows( { selected: true } ).any() ) {
+		return true;
+	}
+
+	if ( $.inArray( 'columns', config.limitTo ) !== -1 && dt.columns( { selected: true } ).any() ) {
+		return true;
+	}
+
+	if ( $.inArray( 'cells', config.limitTo ) !== -1 && dt.cells( { selected: true } ).any() ) {
+		return true;
+	}
+
+	return false;
+}
+
+var _buttonNamespace = 0;
+
+$.extend( DataTable.ext.buttons, {
+	selected: {
+		text: i18n( 'selected', 'Selected' ),
+		className: 'buttons-selected',
+		limitTo: [ 'rows', 'columns', 'cells' ],
+		init: function ( dt, node, config ) {
+			var that = this;
+			config._eventNamespace = '.select'+(_buttonNamespace++);
+
+			// .DT namespace listeners are removed by DataTables automatically
+			// on table destroy
+			dt.on( namespacedEvents(config), function () {
+				that.enable( enabled(dt, config) );
+			} );
+
+			this.disable();
+		},
+		destroy: function ( dt, node, config ) {
+			dt.off( config._eventNamespace );
+		}
+	},
+	selectedSingle: {
+		text: i18n( 'selectedSingle', 'Selected single' ),
+		className: 'buttons-selected-single',
+		init: function ( dt, node, config ) {
+			var that = this;
+			config._eventNamespace = '.select'+(_buttonNamespace++);
+
+			dt.on( namespacedEvents(config), function () {
+				var count = dt.rows( { selected: true } ).flatten().length +
+				            dt.columns( { selected: true } ).flatten().length +
+				            dt.cells( { selected: true } ).flatten().length;
+
+				that.enable( count === 1 );
+			} );
+
+			this.disable();
+		},
+		destroy: function ( dt, node, config ) {
+			dt.off( config._eventNamespace );
+		}
+	},
+	selectAll: {
+		text: i18n( 'selectAll', 'Select all' ),
+		className: 'buttons-select-all',
+		action: function () {
+			var items = this.select.items();
+			this[ items+'s' ]().select();
+		}
+	},
+	selectNone: {
+		text: i18n( 'selectNone', 'Deselect all' ),
+		className: 'buttons-select-none',
+		action: function () {
+			clear( this.settings()[0], true );
+		},
+		init: function ( dt, node, config ) {
+			var that = this;
+			config._eventNamespace = '.select'+(_buttonNamespace++);
+
+			dt.on( namespacedEvents(config), function () {
+				var count = dt.rows( { selected: true } ).flatten().length +
+				            dt.columns( { selected: true } ).flatten().length +
+				            dt.cells( { selected: true } ).flatten().length;
+
+				that.enable( count > 0 );
+			} );
+
+			this.disable();
+		},
+		destroy: function ( dt, node, config ) {
+			dt.off( config._eventNamespace );
+		}
+	}
+} );
+
+$.each( [ 'Row', 'Column', 'Cell' ], function ( i, item ) {
+	var lc = item.toLowerCase();
+
+	DataTable.ext.buttons[ 'select'+item+'s' ] = {
+		text: i18n( 'select'+item+'s', 'Select '+lc+'s' ),
+		className: 'buttons-select-'+lc+'s',
+		action: function () {
+			this.select.items( lc );
+		},
+		init: function ( dt ) {
+			var that = this;
+
+			dt.on( 'selectItems.dt.DT', function ( e, ctx, items ) {
+				that.active( items === lc );
+			} );
+		}
+	};
+} );
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Initialisation
+ */
+
+// DataTables creation - check if select has been defined in the options. Note
+// this required that the table be in the document! If it isn't then something
+// needs to trigger this method unfortunately. The next major release of
+// DataTables will rework the events and address this.
+$(document).on( 'preInit.dt.dtSelect', function (e, ctx) {
+	if ( e.namespace !== 'dt' ) {
+		return;
+	}
+
+	DataTable.select.init( new DataTable.Api( ctx ) );
+} );
+
+
+return DataTable.select;
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/datatables.net/js/jquery.dataTables.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/datatables.net/js/jquery.dataTables.js ***!
+  \*************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.19
@@ -746,33 +2536,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				// CommonJS environments without a window global must pass a
-				// root. This will give an error otherwise
-				root = window;
-			}
-
-			if ( ! $ ) {
-				$ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
-					require('jquery') :
-					require('jquery')( root );
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
+	else {}
 }
 (function( $, window, document, undefined ) {
 	"use strict";
@@ -16015,947 +17784,587 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___ = __webpack_require__(6);
-/* unused harmony namespace reexport */
- /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___["a" /* default */]); 
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables_net_bs4_js_dataTables_bootstrap4_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables_net_bs4_js_dataTables_bootstrap4_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_datatables_net_bs4_js_dataTables_bootstrap4_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net_buttons_bs4__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net_buttons_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_datatables_net_buttons_bs4__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net_responsive_bs4__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net_responsive_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net_responsive_bs4__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net_select_bs4__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net_select_bs4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_datatables_net_select_bs4__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_datatables_net_bs4_css_dataTables_bootstrap4_min_css__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_datatables_net_bs4_css_dataTables_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_datatables_net_bs4_css_dataTables_bootstrap4_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_datatables_net_select_bs4_css_select_bootstrap4_min_css__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_datatables_net_select_bs4_css_select_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_datatables_net_select_bs4_css_select_bootstrap4_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_datatables_net_buttons_bs4_css_buttons_bootstrap4_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_datatables_net_responsive_bs4_css_responsive_bootstrap4_min_css__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// this demonstrate with buttons and responsive master/details row
-
-// since I already include on index.html, I don't need to include it here
-// import 'datatables.net/js/jquery.dataTables.js'
-
-
-// import the rest
-
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  name: 'App',
-  components: { VdtnetTable: __WEBPACK_IMPORTED_MODULE_0__src__["a" /* default */] },
-  data: function data() {
-    var vm = this;
-
-    return {
-      options: {
-        ajax: {
-          url: 'https://jsonplaceholder.typicode.com/users',
-          dataSrc: function dataSrc(json) {
-            return json;
-          }
-        },
-        responsive: false,
-        processing: true,
-        pageLength: 10,
-        searching: true,
-        searchDelay: 1500,
-        destroy: true,
-        ordering: true,
-        lengthChange: true,
-        serverSide: true,
-        fixedHeader: true,
-        saveState: true
-      },
-      fields: {
-        id: { label: 'ID', sortable: true },
-        actions: {
-          sortable: false,
-          label: 'Actions',
-          defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
-        },
-        name: { label: 'Name', sortable: true, searchable: true },
-        username: { label: 'Username', sortable: false, searchable: true },
-        email: { label: 'Email' },
-        address: {
-          label: 'Address',
-          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
-        },
-        phone: { label: 'Phone' },
-        website: {
-          label: 'Website',
-          render: function render(data) {
-            return 'https://' + data;
-          }
-        }
-      },
-      quickSearch: '',
-      details: {
-        template: 'I\'m a child for {{ data.id }} yall'
-      }
-    };
-  },
-
-  methods: {
-    doLoadTable: function doLoadTable(cb) {
-      $.getJSON('https://jsonplaceholder.typicode.com/users', function (data) {
-        cb(data);
-      });
-    },
-    doAlertEdit: function doAlertEdit(data) {
-      window.alert('row edit click for item ID: ' + data.id);
-    },
-    doAlertDelete: function doAlertDelete(data, row, tr, target) {
-      window.alert('deleting item ID: ' + data.id);
-
-      // row.remove() doesn't work when serverside is enabled
-      // so we fake it with dom remove
-      tr.remove();
-
-      var table = this.$refs.table;
-      setTimeout(function () {
-        // simulate extra long running ajax
-        table.reload();
-      }, 1500);
-    },
-    doAfterReload: function doAfterReload(data, table) {
-      window.alert('data reloaded');
-    },
-    doSearch: function doSearch() {
-      this.$refs.table.search(this.quickSearch);
-    },
-    doExport: function doExport(type) {
-      var parms = this.$refs.table.getServerParams();
-      parms.export = type;
-      window.alert('GET /api/v1/export?' + jQuery.param(parms));
-    }
-  }
-});
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_script_lang_js___ = __webpack_require__(8);
-/* unused harmony namespace reexport */
- /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_script_lang_js___["a" /* default */]); 
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  name: 'VdtnetTable',
-  props: {
-    /**
-     * Set the table classes you wish to use, default with bootstrap4
-     * but you can override with: themeforest, foundation, etc..
-     *
-     * @type String
-     */
-    className: {
-      type: String,
-      default: 'table table-striped table-bordered nowrap w-100'
-    },
-    /**
-     * the options object: https://datatables.net/manual/options
-     *
-     * @type Object
-     */
-    opts: {
-      type: Object
-    },
-    /**
-     * List all fields to be converted to opts columns
-     *
-     * @type Object
-     */
-    fields: {
-      type: Object
-    },
-    /**
-     * Pass in DataTables.Net jQuery to resolve any conflict from
-     * multiple jQuery loaded in the browser
-     *
-     * @type Object
-     */
-    jquery: {
-      type: Object
-    },
-    /**
-     * The select-checkbox column index (start at 1)
-     * Current implementation require datatables.net-select
-     *
-     * @type Number
-     */
-    selectCheckbox: {
-      type: Number
-    },
-    /**
-     * Provide custom local data loading.  Warning: this option has not been
-     * thoroughly tested.  Please use ajax and serverSide instead.
-     *
-     * @type Function
-     */
-    dataLoader: {
-      type: Function
-    },
-    /**
-     * true to hide the footer of the table
-     *
-     * @type Boolean
-     */
-    hideFooter: {
-      type: Boolean
-    },
-    /**
-     * The details column configuration of master/details.
-     *
-     * @type {Object}
-     */
-    details: {
-      type: Object
-    }
-  },
-  data: function data() {
-    // initialize defaults
-    return {
-      options: {
-        /*eslint-disable */
-        dom: "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
-        /*eslint-enable */
-        columns: [],
-        language: {
-          infoFiltered: ''
-        },
-        lengthMenu: [[15, 100, 500, 1000, -1], [15, 100, 500, 1000, 'All']],
-        pageLength: 15,
-        buttons: [] // remove any button defaults
-      },
-      dataTable: null
-    };
-  },
-
-  computed: {
-    jq: function jq() {
-      return this.jquery || window.jQuery;
-    },
-    classes: function classes() {
-      var classes = 'table-responsive vdtnet-container';
-      if (this.hideFooter) {
-        classes += ' hide-footer';
-      }
-
-      return classes;
-    }
-  },
-  created: function created() {
-    var vm = this;
-    var jq = vm.jq;
-    var orders = [];
-
-    var sort = 0;
-    var icol = 0;
-
-    // allow user to override default options
-    if (vm.opts) {
-      vm.options = jq.extend({}, vm.options, vm.opts);
-    }
-
-    // if fields are passed in, generate column definition
-    // from our custom fields schema
-    if (vm.fields) {
-      var fields = vm.fields;
-      var cols = vm.options.columns;
-
-      for (var k in fields) {
-        var field = fields[k];
-        field.name = field.name || k;
-
-        // generate
-        var col = {
-          searchable: field.searchable,
-          title: field.label || k,
-          width: field.width,
-          data: field.name,
-          visible: field.visible,
-          className: field.className
-        };
-
-        if (field.width) {
-          col.width = field.width;
-        }
-
-        if (field.hasOwnProperty('defaultContent')) {
-          col.defaultContent = field.defaultContent;
-        }
-
-        if (field.hasOwnProperty('sortable')) {
-          col.orderable = field.sortable;
-        }
-
-        if (field.template) {
-          field.render = vm.compileTemplate(field.template);
-        }
-
-        if (field.render) {
-          col.render = field.render;
-        }
-        // console.log(col)
-
-        cols.push(col);
-
-        if (col.defaultOrder) {
-          orders.push([icol, col.defaultOrder]);
-        }
-
-        icol++;
-      }
-    }
-
-    // apply orders calculated from above
-    vm.options.order = vm.options.order || orders;
-
-    if (vm.selectCheckbox) {
-      // expand column
-      var _col = {
-        orderable: false,
-        name: '_select_checkbox',
-        className: 'select-checkbox',
-        data: null,
-        defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox">'
-      };
-      vm.options.columns.splice(vm.selectCheckbox - 1, 0, _col);
-
-      // console.log(vm.options.columns)
-      vm.options.select = jq.extend(vm.options.select || {}, {
-        style: 'os',
-        selector: 'td.select-checkbox'
-      });
-
-      if (vm.selectCheckbox == 1) {
-        sort++;
-      }
-    }
-
-    // handle master details
-    if (vm.details) {
-      var _col2 = _defineProperty({
-        orderable: false,
-        name: '_details_control',
-        className: 'details-control',
-        data: null,
-        defaultContent: ''
-      }, 'defaultContent', vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>');
-      vm.options.columns.splice((vm.details.index || 1) - 1, 0, _col2);
-
-      if ((vm.details.index || 1) > 0) {
-        sort++;
-      }
-    }
-
-    if (sort > 0) {
-      vm.options.order = [[sort, 'asc']];
-    }
-
-    // handle local data loader
-    if (vm.dataLoader) {
-      delete vm.options.ajax;
-      vm.options.serverSide = false;
-    }
-  },
-  mounted: function mounted() {
-    var vm = this;
-    var jq = vm.jq;
-    var $el = jq(vm.$refs.table);
-
-    // console.log(vm.options.buttons)
-    vm.dataTable = $el.DataTable(vm.options);
-
-    if (vm.selectCheckbox) {
-      // handle select all checkbox
-      $el.on('click', 'th input.select-all-checkbox', function (e) {
-        if (jq(e.target).is(':checked')) {
-          vm.dataTable.rows().select();
-        } else {
-          vm.dataTable.rows().deselect();
-        }
-      });
-
-      // handle individual row select events
-      vm.dataTable.on('select deselect', function () {
-        var $input = $el.find('th input.select-all-checkbox');
-        if (vm.dataTable.rows({
-          selected: true
-        }).count() !== vm.dataTable.rows().count()) {
-          jq('th.select-checkbox').removeClass('selected');
-          $input.attr('checked', false);
-        } else {
-          jq('th.select-checkbox').addClass('selected');
-          $input.attr('checked', true);
-        }
-        // TODO: vm.$emit the selected row?
-      });
-    }
-
-    // wire up edit, delete, and/or action buttons
-    $el.on('click', '[data-action]', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var target = jq(e.target);
-      var that = target;
-      var action = that.attr('data-action');
-      while (!action) {
-        // don't let it propagate outside of container
-        if (that.hasClass('vdtnet-container') || that.prop('tagName') === 'table') {
-          // no action, simply exit
-          return;
-        }
-        that = that.parent();
-        action = that.attr('data-action');
-      }
-
-      // only emit if there is action
-      if (action) {
-        // detect if row action
-        var tr = that.closest('tr');
-        if (tr) {
-          if (tr.attr('role') !== 'row') {
-            tr = tr.prev();
-          }
-          var row = vm.dataTable.row(tr);
-          var data = row.data();
-          vm.$emit(action, data, row, tr, that);
-        } else {
-          // not a row click, must be other kind of action
-          // such as bulk, csv, pdf, etc...
-          vm.$emit(action, null, null, null, target);
-        }
-      }
-    });
-
-    // handle master/details
-    if (vm.details) {
-      // default to render function
-      var renderFunc = vm.details.render;
-
-      // must be string template
-      if (vm.details.template) {
-        renderFunc = vm.compileTemplate(vm.details.template);
-      }
-
-      // handle master/details
-      // Add event listener for opening and closing details
-      $el.on('click', 'td.details-control', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var target = jq(e.target);
-        var that = target;
-        var tr = that.closest('tr');
-        if (tr.attr('role') !== 'row') {
-          tr = tr.prev();
-        }
-        var row = vm.dataTable.row(tr);
-        if (row.child.isShown()) {
-          // This row is already open - close it
-          row.child.hide();
-          tr.removeClass('master');
-        } else {
-          // Open this row
-          var data = row.data();
-          row.child(renderFunc(data, 'child', row, tr)).show();
-          tr.addClass('master');
-        }
-      });
-    }
-
-    // finally, load data
-    if (vm.dataLoader) {
-      vm.reload();
-    }
-  },
-  beforeDestroy: function beforeDestroy() {
-    var vm = this;
-    if (vm.dataTable) {
-      vm.dataTable.destroy(true);
-    }
-    vm.dataTable = null;
-  },
-
-  methods: {
-    /**
-     * Vue.compile a template string and return the compiled function
-     *
-     * @param  {String} template the string template
-     * @return {Function}          the compiled template function
-     */
-    compileTemplate: function compileTemplate(template) {
-      var vm = this;
-      var jq = vm.jq;
-      var res = Vue.compile('<div>' + template + '</div>');
-      var renderFunc = function renderFunc(data, type, row, meta) {
-        var comp = new Vue({
-          data: {
-            data: data,
-            type: type,
-            row: row,
-            meta: meta
-          },
-          render: res.render,
-          staticRenderFns: res.staticRenderFns
-        }).$mount();
-        return jq(comp.$el).html();
-      };
-
-      return renderFunc;
-    },
-
-    /**
-     * Set table data array that was loaded from somewhere else
-     * This method allow for local setting of data; though, it
-     * is recommended to use ajax instead of this.
-     *
-     * @param {Array} data   the array of data
-     * @return {Object}            the component
-     */
-    setTableData: function setTableData(data) {
-      var vm = this;
-      if (data.constructor === Array) {
-        vm.dataTable.clear().rows.add(data);
-        vm.dataTable.draw(false);
-        vm.dataTable.columns.adjust();
-      }
-      return vm;
-    },
-
-    /**
-     * pass through reload method
-     *
-     * @param  {Boolean}  resetPaging true to reset current page position
-     * @return {Object}            the component
-     */
-    reload: function reload() {
-      var resetPaging = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      var vm = this;
-      if (vm.dataLoader) {
-        // manual data loading
-        vm.dataLoader(function (data) {
-          if (data && !data.data) {
-            data = { data: data };
-          }
-          vm.setTableData(data.data);
-
-          vm.$emit('reloaded', data, vm);
-        });
-      } else {
-        vm.dataTable.ajax.reload(function (data) {
-          vm.$emit('reloaded', data, vm);
-        }, resetPaging);
-      }
-
-      return vm;
-    },
-    search: function search(value) {
-      var vm = this;
-      vm.dataTable.search(value).draw();
-      return vm;
-    },
-    setPageLength: function setPageLength(value) {
-      var vm = this;
-      vm.dataTable.page.len(value);
-      return vm.reload();
-    },
-    getServerParams: function getServerParams() {
-      if (this.dataLoader) {
-        return {};
-      }
-      return this.dataTable.ajax.params();
-    }
-  }
-});
-
-/***/ }),
-/* 9 */
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options!./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
 
-// load the styles
-var content = __webpack_require__(23);
+var content = __webpack_require__(/*! !../node_modules/css-loader!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&");
+
 if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
+
 var transform;
+var insertInto;
 
-var options = {}
+
+
+var options = {"hmr":true}
+
 options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
 if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./VdtnetTable.vue?vue&type=style&index=0&lang=css&", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./VdtnetTable.vue?vue&type=style&index=0&lang=css&");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
+
+if(false) {}
 
 /***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = normalizeComponent;
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 11 */
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
 
-// load the styles
-var content = __webpack_require__(40);
+var content = __webpack_require__(/*! !../node_modules/css-loader!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib??vue-loader-options!./VdtnetTable.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&");
+
 if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
 
-var options = {}
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
 options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
 if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js??vue-loader-options!../node_modules/eslint-loader/index.js??ref--8!./App.vue?vue&type=style&index=0&id=a9794c84&scoped=true&lang=css&");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
+
+if(false) {}
 
 /***/ }),
-/* 12 */
+
+/***/ "./node_modules/style-loader/lib/addStyles.js":
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(13);
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
 
+var stylesInDom = {};
 
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+var	memoize = function (fn) {
+	var memo;
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_vue__ = __webpack_require__(15);
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
 
-
-
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#app',
-  render: function render(h) {
-    return h(__WEBPACK_IMPORTED_MODULE_1__App_vue__["a" /* default */]);
-  }
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
 });
 
+var getTarget = function (target, parent) {
+  if (parent){
+    return parent.querySelector(target);
+  }
+  return document.querySelector(target);
+};
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(target, parent) {
+                // If passing function in options, then use it for resolve "head" element.
+                // Useful for Shadow Root style i.e
+                // {
+                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+                // }
+                if (typeof target === 'function') {
+                        return target();
+                }
+                if (typeof memo[target] === "undefined") {
+			var styleTarget = getTarget.call(this, target, parent);
+			// Special case to return head of iframe instead of iframe itself
+			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[target] = styleTarget;
+		}
+		return memo[target]
+	};
+})();
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(/*! ./urls */ "./node_modules/style-loader/lib/urls.js");
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+        if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertAt.before, target);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+
+	if(options.attrs.nonce === undefined) {
+		var nonce = getNonce();
+		if (nonce) {
+			options.attrs.nonce = nonce;
+		}
+	}
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function getNonce() {
+	if (false) {}
+
+	return __webpack_require__.nc;
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = typeof options.transform === 'function'
+		 ? options.transform(obj.css) 
+		 : options.transform.default(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
 /***/ }),
-/* 14 */
+
+/***/ "./node_modules/style-loader/lib/urls.js":
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
 
-/***/ }),
-/* 15 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App_vue_vue_type_template_id_a9794c84_scoped_true___ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_vue_vue_type_script_lang_js___ = __webpack_require__(5);
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__ = __webpack_require__(10);
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
 
-
-
-
-
-
-/* normalize component */
-
-var component = Object(__WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__["a" /* default */])(
-  __WEBPACK_IMPORTED_MODULE_1__App_vue_vue_type_script_lang_js___["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_0__App_vue_vue_type_template_id_a9794c84_scoped_true___["a" /* render */],
-  __WEBPACK_IMPORTED_MODULE_0__App_vue_vue_type_template_id_a9794c84_scoped_true___["b" /* staticRenderFns */],
-  false,
-  null,
-  "a9794c84",
-  null
-  
-)
-
-/* hot reload */
-if (false) {
-  var api = require("/Users/tomn/Desktop/work/niiknow/vue-datatables-net/node_modules/vue-hot-reload-api/dist/index.js")
-  api.install(require('vue'))
-  if (api.compatible) {
-    module.hot.accept()
-    if (!module.hot.data) {
-      api.createRecord('a9794c84', component.options)
-    } else {
-      api.reload('a9794c84', component.options)
-    }
-    module.hot.accept("./App.vue?vue&type=template&id=a9794c84&scoped=true&", function () {
-      api.rerender('a9794c84', {
-        render: render,
-        staticRenderFns: staticRenderFns
-      })
-    })
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
   }
-}
-component.options.__file = "example/App.vue"
-/* harmony default export */ __webpack_exports__["a"] = (component.exports);
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
 
 /***/ }),
-/* 16 */
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./example/App.vue?vue&type=template&id=a9794c84&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./example/App.vue?vue&type=template&id=a9794c84&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___ = __webpack_require__(17);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_a9794c84_scoped_true___["b"]; });
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -16979,7 +18388,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Csv")]
+              [_vm._v("\n          Csv\n        ")]
             ),
             _vm._v(" "),
             _c(
@@ -16994,7 +18403,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Excel")]
+              [_vm._v("\n          Excel\n        ")]
             ),
             _vm._v(" "),
             _c(
@@ -17009,7 +18418,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Pdf")]
+              [_vm._v("\n          Pdf\n        ")]
             )
           ])
         ]),
@@ -17107,83 +18516,18 @@ render._withStripped = true
 
 
 /***/ }),
-/* 18 */
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=template&id=c0350a64&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/VdtnetTable.vue?vue&type=template&id=c0350a64& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue__ = __webpack_require__(19);
-
-
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue__["a" /* default */]);
-
-/***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue_vue_type_template_id_c0350a64___ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VdtnetTable_vue_vue_type_script_lang_js___ = __webpack_require__(7);
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VdtnetTable_vue_vue_type_style_index_0_lang_css___ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__ = __webpack_require__(10);
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(__WEBPACK_IMPORTED_MODULE_3__node_modules_vue_loader_lib_runtime_componentNormalizer_js__["a" /* default */])(
-  __WEBPACK_IMPORTED_MODULE_1__VdtnetTable_vue_vue_type_script_lang_js___["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue_vue_type_template_id_c0350a64___["a" /* render */],
-  __WEBPACK_IMPORTED_MODULE_0__VdtnetTable_vue_vue_type_template_id_c0350a64___["b" /* staticRenderFns */],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) {
-  var api = require("/Users/tomn/Desktop/work/niiknow/vue-datatables-net/node_modules/vue-hot-reload-api/dist/index.js")
-  api.install(require('vue'))
-  if (api.compatible) {
-    module.hot.accept()
-    if (!module.hot.data) {
-      api.createRecord('c0350a64', component.options)
-    } else {
-      api.reload('c0350a64', component.options)
-    }
-    module.hot.accept("./VdtnetTable.vue?vue&type=template&id=c0350a64&", function () {
-      api.rerender('c0350a64', {
-        render: render,
-        staticRenderFns: staticRenderFns
-      })
-    })
-  }
-}
-component.options.__file = "src/VdtnetTable.vue"
-/* harmony default export */ __webpack_exports__["a"] = (component.exports);
-
-/***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___ = __webpack_require__(21);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___["b"]; });
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -17231,5040 +18575,250 @@ render._withStripped = true
 
 
 /***/ }),
-/* 22 */
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___);
-/* unused harmony reexport namespace */
- /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css____default.a); 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
 
 /***/ }),
-/* 23 */
+
+/***/ "./src/VdtnetTable.vue":
+/*!*****************************!*\
+  !*** ./src/VdtnetTable.vue ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VdtnetTable_vue_vue_type_template_id_c0350a64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VdtnetTable.vue?vue&type=template&id=c0350a64& */ "./src/VdtnetTable.vue?vue&type=template&id=c0350a64&");
+/* harmony import */ var _VdtnetTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VdtnetTable.vue?vue&type=script&lang=js& */ "./src/VdtnetTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VdtnetTable.vue?vue&type=style&index=0&lang=css& */ "./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _VdtnetTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _VdtnetTable_vue_vue_type_template_id_c0350a64___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VdtnetTable_vue_vue_type_template_id_c0350a64___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/VdtnetTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./src/VdtnetTable.vue?vue&type=script&lang=js&":
+/*!******************************************************!*\
+  !*** ./src/VdtnetTable.vue?vue&type=script&lang=js& ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/babel-loader/lib??ref--4-0!../node_modules/vue-loader/lib??vue-loader-options!./VdtnetTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************!*\
+  !*** ./src/VdtnetTable.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/style-loader!../node_modules/css-loader!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib??vue-loader-options!./VdtnetTable.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/VdtnetTable.vue?vue&type=template&id=c0350a64&":
+/*!************************************************************!*\
+  !*** ./src/VdtnetTable.vue?vue&type=template&id=c0350a64& ***!
+  \************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./VdtnetTable.vue?vue&type=template&id=c0350a64& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/VdtnetTable.vue?vue&type=template&id=c0350a64&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VdtnetTable_vue_vue_type_template_id_c0350a64___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VdtnetTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VdtnetTable.vue */ "./src/VdtnetTable.vue");
+
+/* harmony default export */ __webpack_exports__["default"] = (_VdtnetTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ 0:
+/*!********************************!*\
+  !*** multi ./example/index.js ***!
+  \********************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.vdtnet-footer .dataTables_length {\n  padding-top: 6px;\n  padding-right: 10px;\n}\n.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {\n  float: right;\n}\n.hide-footer .vdtnet-footer {\n  display: none;\n}\n.master .details-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.master .details-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}\n", ""]);
-
-// exports
+module.exports = __webpack_require__(/*! /Users/tomn/Desktop/work/niiknow/vue-datatables-net/example/index.js */"./example/index.js");
 
 
 /***/ }),
-/* 24 */
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
-  }
-
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
-  }
-
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
-
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
-
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
-
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
-
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
-
-		// convert the url to a full url
-		var newUrl;
-
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
-};
-
+module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap integration for DataTables' Buttons
- * ©2016 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net-bs4')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.Buttons ) {
-				require('datatables.net-buttons')(root, $);
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-$.extend( true, DataTable.Buttons.defaults, {
-	dom: {
-		container: {
-			className: 'dt-buttons btn-group'
-		},
-		button: {
-			className: 'btn btn-secondary'
-		},
-		collection: {
-			tag: 'div',
-			className: 'dt-button-collection dropdown-menu',
-			button: {
-				tag: 'a',
-				className: 'dt-button dropdown-item',
-				active: 'active',
-				disabled: 'disabled'
-			}
-		}
-	}
-} );
-
-DataTable.ext.buttons.collection.className += ' dropdown-toggle';
-DataTable.ext.buttons.collection.rightAlignClassName = 'dropdown-menu-right';
-
-return DataTable.Buttons;
-}));
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for DataTables 1.5.4
- * ©2016-2018 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
-// Used for namespacing events added to the document by each instance, so they
-// can be removed on destroy
-var _instCounter = 0;
-
-// Button namespacing counter for namespacing events on individual buttons
-var _buttonCounter = 0;
-
-var _dtButtons = DataTable.ext.buttons;
-
-/**
- * [Buttons description]
- * @param {[type]}
- * @param {[type]}
- */
-var Buttons = function( dt, config )
-{
-	// If there is no config set it to an empty object
-	if ( typeof( config ) === 'undefined' ) {
-		config = {};	
-	}
-	
-	// Allow a boolean true for defaults
-	if ( config === true ) {
-		config = {};
-	}
-
-	// For easy configuration of buttons an array can be given
-	if ( $.isArray( config ) ) {
-		config = { buttons: config };
-	}
-
-	this.c = $.extend( true, {}, Buttons.defaults, config );
-
-	// Don't want a deep copy for the buttons
-	if ( config.buttons ) {
-		this.c.buttons = config.buttons;
-	}
-
-	this.s = {
-		dt: new DataTable.Api( dt ),
-		buttons: [],
-		listenKeys: '',
-		namespace: 'dtb'+(_instCounter++)
-	};
-
-	this.dom = {
-		container: $('<'+this.c.dom.container.tag+'/>')
-			.addClass( this.c.dom.container.className )
-	};
-
-	this._constructor();
-};
-
-
-$.extend( Buttons.prototype, {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 */
-
-	/**
-	 * Get the action of a button
-	 * @param  {int|string} Button index
-	 * @return {function}
-	 *//**
-	 * Set the action of a button
-	 * @param  {node} node Button element
-	 * @param  {function} action Function to set
-	 * @return {Buttons} Self for chaining
-	 */
-	action: function ( node, action )
-	{
-		var button = this._nodeToButton( node );
-
-		if ( action === undefined ) {
-			return button.conf.action;
-		}
-
-		button.conf.action = action;
-
-		return this;
-	},
-
-	/**
-	 * Add an active class to the button to make to look active or get current
-	 * active state.
-	 * @param  {node} node Button element
-	 * @param  {boolean} [flag] Enable / disable flag
-	 * @return {Buttons} Self for chaining or boolean for getter
-	 */
-	active: function ( node, flag ) {
-		var button = this._nodeToButton( node );
-		var klass = this.c.dom.button.active;
-		var jqNode = $(button.node);
-
-		if ( flag === undefined ) {
-			return jqNode.hasClass( klass );
-		}
-
-		jqNode.toggleClass( klass, flag === undefined ? true : flag );
-
-		return this;
-	},
-
-	/**
-	 * Add a new button
-	 * @param {object} config Button configuration object, base string name or function
-	 * @param {int|string} [idx] Button index for where to insert the button
-	 * @return {Buttons} Self for chaining
-	 */
-	add: function ( config, idx )
-	{
-		var buttons = this.s.buttons;
-
-		if ( typeof idx === 'string' ) {
-			var split = idx.split('-');
-			var base = this.s;
-
-			for ( var i=0, ien=split.length-1 ; i<ien ; i++ ) {
-				base = base.buttons[ split[i]*1 ];
-			}
-
-			buttons = base.buttons;
-			idx = split[ split.length-1 ]*1;
-		}
-
-		this._expandButton( buttons, config, false, idx );
-		this._draw();
-
-		return this;
-	},
-
-	/**
-	 * Get the container node for the buttons
-	 * @return {jQuery} Buttons node
-	 */
-	container: function ()
-	{
-		return this.dom.container;
-	},
-
-	/**
-	 * Disable a button
-	 * @param  {node} node Button node
-	 * @return {Buttons} Self for chaining
-	 */
-	disable: function ( node ) {
-		var button = this._nodeToButton( node );
-
-		$(button.node).addClass( this.c.dom.button.disabled );
-
-		return this;
-	},
-
-	/**
-	 * Destroy the instance, cleaning up event handlers and removing DOM
-	 * elements
-	 * @return {Buttons} Self for chaining
-	 */
-	destroy: function ()
-	{
-		// Key event listener
-		$('body').off( 'keyup.'+this.s.namespace );
-
-		// Individual button destroy (so they can remove their own events if
-		// needed). Take a copy as the array is modified by `remove`
-		var buttons = this.s.buttons.slice();
-		var i, ien;
-		
-		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-			this.remove( buttons[i].node );
-		}
-
-		// Container
-		this.dom.container.remove();
-
-		// Remove from the settings object collection
-		var buttonInsts = this.s.dt.settings()[0];
-
-		for ( i=0, ien=buttonInsts.length ; i<ien ; i++ ) {
-			if ( buttonInsts.inst === this ) {
-				buttonInsts.splice( i, 1 );
-				break;
-			}
-		}
-
-		return this;
-	},
-
-	/**
-	 * Enable / disable a button
-	 * @param  {node} node Button node
-	 * @param  {boolean} [flag=true] Enable / disable flag
-	 * @return {Buttons} Self for chaining
-	 */
-	enable: function ( node, flag )
-	{
-		if ( flag === false ) {
-			return this.disable( node );
-		}
-
-		var button = this._nodeToButton( node );
-		$(button.node).removeClass( this.c.dom.button.disabled );
-
-		return this;
-	},
-
-	/**
-	 * Get the instance name for the button set selector
-	 * @return {string} Instance name
-	 */
-	name: function ()
-	{
-		return this.c.name;
-	},
-
-	/**
-	 * Get a button's node
-	 * @param  {node} node Button node
-	 * @return {jQuery} Button element
-	 */
-	node: function ( node )
-	{
-		var button = this._nodeToButton( node );
-		return $(button.node);
-	},
-
-	/**
-	 * Set / get a processing class on the selected button
-	 * @param  {boolean} flag true to add, false to remove, undefined to get
-	 * @return {boolean|Buttons} Getter value or this if a setter.
-	 */
-	processing: function ( node, flag )
-	{
-		var button = this._nodeToButton( node );
-
-		if ( flag === undefined ) {
-			return $(button.node).hasClass( 'processing' );
-		}
-
-		$(button.node).toggleClass( 'processing', flag );
-
-		return this;
-	},
-
-	/**
-	 * Remove a button.
-	 * @param  {node} node Button node
-	 * @return {Buttons} Self for chaining
-	 */
-	remove: function ( node )
-	{
-		var button = this._nodeToButton( node );
-		var host = this._nodeToHost( node );
-		var dt = this.s.dt;
-
-		// Remove any child buttons first
-		if ( button.buttons.length ) {
-			for ( var i=button.buttons.length-1 ; i>=0 ; i-- ) {
-				this.remove( button.buttons[i].node );
-			}
-		}
-
-		// Allow the button to remove event handlers, etc
-		if ( button.conf.destroy ) {
-			button.conf.destroy.call( dt.button(node), dt, $(node), button.conf );
-		}
-
-		this._removeKey( button.conf );
-
-		$(button.node).remove();
-
-		var idx = $.inArray( button, host );
-		host.splice( idx, 1 );
-
-		return this;
-	},
-
-	/**
-	 * Get the text for a button
-	 * @param  {int|string} node Button index
-	 * @return {string} Button text
-	 *//**
-	 * Set the text for a button
-	 * @param  {int|string|function} node Button index
-	 * @param  {string} label Text
-	 * @return {Buttons} Self for chaining
-	 */
-	text: function ( node, label )
-	{
-		var button = this._nodeToButton( node );
-		var buttonLiner = this.c.dom.collection.buttonLiner;
-		var linerTag = button.inCollection && buttonLiner && buttonLiner.tag ?
-			buttonLiner.tag :
-			this.c.dom.buttonLiner.tag;
-		var dt = this.s.dt;
-		var jqNode = $(button.node);
-		var text = function ( opt ) {
-			return typeof opt === 'function' ?
-				opt( dt, jqNode, button.conf ) :
-				opt;
-		};
-
-		if ( label === undefined ) {
-			return text( button.conf.text );
-		}
-
-		button.conf.text = label;
-
-		if ( linerTag ) {
-			jqNode.children( linerTag ).html( text(label) );
-		}
-		else {
-			jqNode.html( text(label) );
-		}
-
-		return this;
-	},
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
-
-	/**
-	 * Buttons constructor
-	 * @private
-	 */
-	_constructor: function ()
-	{
-		var that = this;
-		var dt = this.s.dt;
-		var dtSettings = dt.settings()[0];
-		var buttons =  this.c.buttons;
-
-		if ( ! dtSettings._buttons ) {
-			dtSettings._buttons = [];
-		}
-
-		dtSettings._buttons.push( {
-			inst: this,
-			name: this.c.name
-		} );
-
-		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			this.add( buttons[i] );
-		}
-
-		dt.on( 'destroy', function ( e, settings ) {
-			if ( settings === dtSettings ) {
-				that.destroy();
-			}
-		} );
-
-		// Global key event binding to listen for button keys
-		$('body').on( 'keyup.'+this.s.namespace, function ( e ) {
-			if ( ! document.activeElement || document.activeElement === document.body ) {
-				// SUse a string of characters for fast lookup of if we need to
-				// handle this
-				var character = String.fromCharCode(e.keyCode).toLowerCase();
-
-				if ( that.s.listenKeys.toLowerCase().indexOf( character ) !== -1 ) {
-					that._keypress( character, e );
-				}
-			}
-		} );
-	},
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
-
-	/**
-	 * Add a new button to the key press listener
-	 * @param {object} conf Resolved button configuration object
-	 * @private
-	 */
-	_addKey: function ( conf )
-	{
-		if ( conf.key ) {
-			this.s.listenKeys += $.isPlainObject( conf.key ) ?
-				conf.key.key :
-				conf.key;
-		}
-	},
-
-	/**
-	 * Insert the buttons into the container. Call without parameters!
-	 * @param  {node} [container] Recursive only - Insert point
-	 * @param  {array} [buttons] Recursive only - Buttons array
-	 * @private
-	 */
-	_draw: function ( container, buttons )
-	{
-		if ( ! container ) {
-			container = this.dom.container;
-			buttons = this.s.buttons;
-		}
-
-		container.children().detach();
-
-		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			container.append( buttons[i].inserter );
-			container.append( ' ' );
-
-			if ( buttons[i].buttons && buttons[i].buttons.length ) {
-				this._draw( buttons[i].collection, buttons[i].buttons );
-			}
-		}
-	},
-
-	/**
-	 * Create buttons from an array of buttons
-	 * @param  {array} attachTo Buttons array to attach to
-	 * @param  {object} button Button definition
-	 * @param  {boolean} inCollection true if the button is in a collection
-	 * @private
-	 */
-	_expandButton: function ( attachTo, button, inCollection, attachPoint )
-	{
-		var dt = this.s.dt;
-		var buttonCounter = 0;
-		var buttons = ! $.isArray( button ) ?
-			[ button ] :
-			button;
-
-		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			var conf = this._resolveExtends( buttons[i] );
-
-			if ( ! conf ) {
-				continue;
-			}
-
-			// If the configuration is an array, then expand the buttons at this
-			// point
-			if ( $.isArray( conf ) ) {
-				this._expandButton( attachTo, conf, inCollection, attachPoint );
-				continue;
-			}
-
-			var built = this._buildButton( conf, inCollection );
-			if ( ! built ) {
-				continue;
-			}
-
-			if ( attachPoint !== undefined ) {
-				attachTo.splice( attachPoint, 0, built );
-				attachPoint++;
-			}
-			else {
-				attachTo.push( built );
-			}
-
-			if ( built.conf.buttons ) {
-				var collectionDom = this.c.dom.collection;
-				built.collection = $('<'+collectionDom.tag+'/>')
-					.addClass( collectionDom.className )
-					.attr( 'role', 'menu' ) ;
-				built.conf._collection = built.collection;
-
-				this._expandButton( built.buttons, built.conf.buttons, true, attachPoint );
-			}
-
-			// init call is made here, rather than buildButton as it needs to
-			// be selectable, and for that it needs to be in the buttons array
-			if ( conf.init ) {
-				conf.init.call( dt.button( built.node ), dt, $(built.node), conf );
-			}
-
-			buttonCounter++;
-		}
-	},
-
-	/**
-	 * Create an individual button
-	 * @param  {object} config            Resolved button configuration
-	 * @param  {boolean} inCollection `true` if a collection button
-	 * @return {jQuery} Created button node (jQuery)
-	 * @private
-	 */
-	_buildButton: function ( config, inCollection )
-	{
-		var buttonDom = this.c.dom.button;
-		var linerDom = this.c.dom.buttonLiner;
-		var collectionDom = this.c.dom.collection;
-		var dt = this.s.dt;
-		var text = function ( opt ) {
-			return typeof opt === 'function' ?
-				opt( dt, button, config ) :
-				opt;
-		};
-
-		if ( inCollection && collectionDom.button ) {
-			buttonDom = collectionDom.button;
-		}
-
-		if ( inCollection && collectionDom.buttonLiner ) {
-			linerDom = collectionDom.buttonLiner;
-		}
-
-		// Make sure that the button is available based on whatever requirements
-		// it has. For example, Flash buttons require Flash
-		if ( config.available && ! config.available( dt, config ) ) {
-			return false;
-		}
-
-		var action = function ( e, dt, button, config ) {
-			config.action.call( dt.button( button ), e, dt, button, config );
-
-			$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
-				dt.button( button ), dt, button, config 
-			] );
-		};
-
-		var tag = config.tag || buttonDom.tag;
-		var button = $('<'+tag+'/>')
-			.addClass( buttonDom.className )
-			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
-			.attr( 'aria-controls', this.s.dt.table().node().id )
-			.on( 'click.dtb', function (e) {
-				e.preventDefault();
-
-				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
-					action( e, dt, button, config );
-				}
-
-				button.blur();
-			} )
-			.on( 'keyup.dtb', function (e) {
-				if ( e.keyCode === 13 ) {
-					if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
-						action( e, dt, button, config );
-					}
-				}
-			} );
-
-		// Make `a` tags act like a link
-		if ( tag.toLowerCase() === 'a' ) {
-			button.attr( 'href', '#' );
-		}
-
-		// Button tags should have `type=button` so they don't have any default behaviour
-		if ( tag.toLowerCase() === 'button' ) {
-			button.attr( 'type', 'button' );
-		}
-
-		if ( linerDom.tag ) {
-			var liner = $('<'+linerDom.tag+'/>')
-				.html( text( config.text ) )
-				.addClass( linerDom.className );
-
-			if ( linerDom.tag.toLowerCase() === 'a' ) {
-				liner.attr( 'href', '#' );
-			}
-
-			button.append( liner );
-		}
-		else {
-			button.html( text( config.text ) );
-		}
-
-		if ( config.enabled === false ) {
-			button.addClass( buttonDom.disabled );
-		}
-
-		if ( config.className ) {
-			button.addClass( config.className );
-		}
-
-		if ( config.titleAttr ) {
-			button.attr( 'title', text( config.titleAttr ) );
-		}
-
-		if ( config.attr ) {
-			button.attr( config.attr );
-		}
-
-		if ( ! config.namespace ) {
-			config.namespace = '.dt-button-'+(_buttonCounter++);
-		}
-
-		var buttonContainer = this.c.dom.buttonContainer;
-		var inserter;
-		if ( buttonContainer && buttonContainer.tag ) {
-			inserter = $('<'+buttonContainer.tag+'/>')
-				.addClass( buttonContainer.className )
-				.append( button );
-		}
-		else {
-			inserter = button;
-		}
-
-		this._addKey( config );
-
-		return {
-			conf:         config,
-			node:         button.get(0),
-			inserter:     inserter,
-			buttons:      [],
-			inCollection: inCollection,
-			collection:   null
-		};
-	},
-
-	/**
-	 * Get the button object from a node (recursive)
-	 * @param  {node} node Button node
-	 * @param  {array} [buttons] Button array, uses base if not defined
-	 * @return {object} Button object
-	 * @private
-	 */
-	_nodeToButton: function ( node, buttons )
-	{
-		if ( ! buttons ) {
-			buttons = this.s.buttons;
-		}
-
-		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			if ( buttons[i].node === node ) {
-				return buttons[i];
-			}
-
-			if ( buttons[i].buttons.length ) {
-				var ret = this._nodeToButton( node, buttons[i].buttons );
-
-				if ( ret ) {
-					return ret;
-				}
-			}
-		}
-	},
-
-	/**
-	 * Get container array for a button from a button node (recursive)
-	 * @param  {node} node Button node
-	 * @param  {array} [buttons] Button array, uses base if not defined
-	 * @return {array} Button's host array
-	 * @private
-	 */
-	_nodeToHost: function ( node, buttons )
-	{
-		if ( ! buttons ) {
-			buttons = this.s.buttons;
-		}
-
-		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			if ( buttons[i].node === node ) {
-				return buttons;
-			}
-
-			if ( buttons[i].buttons.length ) {
-				var ret = this._nodeToHost( node, buttons[i].buttons );
-
-				if ( ret ) {
-					return ret;
-				}
-			}
-		}
-	},
-
-	/**
-	 * Handle a key press - determine if any button's key configured matches
-	 * what was typed and trigger the action if so.
-	 * @param  {string} character The character pressed
-	 * @param  {object} e Key event that triggered this call
-	 * @private
-	 */
-	_keypress: function ( character, e )
-	{
-		// Check if this button press already activated on another instance of Buttons
-		if ( e._buttonsHandled ) {
-			return;
-		}
-
-		var run = function ( conf, node ) {
-			if ( ! conf.key ) {
-				return;
-			}
-
-			if ( conf.key === character ) {
-				e._buttonsHandled = true;
-				$(node).click();
-			}
-			else if ( $.isPlainObject( conf.key ) ) {
-				if ( conf.key.key !== character ) {
-					return;
-				}
-
-				if ( conf.key.shiftKey && ! e.shiftKey ) {
-					return;
-				}
-
-				if ( conf.key.altKey && ! e.altKey ) {
-					return;
-				}
-
-				if ( conf.key.ctrlKey && ! e.ctrlKey ) {
-					return;
-				}
-
-				if ( conf.key.metaKey && ! e.metaKey ) {
-					return;
-				}
-
-				// Made it this far - it is good
-				e._buttonsHandled = true;
-				$(node).click();
-			}
-		};
-
-		var recurse = function ( a ) {
-			for ( var i=0, ien=a.length ; i<ien ; i++ ) {
-				run( a[i].conf, a[i].node );
-
-				if ( a[i].buttons.length ) {
-					recurse( a[i].buttons );
-				}
-			}
-		};
-
-		recurse( this.s.buttons );
-	},
-
-	/**
-	 * Remove a key from the key listener for this instance (to be used when a
-	 * button is removed)
-	 * @param  {object} conf Button configuration
-	 * @private
-	 */
-	_removeKey: function ( conf )
-	{
-		if ( conf.key ) {
-			var character = $.isPlainObject( conf.key ) ?
-				conf.key.key :
-				conf.key;
-
-			// Remove only one character, as multiple buttons could have the
-			// same listening key
-			var a = this.s.listenKeys.split('');
-			var idx = $.inArray( character, a );
-			a.splice( idx, 1 );
-			this.s.listenKeys = a.join('');
-		}
-	},
-
-	/**
-	 * Resolve a button configuration
-	 * @param  {string|function|object} conf Button config to resolve
-	 * @return {object} Button configuration
-	 * @private
-	 */
-	_resolveExtends: function ( conf )
-	{
-		var dt = this.s.dt;
-		var i, ien;
-		var toConfObject = function ( base ) {
-			var loop = 0;
-
-			// Loop until we have resolved to a button configuration, or an
-			// array of button configurations (which will be iterated
-			// separately)
-			while ( ! $.isPlainObject(base) && ! $.isArray(base) ) {
-				if ( base === undefined ) {
-					return;
-				}
-
-				if ( typeof base === 'function' ) {
-					base = base( dt, conf );
-
-					if ( ! base ) {
-						return false;
-					}
-				}
-				else if ( typeof base === 'string' ) {
-					if ( ! _dtButtons[ base ] ) {
-						throw 'Unknown button type: '+base;
-					}
-
-					base = _dtButtons[ base ];
-				}
-
-				loop++;
-				if ( loop > 30 ) {
-					// Protect against misconfiguration killing the browser
-					throw 'Buttons: Too many iterations';
-				}
-			}
-
-			return $.isArray( base ) ?
-				base :
-				$.extend( {}, base );
-		};
-
-		conf = toConfObject( conf );
-
-		while ( conf && conf.extend ) {
-			// Use `toConfObject` in case the button definition being extended
-			// is itself a string or a function
-			if ( ! _dtButtons[ conf.extend ] ) {
-				throw 'Cannot extend unknown button type: '+conf.extend;
-			}
-
-			var objArray = toConfObject( _dtButtons[ conf.extend ] );
-			if ( $.isArray( objArray ) ) {
-				return objArray;
-			}
-			else if ( ! objArray ) {
-				// This is a little brutal as it might be possible to have a
-				// valid button without the extend, but if there is no extend
-				// then the host button would be acting in an undefined state
-				return false;
-			}
-
-			// Stash the current class name
-			var originalClassName = objArray.className;
-
-			conf = $.extend( {}, objArray, conf );
-
-			// The extend will have overwritten the original class name if the
-			// `conf` object also assigned a class, but we want to concatenate
-			// them so they are list that is combined from all extended buttons
-			if ( originalClassName && conf.className !== originalClassName ) {
-				conf.className = originalClassName+' '+conf.className;
-			}
-
-			// Buttons to be added to a collection  -gives the ability to define
-			// if buttons should be added to the start or end of a collection
-			var postfixButtons = conf.postfixButtons;
-			if ( postfixButtons ) {
-				if ( ! conf.buttons ) {
-					conf.buttons = [];
-				}
-
-				for ( i=0, ien=postfixButtons.length ; i<ien ; i++ ) {
-					conf.buttons.push( postfixButtons[i] );
-				}
-
-				conf.postfixButtons = null;
-			}
-
-			var prefixButtons = conf.prefixButtons;
-			if ( prefixButtons ) {
-				if ( ! conf.buttons ) {
-					conf.buttons = [];
-				}
-
-				for ( i=0, ien=prefixButtons.length ; i<ien ; i++ ) {
-					conf.buttons.splice( i, 0, prefixButtons[i] );
-				}
-
-				conf.prefixButtons = null;
-			}
-
-			// Although we want the `conf` object to overwrite almost all of
-			// the properties of the object being extended, the `extend`
-			// property should come from the object being extended
-			conf.extend = objArray.extend;
-		}
-
-		return conf;
-	}
-} );
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Statics
- */
-
-/**
- * Show / hide a background layer behind a collection
- * @param  {boolean} Flag to indicate if the background should be shown or
- *   hidden 
- * @param  {string} Class to assign to the background
- * @static
- */
-Buttons.background = function ( show, className, fade, insertPoint ) {
-	if ( fade === undefined ) {
-		fade = 400;
-	}
-	if ( ! insertPoint ) {
-		insertPoint = document.body;
-	}
-
-	if ( show ) {
-		$('<div/>')
-			.addClass( className )
-			.css( 'display', 'none' )
-			.insertAfter( insertPoint )
-			.fadeIn( fade );
-	}
-	else {
-		$('div.'+className)
-			.fadeOut( fade, function () {
-				$(this)
-					.removeClass( className )
-					.remove();
-			} );
-	}
-};
-
-/**
- * Instance selector - select Buttons instances based on an instance selector
- * value from the buttons assigned to a DataTable. This is only useful if
- * multiple instances are attached to a DataTable.
- * @param  {string|int|array} Instance selector - see `instance-selector`
- *   documentation on the DataTables site
- * @param  {array} Button instance array that was attached to the DataTables
- *   settings object
- * @return {array} Buttons instances
- * @static
- */
-Buttons.instanceSelector = function ( group, buttons )
-{
-	if ( ! group ) {
-		return $.map( buttons, function ( v ) {
-			return v.inst;
-		} );
-	}
-
-	var ret = [];
-	var names = $.map( buttons, function ( v ) {
-		return v.name;
-	} );
-
-	// Flatten the group selector into an array of single options
-	var process = function ( input ) {
-		if ( $.isArray( input ) ) {
-			for ( var i=0, ien=input.length ; i<ien ; i++ ) {
-				process( input[i] );
-			}
-			return;
-		}
-
-		if ( typeof input === 'string' ) {
-			if ( input.indexOf( ',' ) !== -1 ) {
-				// String selector, list of names
-				process( input.split(',') );
-			}
-			else {
-				// String selector individual name
-				var idx = $.inArray( $.trim(input), names );
-
-				if ( idx !== -1 ) {
-					ret.push( buttons[ idx ].inst );
-				}
-			}
-		}
-		else if ( typeof input === 'number' ) {
-			// Index selector
-			ret.push( buttons[ input ].inst );
-		}
-	};
-	
-	process( group );
-
-	return ret;
-};
-
-/**
- * Button selector - select one or more buttons from a selector input so some
- * operation can be performed on them.
- * @param  {array} Button instances array that the selector should operate on
- * @param  {string|int|node|jQuery|array} Button selector - see
- *   `button-selector` documentation on the DataTables site
- * @return {array} Array of objects containing `inst` and `idx` properties of
- *   the selected buttons so you know which instance each button belongs to.
- * @static
- */
-Buttons.buttonSelector = function ( insts, selector )
-{
-	var ret = [];
-	var nodeBuilder = function ( a, buttons, baseIdx ) {
-		var button;
-		var idx;
-
-		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			button = buttons[i];
-
-			if ( button ) {
-				idx = baseIdx !== undefined ?
-					baseIdx+i :
-					i+'';
-
-				a.push( {
-					node: button.node,
-					name: button.conf.name,
-					idx:  idx
-				} );
-
-				if ( button.buttons ) {
-					nodeBuilder( a, button.buttons, idx+'-' );
-				}
-			}
-		}
-	};
-
-	var run = function ( selector, inst ) {
-		var i, ien;
-		var buttons = [];
-		nodeBuilder( buttons, inst.s.buttons );
-
-		var nodes = $.map( buttons, function (v) {
-			return v.node;
-		} );
-
-		if ( $.isArray( selector ) || selector instanceof $ ) {
-			for ( i=0, ien=selector.length ; i<ien ; i++ ) {
-				run( selector[i], inst );
-			}
-			return;
-		}
-
-		if ( selector === null || selector === undefined || selector === '*' ) {
-			// Select all
-			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-				ret.push( {
-					inst: inst,
-					node: buttons[i].node
-				} );
-			}
-		}
-		else if ( typeof selector === 'number' ) {
-			// Main button index selector
-			ret.push( {
-				inst: inst,
-				node: inst.s.buttons[ selector ].node
-			} );
-		}
-		else if ( typeof selector === 'string' ) {
-			if ( selector.indexOf( ',' ) !== -1 ) {
-				// Split
-				var a = selector.split(',');
-
-				for ( i=0, ien=a.length ; i<ien ; i++ ) {
-					run( $.trim(a[i]), inst );
-				}
-			}
-			else if ( selector.match( /^\d+(\-\d+)*$/ ) ) {
-				// Sub-button index selector
-				var indexes = $.map( buttons, function (v) {
-					return v.idx;
-				} );
-
-				ret.push( {
-					inst: inst,
-					node: buttons[ $.inArray( selector, indexes ) ].node
-				} );
-			}
-			else if ( selector.indexOf( ':name' ) !== -1 ) {
-				// Button name selector
-				var name = selector.replace( ':name', '' );
-
-				for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-					if ( buttons[i].name === name ) {
-						ret.push( {
-							inst: inst,
-							node: buttons[i].node
-						} );
-					}
-				}
-			}
-			else {
-				// jQuery selector on the nodes
-				$( nodes ).filter( selector ).each( function () {
-					ret.push( {
-						inst: inst,
-						node: this
-					} );
-				} );
-			}
-		}
-		else if ( typeof selector === 'object' && selector.nodeName ) {
-			// Node selector
-			var idx = $.inArray( selector, nodes );
-
-			if ( idx !== -1 ) {
-				ret.push( {
-					inst: inst,
-					node: nodes[ idx ]
-				} );
-			}
-		}
-	};
-
-
-	for ( var i=0, ien=insts.length ; i<ien ; i++ ) {
-		var inst = insts[i];
-
-		run( selector, inst );
-	}
-
-	return ret;
-};
-
-
-/**
- * Buttons defaults. For full documentation, please refer to the docs/option
- * directory or the DataTables site.
- * @type {Object}
- * @static
- */
-Buttons.defaults = {
-	buttons: [ 'copy', 'excel', 'csv', 'pdf', 'print' ],
-	name: 'main',
-	tabIndex: 0,
-	dom: {
-		container: {
-			tag: 'div',
-			className: 'dt-buttons'
-		},
-		collection: {
-			tag: 'div',
-			className: 'dt-button-collection'
-		},
-		button: {
-			// Flash buttons will not work with `<button>` in IE - it has to be `<a>`
-			tag: 'ActiveXObject' in window ?
-				'a' :
-				'button',
-			className: 'dt-button',
-			active: 'active',
-			disabled: 'disabled'
-		},
-		buttonLiner: {
-			tag: 'span',
-			className: ''
-		}
-	}
-};
-
-/**
- * Version information
- * @type {string}
- * @static
- */
-Buttons.version = '1.5.4';
-
-
-$.extend( _dtButtons, {
-	collection: {
-		text: function ( dt ) {
-			return dt.i18n( 'buttons.collection', 'Collection' );
-		},
-		className: 'buttons-collection',
-		action: function ( e, dt, button, config ) {
-			var host = button;
-			var collectionParent = $(button).parents('div.dt-button-collection');
-			var hostPosition = host.position();
-			var tableContainer = $( dt.table().container() );
-			var multiLevel = false;
-			var insertPoint = host;
-
-			// Remove any old collection
-			if ( collectionParent.length ) {
-				multiLevel = $('.dt-button-collection').position();
-				insertPoint = collectionParent;
-				$('body').trigger( 'click.dtb-collection' );
-			}
-
-			if ( insertPoint.parents('body')[0] !== document.body ) {
-				insertPoint = document.body.lastChild;
-			}
-
-			config._collection.find('.dt-button-collection-title').remove();
-			config._collection.prepend('<div class="dt-button-collection-title">'+config.collectionTitle+'</div>');
-
-			config._collection
-				.addClass( config.collectionLayout )
-				.css( 'display', 'none' )
-				.insertAfter( insertPoint )
-				.fadeIn( config.fade );
-
-			var position = config._collection.css( 'position' );
-
-			if ( multiLevel && position === 'absolute' ) {
-				config._collection.css( {
-					top: multiLevel.top,
-					left: multiLevel.left
-				} );
-			}
-			else if ( position === 'absolute' ) {
-				config._collection.css( {
-					top: hostPosition.top + host.outerHeight(),
-					left: hostPosition.left
-				} );
-
-				// calculate overflow when positioned beneath
-				var tableBottom = tableContainer.offset().top + tableContainer.height();
-				var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
-				var bottomOverflow = listBottom - tableBottom;
-				
-				// calculate overflow when positioned above
-				var listTop = hostPosition.top - config._collection.outerHeight();
-				var tableTop = tableContainer.offset().top;
-				var topOverflow = tableTop - listTop;
-				
-				// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
-				if (bottomOverflow > topOverflow || config.dropup) {
-					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
-				}
-
-				// Right alignment is enabled on a class, e.g. bootstrap:
-				// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
-				if ( config._collection.hasClass( config.rightAlignClassName ) ) {
-					config._collection.css( 'left', hostPosition.left + host.outerWidth() - config._collection.outerWidth() );
-				}
-
-				// Right alignment in table container
-				var listRight = hostPosition.left + config._collection.outerWidth();
-				var tableRight = tableContainer.offset().left + tableContainer.width();
-				if ( listRight > tableRight ) {
-					config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
-				}
-
-				// Right alignment to window
-				var listOffsetRight = host.offset().left + config._collection.outerWidth();
-				if ( listOffsetRight > $(window).width() ) {
-					config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
-				}
-			}
-			else {
-				// Fix position - centre on screen
-				var top = config._collection.height() / 2;
-				if ( top > $(window).height() / 2 ) {
-					top = $(window).height() / 2;
-				}
-
-				config._collection.css( 'marginTop', top*-1 );
-			}
-
-			if ( config.background ) {
-				Buttons.background( true, config.backgroundClassName, config.fade, insertPoint );
-			}
-
-			var close = function () {
-				config._collection
-				.fadeOut( config.fade, function () {
-					config._collection.detach();
-				} );
-
-				$('div.dt-button-background').off( 'click.dtb-collection' );
-				Buttons.background( false, config.backgroundClassName, config.fade, insertPoint );
-
-				$('body').off( '.dtb-collection' );
-				dt.off( 'buttons-action.b-internal' );
-			};
-
-			// Need to break the 'thread' for the collection button being
-			// activated by a click - it would also trigger this event
-			setTimeout( function () {
-				// This is bonkers, but if we don't have a click listener on the
-				// background element, iOS Safari will ignore the body click
-				// listener below. An empty function here is all that is
-				// required to make it work...
-				$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
-
-				$('body')
-					.on( 'click.dtb-collection', function (e) {
-						// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-						var back = $.fn.addBack ? 'addBack' : 'andSelf';
-
-						if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-							close();
-						}
-					} )
-					.on( 'keyup.dtb-collection', function (e) {
-						if ( e.keyCode === 27 ) {
-							close();
-						}
-					} );
-
-				if ( config.autoClose ) {
-					dt.on( 'buttons-action.b-internal', function () {
-						close();
-					} );
-				}
-			}, 10 );
-		},
-		background: true,
-		collectionLayout: '',
-		collectionTitle: '',
-		backgroundClassName: 'dt-button-background',
-		rightAlignClassName: 'dt-button-right',
-		autoClose: false,
-		fade: 400,
-		attr: {
-			'aria-haspopup': true
-		}
-	},
-	copy: function ( dt, conf ) {
-		if ( _dtButtons.copyHtml5 ) {
-			return 'copyHtml5';
-		}
-		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
-			return 'copyFlash';
-		}
-	},
-	csv: function ( dt, conf ) {
-		// Common option that will use the HTML5 or Flash export buttons
-		if ( _dtButtons.csvHtml5 && _dtButtons.csvHtml5.available( dt, conf ) ) {
-			return 'csvHtml5';
-		}
-		if ( _dtButtons.csvFlash && _dtButtons.csvFlash.available( dt, conf ) ) {
-			return 'csvFlash';
-		}
-	},
-	excel: function ( dt, conf ) {
-		// Common option that will use the HTML5 or Flash export buttons
-		if ( _dtButtons.excelHtml5 && _dtButtons.excelHtml5.available( dt, conf ) ) {
-			return 'excelHtml5';
-		}
-		if ( _dtButtons.excelFlash && _dtButtons.excelFlash.available( dt, conf ) ) {
-			return 'excelFlash';
-		}
-	},
-	pdf: function ( dt, conf ) {
-		// Common option that will use the HTML5 or Flash export buttons
-		if ( _dtButtons.pdfHtml5 && _dtButtons.pdfHtml5.available( dt, conf ) ) {
-			return 'pdfHtml5';
-		}
-		if ( _dtButtons.pdfFlash && _dtButtons.pdfFlash.available( dt, conf ) ) {
-			return 'pdfFlash';
-		}
-	},
-	pageLength: function ( dt ) {
-		var lengthMenu = dt.settings()[0].aLengthMenu;
-		var vals = $.isArray( lengthMenu[0] ) ? lengthMenu[0] : lengthMenu;
-		var lang = $.isArray( lengthMenu[0] ) ? lengthMenu[1] : lengthMenu;
-		var text = function ( dt ) {
-			return dt.i18n( 'buttons.pageLength', {
-				"-1": 'Show all rows',
-				_:    'Show %d rows'
-			}, dt.page.len() );
-		};
-
-		return {
-			extend: 'collection',
-			text: text,
-			className: 'buttons-page-length',
-			autoClose: true,
-			buttons: $.map( vals, function ( val, i ) {
-				return {
-					text: lang[i],
-					className: 'button-page-length',
-					action: function ( e, dt ) {
-						dt.page.len( val ).draw();
-					},
-					init: function ( dt, node, conf ) {
-						var that = this;
-						var fn = function () {
-							that.active( dt.page.len() === val );
-						};
-
-						dt.on( 'length.dt'+conf.namespace, fn );
-						fn();
-					},
-					destroy: function ( dt, node, conf ) {
-						dt.off( 'length.dt'+conf.namespace );
-					}
-				};
-			} ),
-			init: function ( dt, node, conf ) {
-				var that = this;
-				dt.on( 'length.dt'+conf.namespace, function () {
-					that.text( text( dt ) );
-				} );
-			},
-			destroy: function ( dt, node, conf ) {
-				dt.off( 'length.dt'+conf.namespace );
-			}
-		};
-	}
-} );
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DataTables API
- *
- * For complete documentation, please refer to the docs/api directory or the
- * DataTables site
- */
-
-// Buttons group and individual button selector
-DataTable.Api.register( 'buttons()', function ( group, selector ) {
-	// Argument shifting
-	if ( selector === undefined ) {
-		selector = group;
-		group = undefined;
-	}
-
-	this.selector.buttonGroup = group;
-
-	var res = this.iterator( true, 'table', function ( ctx ) {
-		if ( ctx._buttons ) {
-			return Buttons.buttonSelector(
-				Buttons.instanceSelector( group, ctx._buttons ),
-				selector
-			);
-		}
-	}, true );
-
-	res._groupSelector = group;
-	return res;
-} );
-
-// Individual button selector
-DataTable.Api.register( 'button()', function ( group, selector ) {
-	// just run buttons() and truncate
-	var buttons = this.buttons( group, selector );
-
-	if ( buttons.length > 1 ) {
-		buttons.splice( 1, buttons.length );
-	}
-
-	return buttons;
-} );
-
-// Active buttons
-DataTable.Api.registerPlural( 'buttons().active()', 'button().active()', function ( flag ) {
-	if ( flag === undefined ) {
-		return this.map( function ( set ) {
-			return set.inst.active( set.node );
-		} );
-	}
-
-	return this.each( function ( set ) {
-		set.inst.active( set.node, flag );
-	} );
-} );
-
-// Get / set button action
-DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', function ( action ) {
-	if ( action === undefined ) {
-		return this.map( function ( set ) {
-			return set.inst.action( set.node );
-		} );
-	}
-
-	return this.each( function ( set ) {
-		set.inst.action( set.node, action );
-	} );
-} );
-
-// Enable / disable buttons
-DataTable.Api.register( ['buttons().enable()', 'button().enable()'], function ( flag ) {
-	return this.each( function ( set ) {
-		set.inst.enable( set.node, flag );
-	} );
-} );
-
-// Disable buttons
-DataTable.Api.register( ['buttons().disable()', 'button().disable()'], function () {
-	return this.each( function ( set ) {
-		set.inst.disable( set.node );
-	} );
-} );
-
-// Get button nodes
-DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function () {
-	var jq = $();
-
-	// jQuery will automatically reduce duplicates to a single entry
-	$( this.each( function ( set ) {
-		jq = jq.add( set.inst.node( set.node ) );
-	} ) );
-
-	return jq;
-} );
-
-// Get / set button processing state
-DataTable.Api.registerPlural( 'buttons().processing()', 'button().processing()', function ( flag ) {
-	if ( flag === undefined ) {
-		return this.map( function ( set ) {
-			return set.inst.processing( set.node );
-		} );
-	}
-
-	return this.each( function ( set ) {
-		set.inst.processing( set.node, flag );
-	} );
-} );
-
-// Get / set button text (i.e. the button labels)
-DataTable.Api.registerPlural( 'buttons().text()', 'button().text()', function ( label ) {
-	if ( label === undefined ) {
-		return this.map( function ( set ) {
-			return set.inst.text( set.node );
-		} );
-	}
-
-	return this.each( function ( set ) {
-		set.inst.text( set.node, label );
-	} );
-} );
-
-// Trigger a button's action
-DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', function () {
-	return this.each( function ( set ) {
-		set.inst.node( set.node ).trigger( 'click' );
-	} );
-} );
-
-// Get the container elements
-DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
-	var jq = $();
-	var groupSelector = this._groupSelector;
-
-	// We need to use the group selector directly, since if there are no buttons
-	// the result set will be empty
-	this.iterator( true, 'table', function ( ctx ) {
-		if ( ctx._buttons ) {
-			var insts = Buttons.instanceSelector( groupSelector, ctx._buttons );
-
-			for ( var i=0, ien=insts.length ; i<ien ; i++ ) {
-				jq = jq.add( insts[i].container() );
-			}
-		}
-	} );
-
-	return jq;
-} );
-
-// Add a new button
-DataTable.Api.register( 'button().add()', function ( idx, conf ) {
-	var ctx = this.context;
-
-	// Don't use `this` as it could be empty - select the instances directly
-	if ( ctx.length ) {
-		var inst = Buttons.instanceSelector( this._groupSelector, ctx[0]._buttons );
-
-		if ( inst.length ) {
-			inst[0].add( conf, idx );
-		}
-	}
-
-	return this.button( this._groupSelector, idx );
-} );
-
-// Destroy the button sets selected
-DataTable.Api.register( 'buttons().destroy()', function () {
-	this.pluck( 'inst' ).unique().each( function ( inst ) {
-		inst.destroy();
-	} );
-
-	return this;
-} );
-
-// Remove a button
-DataTable.Api.registerPlural( 'buttons().remove()', 'buttons().remove()', function () {
-	this.each( function ( set ) {
-		set.inst.remove( set.node );
-	} );
-
-	return this;
-} );
-
-// Information box that can be used by buttons
-var _infoTimer;
-DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
-	var that = this;
-
-	if ( title === false ) {
-		$('#datatables_buttons_info').fadeOut( function () {
-			$(this).remove();
-		} );
-		clearTimeout( _infoTimer );
-		_infoTimer = null;
-
-		return this;
-	}
-
-	if ( _infoTimer ) {
-		clearTimeout( _infoTimer );
-	}
-
-	if ( $('#datatables_buttons_info').length ) {
-		$('#datatables_buttons_info').remove();
-	}
-
-	title = title ? '<h2>'+title+'</h2>' : '';
-
-	$('<div id="datatables_buttons_info" class="dt-button-info"/>')
-		.html( title )
-		.append( $('<div/>')[ typeof message === 'string' ? 'html' : 'append' ]( message ) )
-		.css( 'display', 'none' )
-		.appendTo( 'body' )
-		.fadeIn();
-
-	if ( time !== undefined && time !== 0 ) {
-		_infoTimer = setTimeout( function () {
-			that.buttons.info( false );
-		}, time );
-	}
-
-	return this;
-} );
-
-// Get data from the table for export - this is common to a number of plug-in
-// buttons so it is included in the Buttons core library
-DataTable.Api.register( 'buttons.exportData()', function ( options ) {
-	if ( this.context.length ) {
-		return _exportData( new DataTable.Api( this.context[0] ), options );
-	}
-} );
-
-// Get information about the export that is common to many of the export data
-// types (DRY)
-DataTable.Api.register( 'buttons.exportInfo()', function ( conf ) {
-	if ( ! conf ) {
-		conf = {};
-	}
-
-	return {
-		filename: _filename( conf ),
-		title: _title( conf ),
-		messageTop: _message(this, conf.message || conf.messageTop, 'top'),
-		messageBottom: _message(this, conf.messageBottom, 'bottom')
-	};
-} );
-
-
-
-/**
- * Get the file name for an exported file.
- *
- * @param {object}	config Button configuration
- * @param {boolean} incExtension Include the file name extension
- */
-var _filename = function ( config )
-{
-	// Backwards compatibility
-	var filename = config.filename === '*' && config.title !== '*' && config.title !== undefined && config.title !== null && config.title !== '' ?
-		config.title :
-		config.filename;
-
-	if ( typeof filename === 'function' ) {
-		filename = filename();
-	}
-
-	if ( filename === undefined || filename === null ) {
-		return null;
-	}
-
-	if ( filename.indexOf( '*' ) !== -1 ) {
-		filename = $.trim( filename.replace( '*', $('head > title').text() ) );
-	}
-
-	// Strip characters which the OS will object to
-	filename = filename.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
-
-	var extension = _stringOrFunction( config.extension );
-	if ( ! extension ) {
-		extension = '';
-	}
-
-	return filename + extension;
-};
-
-/**
- * Simply utility method to allow parameters to be given as a function
- *
- * @param {undefined|string|function} option Option
- * @return {null|string} Resolved value
- */
-var _stringOrFunction = function ( option )
-{
-	if ( option === null || option === undefined ) {
-		return null;
-	}
-	else if ( typeof option === 'function' ) {
-		return option();
-	}
-	return option;
-};
-
-/**
- * Get the title for an exported file.
- *
- * @param {object} config	Button configuration
- */
-var _title = function ( config )
-{
-	var title = _stringOrFunction( config.title );
-
-	return title === null ?
-		null : title.indexOf( '*' ) !== -1 ?
-			title.replace( '*', $('head > title').text() || 'Exported data' ) :
-			title;
-};
-
-var _message = function ( dt, option, position )
-{
-	var message = _stringOrFunction( option );
-	if ( message === null ) {
-		return null;
-	}
-
-	var caption = $('caption', dt.table().container()).eq(0);
-	if ( message === '*' ) {
-		var side = caption.css( 'caption-side' );
-		if ( side !== position ) {
-			return null;
-		}
-
-		return caption.length ?
-			caption.text() :
-			'';
-	}
-
-	return message;
-};
-
-
-
-
-
-
-
-var _exportTextarea = $('<textarea/>')[0];
-var _exportData = function ( dt, inOpts )
-{
-	var config = $.extend( true, {}, {
-		rows:           null,
-		columns:        '',
-		modifier:       {
-			search: 'applied',
-			order:  'applied'
-		},
-		orthogonal:     'display',
-		stripHtml:      true,
-		stripNewlines:  true,
-		decodeEntities: true,
-		trim:           true,
-		format:         {
-			header: function ( d ) {
-				return strip( d );
-			},
-			footer: function ( d ) {
-				return strip( d );
-			},
-			body: function ( d ) {
-				return strip( d );
-			}
-		},
-		customizeData: null
-	}, inOpts );
-
-	var strip = function ( str ) {
-		if ( typeof str !== 'string' ) {
-			return str;
-		}
-
-		// Always remove script tags
-		str = str.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
-
-		// Always remove comments
-		str = str.replace( /<!\-\-.*?\-\->/g, '' );
-
-		if ( config.stripHtml ) {
-			str = str.replace( /<[^>]*>/g, '' );
-		}
-
-		if ( config.trim ) {
-			str = str.replace( /^\s+|\s+$/g, '' );
-		}
-
-		if ( config.stripNewlines ) {
-			str = str.replace( /\n/g, ' ' );
-		}
-
-		if ( config.decodeEntities ) {
-			_exportTextarea.innerHTML = str;
-			str = _exportTextarea.value;
-		}
-
-		return str;
-	};
-
-
-	var header = dt.columns( config.columns ).indexes().map( function (idx) {
-		var el = dt.column( idx ).header();
-		return config.format.header( el.innerHTML, idx, el );
-	} ).toArray();
-
-	var footer = dt.table().footer() ?
-		dt.columns( config.columns ).indexes().map( function (idx) {
-			var el = dt.column( idx ).footer();
-			return config.format.footer( el ? el.innerHTML : '', idx, el );
-		} ).toArray() :
-		null;
-	
-	// If Select is available on this table, and any rows are selected, limit the export
-	// to the selected rows. If no rows are selected, all rows will be exported. Specify
-	// a `selected` modifier to control directly.
-	var modifier = $.extend( {}, config.modifier );
-	if ( dt.select && typeof dt.select.info === 'function' && modifier.selected === undefined ) {
-		if ( dt.rows( config.rows, $.extend( { selected: true }, modifier ) ).any() ) {
-			$.extend( modifier, { selected: true } )
-		}
-	}
-
-	var rowIndexes = dt.rows( config.rows, modifier ).indexes().toArray();
-	var selectedCells = dt.cells( rowIndexes, config.columns );
-	var cells = selectedCells
-		.render( config.orthogonal )
-		.toArray();
-	var cellNodes = selectedCells
-		.nodes()
-		.toArray();
-
-	var columns = header.length;
-	var rows = columns > 0 ? cells.length / columns : 0;
-	var body = [];
-	var cellCounter = 0;
-
-	for ( var i=0, ien=rows ; i<ien ; i++ ) {
-		var row = [ columns ];
-
-		for ( var j=0 ; j<columns ; j++ ) {
-			row[j] = config.format.body( cells[ cellCounter ], i, j, cellNodes[ cellCounter ] );
-			cellCounter++;
-		}
-
-		body[i] = row;
-	}
-
-	var data = {
-		header: header,
-		footer: footer,
-		body:   body
-	};
-
-	if ( config.customizeData ) {
-		config.customizeData( data );
-	}
-
-	return data;
-};
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DataTables interface
- */
-
-// Attach to DataTables objects for global access
-$.fn.dataTable.Buttons = Buttons;
-$.fn.DataTable.Buttons = Buttons;
-
-
-
-// DataTables creation - check if the buttons have been defined for this table,
-// they will have been if the `B` option was used in `dom`, otherwise we should
-// create the buttons instance here so they can be inserted into the document
-// using the API. Listen for `init` for compatibility with pre 1.10.10, but to
-// be removed in future.
-$(document).on( 'init.dt plugin-init.dt', function (e, settings) {
-	if ( e.namespace !== 'dt' ) {
-		return;
-	}
-
-	var opts = settings.oInit.buttons || DataTable.defaults.buttons;
-
-	if ( opts && ! settings._buttons ) {
-		new Buttons( settings, opts ).container();
-	}
-} );
-
-// DataTables `dom` feature option
-DataTable.ext.feature.push( {
-	fnInit: function( settings ) {
-		var api = new DataTable.Api( settings );
-		var opts = api.init().buttons || DataTable.defaults.buttons;
-
-		return new Buttons( api, opts ).container();
-	},
-	cFeature: "B"
-} );
-
-
-return Buttons;
-}));
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 integration for DataTables' Responsive
- * ©2016 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net-bs4')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.Responsive ) {
-				require('datatables.net-responsive')(root, $);
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
-var _display = DataTable.Responsive.display;
-var _original = _display.modal;
-var _modal = $(
-	'<div class="modal fade dtr-bs-modal" role="dialog">'+
-		'<div class="modal-dialog" role="document">'+
-			'<div class="modal-content">'+
-				'<div class="modal-header">'+
-					'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-				'</div>'+
-				'<div class="modal-body"/>'+
-			'</div>'+
-		'</div>'+
-	'</div>'
-);
-
-_display.modal = function ( options ) {
-	return function ( row, update, render ) {
-		if ( ! $.fn.modal ) {
-			_original( row, update, render );
-		}
-		else {
-			if ( ! update ) {
-				if ( options && options.header ) {
-					var header = _modal.find('div.modal-header');
-					var button = header.find('button').detach();
-					
-					header
-						.empty()
-						.append( '<h4 class="modal-title">'+options.header( row )+'</h4>' )
-						.append( button );
-				}
-
-				_modal.find( 'div.modal-body' )
-					.empty()
-					.append( render() );
-
-				_modal
-					.appendTo( 'body' )
-					.modal();
-			}
-		}
-	};
-};
-
-
-return DataTable.Responsive;
-}));
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Responsive 2.2.3
- * 2014-2018 SpryMedia Ltd - datatables.net/license
- */
-
-/**
- * @summary     Responsive
- * @description Responsive tables plug-in for DataTables
- * @version     2.2.3
- * @file        dataTables.responsive.js
- * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
- * @copyright   Copyright 2014-2018 SpryMedia Ltd.
- *
- * This source file is free software, available under the following license:
- *   MIT license - http://datatables.net/license/mit
- *
- * This source file is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
- *
- * For details please refer to: http://www.datatables.net
- */
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
-/**
- * Responsive is a plug-in for the DataTables library that makes use of
- * DataTables' ability to change the visibility of columns, changing the
- * visibility of columns so the displayed columns fit into the table container.
- * The end result is that complex tables will be dynamically adjusted to fit
- * into the viewport, be it on a desktop, tablet or mobile browser.
- *
- * Responsive for DataTables has two modes of operation, which can used
- * individually or combined:
- *
- * * Class name based control - columns assigned class names that match the
- *   breakpoint logic can be shown / hidden as required for each breakpoint.
- * * Automatic control - columns are automatically hidden when there is no
- *   room left to display them. Columns removed from the right.
- *
- * In additional to column visibility control, Responsive also has built into
- * options to use DataTables' child row display to show / hide the information
- * from the table that has been hidden. There are also two modes of operation
- * for this child row display:
- *
- * * Inline - when the control element that the user can use to show / hide
- *   child rows is displayed inside the first column of the table.
- * * Column - where a whole column is dedicated to be the show / hide control.
- *
- * Initialisation of Responsive is performed by:
- *
- * * Adding the class `responsive` or `dt-responsive` to the table. In this case
- *   Responsive will automatically be initialised with the default configuration
- *   options when the DataTable is created.
- * * Using the `responsive` option in the DataTables configuration options. This
- *   can also be used to specify the configuration options, or simply set to
- *   `true` to use the defaults.
- *
- *  @class
- *  @param {object} settings DataTables settings object for the host table
- *  @param {object} [opts] Configuration options
- *  @requires jQuery 1.7+
- *  @requires DataTables 1.10.3+
- *
- *  @example
- *      $('#example').DataTable( {
- *        responsive: true
- *      } );
- *    } );
- */
-var Responsive = function ( settings, opts ) {
-	// Sanity check that we are using DataTables 1.10 or newer
-	if ( ! DataTable.versionCheck || ! DataTable.versionCheck( '1.10.10' ) ) {
-		throw 'DataTables Responsive requires DataTables 1.10.10 or newer';
-	}
-
-	this.s = {
-		dt: new DataTable.Api( settings ),
-		columns: [],
-		current: []
-	};
-
-	// Check if responsive has already been initialised on this table
-	if ( this.s.dt.settings()[0].responsive ) {
-		return;
-	}
-
-	// details is an object, but for simplicity the user can give it as a string
-	// or a boolean
-	if ( opts && typeof opts.details === 'string' ) {
-		opts.details = { type: opts.details };
-	}
-	else if ( opts && opts.details === false ) {
-		opts.details = { type: false };
-	}
-	else if ( opts && opts.details === true ) {
-		opts.details = { type: 'inline' };
-	}
-
-	this.c = $.extend( true, {}, Responsive.defaults, DataTable.defaults.responsive, opts );
-	settings.responsive = this;
-	this._constructor();
-};
-
-$.extend( Responsive.prototype, {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
-
-	/**
-	 * Initialise the Responsive instance
-	 *
-	 * @private
-	 */
-	_constructor: function ()
-	{
-		var that = this;
-		var dt = this.s.dt;
-		var dtPrivateSettings = dt.settings()[0];
-		var oldWindowWidth = $(window).width();
-
-		dt.settings()[0]._responsive = this;
-
-		// Use DataTables' throttle function to avoid processor thrashing on
-		// resize
-		$(window).on( 'resize.dtr orientationchange.dtr', DataTable.util.throttle( function () {
-			// iOS has a bug whereby resize can fire when only scrolling
-			// See: http://stackoverflow.com/questions/8898412
-			var width = $(window).width();
-
-			if ( width !== oldWindowWidth ) {
-				that._resize();
-				oldWindowWidth = width;
-			}
-		} ) );
-
-		// DataTables doesn't currently trigger an event when a row is added, so
-		// we need to hook into its private API to enforce the hidden rows when
-		// new data is added
-		dtPrivateSettings.oApi._fnCallbackReg( dtPrivateSettings, 'aoRowCreatedCallback', function (tr, data, idx) {
-			if ( $.inArray( false, that.s.current ) !== -1 ) {
-				$('>td, >th', tr).each( function ( i ) {
-					var idx = dt.column.index( 'toData', i );
-
-					if ( that.s.current[idx] === false ) {
-						$(this).css('display', 'none');
-					}
-				} );
-			}
-		} );
-
-		// Destroy event handler
-		dt.on( 'destroy.dtr', function () {
-			dt.off( '.dtr' );
-			$( dt.table().body() ).off( '.dtr' );
-			$(window).off( 'resize.dtr orientationchange.dtr' );
-
-			// Restore the columns that we've hidden
-			$.each( that.s.current, function ( i, val ) {
-				if ( val === false ) {
-					that._setColumnVis( i, true );
-				}
-			} );
-		} );
-
-		// Reorder the breakpoints array here in case they have been added out
-		// of order
-		this.c.breakpoints.sort( function (a, b) {
-			return a.width < b.width ? 1 :
-				a.width > b.width ? -1 : 0;
-		} );
-
-		this._classLogic();
-		this._resizeAuto();
-
-		// Details handler
-		var details = this.c.details;
-
-		if ( details.type !== false ) {
-			that._detailsInit();
-
-			// DataTables will trigger this event on every column it shows and
-			// hides individually
-			dt.on( 'column-visibility.dtr', function () {
-				// Use a small debounce to allow multiple columns to be set together
-				if ( that._timer ) {
-					clearTimeout( that._timer );
-				}
-
-				that._timer = setTimeout( function () {
-					that._timer = null;
-
-					that._classLogic();
-					that._resizeAuto();
-					that._resize();
-
-					that._redrawChildren();
-				}, 100 );
-			} );
-
-			// Redraw the details box on each draw which will happen if the data
-			// has changed. This is used until DataTables implements a native
-			// `updated` event for rows
-			dt.on( 'draw.dtr', function () {
-				that._redrawChildren();
-			} );
-
-			$(dt.table().node()).addClass( 'dtr-'+details.type );
-		}
-
-		dt.on( 'column-reorder.dtr', function (e, settings, details) {
-			that._classLogic();
-			that._resizeAuto();
-			that._resize();
-		} );
-
-		// Change in column sizes means we need to calc
-		dt.on( 'column-sizing.dtr', function () {
-			that._resizeAuto();
-			that._resize();
-		});
-
-		// On Ajax reload we want to reopen any child rows which are displayed
-		// by responsive
-		dt.on( 'preXhr.dtr', function () {
-			var rowIds = [];
-			dt.rows().every( function () {
-				if ( this.child.isShown() ) {
-					rowIds.push( this.id(true) );
-				}
-			} );
-
-			dt.one( 'draw.dtr', function () {
-				that._resizeAuto();
-				that._resize();
-
-				dt.rows( rowIds ).every( function () {
-					that._detailsDisplay( this, false );
-				} );
-			} );
-		});
-
-		dt.on( 'init.dtr', function (e, settings, details) {
-			that._resizeAuto();
-			that._resize();
-
-			// If columns were hidden, then DataTables needs to adjust the
-			// column sizing
-			if ( $.inArray( false, that.s.current ) ) {
-				dt.columns.adjust();
-			}
-		} );
-
-		// First pass - draw the table for the current viewport size
-		this._resize();
-	},
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods
-	 */
-
-	/**
-	 * Calculate the visibility for the columns in a table for a given
-	 * breakpoint. The result is pre-determined based on the class logic if
-	 * class names are used to control all columns, but the width of the table
-	 * is also used if there are columns which are to be automatically shown
-	 * and hidden.
-	 *
-	 * @param  {string} breakpoint Breakpoint name to use for the calculation
-	 * @return {array} Array of boolean values initiating the visibility of each
-	 *   column.
-	 *  @private
-	 */
-	_columnsVisiblity: function ( breakpoint )
-	{
-		var dt = this.s.dt;
-		var columns = this.s.columns;
-		var i, ien;
-
-		// Create an array that defines the column ordering based first on the
-		// column's priority, and secondly the column index. This allows the
-		// columns to be removed from the right if the priority matches
-		var order = columns
-			.map( function ( col, idx ) {
-				return {
-					columnIdx: idx,
-					priority: col.priority
-				};
-			} )
-			.sort( function ( a, b ) {
-				if ( a.priority !== b.priority ) {
-					return a.priority - b.priority;
-				}
-				return a.columnIdx - b.columnIdx;
-			} );
-
-		// Class logic - determine which columns are in this breakpoint based
-		// on the classes. If no class control (i.e. `auto`) then `-` is used
-		// to indicate this to the rest of the function
-		var display = $.map( columns, function ( col, i ) {
-			if ( dt.column(i).visible() === false ) {
-				return 'not-visible';
-			}
-			return col.auto && col.minWidth === null ?
-				false :
-				col.auto === true ?
-					'-' :
-					$.inArray( breakpoint, col.includeIn ) !== -1;
-		} );
-
-		// Auto column control - first pass: how much width is taken by the
-		// ones that must be included from the non-auto columns
-		var requiredWidth = 0;
-		for ( i=0, ien=display.length ; i<ien ; i++ ) {
-			if ( display[i] === true ) {
-				requiredWidth += columns[i].minWidth;
-			}
-		}
-
-		// Second pass, use up any remaining width for other columns. For
-		// scrolling tables we need to subtract the width of the scrollbar. It
-		// may not be requires which makes this sub-optimal, but it would
-		// require another full redraw to make complete use of those extra few
-		// pixels
-		var scrolling = dt.settings()[0].oScroll;
-		var bar = scrolling.sY || scrolling.sX ? scrolling.iBarWidth : 0;
-		var widthAvailable = dt.table().container().offsetWidth - bar;
-		var usedWidth = widthAvailable - requiredWidth;
-
-		// Control column needs to always be included. This makes it sub-
-		// optimal in terms of using the available with, but to stop layout
-		// thrashing or overflow. Also we need to account for the control column
-		// width first so we know how much width is available for the other
-		// columns, since the control column might not be the first one shown
-		for ( i=0, ien=display.length ; i<ien ; i++ ) {
-			if ( columns[i].control ) {
-				usedWidth -= columns[i].minWidth;
-			}
-		}
-
-		// Allow columns to be shown (counting by priority and then right to
-		// left) until we run out of room
-		var empty = false;
-		for ( i=0, ien=order.length ; i<ien ; i++ ) {
-			var colIdx = order[i].columnIdx;
-
-			if ( display[colIdx] === '-' && ! columns[colIdx].control && columns[colIdx].minWidth ) {
-				// Once we've found a column that won't fit we don't let any
-				// others display either, or columns might disappear in the
-				// middle of the table
-				if ( empty || usedWidth - columns[colIdx].minWidth < 0 ) {
-					empty = true;
-					display[colIdx] = false;
-				}
-				else {
-					display[colIdx] = true;
-				}
-
-				usedWidth -= columns[colIdx].minWidth;
-			}
-		}
-
-		// Determine if the 'control' column should be shown (if there is one).
-		// This is the case when there is a hidden column (that is not the
-		// control column). The two loops look inefficient here, but they are
-		// trivial and will fly through. We need to know the outcome from the
-		// first , before the action in the second can be taken
-		var showControl = false;
-
-		for ( i=0, ien=columns.length ; i<ien ; i++ ) {
-			if ( ! columns[i].control && ! columns[i].never && display[i] === false ) {
-				showControl = true;
-				break;
-			}
-		}
-
-		for ( i=0, ien=columns.length ; i<ien ; i++ ) {
-			if ( columns[i].control ) {
-				display[i] = showControl;
-			}
-
-			// Replace not visible string with false from the control column detection above
-			if ( display[i] === 'not-visible' ) {
-				display[i] = false;
-			}
-		}
-
-		// Finally we need to make sure that there is at least one column that
-		// is visible
-		if ( $.inArray( true, display ) === -1 ) {
-			display[0] = true;
-		}
-
-		return display;
-	},
-
-
-	/**
-	 * Create the internal `columns` array with information about the columns
-	 * for the table. This includes determining which breakpoints the column
-	 * will appear in, based upon class names in the column, which makes up the
-	 * vast majority of this method.
-	 *
-	 * @private
-	 */
-	_classLogic: function ()
-	{
-		var that = this;
-		var calc = {};
-		var breakpoints = this.c.breakpoints;
-		var dt = this.s.dt;
-		var columns = dt.columns().eq(0).map( function (i) {
-			var column = this.column(i);
-			var className = column.header().className;
-			var priority = dt.settings()[0].aoColumns[i].responsivePriority;
-
-			if ( priority === undefined ) {
-				var dataPriority = $(column.header()).data('priority');
-
-				priority = dataPriority !== undefined ?
-					dataPriority * 1 :
-					10000;
-			}
-
-			return {
-				className: className,
-				includeIn: [],
-				auto:      false,
-				control:   false,
-				never:     className.match(/\bnever\b/) ? true : false,
-				priority:  priority
-			};
-		} );
-
-		// Simply add a breakpoint to `includeIn` array, ensuring that there are
-		// no duplicates
-		var add = function ( colIdx, name ) {
-			var includeIn = columns[ colIdx ].includeIn;
-
-			if ( $.inArray( name, includeIn ) === -1 ) {
-				includeIn.push( name );
-			}
-		};
-
-		var column = function ( colIdx, name, operator, matched ) {
-			var size, i, ien;
-
-			if ( ! operator ) {
-				columns[ colIdx ].includeIn.push( name );
-			}
-			else if ( operator === 'max-' ) {
-				// Add this breakpoint and all smaller
-				size = that._find( name ).width;
-
-				for ( i=0, ien=breakpoints.length ; i<ien ; i++ ) {
-					if ( breakpoints[i].width <= size ) {
-						add( colIdx, breakpoints[i].name );
-					}
-				}
-			}
-			else if ( operator === 'min-' ) {
-				// Add this breakpoint and all larger
-				size = that._find( name ).width;
-
-				for ( i=0, ien=breakpoints.length ; i<ien ; i++ ) {
-					if ( breakpoints[i].width >= size ) {
-						add( colIdx, breakpoints[i].name );
-					}
-				}
-			}
-			else if ( operator === 'not-' ) {
-				// Add all but this breakpoint
-				for ( i=0, ien=breakpoints.length ; i<ien ; i++ ) {
-					if ( breakpoints[i].name.indexOf( matched ) === -1 ) {
-						add( colIdx, breakpoints[i].name );
-					}
-				}
-			}
-		};
-
-		// Loop over each column and determine if it has a responsive control
-		// class
-		columns.each( function ( col, i ) {
-			var classNames = col.className.split(' ');
-			var hasClass = false;
-
-			// Split the class name up so multiple rules can be applied if needed
-			for ( var k=0, ken=classNames.length ; k<ken ; k++ ) {
-				var className = $.trim( classNames[k] );
-
-				if ( className === 'all' ) {
-					// Include in all
-					hasClass = true;
-					col.includeIn = $.map( breakpoints, function (a) {
-						return a.name;
-					} );
-					return;
-				}
-				else if ( className === 'none' || col.never ) {
-					// Include in none (default) and no auto
-					hasClass = true;
-					return;
-				}
-				else if ( className === 'control' ) {
-					// Special column that is only visible, when one of the other
-					// columns is hidden. This is used for the details control
-					hasClass = true;
-					col.control = true;
-					return;
-				}
-
-				$.each( breakpoints, function ( j, breakpoint ) {
-					// Does this column have a class that matches this breakpoint?
-					var brokenPoint = breakpoint.name.split('-');
-					var re = new RegExp( '(min\\-|max\\-|not\\-)?('+brokenPoint[0]+')(\\-[_a-zA-Z0-9])?' );
-					var match = className.match( re );
-
-					if ( match ) {
-						hasClass = true;
-
-						if ( match[2] === brokenPoint[0] && match[3] === '-'+brokenPoint[1] ) {
-							// Class name matches breakpoint name fully
-							column( i, breakpoint.name, match[1], match[2]+match[3] );
-						}
-						else if ( match[2] === brokenPoint[0] && ! match[3] ) {
-							// Class name matched primary breakpoint name with no qualifier
-							column( i, breakpoint.name, match[1], match[2] );
-						}
-					}
-				} );
-			}
-
-			// If there was no control class, then automatic sizing is used
-			if ( ! hasClass ) {
-				col.auto = true;
-			}
-		} );
-
-		this.s.columns = columns;
-	},
-
-
-	/**
-	 * Show the details for the child row
-	 *
-	 * @param  {DataTables.Api} row    API instance for the row
-	 * @param  {boolean}        update Update flag
-	 * @private
-	 */
-	_detailsDisplay: function ( row, update )
-	{
-		var that = this;
-		var dt = this.s.dt;
-		var details = this.c.details;
-
-		if ( details && details.type !== false ) {
-			var res = details.display( row, update, function () {
-				return details.renderer(
-					dt, row[0], that._detailsObj(row[0])
-				);
-			} );
-
-			if ( res === true || res === false ) {
-				$(dt.table().node()).triggerHandler( 'responsive-display.dt', [dt, row, res, update] );
-			}
-		}
-	},
-
-
-	/**
-	 * Initialisation for the details handler
-	 *
-	 * @private
-	 */
-	_detailsInit: function ()
-	{
-		var that    = this;
-		var dt      = this.s.dt;
-		var details = this.c.details;
-
-		// The inline type always uses the first child as the target
-		if ( details.type === 'inline' ) {
-			details.target = 'td:first-child, th:first-child';
-		}
-
-		// Keyboard accessibility
-		dt.on( 'draw.dtr', function () {
-			that._tabIndexes();
-		} );
-		that._tabIndexes(); // Initial draw has already happened
-
-		$( dt.table().body() ).on( 'keyup.dtr', 'td, th', function (e) {
-			if ( e.keyCode === 13 && $(this).data('dtr-keyboard') ) {
-				$(this).click();
-			}
-		} );
-
-		// type.target can be a string jQuery selector or a column index
-		var target   = details.target;
-		var selector = typeof target === 'string' ? target : 'td, th';
-
-		// Click handler to show / hide the details rows when they are available
-		$( dt.table().body() )
-			.on( 'click.dtr mousedown.dtr mouseup.dtr', selector, function (e) {
-				// If the table is not collapsed (i.e. there is no hidden columns)
-				// then take no action
-				if ( ! $(dt.table().node()).hasClass('collapsed' ) ) {
-					return;
-				}
-
-				// Check that the row is actually a DataTable's controlled node
-				if ( $.inArray( $(this).closest('tr').get(0), dt.rows().nodes().toArray() ) === -1 ) {
-					return;
-				}
-
-				// For column index, we determine if we should act or not in the
-				// handler - otherwise it is already okay
-				if ( typeof target === 'number' ) {
-					var targetIdx = target < 0 ?
-						dt.columns().eq(0).length + target :
-						target;
-
-					if ( dt.cell( this ).index().column !== targetIdx ) {
-						return;
-					}
-				}
-
-				// $().closest() includes itself in its check
-				var row = dt.row( $(this).closest('tr') );
-
-				// Check event type to do an action
-				if ( e.type === 'click' ) {
-					// The renderer is given as a function so the caller can execute it
-					// only when they need (i.e. if hiding there is no point is running
-					// the renderer)
-					that._detailsDisplay( row, false );
-				}
-				else if ( e.type === 'mousedown' ) {
-					// For mouse users, prevent the focus ring from showing
-					$(this).css('outline', 'none');
-				}
-				else if ( e.type === 'mouseup' ) {
-					// And then re-allow at the end of the click
-					$(this).blur().css('outline', '');
-				}
-			} );
-	},
-
-
-	/**
-	 * Get the details to pass to a renderer for a row
-	 * @param  {int} rowIdx Row index
-	 * @private
-	 */
-	_detailsObj: function ( rowIdx )
-	{
-		var that = this;
-		var dt = this.s.dt;
-
-		return $.map( this.s.columns, function( col, i ) {
-			// Never and control columns should not be passed to the renderer
-			if ( col.never || col.control ) {
-				return;
-			}
-
-			return {
-				title:       dt.settings()[0].aoColumns[ i ].sTitle,
-				data:        dt.cell( rowIdx, i ).render( that.c.orthogonal ),
-				hidden:      dt.column( i ).visible() && !that.s.current[ i ],
-				columnIndex: i,
-				rowIndex:    rowIdx
-			};
-		} );
-	},
-
-
-	/**
-	 * Find a breakpoint object from a name
-	 *
-	 * @param  {string} name Breakpoint name to find
-	 * @return {object}      Breakpoint description object
-	 * @private
-	 */
-	_find: function ( name )
-	{
-		var breakpoints = this.c.breakpoints;
-
-		for ( var i=0, ien=breakpoints.length ; i<ien ; i++ ) {
-			if ( breakpoints[i].name === name ) {
-				return breakpoints[i];
-			}
-		}
-	},
-
-
-	/**
-	 * Re-create the contents of the child rows as the display has changed in
-	 * some way.
-	 *
-	 * @private
-	 */
-	_redrawChildren: function ()
-	{
-		var that = this;
-		var dt = this.s.dt;
-
-		dt.rows( {page: 'current'} ).iterator( 'row', function ( settings, idx ) {
-			var row = dt.row( idx );
-
-			that._detailsDisplay( dt.row( idx ), true );
-		} );
-	},
-
-
-	/**
-	 * Alter the table display for a resized viewport. This involves first
-	 * determining what breakpoint the window currently is in, getting the
-	 * column visibilities to apply and then setting them.
-	 *
-	 * @private
-	 */
-	_resize: function ()
-	{
-		var that = this;
-		var dt = this.s.dt;
-		var width = $(window).width();
-		var breakpoints = this.c.breakpoints;
-		var breakpoint = breakpoints[0].name;
-		var columns = this.s.columns;
-		var i, ien;
-		var oldVis = this.s.current.slice();
-
-		// Determine what breakpoint we are currently at
-		for ( i=breakpoints.length-1 ; i>=0 ; i-- ) {
-			if ( width <= breakpoints[i].width ) {
-				breakpoint = breakpoints[i].name;
-				break;
-			}
-		}
-		
-		// Show the columns for that break point
-		var columnsVis = this._columnsVisiblity( breakpoint );
-		this.s.current = columnsVis;
-
-		// Set the class before the column visibility is changed so event
-		// listeners know what the state is. Need to determine if there are
-		// any columns that are not visible but can be shown
-		var collapsedClass = false;
-		for ( i=0, ien=columns.length ; i<ien ; i++ ) {
-			if ( columnsVis[i] === false && ! columns[i].never && ! columns[i].control && ! dt.column(i).visible() === false ) {
-				collapsedClass = true;
-				break;
-			}
-		}
-
-		$( dt.table().node() ).toggleClass( 'collapsed', collapsedClass );
-
-		var changed = false;
-		var visible = 0;
-
-		dt.columns().eq(0).each( function ( colIdx, i ) {
-			if ( columnsVis[i] === true ) {
-				visible++;
-			}
-
-			if ( columnsVis[i] !== oldVis[i] ) {
-				changed = true;
-				that._setColumnVis( colIdx, columnsVis[i] );
-			}
-		} );
-
-		if ( changed ) {
-			this._redrawChildren();
-
-			// Inform listeners of the change
-			$(dt.table().node()).trigger( 'responsive-resize.dt', [dt, this.s.current] );
-
-			// If no records, update the "No records" display element
-			if ( dt.page.info().recordsDisplay === 0 ) {
-				$('td', dt.table().body()).eq(0).attr('colspan', visible);
-			}
-		}
-	},
-
-
-	/**
-	 * Determine the width of each column in the table so the auto column hiding
-	 * has that information to work with. This method is never going to be 100%
-	 * perfect since column widths can change slightly per page, but without
-	 * seriously compromising performance this is quite effective.
-	 *
-	 * @private
-	 */
-	_resizeAuto: function ()
-	{
-		var dt = this.s.dt;
-		var columns = this.s.columns;
-
-		// Are we allowed to do auto sizing?
-		if ( ! this.c.auto ) {
-			return;
-		}
-
-		// Are there any columns that actually need auto-sizing, or do they all
-		// have classes defined
-		if ( $.inArray( true, $.map( columns, function (c) { return c.auto; } ) ) === -1 ) {
-			return;
-		}
-
-		// Need to restore all children. They will be reinstated by a re-render
-		if ( ! $.isEmptyObject( _childNodeStore ) ) {
-			$.each( _childNodeStore, function ( key ) {
-				var idx = key.split('-');
-
-				_childNodesRestore( dt, idx[0]*1, idx[1]*1 );
-			} );
-		}
-
-		// Clone the table with the current data in it
-		var tableWidth   = dt.table().node().offsetWidth;
-		var columnWidths = dt.columns;
-		var clonedTable  = dt.table().node().cloneNode( false );
-		var clonedHeader = $( dt.table().header().cloneNode( false ) ).appendTo( clonedTable );
-		var clonedBody   = $( dt.table().body() ).clone( false, false ).empty().appendTo( clonedTable ); // use jQuery because of IE8
-
-		// Header
-		var headerCells = dt.columns()
-			.header()
-			.filter( function (idx) {
-				return dt.column(idx).visible();
-			} )
-			.to$()
-			.clone( false )
-			.css( 'display', 'table-cell' )
-			.css( 'min-width', 0 );
-
-		// Body rows - we don't need to take account of DataTables' column
-		// visibility since we implement our own here (hence the `display` set)
-		$(clonedBody)
-			.append( $(dt.rows( { page: 'current' } ).nodes()).clone( false ) )
-			.find( 'th, td' ).css( 'display', '' );
-
-		// Footer
-		var footer = dt.table().footer();
-		if ( footer ) {
-			var clonedFooter = $( footer.cloneNode( false ) ).appendTo( clonedTable );
-			var footerCells = dt.columns()
-				.footer()
-				.filter( function (idx) {
-					return dt.column(idx).visible();
-				} )
-				.to$()
-				.clone( false )
-				.css( 'display', 'table-cell' );
-
-			$('<tr/>')
-				.append( footerCells )
-				.appendTo( clonedFooter );
-		}
-
-		$('<tr/>')
-			.append( headerCells )
-			.appendTo( clonedHeader );
-
-		// In the inline case extra padding is applied to the first column to
-		// give space for the show / hide icon. We need to use this in the
-		// calculation
-		if ( this.c.details.type === 'inline' ) {
-			$(clonedTable).addClass( 'dtr-inline collapsed' );
-		}
-		
-		// It is unsafe to insert elements with the same name into the DOM
-		// multiple times. For example, cloning and inserting a checked radio
-		// clears the chcecked state of the original radio.
-		$( clonedTable ).find( '[name]' ).removeAttr( 'name' );
-
-		// A position absolute table would take the table out of the flow of
-		// our container element, bypassing the height and width (Scroller)
-		$( clonedTable ).css( 'position', 'relative' )
-		
-		var inserted = $('<div/>')
-			.css( {
-				width: 1,
-				height: 1,
-				overflow: 'hidden',
-				clear: 'both'
-			} )
-			.append( clonedTable );
-
-		inserted.insertBefore( dt.table().node() );
-
-		// The cloned header now contains the smallest that each column can be
-		headerCells.each( function (i) {
-			var idx = dt.column.index( 'fromVisible', i );
-			columns[ idx ].minWidth =  this.offsetWidth || 0;
-		} );
-
-		inserted.remove();
-	},
-
-	/**
-	 * Set a column's visibility.
-	 *
-	 * We don't use DataTables' column visibility controls in order to ensure
-	 * that column visibility can Responsive can no-exist. Since only IE8+ is
-	 * supported (and all evergreen browsers of course) the control of the
-	 * display attribute works well.
-	 *
-	 * @param {integer} col      Column index
-	 * @param {boolean} showHide Show or hide (true or false)
-	 * @private
-	 */
-	_setColumnVis: function ( col, showHide )
-	{
-		var dt = this.s.dt;
-		var display = showHide ? '' : 'none'; // empty string will remove the attr
-
-		$( dt.column( col ).header() ).css( 'display', display );
-		$( dt.column( col ).footer() ).css( 'display', display );
-		dt.column( col ).nodes().to$().css( 'display', display );
-
-		// If the are child nodes stored, we might need to reinsert them
-		if ( ! $.isEmptyObject( _childNodeStore ) ) {
-			dt.cells( null, col ).indexes().each( function (idx) {
-				_childNodesRestore( dt, idx.row, idx.column );
-			} );
-		}
-	},
-
-
-	/**
-	 * Update the cell tab indexes for keyboard accessibility. This is called on
-	 * every table draw - that is potentially inefficient, but also the least
-	 * complex option given that column visibility can change on the fly. Its a
-	 * shame user-focus was removed from CSS 3 UI, as it would have solved this
-	 * issue with a single CSS statement.
-	 *
-	 * @private
-	 */
-	_tabIndexes: function ()
-	{
-		var dt = this.s.dt;
-		var cells = dt.cells( { page: 'current' } ).nodes().to$();
-		var ctx = dt.settings()[0];
-		var target = this.c.details.target;
-
-		cells.filter( '[data-dtr-keyboard]' ).removeData( '[data-dtr-keyboard]' );
-
-		if ( typeof target === 'number' ) {
-			dt.cells( null, target, { page: 'current' } ).nodes().to$()
-				.attr( 'tabIndex', ctx.iTabIndex )
-				.data( 'dtr-keyboard', 1 );
-		}
-		else {
-			// This is a bit of a hack - we need to limit the selected nodes to just
-			// those of this table
-			if ( target === 'td:first-child, th:first-child' ) {
-				target = '>td:first-child, >th:first-child';
-			}
-
-			$( target, dt.rows( { page: 'current' } ).nodes() )
-				.attr( 'tabIndex', ctx.iTabIndex )
-				.data( 'dtr-keyboard', 1 );
-		}
-	}
-} );
-
-
-/**
- * List of default breakpoints. Each item in the array is an object with two
- * properties:
- *
- * * `name` - the breakpoint name.
- * * `width` - the breakpoint width
- *
- * @name Responsive.breakpoints
- * @static
- */
-Responsive.breakpoints = [
-	{ name: 'desktop',  width: Infinity },
-	{ name: 'tablet-l', width: 1024 },
-	{ name: 'tablet-p', width: 768 },
-	{ name: 'mobile-l', width: 480 },
-	{ name: 'mobile-p', width: 320 }
-];
-
-
-/**
- * Display methods - functions which define how the hidden data should be shown
- * in the table.
- *
- * @namespace
- * @name Responsive.defaults
- * @static
- */
-Responsive.display = {
-	childRow: function ( row, update, render ) {
-		if ( update ) {
-			if ( $(row.node()).hasClass('parent') ) {
-				row.child( render(), 'child' ).show();
-
-				return true;
-			}
-		}
-		else {
-			if ( ! row.child.isShown()  ) {
-				row.child( render(), 'child' ).show();
-				$( row.node() ).addClass( 'parent' );
-
-				return true;
-			}
-			else {
-				row.child( false );
-				$( row.node() ).removeClass( 'parent' );
-
-				return false;
-			}
-		}
-	},
-
-	childRowImmediate: function ( row, update, render ) {
-		if ( (! update && row.child.isShown()) || ! row.responsive.hasHidden() ) {
-			// User interaction and the row is show, or nothing to show
-			row.child( false );
-			$( row.node() ).removeClass( 'parent' );
-
-			return false;
-		}
-		else {
-			// Display
-			row.child( render(), 'child' ).show();
-			$( row.node() ).addClass( 'parent' );
-
-			return true;
-		}
-	},
-
-	// This is a wrapper so the modal options for Bootstrap and jQuery UI can
-	// have options passed into them. This specific one doesn't need to be a
-	// function but it is for consistency in the `modal` name
-	modal: function ( options ) {
-		return function ( row, update, render ) {
-			if ( ! update ) {
-				// Show a modal
-				var close = function () {
-					modal.remove(); // will tidy events for us
-					$(document).off( 'keypress.dtr' );
-				};
-
-				var modal = $('<div class="dtr-modal"/>')
-					.append( $('<div class="dtr-modal-display"/>')
-						.append( $('<div class="dtr-modal-content"/>')
-							.append( render() )
-						)
-						.append( $('<div class="dtr-modal-close">&times;</div>' )
-							.click( function () {
-								close();
-							} )
-						)
-					)
-					.append( $('<div class="dtr-modal-background"/>')
-						.click( function () {
-							close();
-						} )
-					)
-					.appendTo( 'body' );
-
-				$(document).on( 'keyup.dtr', function (e) {
-					if ( e.keyCode === 27 ) {
-						e.stopPropagation();
-
-						close();
-					}
-				} );
-			}
-			else {
-				$('div.dtr-modal-content')
-					.empty()
-					.append( render() );
-			}
-
-			if ( options && options.header ) {
-				$('div.dtr-modal-content').prepend(
-					'<h2>'+options.header( row )+'</h2>'
-				);
-			}
-		};
-	}
-};
-
-
-var _childNodeStore = {};
-
-function _childNodes( dt, row, col ) {
-	var name = row+'-'+col;
-
-	if ( _childNodeStore[ name ] ) {
-		return _childNodeStore[ name ];
-	}
-
-	// https://jsperf.com/childnodes-array-slice-vs-loop
-	var nodes = [];
-	var children = dt.cell( row, col ).node().childNodes;
-	for ( var i=0, ien=children.length ; i<ien ; i++ ) {
-		nodes.push( children[i] );
-	}
-
-	_childNodeStore[ name ] = nodes;
-
-	return nodes;
-}
-
-function _childNodesRestore( dt, row, col ) {
-	var name = row+'-'+col;
-
-	if ( ! _childNodeStore[ name ] ) {
-		return;
-	}
-
-	var node = dt.cell( row, col ).node();
-	var store = _childNodeStore[ name ];
-	var parent = store[0].parentNode;
-	var parentChildren = parent.childNodes;
-	var a = [];
-
-	for ( var i=0, ien=parentChildren.length ; i<ien ; i++ ) {
-		a.push( parentChildren[i] );
-	}
-
-	for ( var j=0, jen=a.length ; j<jen ; j++ ) {
-		node.appendChild( a[j] );
-	}
-
-	_childNodeStore[ name ] = undefined;
-}
-
-
-/**
- * Display methods - functions which define how the hidden data should be shown
- * in the table.
- *
- * @namespace
- * @name Responsive.defaults
- * @static
- */
-Responsive.renderer = {
-	listHiddenNodes: function () {
-		return function ( api, rowIdx, columns ) {
-			var ul = $('<ul data-dtr-index="'+rowIdx+'" class="dtr-details"/>');
-			var found = false;
-
-			var data = $.each( columns, function ( i, col ) {
-				if ( col.hidden ) {
-					$(
-						'<li data-dtr-index="'+col.columnIndex+'" data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
-							'<span class="dtr-title">'+
-								col.title+
-							'</span> '+
-						'</li>'
-					)
-						.append( $('<span class="dtr-data"/>').append( _childNodes( api, col.rowIndex, col.columnIndex ) ) )// api.cell( col.rowIndex, col.columnIndex ).node().childNodes ) )
-						.appendTo( ul );
-
-					found = true;
-				}
-			} );
-
-			return found ?
-				ul :
-				false;
-		};
-	},
-
-	listHidden: function () {
-		return function ( api, rowIdx, columns ) {
-			var data = $.map( columns, function ( col ) {
-				return col.hidden ?
-					'<li data-dtr-index="'+col.columnIndex+'" data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
-						'<span class="dtr-title">'+
-							col.title+
-						'</span> '+
-						'<span class="dtr-data">'+
-							col.data+
-						'</span>'+
-					'</li>' :
-					'';
-			} ).join('');
-
-			return data ?
-				$('<ul data-dtr-index="'+rowIdx+'" class="dtr-details"/>').append( data ) :
-				false;
-		}
-	},
-
-	tableAll: function ( options ) {
-		options = $.extend( {
-			tableClass: ''
-		}, options );
-
-		return function ( api, rowIdx, columns ) {
-			var data = $.map( columns, function ( col ) {
-				return '<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
-						'<td>'+col.title+':'+'</td> '+
-						'<td>'+col.data+'</td>'+
-					'</tr>';
-			} ).join('');
-
-			return $('<table class="'+options.tableClass+' dtr-details" width="100%"/>').append( data );
-		}
-	}
-};
-
-/**
- * Responsive default settings for initialisation
- *
- * @namespace
- * @name Responsive.defaults
- * @static
- */
-Responsive.defaults = {
-	/**
-	 * List of breakpoints for the instance. Note that this means that each
-	 * instance can have its own breakpoints. Additionally, the breakpoints
-	 * cannot be changed once an instance has been creased.
-	 *
-	 * @type {Array}
-	 * @default Takes the value of `Responsive.breakpoints`
-	 */
-	breakpoints: Responsive.breakpoints,
-
-	/**
-	 * Enable / disable auto hiding calculations. It can help to increase
-	 * performance slightly if you disable this option, but all columns would
-	 * need to have breakpoint classes assigned to them
-	 *
-	 * @type {Boolean}
-	 * @default  `true`
-	 */
-	auto: true,
-
-	/**
-	 * Details control. If given as a string value, the `type` property of the
-	 * default object is set to that value, and the defaults used for the rest
-	 * of the object - this is for ease of implementation.
-	 *
-	 * The object consists of the following properties:
-	 *
-	 * * `display` - A function that is used to show and hide the hidden details
-	 * * `renderer` - function that is called for display of the child row data.
-	 *   The default function will show the data from the hidden columns
-	 * * `target` - Used as the selector for what objects to attach the child
-	 *   open / close to
-	 * * `type` - `false` to disable the details display, `inline` or `column`
-	 *   for the two control types
-	 *
-	 * @type {Object|string}
-	 */
-	details: {
-		display: Responsive.display.childRow,
-
-		renderer: Responsive.renderer.listHidden(),
-
-		target: 0,
-
-		type: 'inline'
-	},
-
-	/**
-	 * Orthogonal data request option. This is used to define the data type
-	 * requested when Responsive gets the data to show in the child row.
-	 *
-	 * @type {String}
-	 */
-	orthogonal: 'display'
-};
-
-
-/*
- * API
- */
-var Api = $.fn.dataTable.Api;
-
-// Doesn't do anything - work around for a bug in DT... Not documented
-Api.register( 'responsive()', function () {
-	return this;
-} );
-
-Api.register( 'responsive.index()', function ( li ) {
-	li = $(li);
-
-	return {
-		column: li.data('dtr-index'),
-		row:    li.parent().data('dtr-index')
-	};
-} );
-
-Api.register( 'responsive.rebuild()', function () {
-	return this.iterator( 'table', function ( ctx ) {
-		if ( ctx._responsive ) {
-			ctx._responsive._classLogic();
-		}
-	} );
-} );
-
-Api.register( 'responsive.recalc()', function () {
-	return this.iterator( 'table', function ( ctx ) {
-		if ( ctx._responsive ) {
-			ctx._responsive._resizeAuto();
-			ctx._responsive._resize();
-		}
-	} );
-} );
-
-Api.register( 'responsive.hasHidden()', function () {
-	var ctx = this.context[0];
-
-	return ctx._responsive ?
-		$.inArray( false, ctx._responsive.s.current ) !== -1 :
-		false;
-} );
-
-Api.registerPlural( 'columns().responsiveHidden()', 'column().responsiveHidden()', function () {
-	return this.iterator( 'column', function ( settings, column ) {
-		return settings._responsive ?
-			settings._responsive.s.current[ column ] :
-			false;
-	}, 1 );
-} );
-
-
-/**
- * Version information
- *
- * @name Responsive.version
- * @static
- */
-Responsive.version = '2.2.3';
-
-
-$.fn.dataTable.Responsive = Responsive;
-$.fn.DataTable.Responsive = Responsive;
-
-// Attach a listener to the document which listens for DataTables initialisation
-// events so we can automatically initialise
-$(document).on( 'preInit.dt.dtr', function (e, settings, json) {
-	if ( e.namespace !== 'dt' ) {
-		return;
-	}
-
-	if ( $(settings.nTable).hasClass( 'responsive' ) ||
-		 $(settings.nTable).hasClass( 'dt-responsive' ) ||
-		 settings.oInit.responsive ||
-		 DataTable.defaults.responsive
-	) {
-		var init = settings.oInit.responsive;
-
-		if ( init !== false ) {
-			new Responsive( settings, $.isPlainObject( init ) ? init : {}  );
-		}
-	}
-} );
-
-
-return Responsive;
-}));
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 styling wrapper for Select
- * ©2018 SpryMedia Ltd - datatables.net/license
- */
-
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), __webpack_require__(30)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net-bs4')(root, $).$;
-			}
-
-			if ( ! $.fn.dataTable.select ) {
-				require('datatables.net-select')(root, $);
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-
-return $.fn.dataTable;
-
-}));
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.2.7
- * 2015-2018 SpryMedia Ltd - datatables.net/license/mit
- */
-
-/**
- * @summary     Select for DataTables
- * @description A collection of API methods, events and buttons for DataTables
- *   that provides selection options of the items in a DataTable
- * @version     1.2.7
- * @file        dataTables.select.js
- * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     datatables.net/forums
- * @copyright   Copyright 2015-2018 SpryMedia Ltd.
- *
- * This source file is free software, available under the following license:
- *   MIT license - http://datatables.net/license/mit
- *
- * This source file is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
- *
- * For details please refer to: http://www.datatables.net/extensions/select
- */
-(function( factory ){
-	if ( true ) {
-		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
-			return factory( $, window, document );
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
-// Version information for debugger
-DataTable.select = {};
-
-DataTable.select.version = '1.2.7';
-
-DataTable.select.init = function ( dt ) {
-	var ctx = dt.settings()[0];
-	var init = ctx.oInit.select;
-	var defaults = DataTable.defaults.select;
-	var opts = init === undefined ?
-		defaults :
-		init;
-
-	// Set defaults
-	var items = 'row';
-	var style = 'api';
-	var blurable = false;
-	var info = true;
-	var selector = 'td, th';
-	var className = 'selected';
-	var setStyle = false;
-
-	ctx._select = {};
-
-	// Initialisation customisations
-	if ( opts === true ) {
-		style = 'os';
-		setStyle = true;
-	}
-	else if ( typeof opts === 'string' ) {
-		style = opts;
-		setStyle = true;
-	}
-	else if ( $.isPlainObject( opts ) ) {
-		if ( opts.blurable !== undefined ) {
-			blurable = opts.blurable;
-		}
-
-		if ( opts.info !== undefined ) {
-			info = opts.info;
-		}
-
-		if ( opts.items !== undefined ) {
-			items = opts.items;
-		}
-
-		if ( opts.style !== undefined ) {
-			style = opts.style;
-			setStyle = true;
-		}
-
-		if ( opts.selector !== undefined ) {
-			selector = opts.selector;
-		}
-
-		if ( opts.className !== undefined ) {
-			className = opts.className;
-		}
-	}
-
-	dt.select.selector( selector );
-	dt.select.items( items );
-	dt.select.style( style );
-	dt.select.blurable( blurable );
-	dt.select.info( info );
-	ctx._select.className = className;
-
-
-	// Sort table based on selected rows. Requires Select Datatables extension
-	$.fn.dataTable.ext.order['select-checkbox'] = function ( settings, col ) {
-		return this.api().column( col, {order: 'index'} ).nodes().map( function ( td ) {
-			if ( settings._select.items === 'row' ) {
-				return $( td ).parent().hasClass( settings._select.className );
-			} else if ( settings._select.items === 'cell' ) {
-				return $( td ).hasClass( settings._select.className );
-			}
-			return false;
-		});
-	};
-
-	// If the init options haven't enabled select, but there is a selectable
-	// class name, then enable
-	if ( ! setStyle && $( dt.table().node() ).hasClass( 'selectable' ) ) {
-		dt.select.style( 'os' );
-	}
-};
-
-/*
-
-Select is a collection of API methods, event handlers, event emitters and
-buttons (for the `Buttons` extension) for DataTables. It provides the following
-features, with an overview of how they are implemented:
-
-## Selection of rows, columns and cells. Whether an item is selected or not is
-   stored in:
-
-* rows: a `_select_selected` property which contains a boolean value of the
-  DataTables' `aoData` object for each row
-* columns: a `_select_selected` property which contains a boolean value of the
-  DataTables' `aoColumns` object for each column
-* cells: a `_selected_cells` property which contains an array of boolean values
-  of the `aoData` object for each row. The array is the same length as the
-  columns array, with each element of it representing a cell.
-
-This method of using boolean flags allows Select to operate when nodes have not
-been created for rows / cells (DataTables' defer rendering feature).
-
-## API methods
-
-A range of API methods are available for triggering selection and de-selection
-of rows. Methods are also available to configure the selection events that can
-be triggered by an end user (such as which items are to be selected). To a large
-extent, these of API methods *is* Select. It is basically a collection of helper
-functions that can be used to select items in a DataTable.
-
-Configuration of select is held in the object `_select` which is attached to the
-DataTables settings object on initialisation. Select being available on a table
-is not optional when Select is loaded, but its default is for selection only to
-be available via the API - so the end user wouldn't be able to select rows
-without additional configuration.
-
-The `_select` object contains the following properties:
-
-```
-{
-	items:string     - Can be `rows`, `columns` or `cells`. Defines what item 
-	                   will be selected if the user is allowed to activate row
-	                   selection using the mouse.
-	style:string     - Can be `none`, `single`, `multi` or `os`. Defines the
-	                   interaction style when selecting items
-	blurable:boolean - If row selection can be cleared by clicking outside of
-	                   the table
-	info:boolean     - If the selection summary should be shown in the table
-	                   information elements
-}
-```
-
-In addition to the API methods, Select also extends the DataTables selector
-options for rows, columns and cells adding a `selected` option to the selector
-options object, allowing the developer to select only selected items or
-unselected items.
-
-## Mouse selection of items
-
-Clicking on items can be used to select items. This is done by a simple event
-handler that will select the items using the API methods.
-
- */
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Local functions
- */
-
-/**
- * Add one or more cells to the selection when shift clicking in OS selection
- * style cell selection.
- *
- * Cell range is more complicated than row and column as we want to select
- * in the visible grid rather than by index in sequence. For example, if you
- * click first in cell 1-1 and then shift click in 2-2 - cells 1-2 and 2-1
- * should also be selected (and not 1-3, 1-4. etc)
- * 
- * @param  {DataTable.Api} dt   DataTable
- * @param  {object}        idx  Cell index to select to
- * @param  {object}        last Cell index to select from
- * @private
- */
-function cellRange( dt, idx, last )
-{
-	var indexes;
-	var columnIndexes;
-	var rowIndexes;
-	var selectColumns = function ( start, end ) {
-		if ( start > end ) {
-			var tmp = end;
-			end = start;
-			start = tmp;
-		}
-		
-		var record = false;
-		return dt.columns( ':visible' ).indexes().filter( function (i) {
-			if ( i === start ) {
-				record = true;
-			}
-			
-			if ( i === end ) { // not else if, as start might === end
-				record = false;
-				return true;
-			}
-
-			return record;
-		} );
-	};
-
-	var selectRows = function ( start, end ) {
-		var indexes = dt.rows( { search: 'applied' } ).indexes();
-
-		// Which comes first - might need to swap
-		if ( indexes.indexOf( start ) > indexes.indexOf( end ) ) {
-			var tmp = end;
-			end = start;
-			start = tmp;
-		}
-
-		var record = false;
-		return indexes.filter( function (i) {
-			if ( i === start ) {
-				record = true;
-			}
-			
-			if ( i === end ) {
-				record = false;
-				return true;
-			}
-
-			return record;
-		} );
-	};
-
-	if ( ! dt.cells( { selected: true } ).any() && ! last ) {
-		// select from the top left cell to this one
-		columnIndexes = selectColumns( 0, idx.column );
-		rowIndexes = selectRows( 0 , idx.row );
-	}
-	else {
-		// Get column indexes between old and new
-		columnIndexes = selectColumns( last.column, idx.column );
-		rowIndexes = selectRows( last.row , idx.row );
-	}
-
-	indexes = dt.cells( rowIndexes, columnIndexes ).flatten();
-
-	if ( ! dt.cells( idx, { selected: true } ).any() ) {
-		// Select range
-		dt.cells( indexes ).select();
-	}
-	else {
-		// Deselect range
-		dt.cells( indexes ).deselect();
-	}
-}
-
-/**
- * Disable mouse selection by removing the selectors
- *
- * @param {DataTable.Api} dt DataTable to remove events from
- * @private
- */
-function disableMouseSelection( dt )
-{
-	var ctx = dt.settings()[0];
-	var selector = ctx._select.selector;
-
-	$( dt.table().container() )
-		.off( 'mousedown.dtSelect', selector )
-		.off( 'mouseup.dtSelect', selector )
-		.off( 'click.dtSelect', selector );
-
-	$('body').off( 'click.dtSelect' + dt.table().node().id );
-}
-
-/**
- * Attach mouse listeners to the table to allow mouse selection of items
- *
- * @param {DataTable.Api} dt DataTable to remove events from
- * @private
- */
-function enableMouseSelection ( dt )
-{
-	var container = $( dt.table().container() );
-	var ctx = dt.settings()[0];
-	var selector = ctx._select.selector;
-	var matchSelection;
-
-	container
-		.on( 'mousedown.dtSelect', selector, function(e) {
-			// Disallow text selection for shift clicking on the table so multi
-			// element selection doesn't look terrible!
-			if ( e.shiftKey || e.metaKey || e.ctrlKey ) {
-				container
-					.css( '-moz-user-select', 'none' )
-					.one('selectstart.dtSelect', selector, function () {
-						return false;
-					} );
-			}
-
-			if ( window.getSelection ) {
-				matchSelection = window.getSelection();
-			}
-		} )
-		.on( 'mouseup.dtSelect', selector, function() {
-			// Allow text selection to occur again, Mozilla style (tested in FF
-			// 35.0.1 - still required)
-			container.css( '-moz-user-select', '' );
-		} )
-		.on( 'click.dtSelect', selector, function ( e ) {
-			var items = dt.select.items();
-			var idx;
-
-			// If text was selected (click and drag), then we shouldn't change
-			// the row's selected state
-			if ( window.getSelection ) {
-				var selection = window.getSelection();
-
-				// If the element that contains the selection is not in the table, we can ignore it
-				// This can happen if the developer selects text from the click event
-				if ( ! selection.anchorNode || $(selection.anchorNode).closest('table')[0] === dt.table().node() ) {
-					if ( selection !== matchSelection ) {
-						return;
-					}
-				}
-			}
-
-			var ctx = dt.settings()[0];
-			var wrapperClass = dt.settings()[0].oClasses.sWrapper.replace(/ /g, '.');
-
-			// Ignore clicks inside a sub-table
-			if ( $(e.target).closest('div.'+wrapperClass)[0] != dt.table().container() ) {
-				return;
-			}
-
-			var cell = dt.cell( $(e.target).closest('td, th') );
-
-			// Check the cell actually belongs to the host DataTable (so child
-			// rows, etc, are ignored)
-			if ( ! cell.any() ) {
-				return;
-			}
-
-			var event = $.Event('user-select.dt');
-			eventTrigger( dt, event, [ items, cell, e ] );
-
-			if ( event.isDefaultPrevented() ) {
-				return;
-			}
-
-			var cellIndex = cell.index();
-			if ( items === 'row' ) {
-				idx = cellIndex.row;
-				typeSelect( e, dt, ctx, 'row', idx );
-			}
-			else if ( items === 'column' ) {
-				idx = cell.index().column;
-				typeSelect( e, dt, ctx, 'column', idx );
-			}
-			else if ( items === 'cell' ) {
-				idx = cell.index();
-				typeSelect( e, dt, ctx, 'cell', idx );
-			}
-
-			ctx._select_lastCell = cellIndex;
-		} );
-
-	// Blurable
-	$('body').on( 'click.dtSelect' + dt.table().node().id, function ( e ) {
-		if ( ctx._select.blurable ) {
-			// If the click was inside the DataTables container, don't blur
-			if ( $(e.target).parents().filter( dt.table().container() ).length ) {
-				return;
-			}
-
-			// Ignore elements which have been removed from the DOM (i.e. paging
-			// buttons)
-			if ( $(e.target).parents('html').length === 0 ) {
-			 	return;
-			}
-
-			// Don't blur in Editor form
-			if ( $(e.target).parents('div.DTE').length ) {
-				return;
-			}
-
-			clear( ctx, true );
-		}
-	} );
-}
-
-/**
- * Trigger an event on a DataTable
- *
- * @param {DataTable.Api} api      DataTable to trigger events on
- * @param  {boolean}      selected true if selected, false if deselected
- * @param  {string}       type     Item type acting on
- * @param  {boolean}      any      Require that there are values before
- *     triggering
- * @private
- */
-function eventTrigger ( api, type, args, any )
-{
-	if ( any && ! api.flatten().length ) {
-		return;
-	}
-
-	if ( typeof type === 'string' ) {
-		type = type +'.dt';
-	}
-
-	args.unshift( api );
-
-	$(api.table().node()).trigger( type, args );
-}
-
-/**
- * Update the information element of the DataTable showing information about the
- * items selected. This is done by adding tags to the existing text
- * 
- * @param {DataTable.Api} api DataTable to update
- * @private
- */
-function info ( api )
-{
-	var ctx = api.settings()[0];
-
-	if ( ! ctx._select.info || ! ctx.aanFeatures.i ) {
-		return;
-	}
-
-	if ( api.select.style() === 'api' ) {
-		return;
-	}
-
-	var rows    = api.rows( { selected: true } ).flatten().length;
-	var columns = api.columns( { selected: true } ).flatten().length;
-	var cells   = api.cells( { selected: true } ).flatten().length;
-
-	var add = function ( el, name, num ) {
-		el.append( $('<span class="select-item"/>').append( api.i18n(
-			'select.'+name+'s',
-			{ _: '%d '+name+'s selected', 0: '', 1: '1 '+name+' selected' },
-			num
-		) ) );
-	};
-
-	// Internal knowledge of DataTables to loop over all information elements
-	$.each( ctx.aanFeatures.i, function ( i, el ) {
-		el = $(el);
-
-		var output  = $('<span class="select-info"/>');
-		add( output, 'row', rows );
-		add( output, 'column', columns );
-		add( output, 'cell', cells  );
-
-		var exisiting = el.children('span.select-info');
-		if ( exisiting.length ) {
-			exisiting.remove();
-		}
-
-		if ( output.text() !== '' ) {
-			el.append( output );
-		}
-	} );
-}
-
-/**
- * Initialisation of a new table. Attach event handlers and callbacks to allow
- * Select to operate correctly.
- *
- * This will occur _after_ the initial DataTables initialisation, although
- * before Ajax data is rendered, if there is ajax data
- *
- * @param  {DataTable.settings} ctx Settings object to operate on
- * @private
- */
-function init ( ctx ) {
-	var api = new DataTable.Api( ctx );
-
-	// Row callback so that classes can be added to rows and cells if the item
-	// was selected before the element was created. This will happen with the
-	// `deferRender` option enabled.
-	// 
-	// This method of attaching to `aoRowCreatedCallback` is a hack until
-	// DataTables has proper events for row manipulation If you are reviewing
-	// this code to create your own plug-ins, please do not do this!
-	ctx.aoRowCreatedCallback.push( {
-		fn: function ( row, data, index ) {
-			var i, ien;
-			var d = ctx.aoData[ index ];
-
-			// Row
-			if ( d._select_selected ) {
-				$( row ).addClass( ctx._select.className );
-			}
-
-			// Cells and columns - if separated out, we would need to do two
-			// loops, so it makes sense to combine them into a single one
-			for ( i=0, ien=ctx.aoColumns.length ; i<ien ; i++ ) {
-				if ( ctx.aoColumns[i]._select_selected || (d._selected_cells && d._selected_cells[i]) ) {
-					$(d.anCells[i]).addClass( ctx._select.className );
-				}
-			}
-		},
-		sName: 'select-deferRender'
-	} );
-
-	// On Ajax reload we want to reselect all rows which are currently selected,
-	// if there is an rowId (i.e. a unique value to identify each row with)
-	api.on( 'preXhr.dt.dtSelect', function () {
-		// note that column selection doesn't need to be cached and then
-		// reselected, as they are already selected
-		var rows = api.rows( { selected: true } ).ids( true ).filter( function ( d ) {
-			return d !== undefined;
-		} );
-
-		var cells = api.cells( { selected: true } ).eq(0).map( function ( cellIdx ) {
-			var id = api.row( cellIdx.row ).id( true );
-			return id ?
-				{ row: id, column: cellIdx.column } :
-				undefined;
-		} ).filter( function ( d ) {
-			return d !== undefined;
-		} );
-
-		// On the next draw, reselect the currently selected items
-		api.one( 'draw.dt.dtSelect', function () {
-			api.rows( rows ).select();
-
-			// `cells` is not a cell index selector, so it needs a loop
-			if ( cells.any() ) {
-				cells.each( function ( id ) {
-					api.cells( id.row, id.column ).select();
-				} );
-			}
-		} );
-	} );
-
-	// Update the table information element with selected item summary
-	api.on( 'draw.dtSelect.dt select.dtSelect.dt deselect.dtSelect.dt info.dt', function () {
-		info( api );
-	} );
-
-	// Clean up and release
-	api.on( 'destroy.dtSelect', function () {
-		disableMouseSelection( api );
-		api.off( '.dtSelect' );
-	} );
-}
-
-/**
- * Add one or more items (rows or columns) to the selection when shift clicking
- * in OS selection style
- *
- * @param  {DataTable.Api} dt   DataTable
- * @param  {string}        type Row or column range selector
- * @param  {object}        idx  Item index to select to
- * @param  {object}        last Item index to select from
- * @private
- */
-function rowColumnRange( dt, type, idx, last )
-{
-	// Add a range of rows from the last selected row to this one
-	var indexes = dt[type+'s']( { search: 'applied' } ).indexes();
-	var idx1 = $.inArray( last, indexes );
-	var idx2 = $.inArray( idx, indexes );
-
-	if ( ! dt[type+'s']( { selected: true } ).any() && idx1 === -1 ) {
-		// select from top to here - slightly odd, but both Windows and Mac OS
-		// do this
-		indexes.splice( $.inArray( idx, indexes )+1, indexes.length );
-	}
-	else {
-		// reverse so we can shift click 'up' as well as down
-		if ( idx1 > idx2 ) {
-			var tmp = idx2;
-			idx2 = idx1;
-			idx1 = tmp;
-		}
-
-		indexes.splice( idx2+1, indexes.length );
-		indexes.splice( 0, idx1 );
-	}
-
-	if ( ! dt[type]( idx, { selected: true } ).any() ) {
-		// Select range
-		dt[type+'s']( indexes ).select();
-	}
-	else {
-		// Deselect range - need to keep the clicked on row selected
-		indexes.splice( $.inArray( idx, indexes ), 1 );
-		dt[type+'s']( indexes ).deselect();
-	}
-}
-
-/**
- * Clear all selected items
- *
- * @param  {DataTable.settings} ctx Settings object of the host DataTable
- * @param  {boolean} [force=false] Force the de-selection to happen, regardless
- *     of selection style
- * @private
- */
-function clear( ctx, force )
-{
-	if ( force || ctx._select.style === 'single' ) {
-		var api = new DataTable.Api( ctx );
-		
-		api.rows( { selected: true } ).deselect();
-		api.columns( { selected: true } ).deselect();
-		api.cells( { selected: true } ).deselect();
-	}
-}
-
-/**
- * Select items based on the current configuration for style and items.
- *
- * @param  {object}             e    Mouse event object
- * @param  {DataTables.Api}     dt   DataTable
- * @param  {DataTable.settings} ctx  Settings object of the host DataTable
- * @param  {string}             type Items to select
- * @param  {int|object}         idx  Index of the item to select
- * @private
- */
-function typeSelect ( e, dt, ctx, type, idx )
-{
-	var style = dt.select.style();
-	var isSelected = dt[type]( idx, { selected: true } ).any();
-
-	if ( style === 'os' ) {
-		if ( e.ctrlKey || e.metaKey ) {
-			// Add or remove from the selection
-			dt[type]( idx ).select( ! isSelected );
-		}
-		else if ( e.shiftKey ) {
-			if ( type === 'cell' ) {
-				cellRange( dt, idx, ctx._select_lastCell || null );
-			}
-			else {
-				rowColumnRange( dt, type, idx, ctx._select_lastCell ?
-					ctx._select_lastCell[type] :
-					null
-				);
-			}
-		}
-		else {
-			// No cmd or shift click - deselect if selected, or select
-			// this row only
-			var selected = dt[type+'s']( { selected: true } );
-
-			if ( isSelected && selected.flatten().length === 1 ) {
-				dt[type]( idx ).deselect();
-			}
-			else {
-				selected.deselect();
-				dt[type]( idx ).select();
-			}
-		}
-	} else if ( style == 'multi+shift' ) {
-		if ( e.shiftKey ) {
-			if ( type === 'cell' ) {
-				cellRange( dt, idx, ctx._select_lastCell || null );
-			}
-			else {
-				rowColumnRange( dt, type, idx, ctx._select_lastCell ?
-					ctx._select_lastCell[type] :
-					null
-				);
-			}
-		}
-		else {
-			dt[ type ]( idx ).select( ! isSelected );
-		}
-	}
-	else {
-		dt[ type ]( idx ).select( ! isSelected );
-	}
-}
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DataTables selectors
- */
-
-// row and column are basically identical just assigned to different properties
-// and checking a different array, so we can dynamically create the functions to
-// reduce the code size
-$.each( [
-	{ type: 'row', prop: 'aoData' },
-	{ type: 'column', prop: 'aoColumns' }
-], function ( i, o ) {
-	DataTable.ext.selector[ o.type ].push( function ( settings, opts, indexes ) {
-		var selected = opts.selected;
-		var data;
-		var out = [];
-
-		if ( selected !== true && selected !== false ) {
-			return indexes;
-		}
-
-		for ( var i=0, ien=indexes.length ; i<ien ; i++ ) {
-			data = settings[ o.prop ][ indexes[i] ];
-
-			if ( (selected === true && data._select_selected === true) ||
-			     (selected === false && ! data._select_selected )
-			) {
-				out.push( indexes[i] );
-			}
-		}
-
-		return out;
-	} );
-} );
-
-DataTable.ext.selector.cell.push( function ( settings, opts, cells ) {
-	var selected = opts.selected;
-	var rowData;
-	var out = [];
-
-	if ( selected === undefined ) {
-		return cells;
-	}
-
-	for ( var i=0, ien=cells.length ; i<ien ; i++ ) {
-		rowData = settings.aoData[ cells[i].row ];
-
-		if ( (selected === true && rowData._selected_cells && rowData._selected_cells[ cells[i].column ] === true) ||
-		     (selected === false && ( ! rowData._selected_cells || ! rowData._selected_cells[ cells[i].column ] ) )
-		) {
-			out.push( cells[i] );
-		}
-	}
-
-	return out;
-} );
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DataTables API
- *
- * For complete documentation, please refer to the docs/api directory or the
- * DataTables site
- */
-
-// Local variables to improve compression
-var apiRegister = DataTable.Api.register;
-var apiRegisterPlural = DataTable.Api.registerPlural;
-
-apiRegister( 'select()', function () {
-	return this.iterator( 'table', function ( ctx ) {
-		DataTable.select.init( new DataTable.Api( ctx ) );
-	} );
-} );
-
-apiRegister( 'select.blurable()', function ( flag ) {
-	if ( flag === undefined ) {
-		return this.context[0]._select.blurable;
-	}
-
-	return this.iterator( 'table', function ( ctx ) {
-		ctx._select.blurable = flag;
-	} );
-} );
-
-apiRegister( 'select.info()', function ( flag ) {
-	if ( info === undefined ) {
-		return this.context[0]._select.info;
-	}
-
-	return this.iterator( 'table', function ( ctx ) {
-		ctx._select.info = flag;
-	} );
-} );
-
-apiRegister( 'select.items()', function ( items ) {
-	if ( items === undefined ) {
-		return this.context[0]._select.items;
-	}
-
-	return this.iterator( 'table', function ( ctx ) {
-		ctx._select.items = items;
-
-		eventTrigger( new DataTable.Api( ctx ), 'selectItems', [ items ] );
-	} );
-} );
-
-// Takes effect from the _next_ selection. None disables future selection, but
-// does not clear the current selection. Use the `deselect` methods for that
-apiRegister( 'select.style()', function ( style ) {
-	if ( style === undefined ) {
-		return this.context[0]._select.style;
-	}
-
-	return this.iterator( 'table', function ( ctx ) {
-		ctx._select.style = style;
-
-		if ( ! ctx._select_init ) {
-			init( ctx );
-		}
-
-		// Add / remove mouse event handlers. They aren't required when only
-		// API selection is available
-		var dt = new DataTable.Api( ctx );
-		disableMouseSelection( dt );
-		
-		if ( style !== 'api' ) {
-			enableMouseSelection( dt );
-		}
-
-		eventTrigger( new DataTable.Api( ctx ), 'selectStyle', [ style ] );
-	} );
-} );
-
-apiRegister( 'select.selector()', function ( selector ) {
-	if ( selector === undefined ) {
-		return this.context[0]._select.selector;
-	}
-
-	return this.iterator( 'table', function ( ctx ) {
-		disableMouseSelection( new DataTable.Api( ctx ) );
-
-		ctx._select.selector = selector;
-
-		if ( ctx._select.style !== 'api' ) {
-			enableMouseSelection( new DataTable.Api( ctx ) );
-		}
-	} );
-} );
-
-
-
-apiRegisterPlural( 'rows().select()', 'row().select()', function ( select ) {
-	var api = this;
-
-	if ( select === false ) {
-		return this.deselect();
-	}
-
-	this.iterator( 'row', function ( ctx, idx ) {
-		clear( ctx );
-
-		ctx.aoData[ idx ]._select_selected = true;
-		$( ctx.aoData[ idx ].nTr ).addClass( ctx._select.className );
-	} );
-
-	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'select', [ 'row', api[i] ], true );
-	} );
-
-	return this;
-} );
-
-apiRegisterPlural( 'columns().select()', 'column().select()', function ( select ) {
-	var api = this;
-
-	if ( select === false ) {
-		return this.deselect();
-	}
-
-	this.iterator( 'column', function ( ctx, idx ) {
-		clear( ctx );
-
-		ctx.aoColumns[ idx ]._select_selected = true;
-
-		var column = new DataTable.Api( ctx ).column( idx );
-
-		$( column.header() ).addClass( ctx._select.className );
-		$( column.footer() ).addClass( ctx._select.className );
-
-		column.nodes().to$().addClass( ctx._select.className );
-	} );
-
-	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'select', [ 'column', api[i] ], true );
-	} );
-
-	return this;
-} );
-
-apiRegisterPlural( 'cells().select()', 'cell().select()', function ( select ) {
-	var api = this;
-
-	if ( select === false ) {
-		return this.deselect();
-	}
-
-	this.iterator( 'cell', function ( ctx, rowIdx, colIdx ) {
-		clear( ctx );
-
-		var data = ctx.aoData[ rowIdx ];
-
-		if ( data._selected_cells === undefined ) {
-			data._selected_cells = [];
-		}
-
-		data._selected_cells[ colIdx ] = true;
-
-		if ( data.anCells ) {
-			$( data.anCells[ colIdx ] ).addClass( ctx._select.className );
-		}
-	} );
-
-	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'select', [ 'cell', api[i] ], true );
-	} );
-
-	return this;
-} );
-
-
-apiRegisterPlural( 'rows().deselect()', 'row().deselect()', function () {
-	var api = this;
-
-	this.iterator( 'row', function ( ctx, idx ) {
-		ctx.aoData[ idx ]._select_selected = false;
-		$( ctx.aoData[ idx ].nTr ).removeClass( ctx._select.className );
-	} );
-
-	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'deselect', [ 'row', api[i] ], true );
-	} );
-
-	return this;
-} );
-
-apiRegisterPlural( 'columns().deselect()', 'column().deselect()', function () {
-	var api = this;
-
-	this.iterator( 'column', function ( ctx, idx ) {
-		ctx.aoColumns[ idx ]._select_selected = false;
-
-		var api = new DataTable.Api( ctx );
-		var column = api.column( idx );
-
-		$( column.header() ).removeClass( ctx._select.className );
-		$( column.footer() ).removeClass( ctx._select.className );
-
-		// Need to loop over each cell, rather than just using
-		// `column().nodes()` as cells which are individually selected should
-		// not have the `selected` class removed from them
-		api.cells( null, idx ).indexes().each( function (cellIdx) {
-			var data = ctx.aoData[ cellIdx.row ];
-			var cellSelected = data._selected_cells;
-
-			if ( data.anCells && (! cellSelected || ! cellSelected[ cellIdx.column ]) ) {
-				$( data.anCells[ cellIdx.column  ] ).removeClass( ctx._select.className );
-			}
-		} );
-	} );
-
-	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'deselect', [ 'column', api[i] ], true );
-	} );
-
-	return this;
-} );
-
-apiRegisterPlural( 'cells().deselect()', 'cell().deselect()', function () {
-	var api = this;
-
-	this.iterator( 'cell', function ( ctx, rowIdx, colIdx ) {
-		var data = ctx.aoData[ rowIdx ];
-
-		data._selected_cells[ colIdx ] = false;
-
-		// Remove class only if the cells exist, and the cell is not column
-		// selected, in which case the class should remain (since it is selected
-		// in the column)
-		if ( data.anCells && ! ctx.aoColumns[ colIdx ]._select_selected ) {
-			$( data.anCells[ colIdx ] ).removeClass( ctx._select.className );
-		}
-	} );
-
-	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'deselect', [ 'cell', api[i] ], true );
-	} );
-
-	return this;
-} );
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Buttons
- */
-function i18n( label, def ) {
-	return function (dt) {
-		return dt.i18n( 'buttons.'+label, def );
-	};
-}
-
-// Common events with suitable namespaces
-function namespacedEvents ( config ) {
-	var unique = config._eventNamespace;
-
-	return 'draw.dt.DT'+unique+' select.dt.DT'+unique+' deselect.dt.DT'+unique;
-}
-
-function enabled ( dt, config ) {
-	if ( $.inArray( 'rows', config.limitTo ) !== -1 && dt.rows( { selected: true } ).any() ) {
-		return true;
-	}
-
-	if ( $.inArray( 'columns', config.limitTo ) !== -1 && dt.columns( { selected: true } ).any() ) {
-		return true;
-	}
-
-	if ( $.inArray( 'cells', config.limitTo ) !== -1 && dt.cells( { selected: true } ).any() ) {
-		return true;
-	}
-
-	return false;
-}
-
-var _buttonNamespace = 0;
-
-$.extend( DataTable.ext.buttons, {
-	selected: {
-		text: i18n( 'selected', 'Selected' ),
-		className: 'buttons-selected',
-		limitTo: [ 'rows', 'columns', 'cells' ],
-		init: function ( dt, node, config ) {
-			var that = this;
-			config._eventNamespace = '.select'+(_buttonNamespace++);
-
-			// .DT namespace listeners are removed by DataTables automatically
-			// on table destroy
-			dt.on( namespacedEvents(config), function () {
-				that.enable( enabled(dt, config) );
-			} );
-
-			this.disable();
-		},
-		destroy: function ( dt, node, config ) {
-			dt.off( config._eventNamespace );
-		}
-	},
-	selectedSingle: {
-		text: i18n( 'selectedSingle', 'Selected single' ),
-		className: 'buttons-selected-single',
-		init: function ( dt, node, config ) {
-			var that = this;
-			config._eventNamespace = '.select'+(_buttonNamespace++);
-
-			dt.on( namespacedEvents(config), function () {
-				var count = dt.rows( { selected: true } ).flatten().length +
-				            dt.columns( { selected: true } ).flatten().length +
-				            dt.cells( { selected: true } ).flatten().length;
-
-				that.enable( count === 1 );
-			} );
-
-			this.disable();
-		},
-		destroy: function ( dt, node, config ) {
-			dt.off( config._eventNamespace );
-		}
-	},
-	selectAll: {
-		text: i18n( 'selectAll', 'Select all' ),
-		className: 'buttons-select-all',
-		action: function () {
-			var items = this.select.items();
-			this[ items+'s' ]().select();
-		}
-	},
-	selectNone: {
-		text: i18n( 'selectNone', 'Deselect all' ),
-		className: 'buttons-select-none',
-		action: function () {
-			clear( this.settings()[0], true );
-		},
-		init: function ( dt, node, config ) {
-			var that = this;
-			config._eventNamespace = '.select'+(_buttonNamespace++);
-
-			dt.on( namespacedEvents(config), function () {
-				var count = dt.rows( { selected: true } ).flatten().length +
-				            dt.columns( { selected: true } ).flatten().length +
-				            dt.cells( { selected: true } ).flatten().length;
-
-				that.enable( count > 0 );
-			} );
-
-			this.disable();
-		},
-		destroy: function ( dt, node, config ) {
-			dt.off( config._eventNamespace );
-		}
-	}
-} );
-
-$.each( [ 'Row', 'Column', 'Cell' ], function ( i, item ) {
-	var lc = item.toLowerCase();
-
-	DataTable.ext.buttons[ 'select'+item+'s' ] = {
-		text: i18n( 'select'+item+'s', 'Select '+lc+'s' ),
-		className: 'buttons-select-'+lc+'s',
-		action: function () {
-			this.select.items( lc );
-		},
-		init: function ( dt ) {
-			var that = this;
-
-			dt.on( 'selectItems.dt.DT', function ( e, ctx, items ) {
-				that.active( items === lc );
-			} );
-		}
-	};
-} );
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Initialisation
- */
-
-// DataTables creation - check if select has been defined in the options. Note
-// this required that the table be in the document! If it isn't then something
-// needs to trigger this method unfortunately. The next major release of
-// DataTables will rework the events and address this.
-$(document).on( 'preInit.dt.dtSelect', function (e, ctx) {
-	if ( e.namespace !== 'dt' ) {
-		return;
-	}
-
-	DataTable.select.init( new DataTable.Api( ctx ) );
-} );
-
-
-return DataTable.select;
-}));
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(32);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./dataTables.bootstrap4.min.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./dataTables.bootstrap4.min.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "table.dataTable{clear:both;margin-top:6px !important;margin-bottom:6px !important;max-width:none !important;border-collapse:separate !important;border-spacing:0}table.dataTable td,table.dataTable th{-webkit-box-sizing:content-box;box-sizing:content-box}table.dataTable td.dataTables_empty,table.dataTable th.dataTables_empty{text-align:center}table.dataTable.nowrap th,table.dataTable.nowrap td{white-space:nowrap}div.dataTables_wrapper div.dataTables_length label{font-weight:normal;text-align:left;white-space:nowrap}div.dataTables_wrapper div.dataTables_length select{width:auto;display:inline-block}div.dataTables_wrapper div.dataTables_filter{text-align:right}div.dataTables_wrapper div.dataTables_filter label{font-weight:normal;white-space:nowrap;text-align:left}div.dataTables_wrapper div.dataTables_filter input{margin-left:0.5em;display:inline-block;width:auto}div.dataTables_wrapper div.dataTables_info{padding-top:0.85em;white-space:nowrap}div.dataTables_wrapper div.dataTables_paginate{margin:0;white-space:nowrap;text-align:right}div.dataTables_wrapper div.dataTables_paginate ul.pagination{margin:2px 0;white-space:nowrap;justify-content:flex-end}div.dataTables_wrapper div.dataTables_processing{position:absolute;top:50%;left:50%;width:200px;margin-left:-100px;margin-top:-26px;text-align:center;padding:1em 0}table.dataTable thead>tr>th.sorting_asc,table.dataTable thead>tr>th.sorting_desc,table.dataTable thead>tr>th.sorting,table.dataTable thead>tr>td.sorting_asc,table.dataTable thead>tr>td.sorting_desc,table.dataTable thead>tr>td.sorting{padding-right:30px}table.dataTable thead>tr>th:active,table.dataTable thead>tr>td:active{outline:none}table.dataTable thead .sorting,table.dataTable thead .sorting_asc,table.dataTable thead .sorting_desc,table.dataTable thead .sorting_asc_disabled,table.dataTable thead .sorting_desc_disabled{cursor:pointer;position:relative}table.dataTable thead .sorting:before,table.dataTable thead .sorting:after,table.dataTable thead .sorting_asc:before,table.dataTable thead .sorting_asc:after,table.dataTable thead .sorting_desc:before,table.dataTable thead .sorting_desc:after,table.dataTable thead .sorting_asc_disabled:before,table.dataTable thead .sorting_asc_disabled:after,table.dataTable thead .sorting_desc_disabled:before,table.dataTable thead .sorting_desc_disabled:after{position:absolute;bottom:0.9em;display:block;opacity:0.3}table.dataTable thead .sorting:before,table.dataTable thead .sorting_asc:before,table.dataTable thead .sorting_desc:before,table.dataTable thead .sorting_asc_disabled:before,table.dataTable thead .sorting_desc_disabled:before{right:1em;content:\"\\2191\"}table.dataTable thead .sorting:after,table.dataTable thead .sorting_asc:after,table.dataTable thead .sorting_desc:after,table.dataTable thead .sorting_asc_disabled:after,table.dataTable thead .sorting_desc_disabled:after{right:0.5em;content:\"\\2193\"}table.dataTable thead .sorting_asc:before,table.dataTable thead .sorting_desc:after{opacity:1}table.dataTable thead .sorting_asc_disabled:before,table.dataTable thead .sorting_desc_disabled:after{opacity:0}div.dataTables_scrollHead table.dataTable{margin-bottom:0 !important}div.dataTables_scrollBody table{border-top:none;margin-top:0 !important;margin-bottom:0 !important}div.dataTables_scrollBody table thead .sorting:before,div.dataTables_scrollBody table thead .sorting_asc:before,div.dataTables_scrollBody table thead .sorting_desc:before,div.dataTables_scrollBody table thead .sorting:after,div.dataTables_scrollBody table thead .sorting_asc:after,div.dataTables_scrollBody table thead .sorting_desc:after{display:none}div.dataTables_scrollBody table tbody tr:first-child th,div.dataTables_scrollBody table tbody tr:first-child td{border-top:none}div.dataTables_scrollFoot>.dataTables_scrollFootInner{box-sizing:content-box}div.dataTables_scrollFoot>.dataTables_scrollFootInner>table{margin-top:0 !important;border-top:none}@media screen and (max-width: 767px){div.dataTables_wrapper div.dataTables_length,div.dataTables_wrapper div.dataTables_filter,div.dataTables_wrapper div.dataTables_info,div.dataTables_wrapper div.dataTables_paginate{text-align:center}}table.dataTable.table-sm>thead>tr>th{padding-right:20px}table.dataTable.table-sm .sorting:before,table.dataTable.table-sm .sorting_asc:before,table.dataTable.table-sm .sorting_desc:before{top:5px;right:0.85em}table.dataTable.table-sm .sorting:after,table.dataTable.table-sm .sorting_asc:after,table.dataTable.table-sm .sorting_desc:after{top:5px}table.table-bordered.dataTable th,table.table-bordered.dataTable td{border-left-width:0}table.table-bordered.dataTable th:last-child,table.table-bordered.dataTable th:last-child,table.table-bordered.dataTable td:last-child,table.table-bordered.dataTable td:last-child{border-right-width:0}table.table-bordered.dataTable tbody th,table.table-bordered.dataTable tbody td{border-bottom-width:0}div.dataTables_scrollHead table.table-bordered{border-bottom-width:0}div.table-responsive>div.dataTables_wrapper>div.row{margin:0}div.table-responsive>div.dataTables_wrapper>div.row>div[class^=\"col-\"]:first-child{padding-left:0}div.table-responsive>div.dataTables_wrapper>div.row>div[class^=\"col-\"]:last-child{padding-right:0}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(34);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./select.bootstrap4.min.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./select.bootstrap4.min.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#0275d8}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#0172d2}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#0170d0}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#0172d3}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#016ecc}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#016fcd}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#0170cf}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#0172d3}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#0173d5}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#0174d7}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#016ecc}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#0172d3}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#016bc6}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#016cc7}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#016dca}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#016bc6}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:' ';margin-top:-6px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:'\\2714';margin-top:-11px;margin-left:-4px;text-align:center;text-shadow:1px 1px #B0BED9, -1px -1px #B0BED9, 1px -1px #B0BED9, -1px 1px #B0BED9}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(36);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./buttons.bootstrap4.min.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./buttons.bootstrap4.min.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "@keyframes dtb-spinner{100%{transform:rotate(360deg)}}@-o-keyframes dtb-spinner{100%{-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes dtb-spinner{100%{-ms-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes dtb-spinner{100%{-moz-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;box-shadow:3px 3px 8px rgba(0,0,0,0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:0.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}div.dt-button-collection-title{text-align:center;padding:0.3em 0 0.5em;font-size:0.9em}ul.dt-button-collection.dropdown-menu{display:block;z-index:2002;-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}ul.dt-button-collection.dropdown-menu.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}ul.dt-button-collection.dropdown-menu.fixed.two-column{margin-left:-150px}ul.dt-button-collection.dropdown-menu.fixed.three-column{margin-left:-225px}ul.dt-button-collection.dropdown-menu.fixed.four-column{margin-left:-300px}ul.dt-button-collection.dropdown-menu>*{-webkit-column-break-inside:avoid;break-inside:avoid}ul.dt-button-collection.dropdown-menu.two-column{width:300px;padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}ul.dt-button-collection.dropdown-menu.three-column{width:450px;padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}ul.dt-button-collection.dropdown-menu.four-column{width:600px;padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}ul.dt-button-collection.dropdown-menu .dt-button{border-radius:0}ul.dt-button-collection{-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}ul.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}ul.dt-button-collection.fixed.two-column{margin-left:-150px}ul.dt-button-collection.fixed.three-column{margin-left:-225px}ul.dt-button-collection.fixed.four-column{margin-left:-300px}ul.dt-button-collection>*{-webkit-column-break-inside:avoid;break-inside:avoid}ul.dt-button-collection.two-column{width:300px;padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}ul.dt-button-collection.three-column{width:450px;padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}ul.dt-button-collection.four-column{width:600px;padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}ul.dt-button-collection .dt-button{border-radius:0}ul.dt-button-collection.fixed{max-width:none}ul.dt-button-collection.fixed:before,ul.dt-button-collection.fixed:after{display:none}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:0.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0,0,0,0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;box-sizing:border-box;display:block;content:' ';border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(38);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./responsive.bootstrap4.min.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./responsive.bootstrap4.min.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "table.dataTable.dtr-inline.collapsed>tbody>tr>td.child,table.dataTable.dtr-inline.collapsed>tbody>tr>th.child,table.dataTable.dtr-inline.collapsed>tbody>tr>td.dataTables_empty{cursor:default !important}table.dataTable.dtr-inline.collapsed>tbody>tr>td.child:before,table.dataTable.dtr-inline.collapsed>tbody>tr>th.child:before,table.dataTable.dtr-inline.collapsed>tbody>tr>td.dataTables_empty:before{display:none !important}table.dataTable.dtr-inline.collapsed>tbody>tr[role=\"row\"]>td:first-child,table.dataTable.dtr-inline.collapsed>tbody>tr[role=\"row\"]>th:first-child{position:relative;padding-left:30px;cursor:pointer}table.dataTable.dtr-inline.collapsed>tbody>tr[role=\"row\"]>td:first-child:before,table.dataTable.dtr-inline.collapsed>tbody>tr[role=\"row\"]>th:first-child:before{top:12px;left:4px;height:14px;width:14px;display:block;position:absolute;color:white;border:2px solid white;border-radius:14px;box-shadow:0 0 3px #444;box-sizing:content-box;text-align:center;text-indent:0 !important;font-family:'Courier New', Courier, monospace;line-height:14px;content:'+';background-color:#0275d8}table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before,table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before{content:'-';background-color:#d33333}table.dataTable.dtr-inline.collapsed.compact>tbody>tr>td:first-child,table.dataTable.dtr-inline.collapsed.compact>tbody>tr>th:first-child{padding-left:27px}table.dataTable.dtr-inline.collapsed.compact>tbody>tr>td:first-child:before,table.dataTable.dtr-inline.collapsed.compact>tbody>tr>th:first-child:before{top:5px;left:4px;height:14px;width:14px;border-radius:14px;line-height:14px;text-indent:3px}table.dataTable.dtr-column>tbody>tr>td.control,table.dataTable.dtr-column>tbody>tr>th.control{position:relative;cursor:pointer}table.dataTable.dtr-column>tbody>tr>td.control:before,table.dataTable.dtr-column>tbody>tr>th.control:before{top:50%;left:50%;height:16px;width:16px;margin-top:-10px;margin-left:-10px;display:block;position:absolute;color:white;border:2px solid white;border-radius:14px;box-shadow:0 0 3px #444;box-sizing:content-box;text-align:center;text-indent:0 !important;font-family:'Courier New', Courier, monospace;line-height:14px;content:'+';background-color:#0275d8}table.dataTable.dtr-column>tbody>tr.parent td.control:before,table.dataTable.dtr-column>tbody>tr.parent th.control:before{content:'-';background-color:#d33333}table.dataTable>tbody>tr.child{padding:0.5em 1em}table.dataTable>tbody>tr.child:hover{background:transparent !important}table.dataTable>tbody>tr.child ul.dtr-details{display:inline-block;list-style-type:none;margin:0;padding:0}table.dataTable>tbody>tr.child ul.dtr-details>li{border-bottom:1px solid #efefef;padding:0.5em 0}table.dataTable>tbody>tr.child ul.dtr-details>li:first-child{padding-top:0}table.dataTable>tbody>tr.child ul.dtr-details>li:last-child{border-bottom:none}table.dataTable>tbody>tr.child span.dtr-title{display:inline-block;min-width:75px;font-weight:bold}div.dtr-modal{position:fixed;box-sizing:border-box;top:0;left:0;height:100%;width:100%;z-index:100;padding:10em 1em}div.dtr-modal div.dtr-modal-display{position:absolute;top:0;left:0;bottom:0;right:0;width:50%;height:50%;overflow:auto;margin:auto;z-index:102;overflow:auto;background-color:#f5f5f7;border:1px solid black;border-radius:0.5em;box-shadow:0 12px 30px rgba(0,0,0,0.6)}div.dtr-modal div.dtr-modal-content{position:relative;padding:1em}div.dtr-modal div.dtr-modal-close{position:absolute;top:6px;right:6px;width:22px;height:22px;border:1px solid #eaeaea;background-color:#f9f9f9;text-align:center;border-radius:3px;cursor:pointer;z-index:12}div.dtr-modal div.dtr-modal-close:hover{background-color:#eaeaea}div.dtr-modal div.dtr-modal-background{position:fixed;top:0;left:0;right:0;bottom:0;z-index:101;background:rgba(0,0,0,0.6)}@media screen and (max-width: 767px){div.dtr-modal div.dtr-modal-display{width:95%}}div.dtr-bs-modal table.table tr:first-child td{border-top:none}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css___);
-/* unused harmony reexport namespace */
- /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0__node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_id_a9794c84_scoped_true_lang_css____default.a); 
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
+/***/ "vue":
+/*!**********************!*\
+  !*** external "Vue" ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 
 /***/ })
-/******/ ]);
+
+/******/ });
 });
 //# sourceMappingURL=index.js.map

@@ -28,6 +28,8 @@ module.exports = {
     "quotes": [2, "single"],
     "vue/require-default-prop": 0,
     "vue/require-prop-types": 0,
-    "vue/no-v-html": 0
+    "vue/no-v-html": 0,
+    "vue/html-indent": 0,
+    "vue/component-name-in-template-casing": ['error', 'kebab-case']
   }
 };
