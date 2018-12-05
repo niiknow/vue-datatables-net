@@ -1,8 +1,6 @@
-const path = require('path');
-const mix = require('laravel-mix');
-const source =  process.env.NODE_ENV === 'production' ? 'src' : 'example';
-const public = process.env.NODE_ENV === 'production' ? 'lib' : 'dist';
-const { VueLoaderPlugin } = require('vue-loader');
+const path   = require('path');
+const mix    = require('laravel-mix');
+const public = mix.inProduction() ? 'lib' : 'example';
 
 mix.options({
   processCssUrls: false,
@@ -52,7 +50,12 @@ const config = {
 };
 
 mix.webpackConfig(config);
-mix.js(`${ source }/index.js`, `${ public }`);
+if (mix.inProduction()) {
+  mix.js(`src/index.js`, `${ public }`);
+} else {
+  mix.js(`example/app.js`, `${ public }`);
+}
+
 mix.sourceMaps();
 
 if (mix.inProduction()) {
