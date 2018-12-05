@@ -19,8 +19,8 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "test": "cross-env NODE_ENV=test mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require tests/setup.js tests/**/*.spec.js",
     "watch-test": "cross-env NODE_ENV=test mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require tests/setup.js tests/**/*.spec.js",
-    "lint": "eslint --ext .js,.vue src/ example/",
-    "lint-fix": "eslint --fix --ext .js,.vue src/ example/",
+    "lint": "eslint --ext .js,.vue src/ example/app.*",
+    "lint-fix": "eslint --fix --ext .js,.vue src/ example/app.*",
     "check-outdated": "npm outdated"
   },
   "dependencies": {},

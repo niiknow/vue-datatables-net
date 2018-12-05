@@ -2,17 +2,6 @@ const path   = require('path');
 const mix    = require('laravel-mix');
 const public = mix.inProduction() ? 'lib' : 'example';
 
-mix.options({
-  processCssUrls: false,
-  uglify: {
-    uglifyOptions: {
-      compress: {
-        drop_console: true
-      }
-    }
-  }
-});
-
 mix.setPublicPath(path.normalize(public));
 
 const config = {
@@ -49,19 +38,14 @@ const config = {
   devtool: 'source-map'
 };
 
-mix.webpackConfig(config);
+mix.webpackConfig(config).sourceMaps();
+
 if (mix.inProduction()) {
   mix.js(`src/index.js`, `${ public }`);
-} else {
-  mix.js(`example/app.js`, `${ public }`);
-}
-
-mix.sourceMaps();
-
-if (mix.inProduction()) {
   mix.version();
   mix.disableNotifications();
 } else {
+  mix.js(`example/app.js`, `${ public }`);
   mix.browserSync({
     proxy: false,
     port: 3000,
