@@ -47,34 +47,19 @@ import VdtnetTable from 'vue-datatables-net'
 import 'datatables.net-bs4'
 
 /*
-// you can import these on a needed basis
-// this import all buttons that we need, for
-// use with opts: { buttons: ['csv', 'print', ...]}
-import 'datatables.net-buttons/js/dataTables.buttons.js';
-import 'datatables.net-buttons/js/buttons.html5.js';
-import 'datatables.net-buttons/js/buttons.print.js';
-import 'datatables.net-responsive/js/dataTables.responsive.js';
-
 // import any datatables.net extension as you would when using it raw
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-responsive-bs4'
-import 'datatables.net-fixedheader-bs4'
-import 'datatables.net-scroller-bs4';
-import 'datatables.net-select-bs4';
+import 'datatables.net-select-bs4'
 
 // import any styles to support the packages you import above
-import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
-import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css';
-import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
-import 'datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css';
-import 'datatables.net-select-bs4/css/select.bootstrap4.min.css';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
+import 'datatables.net-select-bs4/css/select.bootstrap4.min.css'
 */
 </script>
 ```
 
 > See example [App](https://niiknow.github.io/vue-datatables-net/)
 
-Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/App.vue
+Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/app.vue
 
 **NOTE:**
 Our example use a free API endpoint from [typicode](https://jsonplaceholder.typicode.com), which is simply a JSON endpoint.  As a result, we needed to define a `dataSrc` wrapper like so:
