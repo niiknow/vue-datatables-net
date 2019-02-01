@@ -14,6 +14,12 @@ git clone https://github.com/niiknow/vue-datatables-net
 cd vue-datatables-net
 npm install
 ```
+                                                                                 
+or in one command:                                                               
+                                                                                 
+```                                                                              
+npm install git+https://github.com/niiknow/vue-datatables-net.git                
+```                                                                              
 
 To run locally (automatically launch firefox):
 ```
