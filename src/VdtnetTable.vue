@@ -163,6 +163,7 @@ export default {
           title: field.label || k,
           width: field.width,
           data: field.name,
+          name: field.name,
           visible: field.visible,
           className: field.className
         }
