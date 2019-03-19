@@ -14,12 +14,11 @@ git clone https://github.com/niiknow/vue-datatables-net
 cd vue-datatables-net
 npm install
 ```
-                                                                                 
-or in one command:                                                               
-                                                                                 
-```                                                                              
+
+or in one command:
+```                                                             
 npm install git+https://github.com/niiknow/vue-datatables-net.git                
-```                                                                              
+```
 
 To run locally (automatically launch firefox):
 ```
@@ -85,6 +84,7 @@ Of course, for your implementation, simply use a server-side compatible parser. 
 * dotNET - https://github.com/ALMMa/datatables.aspnet, https://github.com/garvincasimir/csharp-datatables-parser
 * NodeJS - https://github.com/jpravetz/node-datatable
 * Rails - https://github.com/jbox-web/ajax-datatables-rails
+* Python - https://github.com/Pegase745/sqlalchemy-datatables
 
 ## Documentation
 Since it's a wrapper, all/most features are provided by the [jQuery DataTables](https://datatables.net/manual/) library.
