@@ -564,15 +564,19 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var k in fields) {
         var field = fields[k];
-        field.name = field.name || k; // generate
+        field.name = field.name || k; // disable search and sort for local field
+
+        if (field.utility) {
+          field.searchable = false;
+          field.orderable = false;
+        } // generate
+
 
         var col = {
-          searchable: field.searchable,
-          title: field.label || k,
+          title: field.label || field.name,
           width: field.width,
           data: field.name,
           name: field.name,
-          visible: field.visible,
           className: field.className
         };
 
@@ -586,6 +590,14 @@ __webpack_require__.r(__webpack_exports__);
 
         if (field.hasOwnProperty('sortable')) {
           col.orderable = field.sortable;
+        }
+
+        if (field.hasOwnProperty('visible')) {
+          col.visible = field.visible;
+        }
+
+        if (field.hasOwnProperty('searchable')) {
+          col.searchable = field.searchable;
         }
 
         if (field.template) {
@@ -611,9 +623,11 @@ __webpack_require__.r(__webpack_exports__);
     vm.options.order = vm.options.order || orders;
 
     if (vm.selectCheckbox) {
-      // expand column
+      vm.selectCheckbox = vm.selectCheckbox || 1; // create checkbox column
+
       var _col = {
         orderable: false,
+        searchable: false,
         name: '_select_checkbox',
         className: 'select-checkbox',
         data: null,
@@ -627,23 +641,26 @@ __webpack_require__.r(__webpack_exports__);
         selector: 'td.select-checkbox'
       });
 
-      if (vm.selectCheckbox == 1) {
+      if (vm.selectCheckbox === 1) {
         startCol++;
       }
     } // handle master details
 
 
     if (vm.details) {
+      vm.details.index = vm.details.index || 1; // create details column
+
       var _col2 = {
         orderable: false,
+        searchable: false,
         name: '_details_control',
         className: 'details-control',
         data: null,
         defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
       };
-      vm.options.columns.splice((vm.details.index || 1) - 1, 0, _col2);
+      vm.options.columns.splice(vm.details.index - 1, 0, _col2);
 
-      if ((vm.details.index || 1) == 1) {
+      if (vm.details.index === 1) {
         startCol++;
       }
     }

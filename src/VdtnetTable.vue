@@ -155,17 +155,21 @@ export default {
 
       for (let k in fields) {
         const field = fields[k]
-        field.name = field.name || k
+        field.name  = field.name || k
+
+        // disable search and sort for local field
+        if (field.utility) {
+          field.searchable = false
+          field.orderable  = false
+        }
 
         // generate
         let col = {
-          searchable: field.searchable,
-          title: field.label || k,
-          width: field.width,
-          data: field.name,
-          name: field.name,
-          visible: field.visible,
-          className: field.className
+          title:      field.label || field.name,
+          width:      field.width,
+          data:       field.name,
+          name:       field.name,
+          className:  field.className
         }
 
         if (field.width) {
@@ -180,6 +184,14 @@ export default {
           col.orderable = field.sortable
         }
 
+        if (field.hasOwnProperty('visible')) {
+          col.visible = field.visible
+        }
+
+        if (field.hasOwnProperty('searchable')) {
+          col.searchable = field.searchable
+        }
+
         if (field.template) {
           field.render = vm.compileTemplate(field.template)
         }
@@ -187,8 +199,8 @@ export default {
         if (field.render) {
           col.render = field.render
         }
-        // console.log(col)
 
+        // console.log(col)
         cols.push(col)
 
         if (field.defaultOrder) {
@@ -203,9 +215,12 @@ export default {
     vm.options.order = vm.options.order || orders
 
     if (vm.selectCheckbox) {
-      // expand column
+      vm.selectCheckbox = vm.selectCheckbox || 1
+
+      // create checkbox column
       const col = {
         orderable: false,
+        searchable: false,
         name: '_select_checkbox',
         className: 'select-checkbox',
         data: null,
@@ -223,23 +238,27 @@ export default {
         }
       )
 
-      if (vm.selectCheckbox == 1) {
+      if (vm.selectCheckbox === 1) {
         startCol++
       }
     }
 
     // handle master details
     if (vm.details) {
+      vm.details.index = vm.details.index || 1
+
+      // create details column
       const col = {
         orderable: false,
+        searchable: false,
         name: '_details_control',
         className: 'details-control',
         data: null,
         defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
       }
-      vm.options.columns.splice((vm.details.index || 1) - 1, 0, col)
+      vm.options.columns.splice(vm.details.index - 1, 0, col)
 
-      if ((vm.details.index || 1) == 1) {
+      if (vm.details.index === 1) {
         startCol++
       }
     }
@@ -377,6 +396,7 @@ export default {
     if (vm.dataTable) {
       vm.dataTable.destroy(true)
     }
+
     vm.dataTable = null
   },
   methods: {
@@ -450,17 +470,20 @@ export default {
     search(value) {
       const vm = this
       vm.dataTable.search( value ).draw()
+
       return vm
     },
     setPageLength(value) {
       const vm = this
       vm.dataTable.page.len( value )
+
       return vm.reload()
     },
     getServerParams() {
       if (this.dataLoader) {
         return {}
       }
+
       return this.dataTable.ajax.params()
     }
   }
