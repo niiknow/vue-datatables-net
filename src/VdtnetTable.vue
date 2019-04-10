@@ -160,7 +160,7 @@ export default {
         // disable search and sort for local field
         if (field.isLocal) {
           field.searchable = false
-          field.orderable  = false
+          field.sortable  = false
         }
 
         // generate

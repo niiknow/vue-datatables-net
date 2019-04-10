@@ -317,7 +317,7 @@ __webpack_require__.r(__webpack_exports__);
           sortable: true
         },
         actions: {
-          sortable: false,
+          isLocal: true,
           label: 'Actions',
           defaultContent: '<a href="javascript:void(0);" data-action="edit" class="btn btn-primary btn-sm"><i class="mdi mdi-square-edit-outline"></i> Edit</a>' + '<span data-action="delete" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</span>'
         },
@@ -568,7 +568,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (field.isLocal) {
           field.searchable = false;
-          field.orderable = false;
+          field.sortable = false;
         } // generate
 
 
