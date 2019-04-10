@@ -158,7 +158,7 @@ export default {
         field.name  = field.name || k
 
         // disable search and sort for local field
-        if (field.utility) {
+        if (field.isLocal) {
           field.searchable = false
           field.orderable  = false
         }

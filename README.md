@@ -4,7 +4,7 @@
 This library is a Vue 2 wrapper for [jQuery DataTables](https://datatables.net/).  It's a tiny wrapper that doesn't include anything, not even the datatables.net core library.
 
 ## Development
-This library uses the NodeJS library `laravel-mix` to simplify build and packaging.
+`laravel-mix` is use to simplify build and packaging.
 
 Requirement: Install NodeJS, NPM
 
@@ -36,16 +36,16 @@ npm install vue-datatables-net
 ```
 
 ## Usage
-This library default configuration and provide example for use with `bootstrap4` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
+This library default configuration and provide example for `bootstrap4` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
 
 > Example of imports for Bootstrap 4:
 
 ```html
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css'>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 
 <script>
 import VdtnetTable from 'vue-datatables-net'
@@ -64,7 +64,7 @@ import 'datatables.net-select-bs4/css/select.bootstrap4.min.css'
 
 > See example [App](https://niiknow.github.io/vue-datatables-net/)
 
-Example App demonstrate how to pass in overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/app.vue
+Example App demonstrate how to pass overrides for our [jQuery DataTable](https://datatables.net/manual/options) default options - https://github.com/niiknow/vue-datatables-net/blob/master/example/app.vue
 
 **NOTE:**
 Our example use a free API endpoint from [typicode](https://jsonplaceholder.typicode.com), which is simply a JSON endpoint.  As a result, we needed to define a `dataSrc` wrapper like so:
@@ -188,14 +188,15 @@ fields: {
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
 - `template` simple vue template for the field.  See example App.
 - `defaultOrder` null, asc/desc - the default/initial sort order
+- `isLocal` same as setting both searchable and sortable to false
 
-> It is important to understand why one should use `fields` and not `opts.columns`.  Though, `fields` is optional, you can simply pass `opts.columns` definition if you do not wish to use `fields`.
+> It is important to understand why it is better to use `fields` and not `opts.columns`.  Though, `fields` is optional if one wish to use the raw `opts.columns` definition.
 
 One `Purpose` of this component is to extend jQuery DataTables function and features, example:
 * Simplification of features configuration, such as `select-checkbox` column, custom `action` buttons, and/or future Vue specific features.
 * Allow for customizable table heading on a per-column basis; thereby, not having to define all html for each column header.
 * Ability to have simple `template` field so you can pass schema JSON from static file or some API, instead of requiring to define a javascript `render` function.  Though, the `render` function would provide best performance.
-* Having schema also allow future features, such as: support of editable column/cell.
+* Having schema also allow for future features, such as editable column/cell.
 
 ## Additional Headers
 Many server-side usage require CSRF and/or API token headers.  Since jQuery DataTables `options` are completely exposed as `opts`, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)

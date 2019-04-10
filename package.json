@@ -53,7 +53,7 @@
     "file-loader": "^3.0.1",
     "jquery": ">=1.7",
     "laravel-mix": "^4.0.14",
-    "vue": "^2.6.7",
+    "vue": "^2.6.10",
     "vue-loader": "^15.6.4",
     "vue-template-compiler": "^2.6.7"
   }

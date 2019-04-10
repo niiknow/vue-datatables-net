@@ -383,7 +383,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     doExport: function doExport(type) {
       var parms = this.$refs.table.getServerParams();
-      parms.export = type;
+      parms["export"] = type;
       window.alert('GET /api/v1/export?' + jQuery.param(parms));
     }
   }
@@ -442,7 +442,7 @@ __webpack_require__.r(__webpack_exports__);
      */
     className: {
       type: String,
-      default: 'table table-striped table-bordered nowrap w-100'
+      "default": 'table table-striped table-bordered nowrap w-100'
     },
 
     /**
@@ -566,7 +566,7 @@ __webpack_require__.r(__webpack_exports__);
         var field = fields[k];
         field.name = field.name || k; // disable search and sort for local field
 
-        if (field.utility) {
+        if (field.isLocal) {
           field.searchable = false;
           field.orderable = false;
         } // generate
