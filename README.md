@@ -337,7 +337,7 @@ If you're like us, you want to write as little code as possible; as in, applicat
 
 ## Roadmap
 - [ ] Native column templating.  It may be possible to natively template and render column with all @events wired up.  Still need to look into this.
-- [ ] Inline editable.
+- [ ] Inline editable.  This will depend on native column templating capability.
 - [ ] This library is inspired by both [Bootstrap-Vue](https://bootstrap-vue.js.org/) and jQuery DataTables(https://datatables.net/).  Look into creating jQuery DataTables server-side items provider for [Bootstrap-Vue Table](https://bootstrap-vue.js.org/docs/components/table#field-definition-reference) component.  Since jQuery Datatables dependencies cannot be render server-side rendering (SSR), Bootstrap-Vue Table will likely be the answer.
 
 ## License
