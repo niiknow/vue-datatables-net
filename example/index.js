@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("Vue"), require("jQuery"));
+		module.exports = factory(require("jQuery"), require("Vue"));
 	else if(typeof define === 'function' && define.amd)
-		define("VdtnetTable", ["Vue", "jQuery"], factory);
+		define("VdtnetTable", ["jQuery", "Vue"], factory);
 	else if(typeof exports === 'object')
-		exports["VdtnetTable"] = factory(require("Vue"), require("jQuery"));
+		exports["VdtnetTable"] = factory(require("jQuery"), require("Vue"));
 	else
-		root["VdtnetTable"] = factory(root["Vue"], root["jQuery"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_vue__, __WEBPACK_EXTERNAL_MODULE_jquery__) {
+		root["VdtnetTable"] = factory(root["jQuery"], root["Vue"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_jquery__, __WEBPACK_EXTERNAL_MODULE_vue__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -536,7 +536,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.jquery || window.jQuery;
     },
     classes: function classes() {
-      var classes = 'table-responsive vdtnet-container';
+      var classes = 'table-responsive d-print-inline vdtnet-container';
 
       if (this.hideFooter) {
         classes += ' hide-footer';

@@ -126,7 +126,7 @@ export default {
       return this.jquery || window.jQuery
     },
     classes() {
-      let classes = 'table-responsive vdtnet-container'
+      let classes = 'table-responsive d-print-inline vdtnet-container'
       if (this.hideFooter) {
         classes += ' hide-footer'
       }
