@@ -327,6 +327,29 @@ window.open(url)
   render: 'provide a custom render function as alternative to template'
 }
 ```
+## Export
+This is something you want to explore on your own.  We try our best to provide as much example of export as possible in our demo, but Server-Side and/or Language/Framework Specific Code is too much/time-consuming to dive into.  Also, sometime output rendering are ties to specific requirement and cannot generically meet everyone needs.  We suggest that you create a Bounty for your specific needs.
+
+**Client-Side**
+This is mostly provided by jQuery DataTables.  We demonstrate in our default demo.  You can find the documentation for [Buttons](https://datatables.net/extensions/buttons/) directly on the jQuery DataTables website.
+
+**Server-Side**
+Our demo for server-side export is here: https://laratt.niiknow.org/home/contacts
+
+The source of the demo can be found here: https://github.com/niiknow/laratt-api
+And, specifically, the client-side vue component usage source: https://github.com/niiknow/laratt-api/blob/5117bfae1273b31f95af6aa99c51aae7fc413d2f/resources/js/components/DataTableNet.vue#L148
+
+The code use `convention` to calculate a route/url as:
+```
+url: that.$app.apiRoute(that.rName, that.rPath),
+```
+
+Which result to a URL like so: https://laratt.niiknow.org/api/v1/democontact/example?x-tenant=test&x-api-key=demo123
+
+And the server-side source for the export is simply: https://github.com/niiknow/laratt-api/blob/876ce385fc64d83b564f2e697790465675741634/api/Controllers/DemoContactController.php#L90
+
+**Export Tip**
+Outside of csv export, most modern OS and Browser support PDF printing.  As a result, simply instruct the user to Print your page and use printing CSS to manipulate for exporting of PDF.
 
 ## Tips
 If you're like us, you want to write as little code as possible; as in, application of the DRY Principle.  This mean the UI has a standard look/feel/behavior; where toolbar, search, and other controls are place at specific location.  So this mean you want to wrap this component inside your own component?  Our sample App give you a good idea on how to start.  Below are a few things to consider:

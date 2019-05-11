@@ -222,10 +222,10 @@ export default {
         orderable: false,
         searchable: false,
         name: '_select_checkbox',
-        className: 'select-checkbox',
+        className: 'select-checkbox d-print-none',
         data: null,
         defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox">'
+        title: '<input type="checkbox" class="select-all-checkbox d-print-none">'
       }
       vm.options.columns.splice(vm.selectCheckbox - 1, 0, col)
 
@@ -252,7 +252,7 @@ export default {
         orderable: false,
         searchable: false,
         name: '_details_control',
-        className: 'details-control',
+        className: 'details-control d-print-none',
         data: null,
         defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
       }
