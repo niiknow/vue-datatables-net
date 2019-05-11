@@ -348,6 +348,8 @@ Which result to a URL like so: https://laratt.niiknow.org/api/v1/democontact/exa
 
 And the server-side source for the export is simply: https://github.com/niiknow/laratt-api/blob/876ce385fc64d83b564f2e697790465675741634/api/Controllers/DemoContactController.php#L90
 
+As far as PDF export, you will need to handle this yourself.  Tip, use [laravel-snappy](https://github.com/barryvdh/laravel-snappy).  The basic concept is to render your result to some html/blade template and use laravel-snappy to convert HTML to PDF.
+
 **Export Tip**
 Outside of csv export, most modern OS and Browser support PDF printing.  As a result, simply instruct the user to Print your page and use printing CSS to manipulate for exporting of PDF.
 
