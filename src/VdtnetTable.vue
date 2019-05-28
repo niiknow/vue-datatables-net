@@ -167,7 +167,7 @@ export default {
         let col = {
           title:      field.label || field.name,
           width:      field.width,
-          data:       field.name,
+          data:       field.data || field.name,
           name:       field.name,
           className:  field.className
         }
