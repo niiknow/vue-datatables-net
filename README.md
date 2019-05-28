@@ -49,16 +49,21 @@ This library default configuration and provide example for `bootstrap4` styling.
 
 <script>
 import VdtnetTable from 'vue-datatables-net'
+
 import 'datatables.net-bs4'
 
-/*
-// import any datatables.net extension as you would when using it raw
+// below you should only import what you need
+// Example: import buttons and plugins
+import 'datatables.net-buttons/js/dataTables.buttons.js'
+import 'datatables.net-buttons/js/buttons.html5.js'
+import 'datatables.net-buttons/js/buttons.print.js'
+
+// import the rest for your specific theme
+import 'datatables.net-buttons-bs4'
 import 'datatables.net-select-bs4'
 
-// import any styles to support the packages you import above
-import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
 import 'datatables.net-select-bs4/css/select.bootstrap4.min.css'
-*/
+import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'
 </script>
 ```
 
@@ -181,6 +186,7 @@ fields: {
 - `searchable` true to enable search of field
 - `sortable` false to disable sorting
 - `name` to override the name
+- `data` differentiate server-side sorting field - optional default to `name`
 - `visible` false to hide
 - `width` to provide custom width
 - `className` set column class names
