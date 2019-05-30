@@ -54,10 +54,10 @@ export default {
     /**
      * List all fields to be converted to opts columns
      *
-     * @type Object
+     * @type {Object||Array}
      */
     fields: {
-      type: Object
+      type: [Object, Array]
     },
     /**
      * Pass in DataTables.Net jQuery to resolve any conflict from
