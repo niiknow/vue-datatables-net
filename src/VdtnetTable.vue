@@ -4,7 +4,7 @@
   >
     <table
       v-once
-      :id="id"
+      :id="tableId"
       ref="table"
       :class="className"
       cellpadding="0"
@@ -118,6 +118,7 @@ export default {
   data() {
     // initialize defaults
     return {
+      tableId: null,
       options: {
 /*eslint-disable */
         dom: "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>",
@@ -154,14 +155,13 @@ export default {
     let startCol = 0
     let icol     = 0
 
+    vm.tableId = vm.id || `vdtnetable${myUniqueId++}`
+
     // allow user to override default options
     if (vm.opts) {
       vm.options = jq.extend({}, vm.options, vm.opts)
     }
 
-    if (!vm.id) {
-      vm.id = `vdtnetable${myUniqueId++}`
-    }
 
     // if fields are passed in, generate column definition
     // from our custom fields schema
