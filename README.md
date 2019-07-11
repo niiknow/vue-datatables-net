@@ -99,6 +99,14 @@ Our component parameters:
 ```javascript
   props: {
     /**
+     * The table id - useful for saveState
+     *
+     * @type String
+     */
+    id: {
+      type: String
+    },
+    /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
      *

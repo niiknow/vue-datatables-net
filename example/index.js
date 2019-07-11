@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("jQuery"), require("Vue"));
+		module.exports = factory(require("Vue"), require("jQuery"));
 	else if(typeof define === 'function' && define.amd)
-		define("VdtnetTable", ["jQuery", "Vue"], factory);
+		define("VdtnetTable", ["Vue", "jQuery"], factory);
 	else if(typeof exports === 'object')
-		exports["VdtnetTable"] = factory(require("jQuery"), require("Vue"));
+		exports["VdtnetTable"] = factory(require("Vue"), require("jQuery"));
 	else
-		root["VdtnetTable"] = factory(root["jQuery"], root["Vue"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_jquery__, __WEBPACK_EXTERNAL_MODULE_vue__) {
+		root["VdtnetTable"] = factory(root["Vue"], root["jQuery"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_vue__, __WEBPACK_EXTERNAL_MODULE_jquery__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -435,9 +435,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+var myUniqueId = 1;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'VdtnetTable',
   props: {
+    /**
+     * The table id
+     *
+     * @type String
+     */
+    id: {
+      type: String,
+      "default": null
+    },
+
     /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
@@ -558,6 +570,10 @@ __webpack_require__.r(__webpack_exports__);
 
     if (vm.opts) {
       vm.options = jq.extend({}, vm.options, vm.opts);
+    }
+
+    if (!vm.id) {
+      vm.id = "vdtnetable".concat(myUniqueId++);
     } // if fields are passed in, generate column definition
     // from our custom fields schema
 
@@ -22145,7 +22161,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "table",
-      { ref: "table", class: _vm.className, attrs: { cellpadding: "0" } },
+      {
+        ref: "table",
+        class: _vm.className,
+        attrs: { id: _vm.id, cellpadding: "0" }
+      },
       [
         _c("thead", [
           _c(
@@ -22397,7 +22417,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/tomn/Desktop/work/niiknow/vue-datatables-net/example/app.js */"./example/app.js");
+module.exports = __webpack_require__(/*! /Users/tech/Desktop/work/niiknow/vue-datatables-net/example/app.js */"./example/app.js");
 
 
 /***/ }),

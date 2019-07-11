@@ -4,6 +4,7 @@
   >
     <table
       v-once
+      :id="id"
       ref="table"
       :class="className"
       cellpadding="0"
@@ -30,9 +31,20 @@
 </template>
 
 <script>
+let myUniqueId = 1
+
 export default {
   name: 'VdtnetTable',
   props: {
+    /**
+     * The table id
+     *
+     * @type String
+     */
+    id: {
+      type: String,
+      default: null
+    },
     /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
@@ -145,6 +157,10 @@ export default {
     // allow user to override default options
     if (vm.opts) {
       vm.options = jq.extend({}, vm.options, vm.opts)
+    }
+
+    if (!vm.id) {
+      vm.id = `vdtnetable${myUniqueId++}`
     }
 
     // if fields are passed in, generate column definition
