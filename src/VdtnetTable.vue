@@ -46,6 +46,15 @@ export default {
       default: null
     },
     /**
+     * Set the container classes.
+     *
+     * @type String
+     */
+    containerClassName: {
+      type: String,
+      default: 'table-responsive d-print-inline'
+    },
+    /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
      *
@@ -139,7 +148,8 @@ export default {
       return this.jquery || window.jQuery
     },
     classes() {
-      let classes = 'table-responsive d-print-inline vdtnet-container'
+      const that  = this
+      let classes = `${that.containerClassName} vdtnet-container`
       if (this.hideFooter) {
         classes += ' hide-footer'
       }

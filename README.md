@@ -107,6 +107,15 @@ Our component parameters:
       type: String
     },
     /**
+     * Set the wrapper classes.
+     *
+     * @type String
+     */
+    wrapperClassName: {
+      type: String,
+      default: 'table-responsive d-print-inline'
+    },
+    /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
      *

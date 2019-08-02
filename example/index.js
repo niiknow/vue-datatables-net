@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("Vue"), require("jQuery"));
+		module.exports = factory(require("jQuery"), require("Vue"));
 	else if(typeof define === 'function' && define.amd)
-		define("VdtnetTable", ["Vue", "jQuery"], factory);
+		define("VdtnetTable", ["jQuery", "Vue"], factory);
 	else if(typeof exports === 'object')
-		exports["VdtnetTable"] = factory(require("Vue"), require("jQuery"));
+		exports["VdtnetTable"] = factory(require("jQuery"), require("Vue"));
 	else
-		root["VdtnetTable"] = factory(root["Vue"], root["jQuery"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_vue__, __WEBPACK_EXTERNAL_MODULE_jquery__) {
+		root["VdtnetTable"] = factory(root["jQuery"], root["Vue"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_jquery__, __WEBPACK_EXTERNAL_MODULE_vue__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -451,6 +451,16 @@ var myUniqueId = 1;
     },
 
     /**
+     * Set the wrapper classes.
+     *
+     * @type String
+     */
+    containerClassName: {
+      type: String,
+      "default": 'table-responsive d-print-inline'
+    },
+
+    /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
      *
@@ -553,7 +563,8 @@ var myUniqueId = 1;
       return this.jquery || window.jQuery;
     },
     classes: function classes() {
-      var classes = 'table-responsive d-print-inline vdtnet-container';
+      var that = this;
+      var classes = "".concat(that.containerClassName, " vdtnet-container");
 
       if (this.hideFooter) {
         classes += ' hide-footer';
@@ -22415,7 +22426,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/tech/Desktop/work/niiknow/vue-datatables-net/example/app.js */"./example/app.js");
+module.exports = __webpack_require__(/*! /Users/tomnoogen/Desktop/work/niiknow/vue-datatables-net/example/app.js */"./example/app.js");
 
 
 /***/ }),
