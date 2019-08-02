@@ -34,7 +34,7 @@
     "vue": ">=2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
+    "@babel/core": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "babel-eslint": "^10.0.2",
     "bootstrap": "^4.3.1",
@@ -49,13 +49,13 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.2.1",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^3.0.1",
     "jquery": "^3.4.1",
     "laravel-mix": "^4.1.2",
     "vue": "^2.6.10",
-    "vue-loader": "^15.6.4",
+    "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.7"
   }
 }

@@ -451,7 +451,7 @@ var myUniqueId = 1;
     },
 
     /**
-     * Set the wrapper classes.
+     * Set the container classes.
      *
      * @type String
      */
