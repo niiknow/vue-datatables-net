@@ -107,11 +107,11 @@ Our component parameters:
       type: String
     },
     /**
-     * Set the wrapper classes.
+     * Set the container classes.
      *
      * @type String
      */
-    wrapperClassName: {
+    containerClassName: {
       type: String,
       default: 'table-responsive d-print-inline'
     },
