@@ -225,8 +225,8 @@ One `Purpose` of this component is to extend jQuery DataTables function and feat
 Custom events for this component.
 ```html
 <vdtnet-table ...
-  @tableCreating="doSomethingBeforeDataTableCreate"
-  @tableCreated="doSomethingImmediatelyAfterTableCreatedAndInitialized"
+  @table-creating="doSomethingBeforeDataTableCreate"
+  @table-created="doSomethingImmediatelyAfterTableCreatedAndInitialized"
   @reloaded="doSomethingAfterDataLoadOrReloaded"
 />
 ```
@@ -237,8 +237,8 @@ Custom events for this component.
      comp.dataTable.on( 'order.dt',  function () { eventFired( 'Order' ); } )
    }
 ```
-- `tableCreating` this is right before jQuery(el).DataTable(component.options) is called allowing you to modify component options.
-- `tableCreated` this is after we called jQuery(el).DataTable and initialized all the columns.
+- `table-creating` this is right before jQuery(el).DataTable(component.options) is called allowing you to modify component options.
+- `table-created` this is after we called jQuery(el).DataTable and initialized all the columns.
 - `reloaded` this is after data has been load/reloaded
 
 ## Additional Headers

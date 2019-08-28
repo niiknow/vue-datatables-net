@@ -47,6 +47,8 @@
       @edit="doAlertEdit"
       @delete="doAlertDelete"
       @reloaded="doAfterReload"
+      @table-creating="doCreating"
+      @table-created="doCreated"
     >
       <template slot="HEAD__details_control">
         Show Details
@@ -155,6 +157,12 @@ export default {
     },
     doAfterReload(data, table) {
       window.alert('data reloaded')
+    },
+    doCreating(comp, el) {
+      console.log('creating')
+    },
+    doCreated(comp) {
+      console.log('created')
     },
     doSearch() {
       this.$refs.table.search(this.quickSearch)

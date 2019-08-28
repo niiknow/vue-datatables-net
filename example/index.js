@@ -271,6 +271,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // this demonstrate with buttons and responsive master/details row
 
  // import buttons and plugins
@@ -381,6 +383,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     doAfterReload: function doAfterReload(data, table) {
       window.alert('data reloaded');
+    },
+    doCreating: function doCreating(comp, el) {
+      console.log('creating');
+    },
+    doCreated: function doCreated(comp) {
+      console.log('created');
     },
     doSearch: function doSearch() {
       this.$refs.table.search(this.quickSearch);
@@ -22091,7 +22099,9 @@ var render = function() {
           on: {
             edit: _vm.doAlertEdit,
             delete: _vm.doAlertDelete,
-            reloaded: _vm.doAfterReload
+            reloaded: _vm.doAfterReload,
+            "table-creating": _vm.doCreating,
+            "table-created": _vm.doCreated
           }
         },
         [
