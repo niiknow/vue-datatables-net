@@ -716,6 +716,7 @@ var myUniqueId = 1;
     var $el = jq(vm.$refs.table); // console.log(vm.options.buttons)
 
     vm.dataTable = $el.DataTable(vm.options);
+    vm.$emit('table-creating', vm);
 
     if (vm.selectCheckbox) {
       // handle select all checkbox
@@ -817,8 +818,9 @@ var myUniqueId = 1;
           tr.addClass('master');
         }
       });
-    } // finally, load data
+    }
 
+    vm.$emit('table-created', vm); // finally, load data
 
     if (vm.dataLoader) {
       vm.reload();

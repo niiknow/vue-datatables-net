@@ -221,6 +221,26 @@ One `Purpose` of this component is to extend jQuery DataTables function and feat
 * Ability to have simple `template` field so you can pass schema JSON from static file or some API, instead of requiring to define a javascript `render` function.  Though, the `render` function would provide best performance.
 * Having schema also allow for future features, such as editable column/cell.
 
+### events
+Custom events for this component.
+```html
+<vdtnet-table ...
+  @tableCreating="doSomethingImmediatelyAfterDataTableCreate"
+  @tableCreated="doSomethingImmediatelyAfterTableCreatedAndInitialized"
+  @reloaded="doSomethingAfterDataLoadOrReloaded"
+/>
+```
+
+```js
+   doSomethingImmediatelyAfterTableCreatedAndInitialized(comp) {
+    // use comp.dataTable to access the jQuery DataTables object, example:
+     comp.dataTable.on( 'order.dt',  function () { eventFired( 'Order' ); } )
+   }
+```
+- `tableCreating` this is immediately after jQuery(el).DataTable is called.
+- `tableCreated` this is after we have initialized all the columns.
+- `reloaded` this is after data has been load/reloaded
+
 ## Additional Headers
 Many server-side usage require CSRF and/or API token headers.  Since jQuery DataTables `options` are completely exposed as `opts`, simply use the native method per [jQuery DataTables example](https://editor.datatables.net/manual/security#Prevention)
 

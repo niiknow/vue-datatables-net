@@ -312,6 +312,7 @@ export default {
 
     // console.log(vm.options.buttons)
     vm.dataTable = $el.DataTable(vm.options)
+    vm.$emit('table-creating', vm)
 
     if (vm.selectCheckbox) {
       // handle select all checkbox
@@ -411,6 +412,8 @@ export default {
         }
       })
     }
+
+    vm.$emit('table-created', vm)
 
     // finally, load data
     if (vm.dataLoader) {
