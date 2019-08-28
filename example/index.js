@@ -713,10 +713,10 @@ var myUniqueId = 1;
   mounted: function mounted() {
     var vm = this;
     var jq = vm.jq;
-    var $el = jq(vm.$refs.table); // console.log(vm.options.buttons)
+    var $el = jq(vm.$refs.table); // you can access and update the vm.options and $el here before we create the DataTable
 
+    vm.$emit('table-creating', vm, $el);
     vm.dataTable = $el.DataTable(vm.options);
-    vm.$emit('table-creating', vm);
 
     if (vm.selectCheckbox) {
       // handle select all checkbox
