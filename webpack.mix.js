@@ -32,10 +32,11 @@ const config = {
     umdNamedDefine: true
   },
   devServer: {
+    overlay: true,
     inline: true,
     quiet: false
   },
-  devtool: 'source-map'
+  devtool: 'cheap-source-map'
 };
 
 mix.webpackConfig(config).sourceMaps();

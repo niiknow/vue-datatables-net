@@ -141,6 +141,7 @@ export default {
         buttons: []  // remove any button defaults
       },
       dataTable: null
+      vdtnet: this
     }
   },
   computed: {
@@ -223,6 +224,13 @@ export default {
         }
 
         if (field.render) {
+          if (!field.render.templated) {
+            let myRender = field.render
+            field.render = () => {
+              return myRender.apply(vm, arguments)
+            }
+          }
+
           col.render = field.render
         }
 
@@ -385,6 +393,10 @@ export default {
       // must be string template
       if (vm.details.template) {
         renderFunc = vm.compileTemplate(vm.details.template)
+      } else if (renderFunc) {
+        renderFunc = () => {
+          return vm.details.render.apply(vm, arguments)
+        }
       }
 
       // handle master/details
@@ -445,13 +457,16 @@ export default {
               data: data,
               type: type,
               row: row,
-              meta: meta
+              meta: meta,
+              vdtnet: vm
           },
           render: res.render,
           staticRenderFns: res.staticRenderFns
         }).$mount()
         return jq(comp.$el).html()
       }
+
+      renderFunc.templated = true
 
       return renderFunc
     },

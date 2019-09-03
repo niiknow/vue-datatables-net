@@ -582,6 +582,7 @@ var myUniqueId = 1;
     }
   },
   created: function created() {
+    var _arguments = arguments;
     var vm = this;
     var jq = vm.jq;
     var orders = [];
@@ -642,6 +643,16 @@ var myUniqueId = 1;
         }
 
         if (field.render) {
+          if (!field.render.templated) {
+            (function () {
+              var myRender = field.render;
+
+              field.render = function () {
+                return myRender.apply(vm, _arguments);
+              };
+            })();
+          }
+
           col.render = field.render;
         } // console.log(col)
 
@@ -719,6 +730,7 @@ var myUniqueId = 1;
     }
   },
   mounted: function mounted() {
+    var _arguments2 = arguments;
     var vm = this;
     var jq = vm.jq;
     var $el = jq(vm.$refs.table); // you can access and update the vm.options and $el here before we create the DataTable
@@ -798,6 +810,10 @@ var myUniqueId = 1;
 
       if (vm.details.template) {
         renderFunc = vm.compileTemplate(vm.details.template);
+      } else if (renderFunc) {
+        renderFunc = function renderFunc() {
+          return vm.details.render.apply(vm, _arguments2);
+        };
       } // handle master/details
       // Add event listener for opening and closing details
 
@@ -861,7 +877,8 @@ var myUniqueId = 1;
             data: data,
             type: type,
             row: row,
-            meta: meta
+            meta: meta,
+            vdtnet: vm
           },
           render: res.render,
           staticRenderFns: res.staticRenderFns
@@ -869,6 +886,7 @@ var myUniqueId = 1;
         return jq(comp.$el).html();
       };
 
+      renderFunc.templated = true;
       return renderFunc;
     },
 
