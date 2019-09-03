@@ -563,7 +563,8 @@ var myUniqueId = 1;
         buttons: [] // remove any button defaults
 
       },
-      dataTable: null
+      dataTable: null,
+      vdtnet: this
     };
   },
   computed: {

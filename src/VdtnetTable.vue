@@ -140,7 +140,7 @@ export default {
         pageLength: 15,
         buttons: []  // remove any button defaults
       },
-      dataTable: null
+      dataTable: null,
       vdtnet: this
     }
   },
