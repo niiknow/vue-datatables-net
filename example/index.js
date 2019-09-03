@@ -640,7 +640,7 @@ var myUniqueId = 1;
         }
 
         if (field.template) {
-          field.render = vm.compileTemplate(field.template);
+          field.render = vm.compileTemplate(field);
         }
 
         if (field.render) {
@@ -810,7 +810,7 @@ var myUniqueId = 1;
       var renderFunc = vm.details.render; // must be string template
 
       if (vm.details.template) {
-        renderFunc = vm.compileTemplate(vm.details.template);
+        renderFunc = vm.compileTemplate(vm.details);
       } else if (renderFunc) {
         renderFunc = function renderFunc() {
           return vm.details.render.apply(vm, _arguments2);
@@ -864,13 +864,13 @@ var myUniqueId = 1;
     /**
      * Vue.compile a template string and return the compiled function
      *
-     * @param  {String} template the string template
+     * @param  {Object} object with template property
      * @return {Function}          the compiled template function
      */
-    compileTemplate: function compileTemplate(template) {
+    compileTemplate: function compileTemplate(field) {
       var vm = this;
       var jq = vm.jq;
-      var res = Vue.compile("<div>".concat(template, "</div>"));
+      var res = Vue.compile("<div>".concat(field.template, "</div>"));
 
       var renderFunc = function renderFunc(data, type, row, meta) {
         var comp = new Vue({
@@ -879,7 +879,8 @@ var myUniqueId = 1;
             type: type,
             row: row,
             meta: meta,
-            vdtnet: vm
+            vdtnet: vm,
+            def: field
           },
           render: res.render,
           staticRenderFns: res.staticRenderFns

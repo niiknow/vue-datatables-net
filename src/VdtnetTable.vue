@@ -220,7 +220,7 @@ export default {
         }
 
         if (field.template) {
-          field.render = vm.compileTemplate(field.template)
+          field.render = vm.compileTemplate(field)
         }
 
         if (field.render) {
@@ -392,7 +392,7 @@ export default {
 
       // must be string template
       if (vm.details.template) {
-        renderFunc = vm.compileTemplate(vm.details.template)
+        renderFunc = vm.compileTemplate(vm.details)
       } else if (renderFunc) {
         renderFunc = () => {
           return vm.details.render.apply(vm, arguments)
@@ -444,21 +444,22 @@ export default {
     /**
      * Vue.compile a template string and return the compiled function
      *
-     * @param  {String} template the string template
+     * @param  {Object} object with template property
      * @return {Function}          the compiled template function
      */
-    compileTemplate(template) {
+    compileTemplate(field) {
       const vm  = this
       const jq  = vm.jq
-      const res = Vue.compile(`<div>${template}</div>`)
+      const res = Vue.compile(`<div>${field.template}</div>`)
       const renderFunc = (data, type, row, meta) => {
         const comp = new Vue({
           data: {
-              data: data,
-              type: type,
-              row: row,
-              meta: meta,
-              vdtnet: vm
+            data: data,
+            type: type,
+            row: row,
+            meta: meta,
+            vdtnet: vm,
+            def: field
           },
           render: res.render,
           staticRenderFns: res.staticRenderFns
