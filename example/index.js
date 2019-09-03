@@ -273,6 +273,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 // this demonstrate with buttons and responsive master/details row
 
  // import buttons and plugins
@@ -341,9 +347,14 @@ __webpack_require__.r(__webpack_exports__);
         email: {
           label: 'Email'
         },
-        address: {
-          label: 'Address',
-          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
+        address1: {
+          label: 'Address1',
+          data: 'address'
+        },
+        address2: {
+          label: 'Address2',
+          data: 'address',
+          template: '{{ data.city }}, {{ data.zipcode }}'
         },
         phone: {
           label: 'Phone'
@@ -583,19 +594,22 @@ var myUniqueId = 1;
     }
   },
   created: function created() {
-    var _arguments = arguments;
     var vm = this;
     var jq = vm.jq;
-    var orders = [];
-    var startCol = 0;
-    var icol = 0;
     vm.tableId = vm.id || "vdtnetable".concat(myUniqueId++); // allow user to override default options
 
     if (vm.opts) {
       vm.options = jq.extend({}, vm.options, vm.opts);
-    } // if fields are passed in, generate column definition
+    }
+  },
+  mounted: function mounted() {
+    var vm = this;
+    var jq = vm.jq;
+    var $el = jq(vm.$refs.table);
+    var orders = [];
+    var startCol = 0;
+    var icol = 0; // if fields are passed in, generate column definition
     // from our custom fields schema
-
 
     if (vm.fields) {
       var fields = vm.fields;
@@ -613,8 +627,8 @@ var myUniqueId = 1;
 
         var col = {
           title: field.label || field.name,
-          width: field.width,
           data: field.data || field.name,
+          width: field.width,
           name: field.name,
           className: field.className
         };
@@ -639,8 +653,8 @@ var myUniqueId = 1;
           col.searchable = field.searchable;
         }
 
-        if (field.template) {
-          field.render = vm.compileTemplate(field);
+        if (field.template || vm.$scopedSlots[field.name]) {
+          field.render = vm.compileTemplate(field, vm.$scopedSlots[field.name]);
         }
 
         if (field.render) {
@@ -649,7 +663,7 @@ var myUniqueId = 1;
               var myRender = field.render;
 
               field.render = function () {
-                return myRender.apply(vm, _arguments);
+                return myRender.apply(vm, Array.prototype.slice.call(arguments));
               };
             })();
           }
@@ -728,13 +742,8 @@ var myUniqueId = 1;
     if (vm.dataLoader) {
       delete vm.options.ajax;
       vm.options.serverSide = false;
-    }
-  },
-  mounted: function mounted() {
-    var _arguments2 = arguments;
-    var vm = this;
-    var jq = vm.jq;
-    var $el = jq(vm.$refs.table); // you can access and update the vm.options and $el here before we create the DataTable
+    } // you can access and update the vm.options and $el here before we create the DataTable
+
 
     vm.$emit('table-creating', vm, $el);
     vm.dataTable = $el.DataTable(vm.options);
@@ -813,7 +822,7 @@ var myUniqueId = 1;
         renderFunc = vm.compileTemplate(vm.details);
       } else if (renderFunc) {
         renderFunc = function renderFunc() {
-          return vm.details.render.apply(vm, _arguments2);
+          return vm.details.render.apply(vm, Array.prototype.slice.call(arguments));
         };
       } // handle master/details
       // Add event listener for opening and closing details
@@ -865,14 +874,30 @@ var myUniqueId = 1;
      * Vue.compile a template string and return the compiled function
      *
      * @param  {Object} object with template property
+     * @param  {Object} the slot
      * @return {Function}          the compiled template function
      */
-    compileTemplate: function compileTemplate(field) {
+    compileTemplate: function compileTemplate(field, slot) {
       var vm = this;
       var jq = vm.jq;
-      var res = Vue.compile("<div>".concat(field.template, "</div>"));
+      var res = Vue.compile("<div>".concat(field.template || '', "</div>"));
 
       var renderFunc = function renderFunc(data, type, row, meta) {
+        var myRender = res.render;
+
+        if (slot) {
+          myRender = function myRender(createElement) {
+            return createElement('div', [slot({
+              data: data,
+              type: type,
+              row: row,
+              meta: meta,
+              vdtnet: vm,
+              def: field
+            })]);
+          };
+        }
+
         var comp = new Vue({
           data: {
             data: data,
@@ -882,7 +907,7 @@ var myUniqueId = 1;
             vdtnet: vm,
             def: field
           },
-          render: res.render,
+          render: myRender,
           staticRenderFns: res.staticRenderFns
         }).$mount();
         return jq(comp.$el).html();
@@ -22122,11 +22147,25 @@ var render = function() {
             reloaded: _vm.doAfterReload,
             "table-creating": _vm.doCreating,
             "table-created": _vm.doCreated
-          }
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "address1",
+              fn: function(ctx) {
+                return [
+                  _c("span", [
+                    _vm._v(
+                      _vm._s(ctx.data.street) + ", " + _vm._s(ctx.data.suite)
+                    )
+                  ])
+                ]
+              }
+            }
+          ])
         },
         [
           _c("template", { slot: "HEAD__details_control" }, [
-            _vm._v("\n      Show Details\n    ")
+            _c("b", [_vm._v("Show Details")])
           ])
         ],
         2

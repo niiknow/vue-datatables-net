@@ -161,10 +161,6 @@ export default {
   created() {
     const vm     = this
     const jq     = vm.jq
-    const orders = []
-
-    let startCol = 0
-    let icol     = 0
 
     vm.tableId = vm.id || `vdtnetable${myUniqueId++}`
 
@@ -172,7 +168,15 @@ export default {
     if (vm.opts) {
       vm.options = jq.extend({}, vm.options, vm.opts)
     }
+  },
+  mounted() {
+    const vm = this
+    const jq = vm.jq
+    const $el = jq(vm.$refs.table)
+    const orders = []
 
+    let startCol = 0
+    let icol     = 0
 
     // if fields are passed in, generate column definition
     // from our custom fields schema
@@ -193,8 +197,8 @@ export default {
         // generate
         let col = {
           title:      field.label || field.name,
-          width:      field.width,
           data:       field.data || field.name,
+          width:      field.width,
           name:       field.name,
           className:  field.className
         }
@@ -219,15 +223,15 @@ export default {
           col.searchable = field.searchable
         }
 
-        if (field.template) {
-          field.render = vm.compileTemplate(field)
+        if (field.template || vm.$scopedSlots[field.name]) {
+          field.render = vm.compileTemplate(field, vm.$scopedSlots[field.name])
         }
 
         if (field.render) {
           if (!field.render.templated) {
             let myRender = field.render
-            field.render = () => {
-              return myRender.apply(vm, arguments)
+            field.render = function() {
+              return myRender.apply(vm, Array.prototype.slice.call(arguments))
             }
           }
 
@@ -312,11 +316,6 @@ export default {
       delete vm.options.ajax
       vm.options.serverSide = false
     }
-  },
-  mounted() {
-    const vm = this
-    const jq = vm.jq
-    const $el = jq(vm.$refs.table)
 
     // you can access and update the vm.options and $el here before we create the DataTable
     vm.$emit('table-creating', vm, $el)
@@ -394,8 +393,8 @@ export default {
       if (vm.details.template) {
         renderFunc = vm.compileTemplate(vm.details)
       } else if (renderFunc) {
-        renderFunc = () => {
-          return vm.details.render.apply(vm, arguments)
+        renderFunc = function() {
+          return vm.details.render.apply(vm, Array.prototype.slice.call(arguments))
         }
       }
 
@@ -445,13 +444,33 @@ export default {
      * Vue.compile a template string and return the compiled function
      *
      * @param  {Object} object with template property
+     * @param  {Object} the slot
      * @return {Function}          the compiled template function
      */
-    compileTemplate(field) {
+    compileTemplate(field, slot) {
       const vm  = this
       const jq  = vm.jq
-      const res = Vue.compile(`<div>${field.template}</div>`)
+      const res = Vue.compile(`<div>${field.template || ''}</div>`)
+
+
       const renderFunc = (data, type, row, meta) => {
+        let myRender = res.render
+
+        if (slot) {
+          myRender = (createElement) => {
+            return createElement('div', [
+              slot({
+                data: data,
+                type: type,
+                row: row,
+                meta: meta,
+                vdtnet: vm,
+                def: field
+              })
+            ])
+          }
+        }
+
         const comp = new Vue({
           data: {
             data: data,
@@ -461,11 +480,12 @@ export default {
             vdtnet: vm,
             def: field
           },
-          render: res.render,
+          render: myRender,
           staticRenderFns: res.staticRenderFns
         }).$mount()
         return jq(comp.$el).html()
       }
+
 
       renderFunc.templated = true
 

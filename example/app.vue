@@ -51,7 +51,13 @@
       @table-created="doCreated"
     >
       <template slot="HEAD__details_control">
-        Show Details
+        <b>Show Details</b>
+      </template>
+      <template
+        slot="address1"
+        slot-scope="ctx"
+      >
+        <span>{{ ctx.data.street }}, {{ ctx.data.suite }}</span>
       </template>
     </vdtnet-table>
   </div>
@@ -115,9 +121,14 @@ export default {
         name: { label: 'Name', sortable: true, searchable: true, defaultOrder: 'desc' },
         username: { label: 'Username', sortable: false, searchable: true  },
         email: { label: 'Email' },
-        address: {
-          label: 'Address',
-          template: '{{ data.street }}, {{ data.suite }}, {{ data.city }} {{ data.zipcode }}'
+        address1: {
+          label: 'Address1',
+          data: 'address'
+        },
+        address2: {
+          label: 'Address2',
+          data: 'address',
+          template: '{{ data.city }}, {{ data.zipcode }}'
         },
         phone: { label: 'Phone' },
         website: {
