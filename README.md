@@ -370,6 +370,30 @@ window.open(url)
   render: 'provide a custom render function as alternative to template'
 }
 ```
+
+## Native templating (sort-of) explained
+Take a look at example app, you can template:
+```
+<template
+  slot="address1"
+  slot-scope="ctx"
+>
+  <span>{{ ctx.data.street }}, {{ ctx.data.suite }}</span>
+</template>
+```
+
+- `slot` is the slot name
+- `slot-scope` define the context object as `ctx` in this example
+- The context object will have the following properties
+  1. `data` the column value, in this case is `address` property which is an object with sub-properties (street, suite, city, zipcode, geo, etc...)
+  2. `type` the jQuery DataTables rendering type, usually `display`
+  3. `row` the entire row data
+  4. `meta` jQuery DataTables column config
+  5. `vdtnet` the vdtnet table object
+  6. `def` vdtnet field config
+
+Things that are related to display rendering should work.  Event handling doesn't work and I'm still looking for better way handle this.  Of course, you can still use `data-action` to handle clicks.
+
 ## Export
 This is something you want to explore on your own.  We try our best to provide as much example of export as possible in our demo, but Server-Side and/or Language/Framework Specific Code is too much/time-consuming to dive into.  Also, sometime output rendering are ties to specific requirement and cannot generically meet everyone needs.  We suggest that you create a Bounty for your specific needs.
 
