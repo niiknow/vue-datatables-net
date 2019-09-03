@@ -382,7 +382,7 @@ Take a look at example app, you can template:
 </template>
 ```
 
-- `slot` is the slot name
+- `slot` is the field/column name
 - `slot-scope` define the context object as `ctx` in this example
 - The context object will have the following properties
   1. `data` the column value, in this case is `address` property which is an object with sub-properties (street, suite, city, zipcode, geo, etc...)
