@@ -349,12 +349,12 @@ __webpack_require__.r(__webpack_exports__);
         },
         address1: {
           label: 'Address1',
-          data: 'address'
+          data: 'address',
+          template: '{{ data.street }}, {{ data.suite }}'
         },
         address2: {
           label: 'Address2',
-          data: 'address',
-          template: '{{ data.city }}, {{ data.zipcode }}'
+          data: 'address'
         },
         phone: {
           label: 'Phone'
@@ -408,6 +408,9 @@ __webpack_require__.r(__webpack_exports__);
       var parms = this.$refs.table.getServerParams();
       parms["export"] = type;
       window.alert('GET /api/v1/export?' + jQuery.param(parms));
+    },
+    formatCode: function formatCode(zipcode) {
+      return zipcode.split('-')[0];
     }
   }
 });
@@ -893,7 +896,8 @@ var myUniqueId = 1;
               row: row,
               meta: meta,
               vdtnet: vm,
-              def: field
+              def: field,
+              comp: vm.$parent
             })]);
           };
         }
@@ -905,7 +909,8 @@ var myUniqueId = 1;
             row: row,
             meta: meta,
             vdtnet: vm,
-            def: field
+            def: field,
+            comp: vm.$parent
           },
           render: myRender,
           staticRenderFns: res.staticRenderFns
@@ -22150,12 +22155,14 @@ var render = function() {
           },
           scopedSlots: _vm._u([
             {
-              key: "address1",
+              key: "address2",
               fn: function(ctx) {
                 return [
                   _c("span", [
                     _vm._v(
-                      _vm._s(ctx.data.street) + ", " + _vm._s(ctx.data.suite)
+                      _vm._s(ctx.data.city) +
+                        ", " +
+                        _vm._s(ctx.comp.formatCode(ctx.data.zipcode))
                     )
                   ])
                 ]

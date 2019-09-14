@@ -54,10 +54,10 @@
         <b>Show Details</b>
       </template>
       <template
-        slot="address1"
+        slot="address2"
         slot-scope="ctx"
       >
-        <span>{{ ctx.data.street }}, {{ ctx.data.suite }}</span>
+        <span>{{ ctx.data.city }}, {{ ctx.comp.formatCode(ctx.data.zipcode) }}</span>
       </template>
     </vdtnet-table>
   </div>
@@ -123,12 +123,12 @@ export default {
         email: { label: 'Email' },
         address1: {
           label: 'Address1',
-          data: 'address'
+          data: 'address',
+          template: '{{ data.street }}, {{ data.suite }}'
         },
         address2: {
           label: 'Address2',
-          data: 'address',
-          template: '{{ data.city }}, {{ data.zipcode }}'
+          data: 'address'
         },
         phone: { label: 'Phone' },
         website: {
@@ -182,6 +182,9 @@ export default {
       const parms = this.$refs.table.getServerParams()
       parms.export = type
       window.alert('GET /api/v1/export?' + jQuery.param(parms))
+    },
+    formatCode(zipcode) {
+      return zipcode.split('-')[0]
     }
   }
 }

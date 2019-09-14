@@ -465,7 +465,8 @@ export default {
                 row: row,
                 meta: meta,
                 vdtnet: vm,
-                def: field
+                def: field,
+                comp: vm.$parent
               })
             ])
           }
@@ -478,7 +479,8 @@ export default {
             row: row,
             meta: meta,
             vdtnet: vm,
-            def: field
+            def: field,
+            comp: vm.$parent
           },
           render: myRender,
           staticRenderFns: res.staticRenderFns

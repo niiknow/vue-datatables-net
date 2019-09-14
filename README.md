@@ -232,9 +232,9 @@ Custom events for this component.
 ```
 
 ```js
-   doSomethingImmediatelyAfterTableCreatedAndInitialized(comp) {
-    // use comp.dataTable to access the jQuery DataTables object, example:
-     comp.dataTable.on( 'order.dt',  function () { eventFired( 'Order' ); } )
+   doSomethingImmediatelyAfterTableCreatedAndInitialized(vdtnet) {
+    // use vdtnet.dataTable to access the jQuery DataTables object, example:
+     vdtnet.dataTable.on( 'order.dt',  function () { eventFired( 'Order' ); } )
    }
 ```
 - `table-creating` this is right before jQuery(el).DataTable(component.options) is called allowing you to modify component options.
@@ -374,11 +374,11 @@ window.open(url)
 ## Native templating (sort-of) explained
 Take a look at example app, you can template:
 ```
-<template
-  slot="address1"
+ <template
+  slot="address2"
   slot-scope="ctx"
 >
-  <span>{{ ctx.data.street }}, {{ ctx.data.suite }}</span>
+  <span>{{ ctx.data.city }}, {{ ctx.comp.formatCode(ctx.data.zipcode) }}</span>
 </template>
 ```
 
@@ -391,8 +391,9 @@ Take a look at example app, you can template:
   4. `meta` jQuery DataTables column config
   5. `vdtnet` the vdtnet table object
   6. `def` vdtnet field config
+  7. `comp` your component, notice how it demonstrate calling of a function on the example component to strip out all number after the dash.  You can use this to do things like permission checking.  Also see **Note** below.
 
-Things that are related to display rendering should work.  Event handling doesn't work and I'm still looking for better way handle this.  Of course, you can still use `data-action` to handle clicks.
+**Note**: Things that are related to display rendering should work.  Event handling doesn't work and I'm still looking for better way handle this.  Of course, you can still use `data-action` to handle clicks.
 
 ## Export
 This is something you want to explore on your own.  We try our best to provide as much example of export as possible in our demo, but Server-Side and/or Language/Framework Specific Code is too much/time-consuming to dive into.  Also, sometime output rendering are ties to specific requirement and cannot generically meet everyone needs.  We suggest that you create a Bounty for your specific needs.
