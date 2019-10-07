@@ -170,8 +170,8 @@ export default {
     }
   },
   created() {
-    const that     = this
-    const jq     = that.jq
+    const that = this
+    const jq   = that.jq
 
     that.tableId = that.id || `vdtnetable${myUniqueId++}`
 
@@ -181,9 +181,9 @@ export default {
     }
   },
   mounted() {
-    const that = this
-    const jq = that.jq
-    const $el = jq(that.$refs.table)
+    const that   = this
+    const jq     = that.jq
+    const $el    = jq(that.$refs.table)
     const orders = []
 
     let startCol = 0
@@ -368,8 +368,8 @@ export default {
     $el.on('click', '[data-action]', (e) => {
       e.preventDefault()
       e.stopPropagation()
-      const target = jq(e.target)
-      let action   = target.attr('data-action')
+      let target = jq(e.target)
+      let action  = target.attr('data-action')
       while(!action) {
         // don't let it propagate outside of container
         if (target.hasClass('vdtnet-container') ||
@@ -463,10 +463,10 @@ export default {
      * @return {Function}          the compiled template function
      */
     compileTemplate(field, slot) {
-      const that  = this
-      const jq    = that.jq
-      const vue   = that.myVue
-      const res   = vue.compile(`<div>${field.template || ''}</div>`)
+      const that = this
+      const jq   = that.jq
+      const vue  = that.myVue
+      const res  = vue.compile(`<div>${field.template || ''}</div>`)
 
 
       const renderFunc = (data, type, row, meta) => {

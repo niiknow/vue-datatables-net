@@ -426,8 +426,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 //
 //
 //
@@ -813,7 +811,7 @@ var myUniqueId = 1;
           return;
         }
 
-        target = (_readOnlyError("target"), target.parent());
+        target = target.parent();
         action = target.attr('data-action');
       } // only emit if there is action
 
