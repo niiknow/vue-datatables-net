@@ -279,6 +279,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 // this demonstrate with buttons and responsive master/details row
 
  // import buttons and plugins
@@ -367,9 +373,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       quickSearch: '',
-      details: {
-        template: 'I\'m a child for {{ data.id }} yall'
-      }
+      details: {}
     };
   },
   methods: {
@@ -22297,6 +22301,16 @@ var render = function() {
                         ", " +
                         _vm._s(ctx.comp.formatCode(ctx.data.zipcode))
                     )
+                  ])
+                ]
+              }
+            },
+            {
+              key: "_details",
+              fn: function(ctx) {
+                return [
+                  _c("strong", [
+                    _vm._v("I'm a child for " + _vm._s(ctx.data.id) + " yall")
                   ])
                 ]
               }

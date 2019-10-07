@@ -59,6 +59,12 @@
       >
         <span>{{ ctx.data.city }}, {{ ctx.comp.formatCode(ctx.data.zipcode) }}</span>
       </template>
+      <template
+        slot="_details"
+        slot-scope="ctx"
+      >
+        <strong>I'm a child for {{ ctx.data.id }} yall</strong>
+      </template>
     </vdtnet-table>
   </div>
 </template>
@@ -139,9 +145,7 @@ export default {
         }
       },
       quickSearch: '',
-      details: {
-        template: 'I\'m a child for {{ data.id }} yall'
-      }
+      details: {}
     }
   },
   methods: {
