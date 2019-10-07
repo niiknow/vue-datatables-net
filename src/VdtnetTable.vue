@@ -90,6 +90,14 @@ export default {
       type: Object
     },
     /**
+     * Pass in Vue to resolve any conflict from multiple loaded
+     *
+     * @type Object
+     */
+    vue: {
+      type: Object
+    },
+    /**
      * The select-checkbox column index (start at 1)
      * Current implementation require datatables.net-select
      *
@@ -148,6 +156,9 @@ export default {
     jq() {
       return this.jquery || window.jQuery
     },
+    myVue() {
+      return this.vue || window.Vue
+    },
     classes() {
       const that  = this
       let classes = `${that.containerClassName} vdtnet-container`
@@ -159,20 +170,20 @@ export default {
     }
   },
   created() {
-    const vm     = this
-    const jq     = vm.jq
+    const that     = this
+    const jq     = that.jq
 
-    vm.tableId = vm.id || `vdtnetable${myUniqueId++}`
+    that.tableId = that.id || `vdtnetable${myUniqueId++}`
 
     // allow user to override default options
-    if (vm.opts) {
-      vm.options = jq.extend({}, vm.options, vm.opts)
+    if (that.opts) {
+      that.options = jq.extend({}, that.options, that.opts)
     }
   },
   mounted() {
-    const vm = this
-    const jq = vm.jq
-    const $el = jq(vm.$refs.table)
+    const that = this
+    const jq = that.jq
+    const $el = jq(that.$refs.table)
     const orders = []
 
     let startCol = 0
@@ -180,9 +191,9 @@ export default {
 
     // if fields are passed in, generate column definition
     // from our custom fields schema
-    if (vm.fields) {
-      const fields = vm.fields
-      const cols   = vm.options.columns
+    if (that.fields) {
+      const fields = that.fields
+      let cols     = that.options.columns
 
       for (let k in fields) {
         const field = fields[k]
@@ -200,7 +211,8 @@ export default {
           data:       field.data || field.name,
           width:      field.width,
           name:       field.name,
-          className:  field.className
+          className:  field.className,
+          index:      field.index || (icol + 1)
         }
 
         if (field.width) {
@@ -223,15 +235,15 @@ export default {
           col.searchable = field.searchable
         }
 
-        if (field.template || vm.$scopedSlots[field.name]) {
-          field.render = vm.compileTemplate(field, vm.$scopedSlots[field.name])
+        if (field.template || that.$scopedSlots[field.name]) {
+          field.render = that.compileTemplate(field, that.$scopedSlots[field.name])
         }
 
         if (field.render) {
           if (!field.render.templated) {
             let myRender = field.render
             field.render = function() {
-              return myRender.apply(vm, Array.prototype.slice.call(arguments))
+              return myRender.apply(that, Array.prototype.slice.call(arguments))
             }
           }
 
@@ -247,13 +259,16 @@ export default {
 
         icol++
       }
+
+      // sort columns
+      cols = cols.sort((a, b) => a.index - b.index)
     }
 
     // apply orders calculated from above
-    vm.options.order = vm.options.order || orders
+    that.options.order = that.options.order || orders
 
-    if (vm.selectCheckbox) {
-      vm.selectCheckbox = vm.selectCheckbox || 1
+    if (that.selectCheckbox) {
+      that.selectCheckbox = that.selectCheckbox || 1
 
       // create checkbox column
       const col = {
@@ -263,27 +278,28 @@ export default {
         className: 'select-checkbox d-print-none',
         data: null,
         defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox d-print-none">'
+        title: '<input type="checkbox" class="select-all-checkbox d-print-none">',
+        index: (that.selectCheckbox - 1)
       }
-      vm.options.columns.splice(vm.selectCheckbox - 1, 0, col)
+      that.options.columns.splice(that.selectCheckbox - 1, 0, col)
 
-      // console.log(vm.options.columns)
-      vm.options.select = jq.extend(
-        vm.options.select || {},
+      // console.log(that.options.columns)
+      that.options.select = jq.extend(
+        that.options.select || {},
         {
           style: 'os',
           selector: 'td.select-checkbox'
         }
       )
 
-      if (vm.selectCheckbox === 1) {
+      if (that.selectCheckbox === 1) {
         startCol++
       }
     }
 
     // handle master details
-    if (vm.details) {
-      vm.details.index = vm.details.index || 1
+    if (that.details) {
+      that.details.index = that.details.index || 1
 
       // create details column
       const col = {
@@ -292,58 +308,59 @@ export default {
         name: '_details_control',
         className: 'details-control d-print-none',
         data: null,
-        defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
+        defaultContent: that.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>',
+        index: (that.details.index - 1)
       }
-      vm.options.columns.splice(vm.details.index - 1, 0, col)
+      that.options.columns.splice(that.details.index - 1, 0, col)
 
-      if (vm.details.index === 1) {
+      if (that.details.index === 1) {
         startCol++
       }
     }
 
     if (startCol > 0) {
-      if (vm.options.order) {
-        vm.options.order.forEach((v) => {
+      if (that.options.order) {
+        that.options.order.forEach((v) => {
           v[0] += startCol
         })
       } else {
-        vm.options.order = [[startCol, 'asc']]
+        that.options.order = [[startCol, 'asc']]
       }
     }
 
     // handle local data loader
-    if (vm.dataLoader) {
-      delete vm.options.ajax
-      vm.options.serverSide = false
+    if (that.dataLoader) {
+      delete that.options.ajax
+      that.options.serverSide = false
     }
 
-    // you can access and update the vm.options and $el here before we create the DataTable
-    vm.$emit('table-creating', vm, $el)
+    // you can access and update the that.options and $el here before we create the DataTable
+    that.$emit('table-creating', that, $el)
 
-    vm.dataTable = $el.DataTable(vm.options)
-    if (vm.selectCheckbox) {
+    that.dataTable = $el.DataTable(that.options)
+    if (that.selectCheckbox) {
       // handle select all checkbox
       $el.on('click', 'th input.select-all-checkbox', (e) => {
         if(jq(e.target).is(':checked')) {
-          vm.dataTable.rows().select()
+          that.dataTable.rows().select()
         } else {
-          vm.dataTable.rows().deselect()
+          that.dataTable.rows().deselect()
         }
       })
 
       // handle individual row select events
-      vm.dataTable.on('select deselect', () => {
+      that.dataTable.on('select deselect', () => {
         const $input = $el.find('th input.select-all-checkbox')
-        if (vm.dataTable.rows({
+        if (that.dataTable.rows({
             selected: true
-          }).count() !== vm.dataTable.rows().count()) {
+          }).count() !== that.dataTable.rows().count()) {
           jq('th.select-checkbox').removeClass('selected')
           $input.attr('checked', false)
         } else {
           jq('th.select-checkbox').addClass('selected')
           $input.attr('checked', true)
         }
-        // TODO: vm.$emit the selected row?
+        // TODO: that.$emit the selected row?
       })
     }
 
@@ -352,49 +369,48 @@ export default {
       e.preventDefault()
       e.stopPropagation()
       const target = jq(e.target)
-      let that     = target
-      let action   = that.attr('data-action')
+      let action   = target.attr('data-action')
       while(!action) {
         // don't let it propagate outside of container
-        if (that.hasClass('vdtnet-container') ||
-          that.prop('tagName') === 'table') {
+        if (target.hasClass('vdtnet-container') ||
+          target.prop('tagName') === 'table') {
           // no action, simply exit
           return
         }
-        that   = that.parent()
-        action = that.attr('data-action')
+        target = target.parent()
+        action = target.attr('data-action')
       }
 
       // only emit if there is action
       if (action) {
         // detect if row action
-        let tr = that.closest('tr')
+        let tr = target.closest('tr')
         if (tr) {
           if (tr.attr('role') !== 'row') {
             tr = tr.prev()
           }
-          const row  = vm.dataTable.row(tr)
+          const row  = that.dataTable.row(tr)
           const data = row.data()
-          vm.$emit(action, data, row, tr, that)
+          that.$emit(action, data, row, tr, target)
         } else {
           // not a row click, must be other kind of action
           // such as bulk, csv, pdf, etc...
-          vm.$emit(action, null, null, null, target)
+          that.$emit(action, null, null, null, target)
         }
       }
     })
 
     // handle master/details
-    if (vm.details) {
+    if (that.details) {
       // default to render function
-      let renderFunc = vm.details.render
+      let renderFunc = that.details.render
 
       // must be string template
-      if (vm.details.template) {
-        renderFunc = vm.compileTemplate(vm.details)
+      if (that.details.template || that.$scopedSlots['_details']) {
+        renderFunc = that.compileTemplate(that.details, that.$scopedSlots['_details'])
       } else if (renderFunc) {
         renderFunc = function() {
-          return vm.details.render.apply(vm, Array.prototype.slice.call(arguments))
+          return that.details.render.apply(that, Array.prototype.slice.call(arguments))
         }
       }
 
@@ -404,12 +420,11 @@ export default {
         e.preventDefault()
         e.stopPropagation()
         const target = jq(e.target)
-        let that     = target
-        let tr       = that.closest('tr')
+        let tr       = target.closest('tr')
         if (tr.attr('role') !== 'row') {
           tr = tr.prev()
         }
-        const row = vm.dataTable.row( tr )
+        const row = that.dataTable.row( tr )
         if ( row.child.isShown() ) {
           // This row is already open - close it
           row.child.hide()
@@ -424,20 +439,20 @@ export default {
       })
     }
 
-    vm.$emit('table-created', vm)
+    that.$emit('table-created', that)
 
     // finally, load data
-    if (vm.dataLoader) {
-      vm.reload()
+    if (that.dataLoader) {
+      that.reload()
     }
   },
   beforeDestroy() {
-    const vm = this
-    if (vm.dataTable) {
-      vm.dataTable.destroy(true)
+    const that = this
+    if (that.dataTable) {
+      that.dataTable.destroy(true)
     }
 
-    vm.dataTable = null
+    that.dataTable = null
   },
   methods: {
     /**
@@ -448,9 +463,10 @@ export default {
      * @return {Function}          the compiled template function
      */
     compileTemplate(field, slot) {
-      const vm  = this
-      const jq  = vm.jq
-      const res = Vue.compile(`<div>${field.template || ''}</div>`)
+      const that  = this
+      const jq    = that.jq
+      const vue   = that.myVue
+      const res   = vue.compile(`<div>${field.template || ''}</div>`)
 
 
       const renderFunc = (data, type, row, meta) => {
@@ -464,23 +480,23 @@ export default {
                 type: type,
                 row: row,
                 meta: meta,
-                vdtnet: vm,
+                vdtnet: that,
                 def: field,
-                comp: vm.$parent
+                comp: that.$parent
               })
             ])
           }
         }
 
-        const comp = new Vue({
+        const comp = new vue({
           data: {
             data: data,
             type: type,
             row: row,
             meta: meta,
-            vdtnet: vm,
+            vdtnet: that,
             def: field,
-            comp: vm.$parent
+            comp: that.$parent
           },
           render: myRender,
           staticRenderFns: res.staticRenderFns
@@ -502,13 +518,13 @@ export default {
      * @return {Object}            the component
      */
     setTableData(data) {
-      const vm = this
+      const that = this
       if (data.constructor === Array) {
-        vm.dataTable.clear().rows.add(data)
-        vm.dataTable.draw(false)
-        vm.dataTable.columns.adjust()
+        that.dataTable.clear().rows.add(data)
+        that.dataTable.draw(false)
+        that.dataTable.columns.adjust()
       }
-      return vm
+      return that
     },
     /**
      * pass through reload method
@@ -517,34 +533,34 @@ export default {
      * @return {Object}            the component
      */
     reload(resetPaging = false) {
-      const vm = this
-      if (vm.dataLoader) {
+      const that = this
+      if (that.dataLoader) {
         // manual data loading
-        vm.dataLoader((data) => {
+        that.dataLoader((data) => {
           if (data && !data.data) {
             data = { data: data }
           }
-          vm.setTableData( data.data )
+          that.setTableData( data.data )
 
-          vm.$emit('reloaded', data, vm)
+          that.$emit('reloaded', data, that)
         })
       } else {
-        vm.dataTable.ajax.reload( (data) => { vm.$emit('reloaded', data, vm) } , resetPaging )
+        that.dataTable.ajax.reload( (data) => { that.$emit('reloaded', data, that) } , resetPaging )
       }
 
-      return vm
+      return that
     },
     search(value) {
-      const vm = this
-      vm.dataTable.search( value ).draw()
+      const that = this
+      that.dataTable.search( value ).draw()
 
-      return vm
+      return that
     },
     setPageLength(value) {
-      const vm = this
-      vm.dataTable.page.len( value )
+      const that = this
+      that.dataTable.page.len( value )
 
-      return vm.reload()
+      return that.reload()
     },
     getServerParams() {
       if (this.dataLoader) {

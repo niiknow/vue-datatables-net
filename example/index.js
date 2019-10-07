@@ -426,6 +426,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 //
 //
 //
@@ -522,6 +524,15 @@ var myUniqueId = 1;
     },
 
     /**
+     * Pass in Vue to resolve any conflict from multiple loaded
+     *
+     * @type Object
+     */
+    vue: {
+      type: Object
+    },
+
+    /**
      * The select-checkbox column index (start at 1)
      * Current implementation require datatables.net-select
      *
@@ -585,6 +596,9 @@ var myUniqueId = 1;
     jq: function jq() {
       return this.jquery || window.jQuery;
     },
+    myVue: function myVue() {
+      return this.vue || window.Vue;
+    },
     classes: function classes() {
       var that = this;
       var classes = "".concat(that.containerClassName, " vdtnet-container");
@@ -597,26 +611,26 @@ var myUniqueId = 1;
     }
   },
   created: function created() {
-    var vm = this;
-    var jq = vm.jq;
-    vm.tableId = vm.id || "vdtnetable".concat(myUniqueId++); // allow user to override default options
+    var that = this;
+    var jq = that.jq;
+    that.tableId = that.id || "vdtnetable".concat(myUniqueId++); // allow user to override default options
 
-    if (vm.opts) {
-      vm.options = jq.extend({}, vm.options, vm.opts);
+    if (that.opts) {
+      that.options = jq.extend({}, that.options, that.opts);
     }
   },
   mounted: function mounted() {
-    var vm = this;
-    var jq = vm.jq;
-    var $el = jq(vm.$refs.table);
+    var that = this;
+    var jq = that.jq;
+    var $el = jq(that.$refs.table);
     var orders = [];
     var startCol = 0;
     var icol = 0; // if fields are passed in, generate column definition
     // from our custom fields schema
 
-    if (vm.fields) {
-      var fields = vm.fields;
-      var cols = vm.options.columns;
+    if (that.fields) {
+      var fields = that.fields;
+      var cols = that.options.columns;
 
       for (var k in fields) {
         var field = fields[k];
@@ -633,7 +647,8 @@ var myUniqueId = 1;
           data: field.data || field.name,
           width: field.width,
           name: field.name,
-          className: field.className
+          className: field.className,
+          index: field.index || icol + 1
         };
 
         if (field.width) {
@@ -656,8 +671,8 @@ var myUniqueId = 1;
           col.searchable = field.searchable;
         }
 
-        if (field.template || vm.$scopedSlots[field.name]) {
-          field.render = vm.compileTemplate(field, vm.$scopedSlots[field.name]);
+        if (field.template || that.$scopedSlots[field.name]) {
+          field.render = that.compileTemplate(field, that.$scopedSlots[field.name]);
         }
 
         if (field.render) {
@@ -666,7 +681,7 @@ var myUniqueId = 1;
               var myRender = field.render;
 
               field.render = function () {
-                return myRender.apply(vm, Array.prototype.slice.call(arguments));
+                return myRender.apply(that, Array.prototype.slice.call(arguments));
               };
             })();
           }
@@ -682,14 +697,19 @@ var myUniqueId = 1;
         }
 
         icol++;
-      }
+      } // sort columns
+
+
+      cols = cols.sort(function (a, b) {
+        return a.index - b.index;
+      });
     } // apply orders calculated from above
 
 
-    vm.options.order = vm.options.order || orders;
+    that.options.order = that.options.order || orders;
 
-    if (vm.selectCheckbox) {
-      vm.selectCheckbox = vm.selectCheckbox || 1; // create checkbox column
+    if (that.selectCheckbox) {
+      that.selectCheckbox = that.selectCheckbox || 1; // create checkbox column
 
       var _col = {
         orderable: false,
@@ -698,23 +718,24 @@ var myUniqueId = 1;
         className: 'select-checkbox d-print-none',
         data: null,
         defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox d-print-none">'
+        title: '<input type="checkbox" class="select-all-checkbox d-print-none">',
+        index: that.selectCheckbox - 1
       };
-      vm.options.columns.splice(vm.selectCheckbox - 1, 0, _col); // console.log(vm.options.columns)
+      that.options.columns.splice(that.selectCheckbox - 1, 0, _col); // console.log(that.options.columns)
 
-      vm.options.select = jq.extend(vm.options.select || {}, {
+      that.options.select = jq.extend(that.options.select || {}, {
         style: 'os',
         selector: 'td.select-checkbox'
       });
 
-      if (vm.selectCheckbox === 1) {
+      if (that.selectCheckbox === 1) {
         startCol++;
       }
     } // handle master details
 
 
-    if (vm.details) {
-      vm.details.index = vm.details.index || 1; // create details column
+    if (that.details) {
+      that.details.index = that.details.index || 1; // create details column
 
       var _col2 = {
         orderable: false,
@@ -722,57 +743,58 @@ var myUniqueId = 1;
         name: '_details_control',
         className: 'details-control d-print-none',
         data: null,
-        defaultContent: vm.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>'
+        defaultContent: that.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>',
+        index: that.details.index - 1
       };
-      vm.options.columns.splice(vm.details.index - 1, 0, _col2);
+      that.options.columns.splice(that.details.index - 1, 0, _col2);
 
-      if (vm.details.index === 1) {
+      if (that.details.index === 1) {
         startCol++;
       }
     }
 
     if (startCol > 0) {
-      if (vm.options.order) {
-        vm.options.order.forEach(function (v) {
+      if (that.options.order) {
+        that.options.order.forEach(function (v) {
           v[0] += startCol;
         });
       } else {
-        vm.options.order = [[startCol, 'asc']];
+        that.options.order = [[startCol, 'asc']];
       }
     } // handle local data loader
 
 
-    if (vm.dataLoader) {
-      delete vm.options.ajax;
-      vm.options.serverSide = false;
-    } // you can access and update the vm.options and $el here before we create the DataTable
+    if (that.dataLoader) {
+      delete that.options.ajax;
+      that.options.serverSide = false;
+    } // you can access and update the that.options and $el here before we create the DataTable
 
 
-    vm.$emit('table-creating', vm, $el);
-    vm.dataTable = $el.DataTable(vm.options);
+    that.$emit('table-creating', that, $el);
+    that.dataTable = $el.DataTable(that.options);
 
-    if (vm.selectCheckbox) {
+    if (that.selectCheckbox) {
       // handle select all checkbox
       $el.on('click', 'th input.select-all-checkbox', function (e) {
         if (jq(e.target).is(':checked')) {
-          vm.dataTable.rows().select();
+          that.dataTable.rows().select();
         } else {
-          vm.dataTable.rows().deselect();
+          that.dataTable.rows().deselect();
         }
       }); // handle individual row select events
 
-      vm.dataTable.on('select deselect', function () {
+      that.dataTable.on('select deselect', function () {
         var $input = $el.find('th input.select-all-checkbox');
 
-        if (vm.dataTable.rows({
+        if (that.dataTable.rows({
           selected: true
-        }).count() !== vm.dataTable.rows().count()) {
+        }).count() !== that.dataTable.rows().count()) {
           jq('th.select-checkbox').removeClass('selected');
           $input.attr('checked', false);
         } else {
           jq('th.select-checkbox').addClass('selected');
           $input.attr('checked', true);
-        } // TODO: vm.$emit the selected row?
+        } // TODO: that.$emit the selected row?
 
       });
     } // wire up edit, delete, and/or action buttons
@@ -782,50 +804,49 @@ var myUniqueId = 1;
       e.preventDefault();
       e.stopPropagation();
       var target = jq(e.target);
-      var that = target;
-      var action = that.attr('data-action');
+      var action = target.attr('data-action');
 
       while (!action) {
         // don't let it propagate outside of container
-        if (that.hasClass('vdtnet-container') || that.prop('tagName') === 'table') {
+        if (target.hasClass('vdtnet-container') || target.prop('tagName') === 'table') {
           // no action, simply exit
           return;
         }
 
-        that = that.parent();
-        action = that.attr('data-action');
+        target = (_readOnlyError("target"), target.parent());
+        action = target.attr('data-action');
       } // only emit if there is action
 
 
       if (action) {
         // detect if row action
-        var tr = that.closest('tr');
+        var tr = target.closest('tr');
 
         if (tr) {
           if (tr.attr('role') !== 'row') {
             tr = tr.prev();
           }
 
-          var row = vm.dataTable.row(tr);
+          var row = that.dataTable.row(tr);
           var data = row.data();
-          vm.$emit(action, data, row, tr, that);
+          that.$emit(action, data, row, tr, target);
         } else {
           // not a row click, must be other kind of action
           // such as bulk, csv, pdf, etc...
-          vm.$emit(action, null, null, null, target);
+          that.$emit(action, null, null, null, target);
         }
       }
     }); // handle master/details
 
-    if (vm.details) {
+    if (that.details) {
       // default to render function
-      var renderFunc = vm.details.render; // must be string template
+      var renderFunc = that.details.render; // must be string template
 
-      if (vm.details.template) {
-        renderFunc = vm.compileTemplate(vm.details);
+      if (that.details.template || that.$scopedSlots['_details']) {
+        renderFunc = that.compileTemplate(that.details, that.$scopedSlots['_details']);
       } else if (renderFunc) {
         renderFunc = function renderFunc() {
-          return vm.details.render.apply(vm, Array.prototype.slice.call(arguments));
+          return that.details.render.apply(that, Array.prototype.slice.call(arguments));
         };
       } // handle master/details
       // Add event listener for opening and closing details
@@ -835,14 +856,13 @@ var myUniqueId = 1;
         e.preventDefault();
         e.stopPropagation();
         var target = jq(e.target);
-        var that = target;
-        var tr = that.closest('tr');
+        var tr = target.closest('tr');
 
         if (tr.attr('role') !== 'row') {
           tr = tr.prev();
         }
 
-        var row = vm.dataTable.row(tr);
+        var row = that.dataTable.row(tr);
 
         if (row.child.isShown()) {
           // This row is already open - close it
@@ -857,20 +877,20 @@ var myUniqueId = 1;
       });
     }
 
-    vm.$emit('table-created', vm); // finally, load data
+    that.$emit('table-created', that); // finally, load data
 
-    if (vm.dataLoader) {
-      vm.reload();
+    if (that.dataLoader) {
+      that.reload();
     }
   },
   beforeDestroy: function beforeDestroy() {
-    var vm = this;
+    var that = this;
 
-    if (vm.dataTable) {
-      vm.dataTable.destroy(true);
+    if (that.dataTable) {
+      that.dataTable.destroy(true);
     }
 
-    vm.dataTable = null;
+    that.dataTable = null;
   },
   methods: {
     /**
@@ -881,9 +901,10 @@ var myUniqueId = 1;
      * @return {Function}          the compiled template function
      */
     compileTemplate: function compileTemplate(field, slot) {
-      var vm = this;
-      var jq = vm.jq;
-      var res = Vue.compile("<div>".concat(field.template || '', "</div>"));
+      var that = this;
+      var jq = that.jq;
+      var vue = that.myVue;
+      var res = vue.compile("<div>".concat(field.template || '', "</div>"));
 
       var renderFunc = function renderFunc(data, type, row, meta) {
         var myRender = res.render;
@@ -895,22 +916,22 @@ var myUniqueId = 1;
               type: type,
               row: row,
               meta: meta,
-              vdtnet: vm,
+              vdtnet: that,
               def: field,
-              comp: vm.$parent
+              comp: that.$parent
             })]);
           };
         }
 
-        var comp = new Vue({
+        var comp = new vue({
           data: {
             data: data,
             type: type,
             row: row,
             meta: meta,
-            vdtnet: vm,
+            vdtnet: that,
             def: field,
-            comp: vm.$parent
+            comp: that.$parent
           },
           render: myRender,
           staticRenderFns: res.staticRenderFns
@@ -931,15 +952,15 @@ var myUniqueId = 1;
      * @return {Object}            the component
      */
     setTableData: function setTableData(data) {
-      var vm = this;
+      var that = this;
 
       if (data.constructor === Array) {
-        vm.dataTable.clear().rows.add(data);
-        vm.dataTable.draw(false);
-        vm.dataTable.columns.adjust();
+        that.dataTable.clear().rows.add(data);
+        that.dataTable.draw(false);
+        that.dataTable.columns.adjust();
       }
 
-      return vm;
+      return that;
     },
 
     /**
@@ -950,37 +971,37 @@ var myUniqueId = 1;
      */
     reload: function reload() {
       var resetPaging = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      var vm = this;
+      var that = this;
 
-      if (vm.dataLoader) {
+      if (that.dataLoader) {
         // manual data loading
-        vm.dataLoader(function (data) {
+        that.dataLoader(function (data) {
           if (data && !data.data) {
             data = {
               data: data
             };
           }
 
-          vm.setTableData(data.data);
-          vm.$emit('reloaded', data, vm);
+          that.setTableData(data.data);
+          that.$emit('reloaded', data, that);
         });
       } else {
-        vm.dataTable.ajax.reload(function (data) {
-          vm.$emit('reloaded', data, vm);
+        that.dataTable.ajax.reload(function (data) {
+          that.$emit('reloaded', data, that);
         }, resetPaging);
       }
 
-      return vm;
+      return that;
     },
     search: function search(value) {
-      var vm = this;
-      vm.dataTable.search(value).draw();
-      return vm;
+      var that = this;
+      that.dataTable.search(value).draw();
+      return that;
     },
     setPageLength: function setPageLength(value) {
-      var vm = this;
-      vm.dataTable.page.len(value);
-      return vm.reload();
+      var that = this;
+      that.dataTable.page.len(value);
+      return that.reload();
     },
     getServerParams: function getServerParams() {
       if (this.dataLoader) {
@@ -1003,7 +1024,7 @@ var myUniqueId = 1;
 
 exports = module.exports = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "@keyframes dtb-spinner{100%{transform:rotate(360deg)}}@-o-keyframes dtb-spinner{100%{-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes dtb-spinner{100%{-ms-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes dtb-spinner{100%{-moz-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;box-shadow:3px 3px 8px rgba(0,0,0,0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:0.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}div.dt-button-collection-title{text-align:center;padding:0.3em 0 0.5em;font-size:0.9em}div.dt-button-collection-title:empty{display:none}div.dt-button-collection.dropdown-menu{display:block;z-index:2002;-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection.dropdown-menu.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.dropdown-menu.fixed.two-column{margin-left:-150px}div.dt-button-collection.dropdown-menu.fixed.three-column{margin-left:-225px}div.dt-button-collection.dropdown-menu.fixed.four-column{margin-left:-300px}div.dt-button-collection.dropdown-menu>*{-webkit-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.dropdown-menu.two-column{width:300px;padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.dropdown-menu.three-column{width:450px;padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.dropdown-menu.four-column{width:600px;padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection.dropdown-menu .dt-button{border-radius:0}div.dt-button-collection{-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.fixed.two-column{margin-left:-150px}div.dt-button-collection.fixed.three-column{margin-left:-225px}div.dt-button-collection.fixed.four-column{margin-left:-300px}div.dt-button-collection>*{-webkit-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.two-column{width:300px;padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.three-column{width:450px;padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.four-column{width:600px;padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection .dt-button{border-radius:0}div.dt-button-collection.fixed{max-width:none}div.dt-button-collection.fixed:before,div.dt-button-collection.fixed:after{display:none}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:0.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0,0,0,0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;box-sizing:border-box;display:block;content:' ';border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}\n", ""]);
+exports.push([module.i, "@keyframes dtb-spinner{100%{transform:rotate(360deg)}}@-o-keyframes dtb-spinner{100%{-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes dtb-spinner{100%{-ms-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes dtb-spinner{100%{-moz-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;box-shadow:3px 3px 8px rgba(0,0,0,0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:0.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}div.dt-button-collection-title{text-align:center;padding:0.3em 0 0.5em;font-size:0.9em}div.dt-button-collection-title:empty{display:none}div.dt-button-collection.dropdown-menu{display:block;z-index:2002}div.dt-button-collection.dropdown-menu.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.dropdown-menu.fixed.two-column{margin-left:-150px}div.dt-button-collection.dropdown-menu.fixed.three-column{margin-left:-225px}div.dt-button-collection.dropdown-menu.fixed.four-column{margin-left:-300px}div.dt-button-collection.dropdown-menu>div:last-child{-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection.dropdown-menu>div:last-child>*{-webkit-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.dropdown-menu.two-column{width:300px}div.dt-button-collection.dropdown-menu.two-column>div:last-child{padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.dropdown-menu.three-column{width:450px}div.dt-button-collection.dropdown-menu.three-column>div:last-child{padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.dropdown-menu.four-column{width:600px}div.dt-button-collection.dropdown-menu.four-column>div:last-child{padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection.dropdown-menu .dt-button{border-radius:0}div.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.fixed.two-column{margin-left:-150px}div.dt-button-collection.fixed.three-column{margin-left:-225px}div.dt-button-collection.fixed.four-column{margin-left:-300px}div.dt-button-collection>div:last-child{-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection>div:last-child>*{-webkit-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.two-column{width:300px}div.dt-button-collection.two-column>div:last-child{padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.three-column{width:450px}div.dt-button-collection.three-column>div:last-child{padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.four-column{width:600px}div.dt-button-collection.four-column>div:last-child{padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection .dt-button{border-radius:0}div.dt-button-collection.fixed{max-width:none}div.dt-button-collection.fixed:before,div.dt-button-collection.fixed:after{display:none}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:0.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0,0,0,0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;box-sizing:border-box;display:block;content:' ';border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}\n", ""]);
 
 
 
@@ -1368,7 +1389,7 @@ var DataTable = $.fn.dataTable;
 $.extend( true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
-			className: 'dt-buttons btn-group'
+			className: 'dt-buttons btn-group flex-wrap'
 		},
 		button: {
 			className: 'btn btn-secondary'
@@ -3058,7 +3079,7 @@ return DataTable.Buttons;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for DataTables 1.5.6
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for DataTables 1.6.0
  * ©2016-2019 SpryMedia Ltd - datatables.net/license
  */
 
@@ -3210,7 +3231,7 @@ $.extend( Buttons.prototype, {
 			idx = split[ split.length-1 ]*1;
 		}
 
-		this._expandButton( buttons, config, false, idx );
+		this._expandButton( buttons, config, base !== undefined, idx );
 		this._draw();
 
 		return this;
@@ -3317,11 +3338,13 @@ $.extend( Buttons.prototype, {
 
 	/**
 	 * Set / get a processing class on the selected button
+	 * @param {element} node Triggering button node
 	 * @param  {boolean} flag true to add, false to remove, undefined to get
 	 * @return {boolean|Buttons} Getter value or this if a setter.
 	 */
 	processing: function ( node, flag )
 	{
+		var dt = this.s.dt;
 		var button = this._nodeToButton( node );
 
 		if ( flag === undefined ) {
@@ -3329,6 +3352,10 @@ $.extend( Buttons.prototype, {
 		}
 
 		$(button.node).toggleClass( 'processing', flag );
+
+		$(dt.table().node()).triggerHandler( 'buttons-processing.dt', [
+			flag, dt.button( node ), dt, $(node), button.conf
+		] );
 
 		return this;
 	},
@@ -3543,10 +3570,7 @@ $.extend( Buttons.prototype, {
 			}
 
 			if ( built.conf.buttons ) {
-				var collectionDom = this.c.dom.collection;
-				built.collection = $('<'+collectionDom.tag+'/>')
-					.addClass( collectionDom.className )
-					.attr( 'role', 'menu' ) ;
+				built.collection = $('<div/>');
 				built.conf._collection = built.collection;
 
 				this._expandButton( built.buttons, built.conf.buttons, true, attachPoint );
@@ -3958,6 +3982,181 @@ $.extend( Buttons.prototype, {
 		}
 
 		return conf;
+	},
+
+	/**
+	 * Display (and replace if there is an existing one) a popover attached to a button
+	 * @param {string|node} content Content to show
+	 * @param {DataTable.Api} hostButton DT API instance of the button
+	 * @param {object} inOpts Options (see object below for all options)
+	 */
+	_popover: function ( content, hostButton, inOpts ) {
+		var dt = hostButton;
+		var buttonsSettings = this.c;
+		var options = $.extend( {
+			align: 'button-left', // button-right, dt-container
+			autoClose: false,
+			background: true,
+			backgroundClassName: 'dt-button-background',
+			contentClassName: buttonsSettings.dom.collection.className,
+			collectionLayout: '',
+			collectionTitle: '',
+			dropup: false,
+			fade: 400,
+			rightAlignClassName: 'dt-button-right',
+			tag: buttonsSettings.dom.collection.tag
+		}, inOpts );
+		var hostNode = hostButton.node();
+
+		var close = function () {
+			$('.dt-button-collection').stop().fadeOut( options.fade, function () {
+				$(this).detach();
+			} );
+
+			$(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes())
+				.attr('aria-expanded', 'false');
+
+			$('div.dt-button-background').off( 'click.dtb-collection' );
+			Buttons.background( false, options.backgroundClassName, options.fade, hostNode );
+
+			$('body').off( '.dtb-collection' );
+			dt.off( 'buttons-action.b-internal' );
+		};
+
+		if (content === false) {
+			close();
+		}
+
+		var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
+		if ( existingExpanded.length ) {
+			hostNode = existingExpanded.eq(0);
+
+			close();
+		}
+
+		content = $(content);
+
+		var tableContainer = $( hostButton.table().container() );
+
+		hostNode.attr( 'aria-expanded', 'true' );
+
+		if ( hostNode.parents('body')[0] !== document.body ) {
+			hostNode = document.body.lastChild;
+		}
+
+		var display = $('<' + options.tag + '/>')
+			.addClass(options.contentClassName)
+			.attr('role', 'menu');
+
+		if ( options.collectionTitle ) {
+			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
+		}
+
+		display
+			.addClass( options.collectionLayout )
+			.css( 'display', 'none' )
+			.append( content )
+			.insertAfter( hostNode )
+			.stop()
+			.fadeIn( options.fade );
+
+		var position = display.css( 'position' );
+
+		if ( options.align === 'dt-container' ) {
+			hostNode = hostNode.parent();
+			display.css('width', tableContainer.width());
+		}
+
+		if ( position === 'absolute' ) {
+			var hostPosition = hostNode.position();
+
+			display.css( {
+				top: hostPosition.top + hostNode.outerHeight(),
+				left: hostPosition.left
+			} );
+
+			// calculate overflow when positioned beneath
+			var collectionHeight = display.outerHeight();
+			var collectionWidth = display.outerWidth();
+			var tableBottom = tableContainer.offset().top + tableContainer.height();
+			var listBottom = hostPosition.top + hostNode.outerHeight() + collectionHeight;
+			var bottomOverflow = listBottom - tableBottom;
+
+			// calculate overflow when positioned above
+			var listTop = hostPosition.top - collectionHeight;
+			var tableTop = tableContainer.offset().top;
+			var topOverflow = tableTop - listTop;
+
+			// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
+			var moveTop = hostPosition.top - collectionHeight - 5;
+			if ( (bottomOverflow > topOverflow || options.dropup) && -moveTop < tableTop ) {
+				display.css( 'top', moveTop);
+			}
+
+			// Right alignment is enabled on a class, e.g. bootstrap:
+			// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
+			if ( display.hasClass( options.rightAlignClassName ) || options.align === 'button-right' ) {
+				display.css( 'left', hostPosition.left + hostNode.outerWidth() - collectionWidth );
+			}
+
+			// Right alignment in table container
+			var listRight = hostPosition.left + collectionWidth;
+			var tableRight = tableContainer.offset().left + tableContainer.width();
+			if ( listRight > tableRight ) {
+				display.css( 'left', hostPosition.left - ( listRight - tableRight ) );
+			}
+
+			// Right alignment to window
+			var listOffsetRight = hostNode.offset().left + collectionWidth;
+			if ( listOffsetRight > $(window).width() ) {
+				display.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
+			}
+		}
+		else {
+			// Fix position - centre on screen
+			var top = display.height() / 2;
+			if ( top > $(window).height() / 2 ) {
+				top = $(window).height() / 2;
+			}
+
+			display.css( 'marginTop', top*-1 );
+		}
+
+		if ( options.background ) {
+			Buttons.background( true, options.backgroundClassName, options.fade, hostNode );
+		}
+
+		// This is bonkers, but if we don't have a click listener on the
+		// background element, iOS Safari will ignore the body click
+		// listener below. An empty function here is all that is
+		// required to make it work...
+		$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
+
+		$('body')
+			.on( 'click.dtb-collection', function (e) {
+				// andSelf is deprecated in jQ1.8, but we want 1.7 compat
+				var back = $.fn.addBack ? 'addBack' : 'andSelf';
+
+				if ( ! $(e.target).parents()[back]().filter( content ).length ) {
+					close();
+				}
+			} )
+			.on( 'keyup.dtb-collection', function (e) {
+				if ( e.keyCode === 27 ) {
+					close();
+				}
+			} );
+
+		if ( options.autoClose ) {
+			setTimeout( function () {
+				dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
+					if ( node[0] === hostNode[0] ) {
+						return;
+					}
+					close();
+				} );
+			}, 0);
+		}
 	}
 } );
 
@@ -4014,7 +4213,7 @@ Buttons.background = function ( show, className, fade, insertPoint ) {
  */
 Buttons.instanceSelector = function ( group, buttons )
 {
-	if ( ! group ) {
+	if ( group === undefined || group === null ) {
 		return $.map( buttons, function ( v ) {
 			return v.inst;
 		} );
@@ -4236,7 +4435,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.5.6';
+Buttons.version = '1.6.0';
 
 
 $.extend( _dtButtons, {
@@ -4249,165 +4448,19 @@ $.extend( _dtButtons, {
 			button.attr( 'aria-expanded', false );
 		},
 		action: function ( e, dt, button, config ) {
-			var close = function () {
-				dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes().each( function() {
-					var collection = $(this).siblings('.dt-button-collection');
+			e.stopPropagation();
 
-					if ( collection.length ) {
-						collection.stop().fadeOut( config.fade, function () {
-							collection.detach();
-						} );
-					}
-
-					$(this).attr( 'aria-expanded', 'false' );
-				});
-
-				$('div.dt-button-background').off( 'click.dtb-collection' );
-				Buttons.background( false, config.backgroundClassName, config.fade, insertPoint );
-
-				$('body').off( '.dtb-collection' );
-				dt.off( 'buttons-action.b-internal' );
-			};
-
-			var wasExpanded = button.attr( 'aria-expanded' ) === 'true';
-
-			close();
-
-			if (!wasExpanded) {
-				var host = button;
-				var collectionParent = $(button).parents('div.dt-button-collection');
-				var hostPosition = host.position();
-				var tableContainer = $( dt.table().container() );
-				var multiLevel = false;
-				var insertPoint = host;
-
-				button.attr( 'aria-expanded', 'true' );
-
-				// Remove any old collection
-				if ( collectionParent.length ) {
-					multiLevel = $('.dt-button-collection').position();
-					insertPoint = collectionParent;
-					$('body').trigger( 'click.dtb-collection' );
-				}
-
-				if ( insertPoint.parents('body')[0] !== document.body ) {
-					insertPoint = document.body.lastChild;
-				}
-
-				config._collection.find('.dt-button-collection-title').remove();
-				config._collection.prepend('<div class="dt-button-collection-title">'+config.collectionTitle+'</div>');
-
-				config._collection
-					.addClass( config.collectionLayout )
-					.css( 'display', 'none' )
-					.insertAfter( insertPoint )
-					.stop()
-					.fadeIn( config.fade );
-
-				var position = config._collection.css( 'position' );
-
-				if ( multiLevel && position === 'absolute' ) {
-					config._collection.css( {
-						top: multiLevel.top,
-						left: multiLevel.left
-					} );
-				}
-				else if ( position === 'absolute' ) {
-					config._collection.css( {
-						top: hostPosition.top + host.outerHeight(),
-						left: hostPosition.left
-					} );
-
-					// calculate overflow when positioned beneath
-					var tableBottom = tableContainer.offset().top + tableContainer.height();
-					var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
-					var bottomOverflow = listBottom - tableBottom;
-
-					// calculate overflow when positioned above
-					var listTop = hostPosition.top - config._collection.outerHeight();
-					var tableTop = tableContainer.offset().top;
-					var topOverflow = tableTop - listTop;
-
-					// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
-					if (bottomOverflow > topOverflow || config.dropup) {
-						config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
-					}
-
-					// Right alignment is enabled on a class, e.g. bootstrap:
-					// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
-					if ( config._collection.hasClass( config.rightAlignClassName ) ) {
-						config._collection.css( 'left', hostPosition.left + host.outerWidth() - config._collection.outerWidth() );
-					}
-
-					// Right alignment in table container
-					var listRight = hostPosition.left + config._collection.outerWidth();
-					var tableRight = tableContainer.offset().left + tableContainer.width();
-					if ( listRight > tableRight ) {
-						config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
-					}
-
-					// Right alignment to window
-					var listOffsetRight = host.offset().left + config._collection.outerWidth();
-					if ( listOffsetRight > $(window).width() ) {
-						config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
-					}
-				}
-				else {
-					// Fix position - centre on screen
-					var top = config._collection.height() / 2;
-					if ( top > $(window).height() / 2 ) {
-						top = $(window).height() / 2;
-					}
-
-					config._collection.css( 'marginTop', top*-1 );
-				}
-
-				if ( config.background ) {
-					Buttons.background( true, config.backgroundClassName, config.fade, insertPoint );
-				}
-
-				// Need to break the 'thread' for the collection button being
-				// activated by a click - it would also trigger this event
-				setTimeout( function () {
-					// This is bonkers, but if we don't have a click listener on the
-					// background element, iOS Safari will ignore the body click
-					// listener below. An empty function here is all that is
-					// required to make it work...
-					$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
-
-					$('body')
-						.on( 'click.dtb-collection', function (e) {
-							// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-							var back = $.fn.addBack ? 'addBack' : 'andSelf';
-
-							if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-								close();
-							}
-						} )
-						.on( 'keyup.dtb-collection', function (e) {
-							if ( e.keyCode === 27 ) {
-								close();
-							}
-						} );
-
-					if ( config.autoClose ) {
-						dt.on( 'buttons-action.b-internal', function () {
-							close();
-						} );
-					}
-				}, 10 );
+			if ( config._collection.parents('body').length ) {
+				this.popover(false, config);
+			}
+			else {
+				this.popover(config._collection, config);
 			}
 		},
-		background: true,
-		collectionLayout: '',
-		collectionTitle: '',
-		backgroundClassName: 'dt-button-background',
-		rightAlignClassName: 'dt-button-right',
-		autoClose: false,
-		fade: 400,
 		attr: {
 			'aria-haspopup': true
 		}
+		// Also the popover options, defined in Buttons.popover
 	},
 	copy: function ( dt, conf ) {
 		if ( _dtButtons.copyHtml5 ) {
@@ -4622,8 +4675,15 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 	} );
 } );
 
+// Button resolver to the popover
+DataTable.Api.register( 'button().popover()', function (content, options) {
+	return this.map( function ( set ) {
+		return set.inst._popover( content, this.button(this[0].node), options );
+	} );
+} );
+
 // Get the container elements
-DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
+DataTable.Api.register( 'buttons().containers()', function () {
 	var jq = $();
 	var groupSelector = this._groupSelector;
 
@@ -4640,6 +4700,11 @@ DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()',
 	} );
 
 	return jq;
+} );
+
+DataTable.Api.register( 'buttons().container()', function () {
+	// API level of nesting is `buttons()` so we can zip into the containers method
+	return this.containers().eq(0);
 } );
 
 // Add a new button
@@ -4682,6 +4747,7 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 	var that = this;
 
 	if ( title === false ) {
+		this.off('destroy.btn-info');
 		$('#datatables_buttons_info').fadeOut( function () {
 			$(this).remove();
 		} );
@@ -4713,6 +4779,10 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 			that.buttons.info( false );
 		}, time );
 	}
+
+	this.on('destroy.btn-info', function () {
+		that.buttons.info(false);
+	});
 
 	return this;
 } );
@@ -5077,19 +5147,19 @@ return $.fn.dataTable;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.3.0
- * 2015-2018 SpryMedia Ltd - datatables.net/license/mit
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.3.1
+ * 2015-2019 SpryMedia Ltd - datatables.net/license/mit
  */
 
 /**
  * @summary     Select for DataTables
  * @description A collection of API methods, events and buttons for DataTables
  *   that provides selection options of the items in a DataTable
- * @version     1.3.0
+ * @version     1.3.1
  * @file        dataTables.select.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     datatables.net/forums
- * @copyright   Copyright 2015-2018 SpryMedia Ltd.
+ * @copyright   Copyright 2015-2019 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  *   MIT license - http://datatables.net/license/mit
@@ -5117,7 +5187,7 @@ var DataTable = $.fn.dataTable;
 // Version information for debugger
 DataTable.select = {};
 
-DataTable.select.version = '1.3.0';
+DataTable.select.version = '1.3.1';
 
 DataTable.select.init = function ( dt ) {
 	var ctx = dt.settings()[0];
@@ -5131,6 +5201,7 @@ DataTable.select.init = function ( dt ) {
 	var items = 'row';
 	var style = 'api';
 	var blurable = false;
+	var toggleable = true;
 	var info = true;
 	var selector = 'td, th';
 	var className = 'selected';
@@ -5150,6 +5221,10 @@ DataTable.select.init = function ( dt ) {
 	else if ( $.isPlainObject( opts ) ) {
 		if ( opts.blurable !== undefined ) {
 			blurable = opts.blurable;
+		}
+		
+		if ( opts.toggleable !== undefined ) {
+			toggleable = opts.toggleable;
 		}
 
 		if ( opts.info !== undefined ) {
@@ -5182,6 +5257,7 @@ DataTable.select.init = function ( dt ) {
 	dt.select.items( items );
 	dt.select.style( style );
 	dt.select.blurable( blurable );
+	dt.select.toggleable( toggleable );
 	dt.select.info( info );
 	ctx._select.className = className;
 
@@ -5243,15 +5319,17 @@ The `_select` object contains the following properties:
 
 ```
 {
-	items:string     - Can be `rows`, `columns` or `cells`. Defines what item 
-	                   will be selected if the user is allowed to activate row
-	                   selection using the mouse.
-	style:string     - Can be `none`, `single`, `multi` or `os`. Defines the
-	                   interaction style when selecting items
-	blurable:boolean - If row selection can be cleared by clicking outside of
-	                   the table
-	info:boolean     - If the selection summary should be shown in the table
-	                   information elements
+	items:string       - Can be `rows`, `columns` or `cells`. Defines what item 
+	                     will be selected if the user is allowed to activate row
+	                     selection using the mouse.
+	style:string       - Can be `none`, `single`, `multi` or `os`. Defines the
+	                     interaction style when selecting items
+	blurable:boolean   - If row selection can be cleared by clicking outside of
+	                     the table
+	toggleable:boolean - If row selection can be cancelled by repeated clicking
+	                     on the row
+	info:boolean       - If the selection summary should be shown in the table
+	                     information elements
 }
 ```
 
@@ -5377,7 +5455,7 @@ function disableMouseSelection( dt )
 		.off( 'mouseup.dtSelect', selector )
 		.off( 'click.dtSelect', selector );
 
-	$('body').off( 'click.dtSelect' + dt.table().node().id );
+	$('body').off( 'click.dtSelect' + _safeId(dt.table().node()) );
 }
 
 /**
@@ -5473,7 +5551,7 @@ function enableMouseSelection ( dt )
 		} );
 
 	// Blurable
-	$('body').on( 'click.dtSelect' + dt.table().node().id, function ( e ) {
+	$('body').on( 'click.dtSelect' + _safeId(dt.table().node()), function ( e ) {
 		if ( ctx._select.blurable ) {
 			// If the click was inside the DataTables container, don't blur
 			if ( $(e.target).parents().filter( dt.table().container() ).length ) {
@@ -5733,7 +5811,12 @@ function clear( ctx, force )
 function typeSelect ( e, dt, ctx, type, idx )
 {
 	var style = dt.select.style();
+	var toggleable = dt.select.toggleable();
 	var isSelected = dt[type]( idx, { selected: true } ).any();
+	
+	if ( isSelected && ! toggleable ) {
+		return;
+	}
 
 	if ( style === 'os' ) {
 		if ( e.ctrlKey || e.metaKey ) {
@@ -5783,6 +5866,10 @@ function typeSelect ( e, dt, ctx, type, idx )
 	else {
 		dt[ type ]( idx ).select( ! isSelected );
 	}
+}
+
+function _safeId( node ) {
+	return node.id.replace(/[^a-zA-Z0-9\-\_]/g, '-');
 }
 
 
@@ -5869,6 +5956,16 @@ apiRegister( 'select.blurable()', function ( flag ) {
 
 	return this.iterator( 'table', function ( ctx ) {
 		ctx._select.blurable = flag;
+	} );
+} );
+
+apiRegister( 'select.toggleable()', function ( flag ) {
+	if ( flag === undefined ) {
+		return this.context[0]._select.toggleable;
+	}
+
+	return this.iterator( 'table', function ( ctx ) {
+		ctx._select.toggleable = flag;
 	} );
 } );
 
@@ -6251,18 +6348,18 @@ return DataTable.select;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.19
- * ©2008-2018 SpryMedia Ltd - datatables.net/license
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.20
+ * ©2008-2019 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     DataTables
  * @description Paginate, search and order HTML tables
- * @version     1.10.19
+ * @version     1.10.20
  * @file        jquery.dataTables.js
  * @author      SpryMedia Ltd
  * @contact     www.datatables.net
- * @copyright   Copyright 2008-2018 SpryMedia Ltd.
+ * @copyright   Copyright 2008-2019 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  *   MIT license - http://datatables.net/license
@@ -7131,7 +7228,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			_fnCamelToHungarian( defaults.column, defaults.column, true );
 			
 			/* Setting up the initialisation object */
-			_fnCamelToHungarian( defaults, $.extend( oInit, $this.data() ) );
+			_fnCamelToHungarian( defaults, $.extend( oInit, $this.data() ), true );
 			
 			
 			
@@ -7567,7 +7664,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	var _api_registerPlural; // DataTable.Api.registerPlural
 	
 	var _re_dic = {};
-	var _re_new_lines = /[\r\n]/g;
+	var _re_new_lines = /[\r\n\u2028]/g;
 	var _re_html = /<.*?>/g;
 	
 	// This is not strict ISO8601 - Date.parse() is quite lax, although
@@ -8257,7 +8354,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			_fnCompatCols( oOptions );
 	
 			// Map camel case parameters to their Hungarian counterparts
-			_fnCamelToHungarian( DataTable.defaults.column, oOptions );
+			_fnCamelToHungarian( DataTable.defaults.column, oOptions, true );
 	
 			/* Backwards compatibility for mDataProp */
 			if ( oOptions.mDataProp !== undefined && !oOptions.mData )
@@ -9311,7 +9408,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			rowData = row._aData,
 			cells = [],
 			nTr, nTd, oCol,
-			i, iLen;
+			i, iLen, create;
 	
 		if ( row.nTr === null )
 		{
@@ -9332,8 +9429,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
 			{
 				oCol = oSettings.aoColumns[i];
+				create = nTrIn ? false : true;
 	
-				nTd = nTrIn ? anTds[i] : document.createElement( oCol.sCellType );
+				nTd = create ? document.createElement( oCol.sCellType ) : anTds[i];
 				nTd._DT_CellIndex = {
 					row: iRow,
 					column: i
@@ -9342,9 +9440,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 				cells.push( nTd );
 	
 				// Need to create the HTML if new, or if a rendering function is defined
-				if ( (!nTrIn || oCol.mRender || oCol.mData !== i) &&
+				if ( create || ((!nTrIn || oCol.mRender || oCol.mData !== i) &&
 					 (!$.isPlainObject(oCol.mData) || oCol.mData._ !== i+'.display')
-				) {
+				)) {
 					nTd.innerHTML = _fnGetCellData( oSettings, iRow, i, 'display' );
 				}
 	
@@ -10639,6 +10737,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			// New search - start from the master array
 			if ( invalidated ||
 				 force ||
+				 regex ||
 				 prevSearch.length > input.length ||
 				 input.indexOf(prevSearch) !== 0 ||
 				 settings.bSorted // On resort, the display master needs to be
@@ -10762,7 +10861,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 					}
 	
 					if ( cellData.replace ) {
-						cellData = cellData.replace(/[\r\n]/g, '');
+						cellData = cellData.replace(/[\r\n\u2028]/g, '');
 					}
 	
 					filterData.push( cellData );
@@ -11690,7 +11789,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 		table.children('colgroup').insertBefore( table.children('thead') );
 	
 		/* Adjust the position of the header in case we loose the y-scrollbar */
-		divBody.scroll();
+		divBody.trigger('scroll');
 	
 		// If sorting or filtering has occurred, jump the scrolling back to the top
 		// only if we aren't holding the position
@@ -12643,7 +12742,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	
 			_fnCallbackFire( settings, 'aoStateLoaded', 'stateLoaded', [settings, s] );
 			callback();
-		}
+		};
 	
 		if ( ! settings.oFeatures.bStateSave ) {
 			callback();
@@ -13123,7 +13222,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 		var ctxSettings = function ( o ) {
 			var a = _toSettings( o );
 			if ( a ) {
-				settings = settings.concat( a );
+				settings.push.apply( settings, a );
 			}
 		};
 	
@@ -13421,8 +13520,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	
 		var
 			i, ien,
-			j, jen,
-			struct, inner,
+			struct,
 			methodScoping = function ( scope, fn, struc ) {
 				return function () {
 					var ret = fn.apply( scope, arguments );
@@ -13437,9 +13535,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			struct = ext[i];
 	
 			// Value
-			obj[ struct.name ] = typeof struct.val === 'function' ?
+			obj[ struct.name ] = struct.type === 'function' ?
 				methodScoping( scope, struct.val, struct ) :
-				$.isPlainObject( struct.val ) ?
+				struct.type === 'object' ?
 					{} :
 					struct.val;
 	
@@ -13520,13 +13618,19 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 					name:      key,
 					val:       {},
 					methodExt: [],
-					propExt:   []
+					propExt:   [],
+					type:      'object'
 				};
 				struct.push( src );
 			}
 	
 			if ( i === ien-1 ) {
 				src.val = val;
+				src.type = typeof val === 'function' ?
+					'function' :
+					$.isPlainObject( val ) ?
+						'object' :
+						'other';
 			}
 			else {
 				struct = method ?
@@ -13535,7 +13639,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			}
 		}
 	};
-	
 	
 	_Api.registerPlural = _api_registerPlural = function ( pluralName, singularName, val ) {
 		_Api.register( pluralName, val );
@@ -14149,7 +14252,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 						[];
 				}
 				else if ( cellIdx ) {
-					return aoData[ cellIdx.row ] && aoData[ cellIdx.row ].nTr === sel ?
+					return aoData[ cellIdx.row ] && aoData[ cellIdx.row ].nTr === sel.parentNode ?
 						[ cellIdx.row ] :
 						[];
 				}
@@ -14808,16 +14911,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	
 		// Common actions
 		col.bVisible = vis;
-		_fnDrawHead( settings, settings.aoHeader );
-		_fnDrawHead( settings, settings.aoFooter );
-	
-		// Update colspan for no records display. Child rows and extensions will use their own
-		// listeners to do this - only need to update the empty table item here
-		if ( ! settings.aiDisplay.length ) {
-			$(settings.nTBody).find('td[colspan]').attr('colspan', _fnVisbleColumns(settings));
-		}
-	
-		_fnSaveState( settings );
 	};
 	
 	
@@ -14881,6 +14974,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	} );
 	
 	_api_registerPlural( 'columns().visible()', 'column().visible()', function ( vis, calc ) {
+		var that = this;
 		var ret = this.iterator( 'column', function ( settings, column ) {
 			if ( vis === undefined ) {
 				return settings.aoColumns[ column ].bVisible;
@@ -14890,14 +14984,28 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	
 		// Group the column visibility changes
 		if ( vis !== undefined ) {
-			// Second loop once the first is done for events
-			this.iterator( 'column', function ( settings, column ) {
-				_fnCallbackFire( settings, null, 'column-visibility', [settings, column, vis, calc] );
-			} );
+			this.iterator( 'table', function ( settings ) {
+				// Redraw the header after changes
+				_fnDrawHead( settings, settings.aoHeader );
+				_fnDrawHead( settings, settings.aoFooter );
+		
+				// Update colspan for no records display. Child rows and extensions will use their own
+				// listeners to do this - only need to update the empty table item here
+				if ( ! settings.aiDisplay.length ) {
+					$(settings.nTBody).find('td[colspan]').attr('colspan', _fnVisbleColumns(settings));
+				}
+		
+				_fnSaveState( settings );
 	
-			if ( calc === undefined || calc ) {
-				this.columns.adjust();
-			}
+				// Second loop once the first is done for events
+				that.iterator( 'column', function ( settings, column ) {
+					_fnCallbackFire( settings, null, 'column-visibility', [settings, column, vis, calc] );
+				} );
+	
+				if ( calc === undefined || calc ) {
+					that.columns.adjust();
+				}
+			});
 		}
 	
 		return ret;
@@ -15048,13 +15156,20 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			} );
 		}
 	
-		// Row + column selector
-		var columns = this.columns( columnSelector );
-		var rows = this.rows( rowSelector );
-		var a, i, ien, j, jen;
+		// The default built in options need to apply to row and columns
+		var internalOpts = opts ? {
+			page: opts.page,
+			order: opts.order,
+			search: opts.search
+		} : {};
 	
-		this.iterator( 'table', function ( settings, idx ) {
-			a = [];
+		// Row + column selector
+		var columns = this.columns( columnSelector, internalOpts );
+		var rows = this.rows( rowSelector, internalOpts );
+		var i, ien, j, jen;
+	
+		var cellsNoOpts = this.iterator( 'table', function ( settings, idx ) {
+			var a = [];
 	
 			for ( i=0, ien=rows[idx].length ; i<ien ; i++ ) {
 				for ( j=0, jen=columns[idx].length ; j<jen ; j++ ) {
@@ -15064,10 +15179,16 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 					} );
 				}
 			}
+	
+			return a;
 		}, 1 );
 	
-	    // Now pass through the cell selector for options
-	    var cells = this.cells( a, opts );
+		// There is currently only one extension which uses a cell selector extension
+		// It is a _major_ performance drag to run this if it isn't needed, so this is
+		// an extension specific check at the moment
+		var cells = opts && opts.selected ?
+			this.cells( cellsNoOpts, opts ) :
+			cellsNoOpts;
 	
 		$.extend( cells.selector, {
 			cols: columnSelector,
@@ -15696,7 +15817,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	 *  @type string
 	 *  @default Version number
 	 */
-	DataTable.version = "1.10.19";
+	DataTable.version = "1.10.20";
 
 	/**
 	 * Private data store, containing all of the settings objects that are
@@ -20759,7 +20880,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 				var btnDisplay, btnClass, counter=0;
 	
 				var attach = function( container, buttons ) {
-					var i, ien, node, button;
+					var i, ien, node, button, tabIndex;
+					var disabledClass = classes.sPageButtonDisabled;
 					var clickHandler = function ( e ) {
 						_fnPageChange( settings, e.data.action, true );
 					};
@@ -20774,7 +20896,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 						}
 						else {
 							btnDisplay = null;
-							btnClass = '';
+							btnClass = button;
+							tabIndex = settings.iTabIndex;
 	
 							switch ( button ) {
 								case 'ellipsis':
@@ -20783,26 +20906,38 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	
 								case 'first':
 									btnDisplay = lang.sFirst;
-									btnClass = button + (page > 0 ?
-										'' : ' '+classes.sPageButtonDisabled);
+	
+									if ( page === 0 ) {
+										tabIndex = -1;
+										btnClass += ' ' + disabledClass;
+									}
 									break;
 	
 								case 'previous':
 									btnDisplay = lang.sPrevious;
-									btnClass = button + (page > 0 ?
-										'' : ' '+classes.sPageButtonDisabled);
+	
+									if ( page === 0 ) {
+										tabIndex = -1;
+										btnClass += ' ' + disabledClass;
+									}
 									break;
 	
 								case 'next':
 									btnDisplay = lang.sNext;
-									btnClass = button + (page < pages-1 ?
-										'' : ' '+classes.sPageButtonDisabled);
+	
+									if ( page === pages-1 ) {
+										tabIndex = -1;
+										btnClass += ' ' + disabledClass;
+									}
 									break;
 	
 								case 'last':
 									btnDisplay = lang.sLast;
-									btnClass = button + (page < pages-1 ?
-										'' : ' '+classes.sPageButtonDisabled);
+	
+									if ( page === pages-1 ) {
+										tabIndex = -1;
+										btnClass += ' ' + disabledClass;
+									}
 									break;
 	
 								default:
@@ -20818,7 +20953,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 										'aria-controls': settings.sTableId,
 										'aria-label': aria[ button ],
 										'data-dt-idx': counter,
-										'tabindex': settings.iTabIndex,
+										'tabindex': tabIndex,
 										'id': idx === 0 && typeof button === 'string' ?
 											settings.sTableId +'_'+ button :
 											null
@@ -21446,7 +21581,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 	/**
 	 * Processing event, fired when DataTables is doing some kind of processing
-	 * (be it, order, searcg or anything else). It can be used to indicate to
+	 * (be it, order, search or anything else). It can be used to indicate to
 	 * the end user that there is something happening, or that something has
 	 * finished.
 	 *  @name DataTable#processing.dt

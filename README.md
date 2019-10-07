@@ -151,6 +151,14 @@ Our component parameters:
       type: Object
     },
     /**
+     * Pass in Vue to resolve any conflict from multiple loaded
+     *
+     * @type Object
+     */
+    vue: {
+      type: Object
+    },
+    /**
      * The select-checkbox column index (start at 1)
      * Current implementation require datatables.net-select
      *
@@ -212,6 +220,7 @@ fields: {
 - `template` simple vue template for the field.  See example App.
 - `defaultOrder` null, asc/desc - the default/initial sort order
 - `isLocal` same as setting both searchable and sortable to false
+- `index` allow for column positioning
 
 > It is important to understand why it is better to use `fields` and not `opts.columns`.  Though, `fields` is optional if one wish to use the raw `opts.columns` definition.
 
