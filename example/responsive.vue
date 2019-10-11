@@ -42,7 +42,7 @@
       ref="table"
       :fields="fields"
       :opts="options"
-      :select-checkbox="1"
+      :select-checkbox="2"
       container-classname=""
       @edit="doAlertEdit"
       @delete="doAlertDelete"
