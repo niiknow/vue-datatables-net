@@ -17,7 +17,7 @@
             :class="field.className"
           >
             <slot
-              :name="`HEAD_${field.name}`"
+              :name="'HEAD_'+field.name"
               :field="field"
               :i="i"
             >
