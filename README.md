@@ -36,7 +36,7 @@ npm install vue-datatables-net
 ```
 
 ## Usage
-This library default configuration and provide example for `bootstrap4` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
+Default configuration and provide example for `bootstrap4` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
 
 > Example of imports for Bootstrap 4:
 
@@ -440,7 +440,7 @@ If you're like us, you want to write as little code as possible; as in, applicat
 ## Point of Interest
 This library is inspired by both [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [jQuery DataTables](https://datatables.net/).  Look into creating jQuery DataTables server-side items provider for [Bootstrap-Vue Table](https://bootstrap-vue.js.org/docs/components/table#field-definition-reference) component.  Since jQuery Datatables dependencies does not support server-side rendering (SSR), Bootstrap-Vue Table will likely be the answer.  
 
-Here's a library for using server-side datatables.net endpoint with bootstrap-vue b-table - https://github.com/niiknow/bvtablenet-items-provider 
+Here's a library for using server-side datatables.net endpoint with bootstrap-vue b-table - https://github.com/niiknow/bvtnet-items-provider 
 
 ## License
 
