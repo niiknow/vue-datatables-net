@@ -46,7 +46,9 @@ if (mix.inProduction()) {
   mix.version();
   mix.disableNotifications();
 } else {
-  mix.js(`example/app.js`, `${ public }`);
+  const exampleName = process.env.EXAMPLE || 'app'
+
+  mix.js(`example/${exampleName}.js`, `${ public }`);
   mix.browserSync({
     proxy: false,
     port: 3000,
