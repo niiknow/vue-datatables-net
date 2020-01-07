@@ -3,6 +3,8 @@
 
 This library is a Vue 2 wrapper for [jQuery DataTables](https://datatables.net/).  It's a tiny wrapper that doesn't include anything, not even the datatables.net core library.
 
+> Note: you've found this library because you want to use jQuery datatables.net client-side with your application.  Alternatively, if you simply want to integrate with server-side datatables.net compatible endpoint, then I'd like to suggest looking at bootstrap-vue b-table and this component - https://github.com/niiknow/bvtnet-items-provider 
+
 ## Development
 `laravel-mix` is use to simplify build and packaging.
 
@@ -436,11 +438,6 @@ If you're like us, you want to write as little code as possible; as in, applicat
 1. Identify all properties of the new component and howto translate into this component.  Example: hidePageLength -> opts.lengthChange, hideQuickSearch -> v-if on quickSearch form, hideToolbar -> v-if on toolbar div, etc...
 2. Identify methods to wrap, i.e. your component API: reload, getServerParams, etc...
 3. Wrap individual action events you want to expose, or simply wrap with v-on="$listeners" to pipe all events from this component to your component.
-
-## Point of Interest
-This library is inspired by both [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [jQuery DataTables](https://datatables.net/).  Look into creating jQuery DataTables server-side items provider for [Bootstrap-Vue Table](https://bootstrap-vue.js.org/docs/components/table#field-definition-reference) component.  Since jQuery Datatables dependencies does not support server-side rendering (SSR), Bootstrap-Vue Table will likely be the answer.  
-
-Here's a library for using server-side datatables.net endpoint with bootstrap-vue b-table - https://github.com/niiknow/bvtnet-items-provider 
 
 ## License
 
