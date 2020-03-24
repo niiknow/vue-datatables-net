@@ -284,13 +284,7 @@ export default {
       that.options.columns.splice(that.selectCheckbox - 1, 0, col)
 
       // console.log(that.options.columns)
-      that.options.select = jq.extend(
-        that.options.select || {},
-        {
-          style: 'os',
-          selector: 'td.select-checkbox'
-        }
-      )
+      that.options.select = that.options.select || { style: 'os', selector: 'td.select-checkbox' }
 
       if (that.selectCheckbox === 1) {
         startCol++

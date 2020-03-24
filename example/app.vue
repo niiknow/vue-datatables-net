@@ -114,7 +114,10 @@ export default {
         lengthChange: true,
         serverSide: true,
         fixedHeader: true,
-        saveState: true
+        saveState: true /*,
+        select: {
+          style: 'multi'
+        }*/
       },
       fields: {
         id: { label: 'ID', sortable: true },
