@@ -343,7 +343,7 @@ export default {
       })
 
       // handle individual row select events
-      that.dataTable.on('select deselect', () => {
+      that.dataTable.on('select deselect', (e, dt, type, indexes) => {
         const $input = $el.find('th input.select-all-checkbox')
         if (that.dataTable.rows({
             selected: true
@@ -354,7 +354,19 @@ export default {
           jq('th.select-checkbox').addClass('selected')
           $input.attr('checked', true)
         }
-        // TODO: that.$emit the selected row?
+
+        // type is select/deselect so event become row-select or row-deselect
+        that.$emit('row-' + e.type, {
+          dataTable: that.dataTable,
+          e: e,
+          dt: dt,
+          type: type,
+          indexes: indexes
+        })
+
+        // to get data, see const examples below
+        // const rows = event.dataTable.rows( event.indexes )
+        // const data = rows.data()
       })
     }
 

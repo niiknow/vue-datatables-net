@@ -790,7 +790,7 @@ var myUniqueId = 1;
         }
       }); // handle individual row select events
 
-      that.dataTable.on('select deselect', function () {
+      that.dataTable.on('select deselect', function (e, dt, type, indexes) {
         var $input = $el.find('th input.select-all-checkbox');
 
         if (that.dataTable.rows({
@@ -801,8 +801,18 @@ var myUniqueId = 1;
         } else {
           jq('th.select-checkbox').addClass('selected');
           $input.attr('checked', true);
-        } // TODO: that.$emit the selected row?
+        } // type is select/deselect so event become row-select or row-deselect
 
+
+        that.$emit('row-' + e.type, {
+          dataTable: that.dataTable,
+          e: e,
+          dt: dt,
+          type: type,
+          indexes: indexes
+        }); // to get data, see const examples below
+        // const rows = event.dataTable.rows( event.indexes )
+        // const data = rows.data()
       });
     } // wire up edit, delete, and/or action buttons
 
