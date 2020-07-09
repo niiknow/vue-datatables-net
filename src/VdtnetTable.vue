@@ -235,6 +235,10 @@ export default {
           col.searchable = field.searchable
         }
 
+        if (field.hasOwnProperty('editField')) {
+            col.editField = field.editField
+        }
+
         if (field.template || that.$scopedSlots[field.name]) {
           field.render = that.compileTemplate(field, that.$scopedSlots[field.name])
         }
