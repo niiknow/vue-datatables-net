@@ -309,15 +309,8 @@ export default {
           col.classFooterName = field.classFooterName
         }
 
-        if (field.render) {
-          if (!field.render.templated) {
-            let myRender = field.render
-            field.render = function() {
-              return myRender.apply(that, Array.prototype.slice.call(arguments))
-            }
-          }
-
-          col.render = field.render
+        if (field.template) {
+          col.template = field.template
         }
 
         // console.log(col)
@@ -378,7 +371,7 @@ export default {
     if (startCol > 0) {
       if (that.options.order) {
         that.options.order.forEach((v) => {
-            v[0] += startCol
+          v[0] += startCol
         })
       } else {
         that.options.order = [[startCol, 'asc']]
@@ -389,6 +382,28 @@ export default {
     const that   = this
     const jq     = that.jq
     const $el    = jq(that.$refs.table)
+    let cols     = that.options.columns
+
+    for (let k in cols) {
+      const col = cols[k]
+
+      if (col.template || that.$scopedSlots[col.name]) {
+        col.render = that.compileTemplate(col, that.$scopedSlots[col.name])
+      }
+
+      if (col.render) {
+        if (!col.render.templated) {
+          let myRender = col.render
+          col.render = function() {
+            return myRender.apply(that, Array.prototype.slice.call(arguments))
+          }
+        }
+      }
+
+      if (col.template) {
+        delete col.template
+      }
+    }
 
     // handle local data loader
     if (that.dataLoader) {
