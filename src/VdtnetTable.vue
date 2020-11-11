@@ -9,23 +9,62 @@
       :class="className"
       cellpadding="0"
     >
-      <thead>
+      <thead
+        :class="theadClassName"
+      >
         <tr>
           <th
             v-for="(field, i) in options.columns"
-            :key="i"
-            :class="field.className"
+            :key="'head_'+i"
+            :class="field.classHeaderName"
           >
             <slot
               :name="'HEAD_'+field.name"
               :field="field"
               :i="i"
             >
-              <div v-html="field.title" />
+              <input
+                v-if="field.name === '_select_checkbox'"
+                type="checkbox"
+                class="select-all-checkbox d-print-none"
+              >
+              <div
+                v-else
+                v-html="field.label"
+              />
             </slot>
           </th>
         </tr>
       </thead>
+      <tfoot
+        v-if="!hideFooter"
+        :class="tfootClassName"
+      >
+        <tr>
+          <th
+            v-for="(field, i) in options.columns"
+            :key="'foot_'+i"
+            :class="field.classFooterName"
+          >
+            <slot
+              :name="'FOOT_'+field.name"
+              :field="field"
+              :i="i"
+            >
+              <input
+                v-if="columnSearch && (field.searchable || typeof field.searchable === 'undefined')"
+                :placeholder="field.label"
+                :class="columnSearchClassName"
+                type="search"
+              />
+              <div
+                v-else-if="!columnSearch"
+                v-html="field.label"
+              />
+            </slot>
+          </th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </template>
@@ -53,6 +92,31 @@ export default {
     containerClassName: {
       type: String,
       default: 'table-responsive d-print-inline'
+    },
+    /**
+     * Set the input column search classes.
+     *
+     * @type String
+     */
+    columnSearchClassName: {
+      type: String,
+      default: 'form-control form-control-sm'
+    },
+    /**
+     * Set the tfoot classes.
+     *
+     * @type String
+     */
+    tfootClassName: {
+       type: String,
+    },
+    /**
+     * Set the thead classes.
+     *
+     * @type String
+     */
+    theadClassName: {
+      type: String,
     },
     /**
      * Set the table classes you wish to use, default with bootstrap4
@@ -124,6 +188,15 @@ export default {
       type: Boolean
     },
     /**
+     * true to hide the individual column search of the table
+     *
+     * @type Boolean
+     */
+    columnSearch: {
+        type: Boolean,
+        default: false
+    },
+    /**
      * The details column configuration of master/details.
      *
      * @type {Object}
@@ -173,27 +246,20 @@ export default {
     const that = this
     const jq   = that.jq
 
+    let startCol = 0
+    let icol     = 0
+
     that.tableId = that.id || `vdtnetable${myUniqueId++}`
 
     // allow user to override default options
     if (that.opts) {
       that.options = jq.extend({}, that.options, that.opts)
     }
-  },
-  mounted() {
-    const that   = this
-    const jq     = that.jq
-    const $el    = jq(that.$refs.table)
-    const orders = []
 
-    let startCol = 0
-    let icol     = 0
-
-    // if fields are passed in, generate column definition
-    // from our custom fields schema
     if (that.fields) {
       const fields = that.fields
       let cols     = that.options.columns
+      let orders   = that.options.order
 
       for (let k in fields) {
         const field = fields[k]
@@ -201,46 +267,46 @@ export default {
 
         // disable search and sort for local field
         if (field.isLocal) {
-          field.searchable = false
-          field.sortable  = false
+            field.searchable = false
+            field.sortable  = false
         }
 
         // generate
         let col = {
-          title:      field.label || field.name,
-          data:       field.data || field.name,
-          width:      field.width,
-          name:       field.name,
-          className:  field.className,
-          index:      field.index || (icol + 1)
-        }
-
-        if (field.width) {
-          col.width = field.width
+            label:      field.label || field.name,
+            data:       field.data || field.name,
+            width:      field.width,
+            name:       field.name,
+            className:  field.className,
+            index:      field.index || (icol + 1)
         }
 
         if (field.hasOwnProperty('defaultContent')) {
-          col.defaultContent = field.defaultContent
+            col.defaultContent = field.defaultContent
         }
 
         if (field.hasOwnProperty('sortable')) {
-          col.orderable = field.sortable
+            col.orderable = field.sortable
         }
 
         if (field.hasOwnProperty('visible')) {
-          col.visible = field.visible
+            col.visible = field.visible
         }
 
         if (field.hasOwnProperty('searchable')) {
-          col.searchable = field.searchable
+            col.searchable = field.searchable
         }
 
         if (field.hasOwnProperty('editField')) {
             col.editField = field.editField
         }
 
-        if (field.template || that.$scopedSlots[field.name]) {
-          field.render = that.compileTemplate(field, that.$scopedSlots[field.name])
+        if (field.hasOwnProperty('classHeaderName')) {
+            col.classHeaderName = field.classHeaderName
+        }
+
+        if (field.hasOwnProperty('classFooterName')) {
+            col.classFooterName = field.classFooterName
         }
 
         if (field.render) {
@@ -263,13 +329,7 @@ export default {
 
         icol++
       }
-
-      // sort columns
-      cols = cols.sort((a, b) => a.index - b.index)
     }
-
-    // apply orders calculated from above
-    that.options.order = that.options.order || orders
 
     if (that.selectCheckbox) {
       that.selectCheckbox = that.selectCheckbox || 1
@@ -282,7 +342,6 @@ export default {
         className: 'select-checkbox d-print-none',
         data: null,
         defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox d-print-none">',
         index: (that.selectCheckbox - 1)
       }
       that.options.columns.splice(that.selectCheckbox - 1, 0, col)
@@ -319,17 +378,36 @@ export default {
     if (startCol > 0) {
       if (that.options.order) {
         that.options.order.forEach((v) => {
-          v[0] += startCol
+            v[0] += startCol
         })
       } else {
         that.options.order = [[startCol, 'asc']]
       }
     }
+  },
+  mounted() {
+    const that   = this
+    const jq     = that.jq
+    const $el    = jq(that.$refs.table)
 
     // handle local data loader
     if (that.dataLoader) {
       delete that.options.ajax
       that.options.serverSide = false
+    }
+
+    if (!that.hideFooter && that.columnSearch) {
+      that.options.initComplete = function () {
+        this.api().columns().every(function () {
+          const that = this;
+
+          jq('input', this.footer()).on('keyup change clear search', function () {
+            if (that.search() !== this.value) {
+              that.search(this.value).draw();
+            }
+          })
+        })
+      }
     }
 
     // you can access and update the that.options and $el here before we create the DataTable
