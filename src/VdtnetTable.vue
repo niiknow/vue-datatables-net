@@ -267,46 +267,46 @@ export default {
 
         // disable search and sort for local field
         if (field.isLocal) {
-            field.searchable = false
-            field.sortable  = false
+          field.searchable = false
+          field.sortable  = false
         }
 
         // generate
         let col = {
-            label:      field.label || field.name,
-            data:       field.data || field.name,
-            width:      field.width,
-            name:       field.name,
-            className:  field.className,
-            index:      field.index || (icol + 1)
+          label:      field.label || field.name,
+          data:       field.data || field.name,
+          width:      field.width,
+          name:       field.name,
+          className:  field.className,
+          index:      field.index || (icol + 1)
         }
 
         if (field.hasOwnProperty('defaultContent')) {
-            col.defaultContent = field.defaultContent
+          col.defaultContent = field.defaultContent
         }
 
         if (field.hasOwnProperty('sortable')) {
-            col.orderable = field.sortable
+          col.orderable = field.sortable
         }
 
         if (field.hasOwnProperty('visible')) {
-            col.visible = field.visible
+          col.visible = field.visible
         }
 
         if (field.hasOwnProperty('searchable')) {
-            col.searchable = field.searchable
+          col.searchable = field.searchable
         }
 
         if (field.hasOwnProperty('editField')) {
-            col.editField = field.editField
+          col.editField = field.editField
         }
 
         if (field.hasOwnProperty('classHeaderName')) {
-            col.classHeaderName = field.classHeaderName
+          col.classHeaderName = field.classHeaderName
         }
 
         if (field.hasOwnProperty('classFooterName')) {
-            col.classFooterName = field.classFooterName
+          col.classFooterName = field.classFooterName
         }
 
         if (field.render) {
