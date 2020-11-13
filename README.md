@@ -212,6 +212,15 @@ Our component parameters:
       type: Boolean
     },
     /**
+     * true to hide the tfoot of the table
+     *
+     * @type Boolean
+     */
+    hideTfoot: {
+      type: Boolean,
+      default: true
+    },
+    /**
      * true to hide the individual column search of the table
      *
      * @type Boolean

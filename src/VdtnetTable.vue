@@ -37,7 +37,7 @@
         </tr>
       </thead>
       <tfoot
-        v-if="!hideFooter"
+        v-if="!hideTfoot"
         :class="tfootClassName"
       >
         <tr>
@@ -188,6 +188,15 @@ export default {
       type: Boolean
     },
     /**
+     * true to hide the tfoot of the table
+     *
+     * @type Boolean
+     */
+    hideTfoot: {
+      type: Boolean,
+      default: true
+    },
+    /**
      * true to hide the individual column search of the table
      *
      * @type Boolean
@@ -311,6 +320,10 @@ export default {
 
         if (field.template) {
           col.template = field.template
+        }
+
+        if (field.render) {
+          col.render = field.render
         }
 
         // console.log(col)
