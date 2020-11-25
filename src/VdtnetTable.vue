@@ -426,8 +426,19 @@ export default {
 
     if (!that.hideFooter && that.columnSearch) {
       that.options.initComplete = function () {
-        this.api().columns().every(function () {
+        let api = this.api();
+        let state = api.state.loaded();
+
+        api.columns().every(function () {
           const that = this;
+          const colIdx = this.index();
+
+          if(state){
+            let colSearch = state.columns[colIdx].search;
+            if (colSearch.search){
+              jq('input', this.footer()).val(colSearch.search);
+            }
+          }
 
           jq('input', this.footer()).on('keyup change clear search', function () {
             if (that.search() !== this.value) {
