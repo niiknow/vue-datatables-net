@@ -9,23 +9,62 @@
       :class="className"
       cellpadding="0"
     >
-      <thead>
+      <thead
+        :class="theadClassName"
+      >
         <tr>
           <th
             v-for="(field, i) in options.columns"
-            :key="i"
-            :class="field.className"
+            :key="'head_'+i"
+            :class="field.classHeaderName"
           >
             <slot
               :name="'HEAD_'+field.name"
               :field="field"
               :i="i"
             >
-              <div v-html="field.title" />
+              <input
+                v-if="field.name === '_select_checkbox'"
+                type="checkbox"
+                class="select-all-checkbox d-print-none"
+              >
+              <div
+                v-else
+                v-html="field.label"
+              />
             </slot>
           </th>
         </tr>
       </thead>
+      <tfoot
+        v-if="!hideTfoot"
+        :class="tfootClassName"
+      >
+        <tr>
+          <th
+            v-for="(field, i) in options.columns"
+            :key="'foot_'+i"
+            :class="field.classFooterName"
+          >
+            <slot
+              :name="'FOOT_'+field.name"
+              :field="field"
+              :i="i"
+            >
+              <input
+                v-if="columnSearch && (field.searchable || typeof field.searchable === 'undefined')"
+                :placeholder="field.label"
+                :class="columnSearchClassName"
+                type="search"
+              />
+              <div
+                v-else-if="!columnSearch"
+                v-html="field.label"
+              />
+            </slot>
+          </th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </template>
@@ -53,6 +92,31 @@ export default {
     containerClassName: {
       type: String,
       default: 'table-responsive d-print-inline'
+    },
+    /**
+     * Set the input column search classes.
+     *
+     * @type String
+     */
+    columnSearchClassName: {
+      type: String,
+      default: 'form-control form-control-sm'
+    },
+    /**
+     * Set the tfoot classes.
+     *
+     * @type String
+     */
+    tfootClassName: {
+       type: String,
+    },
+    /**
+     * Set the thead classes.
+     *
+     * @type String
+     */
+    theadClassName: {
+      type: String,
     },
     /**
      * Set the table classes you wish to use, default with bootstrap4
@@ -124,6 +188,24 @@ export default {
       type: Boolean
     },
     /**
+     * true to hide the tfoot of the table
+     *
+     * @type Boolean
+     */
+    hideTfoot: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * true to hide the individual column search of the table
+     *
+     * @type Boolean
+     */
+    columnSearch: {
+        type: Boolean,
+        default: false
+    },
+    /**
      * The details column configuration of master/details.
      *
      * @type {Object}
@@ -173,27 +255,20 @@ export default {
     const that = this
     const jq   = that.jq
 
+    let startCol = 0
+    let icol     = 0
+
     that.tableId = that.id || `vdtnetable${myUniqueId++}`
 
     // allow user to override default options
     if (that.opts) {
       that.options = jq.extend({}, that.options, that.opts)
     }
-  },
-  mounted() {
-    const that   = this
-    const jq     = that.jq
-    const $el    = jq(that.$refs.table)
-    const orders = []
 
-    let startCol = 0
-    let icol     = 0
-
-    // if fields are passed in, generate column definition
-    // from our custom fields schema
     if (that.fields) {
       const fields = that.fields
       let cols     = that.options.columns
+      let orders   = that.options.order
 
       for (let k in fields) {
         const field = fields[k]
@@ -207,16 +282,12 @@ export default {
 
         // generate
         let col = {
-          title:      field.label || field.name,
+          label:      field.label || field.name,
           data:       field.data || field.name,
           width:      field.width,
           name:       field.name,
           className:  field.className,
           index:      field.index || (icol + 1)
-        }
-
-        if (field.width) {
-          col.width = field.width
         }
 
         if (field.hasOwnProperty('defaultContent')) {
@@ -236,21 +307,22 @@ export default {
         }
 
         if (field.hasOwnProperty('editField')) {
-            col.editField = field.editField
+          col.editField = field.editField
         }
 
-        if (field.template || that.$scopedSlots[field.name]) {
-          field.render = that.compileTemplate(field, that.$scopedSlots[field.name])
+        if (field.hasOwnProperty('classHeaderName')) {
+          col.classHeaderName = field.classHeaderName
+        }
+
+        if (field.hasOwnProperty('classFooterName')) {
+          col.classFooterName = field.classFooterName
+        }
+
+        if (field.template) {
+          col.template = field.template
         }
 
         if (field.render) {
-          if (!field.render.templated) {
-            let myRender = field.render
-            field.render = function() {
-              return myRender.apply(that, Array.prototype.slice.call(arguments))
-            }
-          }
-
           col.render = field.render
         }
 
@@ -263,13 +335,7 @@ export default {
 
         icol++
       }
-
-      // sort columns
-      cols = cols.sort((a, b) => a.index - b.index)
     }
-
-    // apply orders calculated from above
-    that.options.order = that.options.order || orders
 
     if (that.selectCheckbox) {
       that.selectCheckbox = that.selectCheckbox || 1
@@ -282,7 +348,6 @@ export default {
         className: 'select-checkbox d-print-none',
         data: null,
         defaultContent: '',
-        title: '<input type="checkbox" class="select-all-checkbox d-print-none">',
         index: (that.selectCheckbox - 1)
       }
       that.options.columns.splice(that.selectCheckbox - 1, 0, col)
@@ -325,11 +390,63 @@ export default {
         that.options.order = [[startCol, 'asc']]
       }
     }
+  },
+  mounted() {
+    const that   = this
+    const jq     = that.jq
+    const $el    = jq(that.$refs.table)
+    let cols     = that.options.columns
+
+    for (let k in cols) {
+      const col = cols[k]
+
+      if (col.template || that.$scopedSlots[col.name]) {
+        col.render = that.compileTemplate(col, that.$scopedSlots[col.name])
+      }
+
+      if (col.render) {
+        if (!col.render.templated) {
+          let myRender = col.render
+          col.render = function() {
+            return myRender.apply(that, Array.prototype.slice.call(arguments))
+          }
+        }
+      }
+
+      if (col.template) {
+        delete col.template
+      }
+    }
 
     // handle local data loader
     if (that.dataLoader) {
       delete that.options.ajax
       that.options.serverSide = false
+    }
+
+    if (!that.hideFooter && that.columnSearch) {
+      that.options.initComplete = function () {
+        let api = this.api();
+        let state = api.state.loaded();
+
+        api.columns().every(function () {
+          const that = this;
+          const colIdx = this.index();
+
+          if(state){
+            let colSearch = state.columns[colIdx].search;
+            if (colSearch.search){
+              jq('input', this.footer()).val(colSearch.search);
+            }
+          }
+
+          jq('input', this.footer()).on('keyup change clear search', function () {
+            if (that.search() !== this.value) {
+              that.search(this.value).draw();
+            }
+          })
+        })
+      }
     }
 
     // you can access and update the that.options and $el here before we create the DataTable

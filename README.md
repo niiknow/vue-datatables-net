@@ -118,6 +118,31 @@ Our component parameters:
       default: 'table-responsive d-print-inline'
     },
     /**
+     * Set the input column search classes.
+     *
+     * @type String
+     */
+    columnSearchClassName: {
+      type: String,
+    default: 'form-control form-control-sm'
+    },
+    /**
+     * Set the tfoot classes.
+     *
+     * @type String
+     */
+    tfootClassName: {
+      type: String,
+    },
+    /**
+     * Set the thead classes.
+     *
+     * @type String
+     */
+    theadClassName: {
+      type: String,
+    },
+    /**
      * Set the table classes you wish to use, default with bootstrap4
      * but you can override with: themeforest, foundation, etc..
      *
@@ -187,6 +212,24 @@ Our component parameters:
       type: Boolean
     },
     /**
+     * true to hide the tfoot of the table
+     *
+     * @type Boolean
+     */
+    hideTfoot: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * true to hide the individual column search of the table
+     *
+     * @type Boolean
+     */
+    columnSearch: {
+      type: Boolean,
+    default: false
+    },
+    /**
      * The details column configuration of master/details.
      *
      * @type {Object}
@@ -217,6 +260,8 @@ fields: {
 - `visible` false to hide
 - `width` to provide custom width
 - `className` set column class names
+- `classHeaderName` set header class names
+- `classFooterName` set footer class names
 - `defaultContent` provide default html when no data available
 - `render` custom cell rendering function https://datatables.net/reference/option/columns.render
 - `template` simple vue template for the field.  See example App.
@@ -337,6 +382,14 @@ Allow you to refresh ajax content after some event.  Let say you have something 
 Let say you have a column `description`, you can provide table head template for the description column like so:
 ```html
 <template slot="HEAD_description">
+  <h1>desc</h1>
+</template>
+```
+
+## Customizable table footer (th) columns
+Let say you have a column `description`, you can provide table footer template for the description column like so:
+```html
+<template slot="FOOT_description">
   <h1>desc</h1>
 </template>
 ```
