@@ -56,7 +56,7 @@
                 :placeholder="field.label"
                 :class="columnSearchClassName"
                 type="search"
-              />
+              >
               <div
                 v-else-if="!columnSearch"
                 v-html="field.label"
@@ -265,6 +265,8 @@ export default {
       that.options = jq.extend({}, that.options, that.opts)
     }
 
+    that.options.order = that.options.order || [[startCol, 'asc']]
+
     if (that.fields) {
       const fields = that.fields
       let cols     = that.options.columns
@@ -426,23 +428,23 @@ export default {
 
     if (!that.hideFooter && that.columnSearch) {
       that.options.initComplete = function () {
-        let api = this.api();
-        let state = api.state.loaded();
+        let api = this.api()
+        let state = api.state.loaded()
 
         api.columns().every(function () {
-          const that = this;
-          const colIdx = this.index();
+          const that = this
+          const colIdx = this.index()
 
           if(state){
-            let colSearch = state.columns[colIdx].search;
+            let colSearch = state.columns[colIdx].search
             if (colSearch.search){
-              jq('input', this.footer()).val(colSearch.search);
+              jq('input', this.footer()).val(colSearch.search)
             }
           }
 
           jq('input', this.footer()).on('keyup change clear search', function () {
             if (that.search() !== this.value) {
-              that.search(this.value).draw();
+              that.search(this.value).draw()
             }
           })
         })
