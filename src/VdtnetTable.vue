@@ -497,27 +497,28 @@ export default {
     $el.on('click', '[data-action]', (e) => {
       e.preventDefault()
       e.stopPropagation()
-      let target = jq(e.target)
-      let action  = target.attr('data-action')
-      while(!action) {
-        // don't let it propagate outside of container
-        if (target.hasClass('vdtnet-container') ||
-          target.prop('tagName') === 'table') {
-          // no action, simply exit
-          return
-        }
-        target = target.parent()
-        action = target.attr('data-action')
-      }
 
-      // only emit if there is action
-      if (action) {
-        // detect if row action
-        let tr = target.closest('tr')
+      let target = jq(e.target)
+      let action = target.attr('data-action')
+
+      // no action, simply exit
+      if (!action) {
+        return
+      } else {
+        let tr = target
+
+        // detect if action is inside a row
+        // get data from parent row/tr
+        if (target.prop('tagName') !== 'TR') {
+          tr = target.closest('tr')
+        }
+
         if (tr) {
-          if (tr.attr('role') !== 'row') {
+          // if child row, get previous/parent row
+          if (tr.hasClass('master-details')) {
             tr = tr.prev()
           }
+
           const row  = that.dataTable.row(tr)
           const data = row.data()
           that.$emit(action, data, row, tr, target)
@@ -550,20 +551,22 @@ export default {
         e.stopPropagation()
         const target = jq(e.target)
         let tr       = target.closest('tr')
-        if (tr.attr('role') !== 'row') {
+
+        if (tr.hasClass('master-details')) {
           tr = tr.prev()
         }
+
         const row = that.dataTable.row( tr )
+
         if ( row.child.isShown() ) {
           // This row is already open - close it
           row.child.hide()
           tr.removeClass('master')
-        }
-        else {
+        } else {
           // Open this row
           const data = row.data()
           row.child( renderFunc(data, 'child', row, tr) ).show()
-          tr.addClass('master')
+          tr.addClass('master').next().addClass('master-details')
         }
       })
     }
