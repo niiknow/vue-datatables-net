@@ -29,7 +29,7 @@ npm run watch
 
 To build library for npm publish:
 ```
-npm run build
+npm run dist
 ```
 
 This library is available on NPM, to install:

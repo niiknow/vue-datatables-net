@@ -168,7 +168,8 @@ export default {
      * @type Number
      */
     selectCheckbox: {
-      type: Number
+      type: Number,
+      default: -1
     },
     /**
      * Provide custom local data loading.  Warning: this option has not been
@@ -340,7 +341,6 @@ export default {
     }
 
     if (that.selectCheckbox) {
-      that.selectCheckbox = that.selectCheckbox || 1
 
       // create checkbox column
       const col = {
@@ -364,7 +364,7 @@ export default {
 
     // handle master details
     if (that.details) {
-      that.details.index = that.details.index || 1
+      const detailsIndex = that.details.index || 1
 
       // create details column
       const col = {
@@ -374,11 +374,11 @@ export default {
         className: 'details-control d-print-none',
         data: null,
         defaultContent: that.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>',
-        index: (that.details.index - 1)
+        index: (detailsIndex - 1)
       }
-      that.options.columns.splice(that.details.index - 1, 0, col)
+      that.options.columns.splice(detailsIndex - 1, 0, col)
 
-      if (that.details.index === 1) {
+      if (detailsIndex === 1) {
         startCol++
       }
     }

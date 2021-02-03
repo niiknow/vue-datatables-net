@@ -1,3 +1,11 @@
+/*!
+ * vue-datatables-net
+ * Vue jQuery DataTables.net wrapper component
+ *
+ * @version v1.4.1
+ * @author friends@niiknow.org
+ * @repository https://github.com/niiknow/vue-datatables-net.git
+ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("Vue"), require("jQuery"));
@@ -454,7 +462,8 @@ var myUniqueId = 1;
      * @type Number
      */
     selectCheckbox: {
-      type: Number
+      type: Number,
+      "default": -1
     },
 
     /**
@@ -630,8 +639,7 @@ var myUniqueId = 1;
     }
 
     if (that.selectCheckbox) {
-      that.selectCheckbox = that.selectCheckbox || 1; // create checkbox column
-
+      // create checkbox column
       var _col = {
         orderable: false,
         searchable: false,
@@ -655,7 +663,7 @@ var myUniqueId = 1;
 
 
     if (that.details) {
-      that.details.index = that.details.index || 1; // create details column
+      var detailsIndex = that.details.index || 1; // create details column
 
       var _col2 = {
         orderable: false,
@@ -664,11 +672,11 @@ var myUniqueId = 1;
         className: 'details-control d-print-none',
         data: null,
         defaultContent: that.details.icons || '<span class="details-plus" title="Show details">+</span><span class="details-minus" title="Hide details">-</span>',
-        index: that.details.index - 1
+        index: detailsIndex - 1
       };
-      that.options.columns.splice(that.details.index - 1, 0, _col2);
+      that.options.columns.splice(detailsIndex - 1, 0, _col2);
 
-      if (that.details.index === 1) {
+      if (detailsIndex === 1) {
         startCol++;
       }
     }
