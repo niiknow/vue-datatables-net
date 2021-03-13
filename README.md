@@ -43,10 +43,10 @@ Default configuration and provide example for `bootstrap4` styling.  Though, it 
 > Example of imports for Bootstrap 4:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href='https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href='https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css'>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 
 <script>

@@ -2,7 +2,7 @@
  * vue-datatables-net
  * Vue jQuery DataTables.net wrapper component
  *
- * @version v1.4.1
+ * @version v1.4.2
  * @author friends@niiknow.org
  * @repository https://github.com/niiknow/vue-datatables-net.git
  */
@@ -18,28 +18,6 @@
 })(self, function(__WEBPACK_EXTERNAL_MODULE_vue__, __WEBPACK_EXTERNAL_MODULE_jquery__) {
 return /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./example/app.js":
-/*!************************!*\
-  !*** ./example/app.js ***!
-  \************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _app_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.vue */ "./example/app.vue");
-
-
-new (vue__WEBPACK_IMPORTED_MODULE_0___default())({
-  el: '#app',
-  render: function render(h) {
-    return h(_app_vue__WEBPACK_IMPORTED_MODULE_1__.default);
-  }
-});
-
-/***/ }),
 
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./example/app.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************!*\
@@ -1031,7 +1009,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;-webkit-box-shadow:3px 3px 8px rgba(0,0,0,0.3);box-shadow:3px 3px 8px rgba(0,0,0,0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:0.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}div.dt-button-collection-title{text-align:center;padding:0.3em 0 0.5em;font-size:0.9em}div.dt-button-collection-title:empty{display:none}div.dt-button-collection{position:absolute;z-index:2001}div.dt-button-collection div.dropdown-menu{display:block;z-index:2002;min-width:100%}div.dt-button-collection div.dt-button-collection-title{background-color:white;border:1px solid rgba(0,0,0,0.15)}div.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.fixed.two-column{margin-left:-200px}div.dt-button-collection.fixed.three-column{margin-left:-225px}div.dt-button-collection.fixed.four-column{margin-left:-300px}div.dt-button-collection>:last-child{display:block !important;-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection>:last-child>*{-webkit-column-break-inside:avoid;-moz-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.two-column{width:400px}div.dt-button-collection.two-column>:last-child{padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.three-column{width:450px}div.dt-button-collection.three-column>:last-child{padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.four-column{width:600px}div.dt-button-collection.four-column>:last-child{padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection .dt-button{border-radius:0}div.dt-button-collection.fixed{max-width:none}div.dt-button-collection.fixed:before,div.dt-button-collection.fixed:after{display:none}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:0.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0,0,0,0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;-webkit-box-sizing:border-box;box-sizing:border-box;display:block;content:' ';border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;-webkit-box-shadow:3px 3px 8px rgba(0, 0, 0, 0.3);box-shadow:3px 3px 8px rgba(0, 0, 0, 0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}div.dt-button-collection-title{text-align:center;padding:.3em 0 .5em;font-size:.9em}div.dt-button-collection-title:empty{display:none}div.dt-button-collection{position:absolute;z-index:2001}div.dt-button-collection div.dropdown-menu{display:block;z-index:2002;min-width:100%}div.dt-button-collection div.dt-button-collection-title{background-color:white;border:1px solid rgba(0, 0, 0, 0.15)}div.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.fixed.two-column{margin-left:-200px}div.dt-button-collection.fixed.three-column{margin-left:-225px}div.dt-button-collection.fixed.four-column{margin-left:-300px}div.dt-button-collection>:last-child{display:block !important;-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection>:last-child>*{-webkit-column-break-inside:avoid;-moz-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.two-column{width:400px}div.dt-button-collection.two-column>:last-child{padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.three-column{width:450px}div.dt-button-collection.three-column>:last-child{padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.four-column{width:600px}div.dt-button-collection.four-column>:last-child{padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection .dt-button{border-radius:0}div.dt-button-collection.fixed{max-width:none}div.dt-button-collection.fixed:before,div.dt-button-collection.fixed:after{display:none}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0, 0, 0, 0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;-webkit-box-sizing:border-box;box-sizing:border-box;display:block;content:\" \";border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -1052,7 +1030,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#0275d8}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#0172d2}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#0170d0}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#0172d3}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#016ecc}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#016fcd}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#0170cf}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#0172d3}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#0173d5}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#0174d7}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#016ecc}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#0172d3}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#016bc6}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#016cc7}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#016dca}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#016bc6}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;-webkit-box-sizing:border-box;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:' ';margin-top:-6px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:'\\2714';margin-top:-11px;margin-left:-4px;text-align:center;text-shadow:1px 1px #B0BED9, -1px -1px #B0BED9, 1px -1px #B0BED9, -1px 1px #B0BED9}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#0275d8}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#0272d3}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#0271d0}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#0273d4}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#026fcc}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#0270ce}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#0270d0}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#0273d4}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#0274d5}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#0275d7}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#026fcc}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#0273d4}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#026bc6}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#026cc8}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#026eca}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#026bc6}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;-webkit-box-sizing:border-box;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:\" \";margin-top:-2px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:\"✓\";font-size:20px;margin-top:-19px;margin-left:-6px;text-align:center;text-shadow:1px 1px #b0bed9,-1px -1px #b0bed9,1px -1px #b0bed9,-1px 1px #b0bed9}table.dataTable.compact tbody td.select-checkbox:before,table.dataTable.compact tbody th.select-checkbox:before{margin-top:-12px}table.dataTable.compact tr.selected td.select-checkbox:after,table.dataTable.compact tr.selected th.select-checkbox:after{margin-top:-16px}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -1107,15 +1085,15 @@ module.exports = function (cssWithMappingToString) {
       }
 
       return content;
-    }).join('');
+    }).join("");
   }; // import a list of modules into the list
   // eslint-disable-next-line func-names
 
 
   list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
+    if (typeof modules === "string") {
       // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
+      modules = [[null, modules, ""]];
     }
 
     var alreadyImportedModules = {};
@@ -3048,8 +3026,8 @@ return DataTable.Buttons;
   \**********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for DataTables 1.6.5
- * ©2016-2020 SpryMedia Ltd - datatables.net/license
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Buttons for DataTables 1.7.0
+ * ©2016-2021 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
@@ -3619,7 +3597,7 @@ $.extend( Buttons.prototype, {
 		}
 
 		// Make sure that the button is available based on whatever requirements
-		// it has. For example, Flash buttons require Flash
+		// it has. For example, PDF button require pdfmake
 		if ( config.available && ! config.available( dt, config ) ) {
 			return false;
 		}
@@ -4498,6 +4476,41 @@ Buttons.buttonSelector = function ( insts, selector )
 	return ret;
 };
 
+/**
+ * Default function used for formatting output data.
+ * @param {*} str Data to strip
+ */
+Buttons.stripData = function ( str, config ) {
+	if ( typeof str !== 'string' ) {
+		return str;
+	}
+
+	// Always remove script tags
+	str = str.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
+
+	// Always remove comments
+	str = str.replace( /<!\-\-.*?\-\->/g, '' );
+
+	if ( config.stripHtml ) {
+		str = str.replace( /<[^>]*>/g, '' );
+	}
+
+	if ( config.trim ) {
+		str = str.replace( /^\s+|\s+$/g, '' );
+	}
+
+	if ( config.stripNewlines ) {
+		str = str.replace( /\n/g, ' ' );
+	}
+
+	if ( config.decodeEntities ) {
+		_exportTextarea.innerHTML = str;
+		str = _exportTextarea.value;
+	}
+
+	return str;
+};
+
 
 /**
  * Buttons defaults. For full documentation, please refer to the docs/option
@@ -4519,10 +4532,7 @@ Buttons.defaults = {
 			className: ''
 		},
 		button: {
-			// Flash buttons will not work with `<button>` in IE - it has to be `<a>`
-			tag: 'ActiveXObject' in window ?
-				'a' :
-				'button',
+			tag: 'button',
 			className: 'dt-button',
 			active: 'active',
 			disabled: 'disabled'
@@ -4539,7 +4549,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.6.5';
+Buttons.version = '1.7.0';
 
 
 $.extend( _dtButtons, {
@@ -4570,47 +4580,53 @@ $.extend( _dtButtons, {
 		if ( _dtButtons.copyHtml5 ) {
 			return 'copyHtml5';
 		}
-		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
-			return 'copyFlash';
-		}
 	},
 	csv: function ( dt, conf ) {
-		// Common option that will use the HTML5 or Flash export buttons
 		if ( _dtButtons.csvHtml5 && _dtButtons.csvHtml5.available( dt, conf ) ) {
 			return 'csvHtml5';
 		}
-		if ( _dtButtons.csvFlash && _dtButtons.csvFlash.available( dt, conf ) ) {
-			return 'csvFlash';
-		}
 	},
 	excel: function ( dt, conf ) {
-		// Common option that will use the HTML5 or Flash export buttons
 		if ( _dtButtons.excelHtml5 && _dtButtons.excelHtml5.available( dt, conf ) ) {
 			return 'excelHtml5';
 		}
-		if ( _dtButtons.excelFlash && _dtButtons.excelFlash.available( dt, conf ) ) {
-			return 'excelFlash';
-		}
 	},
 	pdf: function ( dt, conf ) {
-		// Common option that will use the HTML5 or Flash export buttons
 		if ( _dtButtons.pdfHtml5 && _dtButtons.pdfHtml5.available( dt, conf ) ) {
 			return 'pdfHtml5';
-		}
-		if ( _dtButtons.pdfFlash && _dtButtons.pdfFlash.available( dt, conf ) ) {
-			return 'pdfFlash';
 		}
 	},
 	pageLength: function ( dt ) {
 		var lengthMenu = dt.settings()[0].aLengthMenu;
-		var vals = Array.isArray( lengthMenu[0] ) ? lengthMenu[0] : lengthMenu;
-		var lang = Array.isArray( lengthMenu[0] ) ? lengthMenu[1] : lengthMenu;
+		var vals = [];
+		var lang = [];
 		var text = function ( dt ) {
 			return dt.i18n( 'buttons.pageLength', {
 				"-1": 'Show all rows',
 				_:    'Show %d rows'
 			}, dt.page.len() );
 		};
+
+		// Support for DataTables 1.x 2D array
+		if (Array.isArray( lengthMenu[0] )) {
+			vals = lengthMenu[0];
+			lang = lengthMenu[1];
+		}
+		else {
+			for (var i=0 ; i<lengthMenu.length ; i++) {
+				var option = lengthMenu[i];
+
+				// Support for DataTables 2 object in the array
+				if ($.isPlainObject(option)) {
+					vals.push(option.value);
+					lang.push(option.label);
+				}
+				else {
+					vals.push(option);
+					lang.push(option);
+				}
+			}
+		}
 
 		return {
 			extend: 'collection',
@@ -5014,9 +5030,6 @@ var _message = function ( dt, option, position )
 
 
 
-
-
-
 var _exportTextarea = $('<textarea/>')[0];
 var _exportData = function ( dt, inOpts )
 {
@@ -5034,49 +5047,17 @@ var _exportData = function ( dt, inOpts )
 		trim:           true,
 		format:         {
 			header: function ( d ) {
-				return strip( d );
+				return Buttons.stripData( d, config );
 			},
 			footer: function ( d ) {
-				return strip( d );
+				return Buttons.stripData( d, config );
 			},
 			body: function ( d ) {
-				return strip( d );
+				return Buttons.stripData( d, config );
 			}
 		},
 		customizeData: null
 	}, inOpts );
-
-	var strip = function ( str ) {
-		if ( typeof str !== 'string' ) {
-			return str;
-		}
-
-		// Always remove script tags
-		str = str.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
-
-		// Always remove comments
-		str = str.replace( /<!\-\-.*?\-\->/g, '' );
-
-		if ( config.stripHtml ) {
-			str = str.replace( /<([^>'"]*('[^']*'|"[^"]*")?)*>/g, '' );
-		}
-
-		if ( config.trim ) {
-			str = str.replace( /^\s+|\s+$/g, '' );
-		}
-
-		if ( config.stripNewlines ) {
-			str = str.replace( /\n/g, ' ' );
-		}
-
-		if ( config.decodeEntities ) {
-			_exportTextarea.innerHTML = str;
-			str = _exportTextarea.value;
-		}
-
-		return str;
-	};
-
 
 	var header = dt.columns( config.columns ).indexes().map( function (idx) {
 		var el = dt.column( idx ).header();
@@ -5226,19 +5207,19 @@ return $.fn.dataTable;
   \********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.3.1
- * 2015-2019 SpryMedia Ltd - datatables.net/license/mit
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Select for DataTables 1.3.2
+ * 2015-2021 SpryMedia Ltd - datatables.net/license/mit
  */
 
 /**
  * @summary     Select for DataTables
  * @description A collection of API methods, events and buttons for DataTables
  *   that provides selection options of the items in a DataTable
- * @version     1.3.1
+ * @version     1.3.2
  * @file        dataTables.select.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     datatables.net/forums
- * @copyright   Copyright 2015-2019 SpryMedia Ltd.
+ * @copyright   Copyright 2015-2021 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  *   MIT license - http://datatables.net/license/mit
@@ -5266,7 +5247,7 @@ var DataTable = $.fn.dataTable;
 // Version information for debugger
 DataTable.select = {};
 
-DataTable.select.version = '1.3.1';
+DataTable.select.version = '1.3.2';
 
 DataTable.select.init = function ( dt ) {
 	var ctx = dt.settings()[0];
@@ -5590,7 +5571,7 @@ function enableMouseSelection ( dt )
 			}
 
 			var ctx = dt.settings()[0];
-			var wrapperClass = $.trim(dt.settings()[0].oClasses.sWrapper).replace(/ +/g, '.');
+			var wrapperClass = dt.settings()[0].oClasses.sWrapper.trim().replace(/ +/g, '.');
 
 			// Ignore clicks inside a sub-table
 			if ( $(e.target).closest('div.'+wrapperClass)[0] != dt.table().container() ) {
@@ -5772,7 +5753,12 @@ function init ( ctx ) {
 
 	// On Ajax reload we want to reselect all rows which are currently selected,
 	// if there is an rowId (i.e. a unique value to identify each row with)
-	api.on( 'preXhr.dt.dtSelect', function () {
+	api.on( 'preXhr.dt.dtSelect', function (e, settings) {
+		if (settings !== api.settings()[0]) {
+			// Not triggered by our DataTable!
+			return;
+		}
+
 		// note that column selection doesn't need to be cached and then
 		// reselected, as they are already selected
 		var rows = api.rows( { selected: true } ).ids( true ).filter( function ( d ) {
@@ -5808,6 +5794,8 @@ function init ( ctx ) {
 
 	// Clean up and release
 	api.on( 'destroy.dtSelect', function () {
+		api.rows({selected: true}).deselect();
+
 		disableMouseSelection( api );
 		api.off( '.dtSelect' );
 	} );
@@ -6049,7 +6037,7 @@ apiRegister( 'select.toggleable()', function ( flag ) {
 } );
 
 apiRegister( 'select.info()', function ( flag ) {
-	if ( info === undefined ) {
+	if ( flag === undefined ) {
 		return this.context[0]._select.info;
 	}
 
@@ -6187,7 +6175,7 @@ apiRegisterPlural( 'cells().select()', 'cell().select()', function ( select ) {
 	} );
 
 	this.iterator( 'table', function ( ctx, i ) {
-		eventTrigger( api, 'select', [ 'cell', api[i] ], true );
+		eventTrigger( api, 'select', [ 'cell', api.cells(api[i]).indexes().toArray() ], true );
 	} );
 
 	return this;
@@ -6199,6 +6187,7 @@ apiRegisterPlural( 'rows().deselect()', 'row().deselect()', function () {
 
 	this.iterator( 'row', function ( ctx, idx ) {
 		ctx.aoData[ idx ]._select_selected = false;
+		ctx._select_lastCell = null;
 		$( ctx.aoData[ idx ].nTr ).removeClass( ctx._select.className );
 	} );
 
@@ -6426,18 +6415,18 @@ return DataTable.select;
   \*************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.23
- * ©2008-2020 SpryMedia Ltd - datatables.net/license
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.24
+ * ©2008-2021 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     DataTables
  * @description Paginate, search and order HTML tables
- * @version     1.10.23
+ * @version     1.10.24
  * @file        jquery.dataTables.js
  * @author      SpryMedia Ltd
  * @contact     www.datatables.net
- * @copyright   Copyright 2008-2020 SpryMedia Ltd.
+ * @copyright   Copyright 2008-2021 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  *   MIT license - http://datatables.net/license
@@ -7496,6 +7485,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 						_fnLanguageCompat( json );
 						_fnCamelToHungarian( defaults.oLanguage, json );
 						$.extend( true, oLanguage, json );
+			
+						_fnCallbackFire( oSettings, null, 'i18n', [oSettings]);
 						_fnInitialise( oSettings );
 					},
 					error: function () {
@@ -7504,6 +7495,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 					}
 				} );
 				bInitHandedOff = true;
+			}
+			else {
+				_fnCallbackFire( oSettings, null, 'i18n', [oSettings]);
 			}
 			
 			/*
@@ -15938,7 +15932,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	 *  @type string
 	 *  @default Version number
 	 */
-	DataTable.version = "1.10.23";
+	DataTable.version = "1.10.24";
 
 	/**
 	 * Private data store, containing all of the settings objects that are
@@ -20890,8 +20884,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 		"sSortAsc": "sorting_asc",
 		"sSortDesc": "sorting_desc",
 		"sSortable": "sorting", /* Sortable in both directions */
-		"sSortableAsc": "sorting_asc_disabled",
-		"sSortableDesc": "sorting_desc_disabled",
+		"sSortableAsc": "sorting_desc_disabled",
+		"sSortableDesc": "sorting_asc_disabled",
 		"sSortableNone": "sorting_disabled",
 		"sSortColumn": "sorting_", /* Note that an int is postfixed for the sorting order */
 	
@@ -21332,7 +21326,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 	
 					cell
 						.removeClass(
-							column.sSortingClass +' '+
 							classes.sSortAsc +' '+
 							classes.sSortDesc
 						)
@@ -22717,8 +22710,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -22776,10 +22770,27 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;
 /******/ 	}();
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__("./example/app.js");
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
+"use strict";
+/*!************************!*\
+  !*** ./example/app.js ***!
+  \************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _app_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.vue */ "./example/app.vue");
+
+
+new (vue__WEBPACK_IMPORTED_MODULE_0___default())({
+  el: '#app',
+  render: function render(h) {
+    return h(_app_vue__WEBPACK_IMPORTED_MODULE_1__.default);
+  }
+});
+}();
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });

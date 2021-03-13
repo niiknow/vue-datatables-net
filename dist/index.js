@@ -2,7 +2,7 @@
  * vue-datatables-net
  * Vue jQuery DataTables.net wrapper component
  *
- * @version v1.4.1
+ * @version v1.4.2
  * @author friends@niiknow.org
  * @repository https://github.com/niiknow/vue-datatables-net.git
  */
@@ -746,19 +746,6 @@ var myUniqueId = 1;
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _VdtnetTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VdtnetTable.vue */ "./src/VdtnetTable.vue");
-
-/* harmony default export */ __webpack_exports__["default"] = (_VdtnetTable_vue__WEBPACK_IMPORTED_MODULE_0__.default);
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/VdtnetTable.vue?vue&type=style&index=0&lang=css& ***!
@@ -805,15 +792,15 @@ module.exports = function (cssWithMappingToString) {
       }
 
       return content;
-    }).join('');
+    }).join("");
   }; // import a list of modules into the list
   // eslint-disable-next-line func-names
 
 
   list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
+    if (typeof modules === "string") {
       // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
+      modules = [[null, modules, ""]];
     }
 
     var alreadyImportedModules = {};
@@ -1463,8 +1450,9 @@ function normalizeComponent (
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -1522,10 +1510,18 @@ function normalizeComponent (
 /******/ 	}();
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__("./src/index.js");
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VdtnetTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VdtnetTable.vue */ "./src/VdtnetTable.vue");
+
+/* harmony default export */ __webpack_exports__["default"] = (_VdtnetTable_vue__WEBPACK_IMPORTED_MODULE_0__.default);
+}();
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });
