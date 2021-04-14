@@ -2,7 +2,7 @@
  * vue-datatables-net
  * Vue jQuery DataTables.net wrapper component
  *
- * @version v1.5.0
+ * @version v1.5.1
  * @author friends@niiknow.org
  * @repository https://github.com/niiknow/vue-datatables-net.git
  */
@@ -533,8 +533,15 @@ var myUniqueId = 1;
         // const rows = event.dataTable.rows( event.indexes )
         // const data = rows.data()
       });
-    } // wire up edit, delete, and/or action buttons
+    }
 
+    $el.find('#vdtnetable1_wrapper').on('remove', function () {
+      if (that.dataTable) {
+        that.dataTable.destroy(true);
+      }
+
+      that.dataTable = null;
+    }); // wire up edit, delete, and/or action buttons
 
     $el.on('click', '[data-action]', function (e) {
       e.preventDefault();
@@ -613,15 +620,6 @@ var myUniqueId = 1;
     if (that.dataLoader) {
       that.reload();
     }
-  },
-  beforeDestroy: function beforeDestroy() {
-    var that = this;
-
-    if (that.dataTable) {
-      that.dataTable.destroy(true);
-    }
-
-    that.dataTable = null;
   },
   methods: {
     /**

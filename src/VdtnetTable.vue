@@ -493,6 +493,14 @@ export default {
       })
     }
 
+    $el.find('#vdtnetable1_wrapper').on('remove', () => {
+      if (that.dataTable) {
+        that.dataTable.destroy(true)
+      }
+
+      that.dataTable = null
+    })
+
     // wire up edit, delete, and/or action buttons
     $el.on('click', '[data-action]', (e) => {
       e.preventDefault()
@@ -577,14 +585,6 @@ export default {
     if (that.dataLoader) {
       that.reload()
     }
-  },
-  beforeDestroy() {
-    const that = this
-    if (that.dataTable) {
-      that.dataTable.destroy(true)
-    }
-
-    that.dataTable = null
   },
   methods: {
     /**
