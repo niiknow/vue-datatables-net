@@ -493,7 +493,7 @@ export default {
       })
     }
 
-    $el.find('#vdtnetable1_wrapper').on('remove', () => {
+    $el.on('remove', () => {
       if (that.dataTable) {
         that.dataTable.destroy(true)
       }
