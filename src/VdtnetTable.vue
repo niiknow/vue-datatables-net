@@ -148,10 +148,10 @@ export default {
      * Pass in DataTables.Net jQuery to resolve any conflict from
      * multiple jQuery loaded in the browser
      *
-     * @type Object
+     * @type Function
      */
     jquery: {
-      type: Object
+      type: Function
     },
     /**
      * Pass in Vue to resolve any conflict from multiple loaded

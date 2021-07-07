@@ -2,7 +2,7 @@ const webpack      = require('webpack');
 const path         = require('path');
 const mix          = require('laravel-mix');
 const pkg          = require('./package.json');
-const public       = process.env.NODE_ENV === 'dist' ? 'dist' : 'example';
+const public       = process.env.NODE_ENV === 'production' ? 'dist' : 'example';
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const banner  = `${pkg.name}
@@ -46,7 +46,7 @@ const config = {
 mix.webpackConfig(config).sourceMaps();
 mix.version();
 
-if (process.env.NODE_ENV === 'dist') {
+if (process.env.NODE_ENV === 'production') {
   mix.js(`src/index.js`, `${ public }`).vue();
   mix.disableNotifications();
 } else {
