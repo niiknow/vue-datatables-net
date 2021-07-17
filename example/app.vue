@@ -40,6 +40,7 @@
     <!-- Using the VdtnetTable component -->
     <vdtnet-table
       ref="table"
+      id="example"
       :fields="fields"
       :opts="options"
       :select-checkbox="1"
@@ -114,10 +115,7 @@ export default {
         lengthChange: true,
         serverSide: true,
         fixedHeader: true,
-        saveState: true /*,
-        select: {
-          style: 'multi'
-        }*/
+        stateSave: true
       },
       fields: {
         id: { label: 'ID', sortable: true },
