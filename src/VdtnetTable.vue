@@ -506,7 +506,7 @@ export default {
       e.preventDefault()
       e.stopPropagation()
 
-      let target = jq(e.target)
+      let target = jq(e.currentTarget)
       let action = target.attr('data-action')
 
       // no action, simply exit
