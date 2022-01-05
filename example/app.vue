@@ -39,8 +39,8 @@
     </div>
     <!-- Using the VdtnetTable component -->
     <vdtnet-table
-      ref="table"
       id="example"
+      ref="table"
       :fields="fields"
       :opts="options"
       :select-checkbox="1"

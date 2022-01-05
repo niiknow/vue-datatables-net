@@ -6,8 +6,9 @@ module.exports = {
   plugins: ['vue'], // enable vue plugin
   extends: ["plugin:vue/recommended", "prettier"], // activate vue related rules
   parserOptions: {
-    "parser": "babel-eslint",
-    "ecmaVersion": 7,
+    "parser": "@babel/eslint-parser",
+    "ecmaVersion": 8,
+    "requireConfigFile": false,
     "sourceType": "module",
     "ecmaFeatures": {
       "globalReturn": false,
