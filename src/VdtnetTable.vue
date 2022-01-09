@@ -119,7 +119,7 @@ export default {
       type: String,
     },
     /**
-     * Set the table classes you wish to use, default with bootstrap4
+     * Set the table classes you wish to use, default with bootstrap5
      * but you can override with: themeforest, foundation, etc..
      *
      * @type String

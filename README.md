@@ -38,13 +38,13 @@ npm install vue-datatables-net
 ```
 
 ## Usage
-Default configuration and provide example for `bootstrap4` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
+Default configuration and provide example for `bootstrap5` styling.  Though, it allow for complete flexibility of customization with any other jQuery DataTables supported theme.
 
-> Example of imports for Bootstrap 4:
+> Example of imports for Bootstrap 5:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href='https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -52,7 +52,7 @@ Default configuration and provide example for `bootstrap4` styling.  Though, it 
 <script>
 import VdtnetTable from 'vue-datatables-net'
 
-import 'datatables.net-bs4'
+import 'datatables.net-bs5'
 
 // below you should only import what you need
 // Example: import buttons and plugins
@@ -61,11 +61,11 @@ import 'datatables.net-buttons/js/buttons.html5.js'
 import 'datatables.net-buttons/js/buttons.print.js'
 
 // import the rest for your specific theme
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-select-bs4'
+import 'datatables.net-buttons-bs5'
+import 'datatables.net-select-bs5'
 
-import 'datatables.net-select-bs4/css/select.bootstrap4.min.css'
-import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'
+import 'datatables.net-select-bs5/css/select.bootstrap5.min.css'
+import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css'
 </script>
 ```
 
@@ -143,7 +143,7 @@ Our component parameters:
       type: String,
     },
     /**
-     * Set the table classes you wish to use, default with bootstrap4
+     * Set the table classes you wish to use, default with bootstrap5
      * but you can override with: themeforest, foundation, etc..
      *
      * @type String
@@ -397,7 +397,7 @@ Let say you have a column `description`, you can provide table footer template f
 ## dom (Searching and Toolbar)
 `dom` configuration defines how jQuery DataTables components are rendered - https://datatables.net/reference/option/dom
 
-Our default configuration compatible with Bootstrap4 is:
+Our default configuration compatible with Bootstrap5 is:
 ```html
 "tr<'row vdtnet-footer'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'pl>>"
 ```
@@ -421,7 +421,7 @@ window.open(url)
 ```
 
 ## Responsive
-1. In Bootstrap4, there's a class called [table-responsive](https://getbootstrap.com/docs/4.1/content/tables/#responsive-tables) that wrap the table at each screen breakpoint.  We apply this class on our wrapper div to make the table scroll horizontally.  We also include `d-print-inline` for print.
+1. In Bootstrap5, there's a class called [table-responsive](https://getbootstrap.com/docs/5.0/content/tables/#responsive-tables) that wrap the table at each screen breakpoint.  We apply this class on our wrapper div to make the table scroll horizontally.  We also include `d-print-inline` for print.
 
 2. Alternatively, you can set `options.responsive = true` to use jQuery DataTable responsive plugin.  **WARNING**: This plugin does not play well with `select-checkbox`, `master-details`, and many other features.  It is recommended to use option 1 above.
 

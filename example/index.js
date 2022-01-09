@@ -2,7 +2,7 @@
  * vue-datatables-net
  * Vue jQuery DataTables.net wrapper component
  *
- * @version v1.6.0
+ * @version v1.6.1
  * @author friends@niiknow.org
  * @repository https://github.com/niiknow/vue-datatables-net.git
  */
@@ -63,7 +63,7 @@ __webpack_require__(/*! core-js/modules/es.string.split.js */ "./node_modules/co
 
 var _src = _interopRequireDefault(__webpack_require__(/*! ../src */ "./src/index.js"));
 
-__webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+__webpack_require__(/*! datatables.net-bs5 */ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js");
 
 __webpack_require__(/*! datatables.net-buttons/js/dataTables.buttons.js */ "./node_modules/datatables.net-buttons/js/dataTables.buttons.js");
 
@@ -71,13 +71,13 @@ __webpack_require__(/*! datatables.net-buttons/js/buttons.html5.js */ "./node_mo
 
 __webpack_require__(/*! datatables.net-buttons/js/buttons.print.js */ "./node_modules/datatables.net-buttons/js/buttons.print.js");
 
-__webpack_require__(/*! datatables.net-buttons-bs4 */ "./node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.js");
+__webpack_require__(/*! datatables.net-buttons-bs5 */ "./node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.js");
 
-__webpack_require__(/*! datatables.net-select-bs4 */ "./node_modules/datatables.net-select-bs4/js/select.bootstrap4.js");
+__webpack_require__(/*! datatables.net-select-bs5 */ "./node_modules/datatables.net-select-bs5/js/select.bootstrap5.js");
 
-__webpack_require__(/*! datatables.net-select-bs4/css/select.bootstrap4.min.css */ "./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css");
+__webpack_require__(/*! datatables.net-select-bs5/css/select.bootstrap5.min.css */ "./node_modules/datatables.net-select-bs5/css/select.bootstrap5.min.css");
 
-__webpack_require__(/*! datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css */ "./node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css");
+__webpack_require__(/*! datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css */ "./node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css");
 
 //
 //
@@ -441,7 +441,7 @@ var _default = {
     },
 
     /**
-     * Set the table classes you wish to use, default with bootstrap4
+     * Set the table classes you wish to use, default with bootstrap5
      * but you can override with: themeforest, foundation, etc..
      *
      * @type String
@@ -836,7 +836,7 @@ var _default = {
     $el.on('click', '[data-action]', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      var target = jq(e.target);
+      var target = jq(e.currentTarget);
       var action = target.attr('data-action'); // no action, simply exit
 
       if (!action) {
@@ -4616,18 +4616,18 @@ $({ global: true, bind: true, forced: MSIE }, {
 
 /***/ }),
 
-/***/ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js":
+/***/ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js":
 /*!*********************************************************************!*\
-  !*** ./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js ***!
+  !*** ./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js ***!
   \*********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables Bootstrap 4 integration
- * ©2011-2017 SpryMedia Ltd - datatables.net/license
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables Bootstrap 5 integration
+ * 2020 SpryMedia Ltd - datatables.net/license
  */
 
 /**
- * DataTables integration for Bootstrap 4. This requires Bootstrap 4 and
+ * DataTables integration for Bootstrap 4. This requires Bootstrap 5 and
  * DataTables 1.10 or newer.
  *
  * This file sets the defaults and adds options to DataTables to style its
@@ -4660,9 +4660,9 @@ $.extend( true, DataTable.defaults, {
 
 /* Default class modification */
 $.extend( DataTable.ext.classes, {
-	sWrapper:      "dataTables_wrapper dt-bootstrap4",
+	sWrapper:      "dataTables_wrapper dt-bootstrap5",
 	sFilterInput:  "form-control form-control-sm",
-	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
+	sLengthSelect: "form-select form-select-sm",
 	sProcessing:   "dataTables_processing card",
 	sPageButton:   "paginate_button page-item"
 } );
@@ -4791,9 +4791,9 @@ return DataTable;
 
 /***/ }),
 
-/***/ "./node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.js":
+/***/ "./node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.js":
 /*!**************************************************************************!*\
-  !*** ./node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.js ***!
+  !*** ./node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.js ***!
   \**************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4804,7 +4804,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap in
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"), __webpack_require__(/*! datatables.net-buttons */ "./node_modules/datatables.net-buttons/js/dataTables.buttons.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net-bs5 */ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"), __webpack_require__(/*! datatables.net-buttons */ "./node_modules/datatables.net-buttons/js/dataTables.buttons.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -9041,20 +9041,20 @@ return Buttons;
 
 /***/ }),
 
-/***/ "./node_modules/datatables.net-select-bs4/js/select.bootstrap4.js":
+/***/ "./node_modules/datatables.net-select-bs5/js/select.bootstrap5.js":
 /*!************************************************************************!*\
-  !*** ./node_modules/datatables.net-select-bs4/js/select.bootstrap4.js ***!
+  !*** ./node_modules/datatables.net-select-bs5/js/select.bootstrap5.js ***!
   \************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 4 styling wrapper for Select
- * ©2018 SpryMedia Ltd - datatables.net/license
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! Bootstrap 5 styling wrapper for Select
+ * ©2021 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
 	if ( true ) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"), __webpack_require__(/*! datatables.net-select */ "./node_modules/datatables.net-select/js/dataTables.select.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery"), __webpack_require__(/*! datatables.net-bs5 */ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"), __webpack_require__(/*! datatables.net-select */ "./node_modules/datatables.net-select/js/dataTables.select.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -25649,9 +25649,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 /***/ }),
 
-/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css":
+/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css":
 /*!*****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css ***!
+  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css ***!
   \*****************************************************************************************************************************************************************************************************************************************************************/
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -25663,16 +25663,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;-webkit-box-shadow:3px 4px 10px 1px rgba(0, 0, 0, 0.3);box-shadow:3px 4px 10px 1px rgba(0, 0, 0, 0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}button.dtb-hide-drop{display:none !important}div.dt-button-collection-title{text-align:center;padding:.3em 0 .5em;font-size:.9em}div.dt-button-collection-title:empty{display:none}span.dt-button-spacer{display:inline-block;margin:.5em;white-space:nowrap}span.dt-button-spacer.bar{border-left:1px solid rgba(0, 0, 0, 0.3);vertical-align:middle;padding-left:.5em}span.dt-button-spacer.bar:empty{height:1em;width:1px;padding-left:0}div.dt-button-collection span.dt-button-spacer{width:100%;font-size:.9em;text-align:center;margin:.5em 0}div.dt-button-collection span.dt-button-spacer:empty{height:0;width:100%}div.dt-button-collection span.dt-button-spacer.bar{border-left:none;border-bottom:1px solid rgba(0, 0, 0, 0.3);padding-left:0}div.dt-button-collection{position:absolute;z-index:2001;width:100%}div.dt-button-collection div.dropdown-menu{display:block;z-index:2002;min-width:100%}div.dt-button-collection div.dt-button-collection-title{background-color:white;border:1px solid rgba(0, 0, 0, 0.15)}div.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.fixed.two-column{margin-left:-200px}div.dt-button-collection.fixed.three-column{margin-left:-225px}div.dt-button-collection.fixed.four-column{margin-left:-300px}div.dt-button-collection>:last-child{display:block !important;-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection>:last-child>*{-webkit-column-break-inside:avoid;-moz-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.two-column{width:400px}div.dt-button-collection.two-column>:last-child{padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.three-column{width:450px}div.dt-button-collection.three-column>:last-child{padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.four-column{width:600px}div.dt-button-collection.four-column>:last-child{padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection .dt-button{border-radius:0}div.dt-button-collection.fixed{max-width:none}div.dt-button-collection.fixed:before,div.dt-button-collection.fixed:after{display:none}div.dt-button-collection div.dt-btn-split-wrapper{width:100%;padding-left:5px;padding-right:5px}div.dt-button-collection button.dt-btn-split-drop-button{width:100%;color:#212529;border:none;background-color:white;border-radius:0px;margin-left:0px !important}div.dt-button-collection button.dt-btn-split-drop-button:focus{border:none;border-radius:0px;outline:none}div.dt-button-collection button.dt-btn-split-drop-button:hover{background-color:#e9ecef}div.dt-button-collection button.dt-btn-split-drop-button:active{background-color:#007bff !important}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0, 0, 0, 0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;-webkit-box-sizing:border-box;box-sizing:border-box;display:block;content:\" \";border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}div.dt-btn-split-wrapper:active:not(.disabled) button,div.dt-btn-split-wrapper.active:not(.disabled) button{background-color:#5a6268;border-color:#545b62}div.dt-btn-split-wrapper:active:not(.disabled) button.dt-btn-split-drop,div.dt-btn-split-wrapper.active:not(.disabled) button.dt-btn-split-drop{-webkit-box-shadow:none;box-shadow:none;background-color:#6c757d;border-color:#6c757d}div.dt-btn-split-wrapper:active:not(.disabled) button:hover,div.dt-btn-split-wrapper.active:not(.disabled) button:hover{background-color:#5a6268;border-color:#545b62}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group{border-radius:4px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group:last-child{border-top-left-radius:0px !important;border-bottom-left-radius:0px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group:first-child{border-top-right-radius:0px !important;border-bottom-right-radius:0px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group:last-child:first-child{border-top-left-radius:4px !important;border-bottom-left-radius:4px !important;border-top-right-radius:4px !important;border-bottom-right-radius:4px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group button.dt-btn-split-drop:last-child{border:1px solid #6c757d}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group div.dt-btn-split-wrapper{border:none}div.dt-button-collection div.btn-group{border-radius:4px !important}div.dt-button-collection div.btn-group button{border-radius:4px}div.dt-button-collection div.btn-group button:last-child{border-top-left-radius:0px !important;border-bottom-left-radius:0px !important}div.dt-button-collection div.btn-group button:first-child{border-top-right-radius:0px !important;border-bottom-right-radius:0px !important}div.dt-button-collection div.btn-group button:last-child:first-child{border-top-left-radius:4px !important;border-bottom-left-radius:4px !important;border-top-right-radius:4px !important;border-bottom-right-radius:4px !important}div.dt-button-collection div.btn-group button.dt-btn-split-drop:last-child{border:1px solid #6c757d}div.dt-button-collection div.btn-group div.dt-btn-split-wrapper{border:none}span.dt-button-spacer.bar:empty{height:inherit}div.dt-button-collection span.dt-button-spacer{padding-left:1rem !important;text-align:left}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes dtb-spinner{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}div.dt-button-info{position:fixed;top:50%;left:50%;width:400px;margin-top:-100px;margin-left:-200px;background-color:white;border:2px solid #111;-webkit-box-shadow:3px 4px 10px 1px rgba(0, 0, 0, 0.3);box-shadow:3px 4px 10px 1px rgba(0, 0, 0, 0.3);border-radius:3px;text-align:center;z-index:21}div.dt-button-info h2{padding:.5em;margin:0;font-weight:normal;border-bottom:1px solid #ddd;background-color:#f3f3f3}div.dt-button-info>div{padding:1em}button.dtb-hide-drop{display:none !important}div.dt-button-collection-title{text-align:center;padding:.3em 0 .5em;font-size:.9em}div.dt-button-collection-title:empty{display:none}span.dt-button-spacer{display:inline-block;margin:.5em;white-space:nowrap}span.dt-button-spacer.bar{border-left:1px solid rgba(0, 0, 0, 0.3);vertical-align:middle;padding-left:.5em}span.dt-button-spacer.bar:empty{height:1em;width:1px;padding-left:0}div.dt-button-collection span.dt-button-spacer{width:100%;font-size:.9em;text-align:center;margin:.5em 0}div.dt-button-collection span.dt-button-spacer:empty{height:0;width:100%}div.dt-button-collection span.dt-button-spacer.bar{border-left:none;border-bottom:1px solid rgba(0, 0, 0, 0.3);padding-left:0}div.dt-button-collection{position:absolute;z-index:2001;width:100%}div.dt-button-collection div.dropdown-menu{display:block;z-index:2002;min-width:100%;padding-left:2px;padding-right:2px}div.dt-button-collection div.dt-button-collection-title{background-color:white;border:1px solid rgba(0, 0, 0, 0.15)}div.dt-button-collection.fixed{position:fixed;top:50%;left:50%;margin-left:-75px;border-radius:0}div.dt-button-collection.fixed.two-column{margin-left:-200px}div.dt-button-collection.fixed.three-column{margin-left:-225px}div.dt-button-collection.fixed.four-column{margin-left:-300px}div.dt-button-collection>:last-child{display:block !important;-webkit-column-gap:8px;-moz-column-gap:8px;-ms-column-gap:8px;-o-column-gap:8px;column-gap:8px}div.dt-button-collection>:last-child>*{-webkit-column-break-inside:avoid;-moz-column-break-inside:avoid;break-inside:avoid}div.dt-button-collection.two-column{width:400px}div.dt-button-collection.two-column>:last-child{padding-bottom:1px;-webkit-column-count:2;-moz-column-count:2;-ms-column-count:2;-o-column-count:2;column-count:2}div.dt-button-collection.three-column{width:450px}div.dt-button-collection.three-column>:last-child{padding-bottom:1px;-webkit-column-count:3;-moz-column-count:3;-ms-column-count:3;-o-column-count:3;column-count:3}div.dt-button-collection.four-column{width:600px}div.dt-button-collection.four-column>:last-child{padding-bottom:1px;-webkit-column-count:4;-moz-column-count:4;-ms-column-count:4;-o-column-count:4;column-count:4}div.dt-button-collection .dt-button{border-radius:0}div.dt-button-collection.fixed{max-width:none}div.dt-button-collection.fixed:before,div.dt-button-collection.fixed:after{display:none}div.dt-button-collection div.dt-btn-split-wrapper{width:100%}div.dt-button-collection button.dt-btn-split-drop-button{width:100%;color:#212529;border:none;background-color:white;border-radius:0px;margin-left:0px !important}div.dt-button-collection button.dt-btn-split-drop-button:focus{border:none;border-radius:0px;outline:none}div.dt-button-collection button.dt-btn-split-drop-button:hover{background-color:#e9ecef}div.dt-button-collection button.dt-btn-split-drop-button:active{background-color:#007bff !important}div.dt-button-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}@media screen and (max-width: 767px){div.dt-buttons{float:none;width:100%;text-align:center;margin-bottom:.5em}div.dt-buttons a.btn{float:none}}div.dt-buttons button.btn.processing,div.dt-buttons div.btn.processing,div.dt-buttons a.btn.processing{color:rgba(0, 0, 0, 0.2)}div.dt-buttons button.btn.processing:after,div.dt-buttons div.btn.processing:after,div.dt-buttons a.btn.processing:after{position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;-webkit-box-sizing:border-box;box-sizing:border-box;display:block;content:\" \";border:2px solid #282828;border-radius:50%;border-left-color:transparent;border-right-color:transparent;animation:dtb-spinner 1500ms infinite linear;-o-animation:dtb-spinner 1500ms infinite linear;-ms-animation:dtb-spinner 1500ms infinite linear;-webkit-animation:dtb-spinner 1500ms infinite linear;-moz-animation:dtb-spinner 1500ms infinite linear}div.dt-btn-split-wrapper button.dt-btn-split-drop{border-top-right-radius:.25rem !important;border-bottom-right-radius:.25rem !important}div.dt-btn-split-wrapper:active:not(.disabled) button,div.dt-btn-split-wrapper.active:not(.disabled) button{background-color:#5a6268;border-color:#545b62}div.dt-btn-split-wrapper:active:not(.disabled) button.dt-btn-split-drop,div.dt-btn-split-wrapper.active:not(.disabled) button.dt-btn-split-drop{-webkit-box-shadow:none;box-shadow:none;background-color:#6c757d;border-color:#6c757d}div.dt-btn-split-wrapper:active:not(.disabled) button:hover,div.dt-btn-split-wrapper.active:not(.disabled) button:hover{background-color:#5a6268;border-color:#545b62}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group{border-radius:4px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group:last-child{border-top-left-radius:0px !important;border-bottom-left-radius:0px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group:first-child{border-top-right-radius:0px !important;border-bottom-right-radius:0px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group:last-child:first-child{border-top-left-radius:4px !important;border-bottom-left-radius:4px !important;border-top-right-radius:4px !important;border-bottom-right-radius:4px !important}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group button.dt-btn-split-drop:last-child{border:1px solid #6c757d}div.dataTables_wrapper div.dt-buttons.btn-group div.btn-group div.dt-btn-split-wrapper{border:none}div.dt-button-collection div.btn-group{border-radius:4px !important}div.dt-button-collection div.btn-group button{border-radius:4px}div.dt-button-collection div.btn-group button:last-child{border-top-left-radius:0px !important;border-bottom-left-radius:0px !important}div.dt-button-collection div.btn-group button:first-child{border-top-right-radius:0px !important;border-bottom-right-radius:0px !important}div.dt-button-collection div.btn-group button:last-child:first-child{border-top-left-radius:4px !important;border-bottom-left-radius:4px !important;border-top-right-radius:4px !important;border-bottom-right-radius:4px !important}div.dt-button-collection div.btn-group button.dt-btn-split-drop:last-child{border:1px solid #6c757d}div.dt-button-collection div.btn-group div.dt-btn-split-wrapper{border:none}span.dt-button-spacer.bar:empty{height:inherit}div.dt-button-collection span.dt-button-spacer{padding-left:1rem !important;text-align:left}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css":
+/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-select-bs5/css/select.bootstrap5.min.css":
 /*!***************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css ***!
+  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-select-bs5/css/select.bootstrap5.min.css ***!
   \***************************************************************************************************************************************************************************************************************************************************************/
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -25684,7 +25684,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#0275d8}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#0272d3}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#0271d0}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#0273d4}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#026fcc}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#0270ce}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#0270d0}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#0273d4}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#0274d5}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#0275d7}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#026fcc}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#0273d4}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#026bc6}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#026cc8}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#026eca}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#026bc6}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;-webkit-box-sizing:border-box;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:\" \";margin-top:-2px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:\"✓\";font-size:20px;margin-top:-19px;margin-left:-6px;text-align:center;text-shadow:1px 1px #b0bed9,-1px -1px #b0bed9,1px -1px #b0bed9,-1px 1px #b0bed9}table.dataTable.compact tbody td.select-checkbox:before,table.dataTable.compact tbody th.select-checkbox:before{margin-top:-12px}table.dataTable.compact tr.selected td.select-checkbox:after,table.dataTable.compact tr.selected th.select-checkbox:after{margin-top:-16px}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#0d6efd}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#0d6bf7}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#0d6af4}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#0d6cf8}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#0c68ef}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#0c69f1}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#0c6af3}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#0d6cf8}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#0d6dfa}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#0d6efc}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#0c68ef}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#0d6cf8}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#0c65e8}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#0c66ea}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#0c67ed}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#0c65e8}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;-webkit-box-sizing:border-box;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:\" \";margin-top:-2px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:\"✓\";font-size:20px;margin-top:-19px;margin-left:-6px;text-align:center;text-shadow:1px 1px #b0bed9,-1px -1px #b0bed9,1px -1px #b0bed9,-1px 1px #b0bed9}table.dataTable.compact tbody td.select-checkbox:before,table.dataTable.compact tbody th.select-checkbox:before{margin-top:-12px}table.dataTable.compact tr.selected td.select-checkbox:after,table.dataTable.compact tr.selected th.select-checkbox:after{margin-top:-16px}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}table.dataTable tbody tr.selected,table.dataTable tbody th.selected,table.dataTable tbody td.selected{color:white}table.dataTable tbody tr.selected a,table.dataTable tbody th.selected a,table.dataTable tbody td.selected a{color:#a2d4ed}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -25788,9 +25788,9 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ "./node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css":
+/***/ "./node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css":
 /*!********************************************************************************!*\
-  !*** ./node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css ***!
+  !*** ./node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css ***!
   \********************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -25798,7 +25798,7 @@ module.exports = function (cssWithMappingToString) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_buttons_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./buttons.bootstrap4.min.css */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css");
+/* harmony import */ var _laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_buttons_bootstrap5_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./buttons.bootstrap5.min.css */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css");
 
             
 
@@ -25807,17 +25807,17 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_buttons_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_buttons_bootstrap5_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_buttons_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ __webpack_exports__["default"] = (_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_buttons_bootstrap5_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
-/***/ "./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css":
+/***/ "./node_modules/datatables.net-select-bs5/css/select.bootstrap5.min.css":
 /*!******************************************************************************!*\
-  !*** ./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css ***!
+  !*** ./node_modules/datatables.net-select-bs5/css/select.bootstrap5.min.css ***!
   \******************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -25825,7 +25825,7 @@ var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMP
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_select_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./select.bootstrap4.min.css */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css");
+/* harmony import */ var _laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_select_bootstrap5_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./select.bootstrap5.min.css */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/datatables.net-select-bs5/css/select.bootstrap5.min.css");
 
             
 
@@ -25834,11 +25834,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_select_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_select_bootstrap5_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_select_bootstrap4_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ __webpack_exports__["default"] = (_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_select_bootstrap5_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 

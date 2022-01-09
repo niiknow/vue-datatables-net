@@ -74,7 +74,7 @@
 // this demonstrate with buttons and responsive master/details row
 import VdtnetTable from '../src'
 
-import 'datatables.net-bs4'
+import 'datatables.net-bs5'
 
 // import buttons and plugins
 import 'datatables.net-buttons/js/dataTables.buttons.js'
@@ -82,11 +82,11 @@ import 'datatables.net-buttons/js/buttons.html5.js'
 import 'datatables.net-buttons/js/buttons.print.js'
 
 // import the rest
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-select-bs4'
+import 'datatables.net-buttons-bs5'
+import 'datatables.net-select-bs5'
 
-import 'datatables.net-select-bs4/css/select.bootstrap4.min.css'
-import 'datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'
+import 'datatables.net-select-bs5/css/select.bootstrap5.min.css'
+import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css'
 
 export default {
   name: 'App',
