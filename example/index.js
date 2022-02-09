@@ -354,15 +354,6 @@ var _default = {
     },
 
     /**
-     * Pass in Vue to resolve any conflict from multiple loaded
-     *
-     * @type Object
-     */
-    vue: {
-      type: Object
-    },
-
-    /**
      * The select-checkbox column index (start at 1)
      * Current implementation require datatables.net-select
      *
@@ -446,9 +437,6 @@ var _default = {
   computed: {
     jq: function jq() {
       return this.jquery || window.jQuery;
-    },
-    myVue: function myVue() {
-      return this.vue || window.Vue;
     },
     classes: function classes() {
       var that = this;

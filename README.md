@@ -1,9 +1,9 @@
 # vue-datatables-net
-> Vue jQuery DataTables.net wrapper component 
+> Vue jQuery DataTables.net wrapper component
 
 This library is a Vue 2 wrapper for [jQuery DataTables](https://datatables.net/).  It's a tiny wrapper that doesn't include anything, not even the datatables.net core library.
 
-> Note: you've found this library because you want to use jQuery datatables.net client-side with your application.  Alternatively, if you simply want to integrate with server-side datatables.net compatible endpoint, then I'd like to suggest looking at bootstrap-vue b-table and this component - https://github.com/niiknow/bvtnet-items-provider 
+> Note: you've found this library because you want to use jQuery datatables.net client-side with your application.  Alternatively, if you simply want to integrate with server-side datatables.net compatible endpoint, then I'd like to suggest looking at bootstrap-vue b-table and this component - https://github.com/niiknow/bvtnet-items-provider
 
 ## Development
 `laravel-mix` is use to simplify build and packaging.
@@ -18,8 +18,8 @@ npm install
 ```
 
 or in one command:
-```                                                             
-npm install git+https://github.com/niiknow/vue-datatables-net.git                
+```
+npm install git+https://github.com/niiknow/vue-datatables-net.git
 ```
 
 To run locally (automatically launch firefox):
@@ -175,14 +175,6 @@ Our component parameters:
      * @type Object
      */
     jquery: {
-      type: Object
-    },
-    /**
-     * Pass in Vue to resolve any conflict from multiple loaded
-     *
-     * @type Object
-     */
-    vue: {
       type: Object
     },
     /**
