@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import { defineComponent, h, createApp } from 'vue'
+
 let myUniqueId = 1
 
 export default {
@@ -402,8 +404,8 @@ export default {
     for (let k in cols) {
       const col = cols[k]
 
-      if (col.template || that.$scopedSlots[col.name]) {
-        col.render = that.compileTemplate(col, that.$scopedSlots[col.name])
+      if (col.template || typeof that.$slots[col.name] === 'function') {
+        col.render = that.compileTemplate(col, that.$slots[col.name])
       }
 
       if (col.render) {
@@ -413,10 +415,6 @@ export default {
             return myRender.apply(that, Array.prototype.slice.call(arguments))
           }
         }
-      }
-
-      if (col.template) {
-        delete col.template
       }
     }
 
@@ -544,8 +542,8 @@ export default {
       let renderFunc = that.details.render
 
       // must be string template
-      if (that.details.template || that.$scopedSlots['_details']) {
-        renderFunc = that.compileTemplate(that.details, that.$scopedSlots['_details'])
+      if (that.details.template || typeof that.$slots._details === 'function') {
+        renderFunc = that.compileTemplate(that.details, that.$slots._details)
       } else if (renderFunc) {
         renderFunc = function() {
           return that.details.render.apply(that, Array.prototype.slice.call(arguments))
@@ -597,17 +595,27 @@ export default {
     compileTemplate(field, slot) {
       const that = this
       const jq   = that.jq
-      const vue  = that.myVue
-      const res  = vue.compile(`<div>${field.template || ''}</div>`)
-
 
       const renderFunc = (data, type, row, meta) => {
-        let myRender = res.render
+        const myDynamicComponent = defineComponent({
+          data() {
+            return  {
+              data: data,
+              type: type,
+              row: row,
+              meta: meta,
+              vdtnet: that,
+              def: field,
+              comp: that.$parent
+            }
+          },
+          template: `<div>${field.template || ''}</div>`
+        })
 
-        if (slot) {
-          myRender = (createElement) => {
-            return createElement('div', [
-              slot({
+        const tempApp = createApp({
+          render() {
+            if (slot) {
+              return h('div', {}, [slot({
                 data: data,
                 type: type,
                 row: row,
@@ -615,27 +623,16 @@ export default {
                 vdtnet: that,
                 def: field,
                 comp: that.$parent
-              })
-            ])
+              })])
+            }
+            return h(myDynamicComponent, {})
           }
-        }
+        })
+        const el = document.createElement('div')
+        const mountedApp = tempApp.mount(el)
 
-        const comp = new vue({
-          data: {
-            data: data,
-            type: type,
-            row: row,
-            meta: meta,
-            vdtnet: that,
-            def: field,
-            comp: that.$parent
-          },
-          render: myRender,
-          staticRenderFns: res.staticRenderFns
-        }).$mount()
-        return jq(comp.$el).html()
+        return mountedApp.$el.outerHTML || ''
       }
-
 
       renderFunc.templated = true
 

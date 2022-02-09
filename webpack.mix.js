@@ -1,6 +1,7 @@
-const webpack      = require('webpack');
-const path         = require('path');
-const mix          = require('laravel-mix');
+const fs           = require('fs')
+const path         = require('path')
+const mix          = require('laravel-mix')
+const webpack      = require('webpack')
 const pkg          = require('./package.json');
 const public       = process.env.NODE_ENV === 'production' ? 'dist' : 'example';
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -47,12 +48,18 @@ mix.webpackConfig(config).sourceMaps();
 mix.version();
 
 if (process.env.NODE_ENV === 'production') {
-  mix.js(`src/index.js`, `${ public }`).vue();
+  mix.ts(`src/index.ts`, `${ public }`).vue({
+    version: 3,
+    extractStyles: false
+  });
   mix.disableNotifications();
 } else {
-  const exampleName = process.env.EXAMPLE || 'app'
+  const exampleName = process.env.EXAMPLE || 'example'
 
-  mix.js(`example/${exampleName}.js`, `${ public }`).vue();
+  mix.ts(`example/${exampleName}.ts`, `${ public }`).vue({
+    version: 3,
+    extractStyles: false
+  });
   mix.browserSync({
     proxy: false,
     port: 3000,

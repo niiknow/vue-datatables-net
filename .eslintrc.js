@@ -7,8 +7,7 @@ module.exports = {
   extends: ["plugin:vue/recommended", "prettier"], // activate vue related rules
   parserOptions: {
     "parser": "@babel/eslint-parser",
-    "ecmaVersion": 8,
-    "requireConfigFile": false,
+    "ecmaVersion": 7,
     "sourceType": "module",
     "ecmaFeatures": {
       "globalReturn": false,
@@ -27,10 +26,19 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === 'production' ? 2 : 0,
     "semi": [2, "never"],
     "quotes": [2, "single"],
+    "vue/one-component-per-file": 0,
+    "vue/no-multiple-template-root": 0,
     "vue/require-default-prop": 0,
     "vue/require-prop-types": 0,
     "vue/no-v-html": 0,
     "vue/html-indent": 0,
-    "vue/component-name-in-template-casing": ['error', 'kebab-case']
+    "vue/no-use-v-if-with-v-for": 0,
+    "vue/no-mutating-props": 0,
+    "vue/component-name-in-template-casing": ['error', 'kebab-case'],
+    "vue/v-slot-style": ["error", {
+      "atComponent": "v-slot",
+      "default": "v-slot",
+      "named": "longform",
+    }]
   }
 };

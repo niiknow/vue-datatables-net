@@ -1,7 +1,7 @@
 {
   "name": "vue-datatables-net",
   "description": "Vue jQuery DataTables.net wrapper component",
-  "version": "1.6.2",
+  "version": "2.0.0",
   "author": "friends@niiknow.org",
   "license": "MIT",
   "main": "dist/index.js",
@@ -14,12 +14,10 @@
   },
   "scripts": {
     "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "watch-late-schema": "cross-env EXAMPLE=late-schema npm run watch",
-    "production": "cross-env NODE_ENV=production mix",
-    "lint": "eslint --ext .js,.vue src/ example/app.*",
-    "lint-fix": "eslint --fix --ext .js,.vue src/ example/app.*",
-    "check-outdated": "npm outdated"
+    "production": "mix --production",
+    "lint": "tslint --project ./tsconfig.json src/**/*.ts && eslint src/**/*.vue example/**/*.vue",
+    "lint-fix": "tslint --project ./tsconfig.json --fix src/**/*.ts && eslint --fix src/**/*.vue example/**/*.vue",
+    "test": "jest"
   },
   "browserslist": [
     "> 1%",
@@ -28,7 +26,10 @@
   ],
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
-    "babel-loader": "^8.2.3",
+    "@vue/cli-plugin-unit-jest": "^4.5.15",
+    "@vue/compiler-sfc": "^3.2.29",
+    "@vue/test-utils": "^2.0.0-0",
+    "@vue/vue3-jest": "^27.0.0-alpha.4",
     "bootstrap": "5.1.3",
     "browser-sync": "^2.27.7",
     "browser-sync-webpack-plugin": "^2.3.0",
@@ -44,11 +45,18 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-plugin-vue": "^8.4.1",
+    "jest": "27.4.7",
     "eslint-webpack-plugin": "^3.1.1",
     "laravel-mix": "^6.0.41",
-    "vue": "^2.6.14",
-    "vue-loader": "15.9.8",
-    "vue-template-compiler": "^2.6.14",
+    "postcss": "^8.4.6",
+    "ts-jest": "27.1.3",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.5",
+    "vue": "^3.2.11",
+    "vue-loader": "^16.5.0",
     "webpack": "^5.68.0"
   }
 }

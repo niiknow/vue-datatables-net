@@ -6,10 +6,7 @@
     <div class="row">
       <div class="col-12 col-md-9">
         Below are client-side buttons demo, go here to see
-        <a
-          href="https://laratt.niiknow.org/home/contacts"
-          target="_blank"
-        >
+        <a href="https://laratt.niiknow.org/home/contacts" target="_blank">
           server-side buttons demo
         </a>
       </div>
@@ -55,14 +52,12 @@
         <b>Show Details</b>
       </template>
       <template
-        slot="address2"
-        slot-scope="ctx"
+        v-slot:address2="ctx"
       >
         <span>{{ ctx.data.city }}, {{ ctx.comp.formatCode(ctx.data.zipcode) }}</span>
       </template>
       <template
-        slot="_details"
-        slot-scope="ctx"
+        v-slot:_details="ctx"
       >
         <strong>I'm a child for {{ ctx.data.id }} yall</strong>
       </template>

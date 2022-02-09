@@ -1,0 +1,45 @@
+{
+  "extends": "tslint:recommended",
+  "enable": true,
+  "jsEnable": true,
+  "rules": {
+    "max-line-length": [true, 120],
+    "indent": [true, "indent", 4],
+    "interface-name": [true, "never-prefix"],
+    "jsdoc-format": false,
+    "no-consecutive-blank-lines": false,
+    "no-console": [false],
+    "no-duplicate-variable": true,
+    "semicolon": ["always"],
+    "triple-equals": [true, "allow-null-check"],
+    "comment-format": [true, "check-space"],
+    "no-trailing-whitespace": false,
+    "align": [false],
+    "eofline": false,
+    "max-classes-per-file": [true, 5],
+    "quotemark": [true, "single", "avoid-escape"],
+    "object-literal-sort-keys":false,
+    "ordered-imports": ["any"]
+  },
+  "jsRules": {
+    "max-line-length": [true, 120],
+    "indent": [true, "indent", 4],
+    "comment-format": [true, "check-space"],
+    "no-console": [false],
+    "no-duplicate-variable": true,
+    "semicolon": ["always"],
+    "triple-equals": [true, "allow-null-check"],
+    "jsdoc-format": false,
+    "no-trailing-whitespace": false,
+    "align": [false],
+    "eofline": false,
+    "max-classes-per-file": [true, 5],
+    "quotemark": [true, "single", "avoid-escape"],
+    "object-literal-sort-keys":false
+  },
+  "linterOptions": {
+    "exclude": [
+      "src/admin/admin-menu-fix.ts"
+    ]
+  }
+}

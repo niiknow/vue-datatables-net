@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@/src/*": ["src/*"],
+      "@/example/*": ["example/*"]
+    },
+    "types": ["@types/jest"],
+    /* Additional Options */
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "importsNotUsedAsValues": "error",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "allowJs": true
+  },
+  "include": [
+    "src",
+    "example",
+    "tests/jsunit"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules",
+    "dist",
+    "public",
+    "vendor"
+  ]
+}
