@@ -2,7 +2,7 @@
  * vue-datatables-net
  * Vue jQuery DataTables.net wrapper component
  *
- * @version v1.6.1
+ * @version v1.6.2
  * @author friends@niiknow.org
  * @repository https://github.com/niiknow/vue-datatables-net.git
  */
