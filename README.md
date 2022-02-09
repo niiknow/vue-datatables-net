@@ -7,8 +7,7 @@ This library is a Vue 3 wrapper for [jQuery DataTables](https://datatables.net/)
 * You've found this library because you want to use jQuery datatables.net client-side with your application.  Alternatively, if you simply want to integrate with server-side datatables.net compatible endpoint, then I'd like to suggest looking at bootstrap-vue b-table and this component - https://github.com/niiknow/bvtnet-items-provider
 * For Vue 2 support, see vue2 branch or npm install vue-datatables-net@^1.6.1
 
-Development
-`laravel-mix` is use to simplify build and packaging.
+We use `laravel-mix` to simplify build and packaging.
 
 Requirement: Install NodeJS, NPM
 
