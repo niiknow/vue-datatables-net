@@ -48,7 +48,7 @@
       @table-creating="doCreating"
       @table-created="doCreated"
     >
-      <template slot="HEAD__details_control">
+      <template v-slot:HEAD__details_control>
         <b>Show Details</b>
       </template>
       <template

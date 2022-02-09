@@ -946,9 +946,7 @@ var _hoisted_6 = /*#__PURE__*/(0, _vue.createElementVNode)("div", {
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0, _vue.createElementVNode)("template", {
-  slot: "HEAD__details_control"
-}, [/*#__PURE__*/(0, _vue.createElementVNode)("b", null, "Show Details")], -1
+var _hoisted_7 = /*#__PURE__*/(0, _vue.createElementVNode)("b", null, "Show Details", -1
 /* HOISTED */
 );
 
@@ -984,6 +982,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onTableCreating: $options.doCreating,
     onTableCreated: $options.doCreated
   }, {
+    HEAD__details_control: (0, _vue.withCtx)(function () {
+      return [_hoisted_7];
+    }),
     address2: (0, _vue.withCtx)(function (ctx) {
       return [(0, _vue.createElementVNode)("span", null, (0, _vue.toDisplayString)(ctx.data.city) + ", " + (0, _vue.toDisplayString)(ctx.comp.formatCode(ctx.data.zipcode)), 1
       /* TEXT */
@@ -993,9 +994,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0, _vue.createElementVNode)("strong", null, "I'm a child for " + (0, _vue.toDisplayString)(ctx.data.id) + " yall", 1
       /* TEXT */
       )];
-    }),
-    default: (0, _vue.withCtx)(function () {
-      return [_hoisted_7];
     }),
     _: 1
     /* STABLE */
