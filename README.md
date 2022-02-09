@@ -374,7 +374,7 @@ Allow you to refresh ajax content after some event.  Let say you have something 
 ## Customizable table head (th) columns
 Let say you have a column `description`, you can provide table head template for the description column like so:
 ```html
-<template slot="HEAD_description">
+<template v-slot:HEAD_description>
   <h1>desc</h1>
 </template>
 ```
@@ -382,7 +382,7 @@ Let say you have a column `description`, you can provide table head template for
 ## Customizable table footer (th) columns
 Let say you have a column `description`, you can provide table footer template for the description column like so:
 ```html
-<template slot="FOOT_description">
+<template v-slot:FOOT_description>
   <h1>desc</h1>
 </template>
 ```
@@ -432,15 +432,12 @@ window.open(url)
 Take a look at example app, you can template:
 ```
  <template
-  slot="address2"
-  slot-scope="ctx"
+  v-slot:address2="ctx"
 >
   <span>{{ ctx.data.city }}, {{ ctx.comp.formatCode(ctx.data.zipcode) }}</span>
 </template>
 ```
 
-- `slot` is the field/column name
-- `slot-scope` define the context object as `ctx` in this example
 - The context object will have the following properties
   1. `data` the column value, in this case is `address` property which is an object with sub-properties (street, suite, city, zipcode, geo, etc...)
   2. `type` the jQuery DataTables rendering type, usually `display`
