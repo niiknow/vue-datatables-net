@@ -1,5 +1,4 @@
 import App from './Example.vue'
-import { createApp } from 'vue'
-
-const app = createApp(App)
+// @ts-ignore
+const app = window.Vue.createApp(App)
 app.mount('#app')

@@ -3,7 +3,7 @@ const path         = require('path')
 const mix          = require('laravel-mix')
 const webpack      = require('webpack')
 const pkg          = require('./package.json');
-const public       = process.env.NODE_ENV === 'production' ? 'dist' : 'example';
+const deployTo     = 'example';
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const banner  = `${pkg.name}
@@ -12,7 +12,7 @@ ${pkg.description}\n
 @author ${pkg.author}
 @repository ${pkg.repository.url}`;
 
-mix.setPublicPath(path.normalize(public));
+mix.setPublicPath(path.normalize(deployTo));
 
 const config = {
   externals: {
@@ -23,7 +23,7 @@ const config = {
     rules: []
   },
   output: {
-    path: path.resolve(public),
+    path: path.resolve(deployTo),
     filename: 'index.js',
     library: 'VdtnetTable',
     libraryTarget: 'umd',
@@ -34,11 +34,15 @@ const config = {
     inline: true,
     quiet: false
   },
+  resolve: {
+    extensions: ['.js', '.json', '.vue', '.sass', '.scss', '.ts'],
+    alias: {
+      '@src': path.resolve(__dirname, 'src'),
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  },
   devtool: 'cheap-source-map',
   plugins: [
-    new webpack.ProvidePlugin({
-      Promise: 'es6-promise'
-    }),
     new ESLintPlugin(),
     new webpack.BannerPlugin(banner)
   ]
@@ -47,31 +51,24 @@ const config = {
 mix.webpackConfig(config).sourceMaps();
 mix.version();
 
-if (process.env.NODE_ENV === 'production') {
-  mix.ts(`src/index.ts`, `${ public }`).vue({
-    version: 3,
-    extractStyles: false
-  });
-  mix.disableNotifications();
-} else {
-  const exampleName = process.env.EXAMPLE || 'example'
+const exampleName = process.env.EXAMPLE || 'example'
 
-  mix.ts(`example/${exampleName}.ts`, `${ public }`).vue({
-    version: 3,
-    extractStyles: false
-  });
-  mix.browserSync({
-    proxy: false,
-    port: 3000,
-    files: [
-      'src/*',
-      'example/*'
-    ],
-    browser: 'firefox',
-    open: 'local',
-    server: {
-      baseDir: './'
-    }
-  });
-}
+mix.ts(`example/${exampleName}.ts`, `${ deployTo }`).vue({
+  version: 3,
+  extractStyles: false
+});
+mix.browserSync({
+  proxy: false,
+  port: 3000,
+  files: [
+    'src/*',
+    'example/*'
+  ],
+  browser: 'firefox',
+  open: 'local',
+  server: {
+    baseDir: './'
+  }
+});
+
 

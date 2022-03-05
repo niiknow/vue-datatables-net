@@ -40,5 +40,6 @@ module.exports = {
       "default": "v-slot",
       "named": "longform",
     }]
-  }
+  },
+  ignorePatterns: ['dist/*']
 };

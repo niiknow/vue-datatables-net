@@ -66,8 +66,9 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 // this demonstrate with buttons and responsive master/details row
-import VdtnetTable from '../src'
+import VdtnetTable from '../dist/index.umd.js'
 
 import 'datatables.net-bs5'
 
@@ -83,7 +84,7 @@ import 'datatables.net-select-bs5'
 import 'datatables.net-select-bs5/css/select.bootstrap5.min.css'
 import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css'
 
-export default {
+export default defineComponent({
   name: 'App',
   components: { VdtnetTable },
   data() {
@@ -187,7 +188,7 @@ export default {
       return zipcode.split('-')[0]
     }
   }
-}
+})
 </script>
 
 <style scoped>
