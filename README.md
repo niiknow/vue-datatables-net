@@ -45,11 +45,10 @@ Default configuration and provide example for `bootstrap5` styling.  Though, it 
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@next/dist/vue.global.js"></script>
 <script>
 import VdtnetTable from 'vue-datatables-net'
 
