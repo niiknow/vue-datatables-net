@@ -7,8 +7,9 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/src/*": ["src/*"],
-      "@/example/*": ["example/*"]
+      "~src/*": ["src/*"],
+      "~dist/*": ["dist/*"],
+      "~example/*": ["example/*"]
     },
     "types": ["@types/jest"],
     /* Additional Options */

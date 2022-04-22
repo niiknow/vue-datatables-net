@@ -68,7 +68,7 @@
 <script>
 import { defineComponent } from 'vue'
 // this demonstrate with buttons and responsive master/details row
-import VdtnetTable from '../dist/index.umd.js'
+import VdtnetTable from '~dist/index.umd.js'
 
 import 'datatables.net-bs5'
 

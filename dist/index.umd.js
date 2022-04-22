@@ -1,35 +1,4 @@
-(function(){ try {var elementStyle = document.createElement('style'); elementStyle.innerText = `.select-checkbox, .select-all-checkbox {
-  cursor: pointer;
-}
-.vdtnet-footer .dataTables_length {
-  padding-top: 6px;
-  padding-right: 10px;
-}
-.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {
-  float: right;
-}
-.hide-footer .vdtnet-footer {
-  display: none;
-}
-.master .details-plus
-{
-  cursor: pointer;
-  display: none;
-}
-.details-minus
-{
-  cursor: pointer;
-  display: none;
-}
-.master .details-minus
-{
-  cursor: pointer;
-  display: inline;
-}
-.details-control {
-  cursor: pointer;
-  font-weight: 700;
-}`; document.head.appendChild(elementStyle);} catch(e) {console.error(e, 'vite-plugin-css-injected-by-js: error when trying to add the style.');} })();(function (global, factory) {
+(function(){ try {var elementStyle = document.createElement('style'); elementStyle.innerText = ".select-checkbox, .select-all-checkbox {\n  cursor: pointer;\n}\n.vdtnet-footer .dataTables_length {\n  padding-top: 6px;\n  padding-right: 10px;\n}\n.vdtnet-footer .dataTables_length, .vdtnet-footer .dataTables_paginate {\n  float: right;\n}\n.hide-footer .vdtnet-footer {\n  display: none;\n}\n.master .details-plus\n{\n  cursor: pointer;\n  display: none;\n}\n.details-minus\n{\n  cursor: pointer;\n  display: none;\n}\n.master .details-minus\n{\n  cursor: pointer;\n  display: inline;\n}\n.details-control {\n  cursor: pointer;\n  font-weight: 700;\n}"; document.head.appendChild(elementStyle);} catch(e) {console.error('vite-plugin-css-injected-by-js', e);} })();(function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
   typeof define === 'function' && define.amd ? define(['vue'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.VdtnetTable = factory(global.Vue));

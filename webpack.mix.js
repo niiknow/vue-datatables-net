@@ -37,7 +37,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.json', '.vue', '.sass', '.scss', '.ts'],
     alias: {
-      '@src': path.resolve(__dirname, 'src'),
+      '~dist': path.resolve(__dirname, 'dist'),
       'vue$': 'vue/dist/vue.esm.js'
     }
   },
